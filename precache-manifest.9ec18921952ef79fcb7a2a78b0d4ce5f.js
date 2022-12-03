@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ee306920ead636c458075ca475f32a09",
+    "revision": "cc55cf3021803449bfb8a1869672a456",
     "url": "/edurights/index.html"
   },
   {
@@ -244,11 +244,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/css/153.e5a2cf51.chunk.css"
   },
   {
-    "revision": "efc6f78d0e164e11dc37",
+    "revision": "f98404b7677e8c75d167",
     "url": "/edurights/static/css/154.e5a2cf51.chunk.css"
   },
   {
-    "revision": "d662c4b96d75703b33ee",
+    "revision": "e23add93a47b927ca8c6",
     "url": "/edurights/static/css/155.e5a2cf51.chunk.css"
   },
   {
@@ -276,7 +276,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/css/160.e5a2cf51.chunk.css"
   },
   {
-    "revision": "84bf770a0c6725f926c0",
+    "revision": "26e09c11875e03a7f4c2",
     "url": "/edurights/static/css/161.e5a2cf51.chunk.css"
   },
   {
@@ -292,7 +292,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/css/164.e5a2cf51.chunk.css"
   },
   {
-    "revision": "78baf2830d31a7b135d3",
+    "revision": "055e5aafb3ea6887c759",
     "url": "/edurights/static/css/165.e5a2cf51.chunk.css"
   },
   {
@@ -852,7 +852,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/css/64.e5a2cf51.chunk.css"
   },
   {
-    "revision": "62da062101914af84944",
+    "revision": "d27e93ecfea780e3af87",
     "url": "/edurights/static/css/65.e5a2cf51.chunk.css"
   },
   {
@@ -1252,12 +1252,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/js/153.a323d966.chunk.js"
   },
   {
-    "revision": "efc6f78d0e164e11dc37",
-    "url": "/edurights/static/js/154.59ae0137.chunk.js"
+    "revision": "f98404b7677e8c75d167",
+    "url": "/edurights/static/js/154.2f55552e.chunk.js"
   },
   {
-    "revision": "d662c4b96d75703b33ee",
-    "url": "/edurights/static/js/155.ae0f879f.chunk.js"
+    "revision": "e23add93a47b927ca8c6",
+    "url": "/edurights/static/js/155.2f77be6d.chunk.js"
   },
   {
     "revision": "a095c09342d942ea3a5a",
@@ -1284,8 +1284,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/js/160.65dde48a.chunk.js"
   },
   {
-    "revision": "84bf770a0c6725f926c0",
-    "url": "/edurights/static/js/161.4b5135e1.chunk.js"
+    "revision": "26e09c11875e03a7f4c2",
+    "url": "/edurights/static/js/161.9b5392de.chunk.js"
   },
   {
     "revision": "c3f8f88dd8dbd4d6f370",
@@ -1300,8 +1300,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/js/164.8efbe5b9.chunk.js"
   },
   {
-    "revision": "78baf2830d31a7b135d3",
-    "url": "/edurights/static/js/165.01daf967.chunk.js"
+    "revision": "055e5aafb3ea6887c759",
+    "url": "/edurights/static/js/165.db303102.chunk.js"
   },
   {
     "revision": "17da0366c4107e1171aa",
@@ -1876,8 +1876,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/js/64.80019fdb.chunk.js"
   },
   {
-    "revision": "62da062101914af84944",
-    "url": "/edurights/static/js/65.6a5f330c.chunk.js"
+    "revision": "d27e93ecfea780e3af87",
+    "url": "/edurights/static/js/65.83c50b15.chunk.js"
   },
   {
     "revision": "62fed07030038ce0e97f",
@@ -2032,8 +2032,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/edurights/static/js/main.309d192b.chunk.js"
   },
   {
-    "revision": "b851610d5b8967222a41",
-    "url": "/edurights/static/js/runtime-main.4f081c07.js"
+    "revision": "7c022c2bbd79050459eb",
+    "url": "/edurights/static/js/runtime-main.e356242d.js"
   },
   {
     "revision": "c77e6ddc49bf5590fa798adddfe09da9",
