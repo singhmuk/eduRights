@@ -288,7 +288,26 @@ class Methods extends Component {
               </ul>
               <br />
 
-              <h3>2.bind()</h3>
+              <h3>2. In JavaScript, why is the “this” operator inconsistent?</h3>
+              The value of <b>this</b> changes depending on how the function is called. We say that a function is invoked with 
+              some a particular this value — the this value is determined at invocation time, not definition time.
+              <br/>
+              <br/>
+              <ul>
+                <li>If the function is called as a “raw” function, this will be the global object or undefined if the function 
+                  runs in strict mode.</li>
+                <li>If it is called as a method on an object, this will be the calling object.</li>
+                <li>If you call a function with call or apply, this is specified as the first argument to call or apply.</li>
+                <li>If it is called as an event listener, this will be the element that is the target of the event.</li>
+                <li>If it is called as a constructor with new, this will be a newly-created object whose prototype is set to the 
+                  prototype property of the constructor function.</li>
+                <li>If the function is the result of a bind operation, the function will always and forever have this set to the 
+                  first argument of the bind call that produced it. (This is the single exception to the “functions don’t have a 
+                  fixed this” rule — functions produced by bind actually do have an immutable this.)</li>
+              </ul>
+              <br/>
+
+              <h3>3. bind()</h3>
               <ul>
                 <li>Creates a new function, when called.</li>
                 <li>Returns a new function, when invoked, has its this sets to a specific value.</li>
@@ -358,7 +377,7 @@ class Methods extends Component {
                 function with a specified this value.</i>
               <br />
 
-              <h3>3. call(), apply()</h3>
+              <h3>4. call(), apply()</h3>
               The call() method calls a function with a given this value and arguments provided individually.
               <br />
               <br />
@@ -406,7 +425,7 @@ class Methods extends Component {
               </div>
               <br />
 
-              <h3>4. Borrowing</h3>
+              <h3>5. Borrowing</h3>
               <div style={titles}>
                 <PrismCode
                   code={borrowing}

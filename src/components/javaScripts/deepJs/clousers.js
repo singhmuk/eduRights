@@ -279,6 +279,15 @@ class Clousers extends Component {
               all the global variables.
               <br />
 
+              <h3>2. What is the role of closures in JavaScript?</h3>
+              The script builds a closure in JavaScript at the time of making of a function. It is a local variable that is 
+              present in the memory even after the function finishes its execution. Besides, it has a great access to the variable 
+              in three scopes: variable in its scope, global variables, and variables in the enclosing function’s scope. However, 
+              closures are tough in JavaScript to make sure the variable privacy, that is, to build private variables. Since 
+              JavaScript has no modifiers for access, closures permit the programmer to make variables that are not directly 
+              accessible.
+              <br />
+
               <h3>2. Closure Scope Chain</h3>
               Every closure has three scopes:
               <ul>

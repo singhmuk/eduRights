@@ -24,22 +24,22 @@ const styles = theme => ({
 
 const App = `
 const App = () => {
-  const [filteredData, setFilteredData] = useState([]);
+  const [mockdata, setMockdata] = useState([]);
 
-  const handleSearch = (event) => {
-    let value = event.target.value.toLowerCase();
+  const handleSearch = (e) => {
+    let value = e.target.value.toLowerCase();
     let result = [];
 
-    result = filteredData.filter((data) => {
+    result = mockdata.filter((data) => {
       return data.title.search(value) != -1;
     });
-    setFilteredData(result);
+    setMockdata(result);
   }
 
   useEffect(() => {
-    axios('https://jsonplaceholder.typicode.com/albums/1/photos')
-      .then(response => {
-        setFilteredData(response.data);
+    axios.get('https://jsonplaceholder.typicode.com/albums/1/photos')
+      .then(res => {
+        setMockdata(res.data);
       })
       .catch(error => {
         console.log(error);
@@ -49,12 +49,13 @@ const App = () => {
   return (
     <div>
       <input type="text" onChange={(event) => handleSearch(event)} />
-      {filteredData.map((items) => (
+      {mockdata.map((items) => (
         <li>{items.title}</li>
       ))}
     </div>
   )
-}`.trim();
+}
+`.trim();
 
 const multiple = `
 const App = () => {
@@ -374,7 +375,6 @@ class AsyncAwait extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-
               <br/>
 
               <h3>2. Recived data from two different APIS in one function to multiple calls.</h3>

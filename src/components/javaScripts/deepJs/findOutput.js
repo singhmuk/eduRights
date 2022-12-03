@@ -460,6 +460,88 @@ if(x) { console.log(x) }   // The code inside this block will not run since the 
 if(y) { console.log(y) }    // The code inside this block will run since the value of y is 23 (Truthy)
 `.trim();
 
+const argu = `
+function add(...args){
+  console.log(args)
+}
+add(12)
+
+//2
+console.log(typeof typeof 12)
+console.log(typeof NaN)
+`.trim();
+
+const diffop = `
+let arr=[{id:1, name:'Krishana'},{id:2, name:'Ram'}]
+    function add(obj,index){
+        obj[index].name = obj[index].name
+        console.log('obj[index] ', obj[index].name)
+        console.log('obj', obj)
+    }
+add(arr, 1)
+console.log('arr', arr)
+`.trim();
+
+const actually = `
+function fun({a,b,c}){
+  console.log(a,b,c)
+}
+fun(1,2,3)
+`.trim();
+
+const frozen = `
+let person = {
+  name: "Leonardo",
+  profession: {
+      name: "developer"
+  }
+};
+Object.freeze(person); // make object immutable
+person.profession.name = "doctor";
+console.log(person);
+
+
+//With deep freeze
+function deepFreeze(object) {
+  let propNames = Object.getOwnPropertyNames(object);
+  for (let name of propNames) {
+      let value = object[name];
+      object[name] = value && typeof value === "object" ?
+          deepFreeze(value) : value;
+  }
+  return Object.freeze(object);
+}
+let person = {
+  name: "Leonardo",
+  profession: {
+      name: "developer"
+  }
+};
+deepFreeze(person);
+person.profession.name = "doctor";
+`.trim();
+
+const multilines = `
+const string = “line1” +
+“line2” +
+“line3”;
+
+//
+const string = “line1 \
+line2 \
+line3”;
+`.trim();
+
+const following = `
+const courses = ["JavaScript","Java","C","C++","Python"];
+delete courses[2];
+
+console.log(courses);
+console.log(courses.length);
+`.trim();
+
+// const diffop = ``.trim();
+
 
 class FindOutput extends Component {
   componentDidMount() {
@@ -1039,6 +1121,81 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+
+              <h3>49. </h3>
+              <div style={titles}>
+                <PrismCode
+                  code={argu}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>50. </h3>
+              <div style={titles}>
+                <PrismCode
+                  code={diffop}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>51. Is JavaScript a pass-by-reference or pass-by-value language?</h3>
+              It’s always pass by value, but for objects the value of the variable is a reference. Because of this, when you pass 
+              an object and change its members, those changes persist outside of the function. This makes it look like pass by 
+              reference. But if you actually change the value of the object variable you will see that the change does not 
+              persist, proving it’s really pass by value.
+              <br/>
+
+              <h3>52. </h3>
+              <div style={titles}>
+                <PrismCode
+                  code={actually}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>53. How to “deep-freeze” object in JavaScript?</h3>
+              If you want make sure the object is deep frozen you have to create a recursive function to freeze each property 
+              which is of type object.
+              <div style={titles}>
+                <PrismCode
+                  code={frozen}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>54.  Is it possible to write a multi-line string in JavaScript?</h3>
+              <ul>
+                <li>Using backticks</li>
+                <li>Using + operator</li>
+                <li>Using \ (backslash)</li>
+              </ul>
+              <div style={titles}>
+                <PrismCode
+                  code={multilines}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>55. </h3>
+              <div style={titles}>
+                <PrismCode
+                  code={following}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <i>The delete operator does not really affect the entire length of the array as the operates removes only the value 
+                which is there at the position. </i>
             </List>
           </Paper>
         </Grid>
