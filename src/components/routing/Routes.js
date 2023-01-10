@@ -32,9 +32,9 @@ import { components as MernProjectss } from '../mern';
 import About from '../../components/dashboard/about';
 
 
-const { MainCompo, AsyncAwait, IntroRectJs, SSRendering, HackeRank, Models, Like, DropdownSelect, ContextMeth,
-  ContextHooks, CustomHooks, NumberForm, UseReducers, TicGame, PureComp, UseStates, JsonPlaceholder, LinkGet,
-  TextEditors, Kanban, ReactInter, CodingInter, SortItems } = ReactMains;
+const { MainCompo, AsyncAwait, IntroRectJs, SSRendering, HackeRank, Models, Like, DropdownSelect, 
+    CustomHooks, NumberForm, TicGame, PureComp, UseStates, LinkGet,
+  TextEditors, Kanban, ReactInter, SortItems } = ReactMains;
 
 const { CssBasics, Sass, ReatAPIS, Jest, Enzymes, Matchers, Enzymes2, Enzymes3, DevTools,
   Html1 } = CssMains;
@@ -42,8 +42,8 @@ const { CssBasics, Sass, ReatAPIS, Jest, Enzymes, Matchers, Enzymes2, Enzymes3, 
 const { ReduxState, ReduxMethods, Git, Skills, IntroRedux, ReactRedux, ContctHooks, ExpenseTraMern, GitConcepts,
   CountersRedux, MernRedux, ReduxCurd, SignUp, ComSkils, TechSkils, TechInto } = ReduxMains;
 
-const { Arrays, Clousers, FindOutput, JsObject, Logic, Methods,
-  IntroJs, Prototypes, ArraysApi, Oops, Reduce, McqJs,
+const { Arrays, Clousers, FindOutput, JsObject, Logic, 
+  IntroJs, Prototypes, ArraysApi, Oops, Reduce, McqJs, Datatypests, TypeScript2, TypeScript4,
   KeyedCollections, RegularExp, HackerRank1, HackerRank6 } = JsMains;
 
 const { NodeJsCodes, ServerSide, IntroNodeJs, Tur1, Tut2, Tut6, Udemy, Ejs, Nodetext,
@@ -55,7 +55,8 @@ const { GridFs, Intro, MongodbMethods, IntroMD, CurdOp, BulkWright, MysqlCurd, M
   PostgresSQL, MongoQueries, SearchErrorHandling, JoinOp, SortOp
 } = MongodbMains;
 
-const { Middleware, IntroExpress, LoopbackCli, ResDocs, routerDocs, JQueies, Backbonejs, UnderscorJs } = ExpressMains;
+const { Middleware, IntroExpress, LoopbackCli, ResDocs, routerDocs, JQueies, Backbonejs, UnderscorJs,
+        Networks } = ExpressMains;
 
 const { PyIntro, PyLogic, IntroPython, Collections, CsvPython, Json, Logics, Mathematics, OopsPyton,
   Regex, Tkinter, LogicalsPy, Abstract, Tuples, StringPy, IteratorsPy,
@@ -67,18 +68,18 @@ const { Graph, LinkedList, Queue, Stack, Sort, Search, IntroAlgo, Heap, TopTech,
          Trees } = AlMains;
 
 const { IntroAngular, Calculator, ActivationFuns, Loss, Stochastic, Tensorboards,
-  AngularCompile, NeyralNetwork, GradientNeural, RegularizationDeep, Imbalanced, Datatypests,
+  AngularCompile, NeyralNetwork, GradientNeural, RegularizationDeep, Imbalanced, 
   Benchmarking, Customer, Imbalanced2, Convolutionals, Transfer, WordEmbedding,
-  Projection, dataAugmentation, TypeScript2, TypeScript4, TensorFlows
+  Projection, dataAugmentation, TensorFlows
 } = AngularJs;
 
 const { IntroAngulard, NgModel, Calculators, NgRepeat, AngularCond, Rxjs, NgrxCurd, NgrxCounter,
-  Logic3, AngularDir, AngularDir2, MetaData, AngularLifeCycle, Aflows,
-  Directives, AungularEvents, Fiters, AngularForm, AngularFor, ViewProviders,
-  Scope, Services, Validations, Filterss, AngularRoutes,
+  Logic3, AngularDir, AngularLifeCycle, Aflows,
+  Directives, AungularEvents, Fiters, AngularForm, AngularFor, 
+  Scope, Services, Validations, Filterss, 
   Projection12, AngularCurd12, FilterPlace, DynamicallyLoad,
   RadioButton12, Services12, Vote, MultiCheck, DropDownAngular,
-  AngularSelector, AngularPipes,
+  DepenInjection,
   Debounce, Paginations, Loader
 } = AngularJsd;
 
@@ -100,11 +101,9 @@ const Routes = props => {
         <Suspense fallback={<div>Loading Page...</div>}>
           <Route exact path="/async_await" component={AsyncAwait} />
           <Route exact path="/reactInter" component={ReactInter} />
-          <Route exact path="/codingInter" component={CodingInter} />
           <Route exact path="/mainCompo" component={MainCompo} />
           <Route exact path="/pureComp" component={PureComp} />
           <Route exact path="/models" component={Models} />
-          <Route exact path="/contextHooks" component={ContextHooks} />
           <Route exact path="/customHooks" component={CustomHooks} />
           <Route exact path="/introReact" component={IntroRectJs} />
           <Route exact path="/like" component={Like} />
@@ -114,12 +113,9 @@ const Routes = props => {
           <Route exact path="/serverSideRend" component={SSRendering} />
           <Route exact path="/numberFormats" component={NumberForm} />
           <Route exact path="/dropdownSelect" component={DropdownSelect} />
-          <Route exact path="/useReducersSta" component={UseReducers} />
-          <Route exact path="/jsonPlaceholder" component={JsonPlaceholder} />
           <Route exact path="/hackeRank" component={HackeRank} />
           <Route exact path="/ticGame" component={TicGame} />
           <Route exact path="/linkGet" component={LinkGet} />
-          <Route exact path="/contextMethods" component={ContextMeth} />
           <Route exact path="/kanban" component={Kanban} />
 
           <Route exact path="/cssbasics" component={CssBasics} />
@@ -156,10 +152,12 @@ const Routes = props => {
           <Route exact path="/mcqjs" component={McqJs} />
           <Route exact path="/hackerRank" component={HackerRank1} />
           <Route exact path="/hackerRank6" component={HackerRank6} />
+          <Route exact path="/datatypests" component={Datatypests} />
+          <Route exact path="/typeScript_2" component={TypeScript2} />
+          <Route exact path="/typeScript_4" component={TypeScript4} />
 
 
           <Route exact path="/jsObjects" component={JsObject} />
-          <Route exact path="/this" component={Methods} />
           <Route exact path="/array" component={Arrays} />
           <Route exact path="/arrayApi" component={ArraysApi} />
           <Route exact path="/clousers" component={Clousers} />
@@ -219,6 +217,7 @@ const Routes = props => {
           <Route exact path="/jqueries" component={JQueies} />
           <Route exact path="/backbonejs" component={Backbonejs} />
           <Route exact path="/underscorejs" component={UnderscorJs} />
+          <Route exact path="/network" component={Networks} />
 
           <Route exact path="/introPython" component={IntroPython} />
           <Route exact path="/pyIntro" component={PyIntro} />
@@ -285,9 +284,6 @@ const Routes = props => {
           <Route exact path="/tensorflow" component={TensorFlows} />
 
           <Route exact path="/projection" component={Projection} />
-          <Route exact path="/datatypests" component={Datatypests} />
-          <Route exact path="/typeScript_2" component={TypeScript2} />
-          <Route exact path="/typeScript_4" component={TypeScript4} />
           <Route exact path="/angCompilers" component={AngularCompile} />
           <Route exact path="/neural" component={NeyralNetwork} />
 
@@ -336,8 +332,9 @@ const Routes = props => {
           <Route exact path="/socialSignUp" component={SocialSignUp} />
           <Route exact path="/mernSocial" component={MernSocial} />
           <Route exact path="/setUpFiles" component={SetUpFiles} />
-
+          
           <Route exact path="/introAngularjs" component={IntroAngulard} />
+          <Route exact path="/depenInjection" component={DepenInjection} />
           <Route exact path="/flows" component={Aflows} />
           <Route exact path="/ngModel" component={NgModel} />
           <Route exact path="/calculator" component={Calculators} />
@@ -362,15 +359,9 @@ const Routes = props => {
           <Route exact path="/vote" component={Vote} />
           <Route exact path="/multiCheck" component={MultiCheck} />
           <Route exact path="/dropdownsAngu" component={DropDownAngular} />
-          <Route exact path="/angularSelector" component={AngularSelector} />
           <Route exact path="/angularDir" component={AngularDir} />
-          <Route exact path="/angularDir2" component={AngularDir2} />
-          <Route exact path="/metedata" component={MetaData} />
           <Route exact path="/ngFor" component={AngularFor} />
-          <Route exact path="/pipes" component={AngularPipes} />
-          <Route exact path="/anguRoutes" component={AngularRoutes} />
           <Route exact path="/lifeCycleAng" component={AngularLifeCycle} />
-          <Route exact path="/viewProvider" component={ViewProviders} />
           <Route exact path="/dynamicallyLoad" component={DynamicallyLoad} />
           <Route exact path="/rxjs" component={Rxjs} />
           <Route exact path="/ngrxCurd" component={NgrxCurd} />

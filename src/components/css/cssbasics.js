@@ -157,11 +157,6 @@ const website = `
     font-size: 24px;
   }
 }
-@media (max-width: 600px) {
-  .my-class {
-    font-size: 12px;
-  }
-}
 
 .my-class {
   font-size: 12px;
@@ -223,60 +218,18 @@ const importants = `
 }
 `.trim();
 
-const browserspecific = `
-@-moz-document url-prefix(){
-  body {
-      color: #000;
-  }
-  div{
-     margin:-4px;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  body {
-      color: #90f;
-  }
-}
-`.trim();
-
 const inlinestyles = `
 span.a {
-  display: inline; 
+  display: inline/ inline-block/ block; 
   width: 100px;
   height: 100px;
   border: 1px solid rgb(0, 255, 21);  
 }
-
-span.b {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  border: 1px solid blue;    
-}
-
-span.c {
-  display: block;
-  width: 100px;
-  height: 100px;
-  border: 1px solid rgb(255, 0, 191);    
-}
-
-
-//HTML
-  <span class="a">Aliquam</span> <span class="a">venenatis</span>
-  <span class="b">Aliquam</span> <span class="b">venenatis</span>
-  <span class="c">Aliquam</span> <span class="c">venenatis</span>
 `.trim();
 
 const relativestyles = `
 .static {
-  border: 3px solid #73AD21;
-  position: static;
-  position: relative;
-  position: fixed;
-  position: absolute;
-  position: sticky;
+  position: static/ relative/ fixed/ absolute/ sticky;
 }
 `.trim();
 
@@ -309,7 +262,7 @@ h1.hidden {
 
 const boxModel = `
 padding: 25px  50px   75px   100px;                                  //top   right  bottom left. 
-padding: 25px 50px;                                                  //top/bottom padding 25px; right/left padding 50px.
+padding: 25px 50px;                            //top/bottom padding 25px; right/left padding 50px.
 
 color: blue;
 text-align: center / left / right / justify;
@@ -340,14 +293,6 @@ const supports = `
 	div {
 		display: grid;
 	}
-}
-`.trim();
-
-const hidden = `
-div {
-  width: 150px;
-  height: 50px;
-  overflow: hidden;
 }
 `.trim();
 
@@ -482,11 +427,7 @@ const defoultcss = `
 }
 
 #initial {
-  color: initial;
-}
-
-#inherit {
-  color: inherit;
+  color: initial/ inherit;
 }
 `.trim();
 
@@ -494,7 +435,7 @@ const sprites = `
 .sprites {
   width: 200px;
   background-image: url("abc.png");
-  background-position: 0px -200px;                //second image start after 200px. initials 200px occupied by first image
+  background-position: 0px -200px;  //second image start after 200px. initials 200px occupied by first image
 }
 `.trim();
 
@@ -571,7 +512,7 @@ const gridtemplates = `
 }
 
 
-//Specifies the size of the grid lines. You can think of it like setting the width of the gutters between the columns/rows
+//Specifies the size of the grid lines. Setting the width of the gutters between the columns/rows
 .container {
 	column-gap: 15px 10px;
 	row-gap: 15px 10px;
@@ -587,12 +528,6 @@ const gridtemplates = `
 `.trim();
 
 const judtifyItems = `
-//
-.container {
-  justify-items: start | end | center | stretch;
-}
-
-//align-items
 .container {
   align-items: start | end | center | stretch;
 }
@@ -603,10 +538,6 @@ const justifycontain = `
   justify-content: start | end | center | stretch | space-around | space-between | space-evenly;    
 }
 
-//
-.container {
-  align-content: start | end | center | stretch | space-around | space-between | space-evenly;    
-}
 
 //
 .container {
@@ -669,24 +600,23 @@ class CssBasics extends Component {
           <Paper className={classes.paper}>
             <List>
               <h3>1. How does CSS actually work (under the hood of browser)?</h3>
-              When a browser displays a document, it must combine the document's content with its style information. It processes the document in two stages:
+              Browser must combine the document's content with its style befor displays a document. It processes the document in two stages:
               <ol>
-                <li>The browser converts HTML and CSS into the DOM. The DOM represents the document in the computer's memory. It combines the document's
-                  content with its style.</li>
+                <li>The browser converts HTML and CSS into the DOM. The DOM represents the document in the computer's memory.</li>
                 <li>The browser displays the contents of the DOM.</li>
               </ol>
               <img src={Browser} alt="" className="responsive" />
               <br />
               <br />
               <ul>
-                <li>CSS is a design language that makes a website look more appealing than just plain or uninspiring pieces of text.</li>
-                <li>A website can run without CSS, but it certainly isn’t pretty. CSS makes the front-end of a website shine and it creates a great user experience. Without CSS, websites would be less pleasing to the eye and likely much harder to navigate.</li>
+                <li>CSS is a design language that makes a website look more appealing than just plain text.</li>
               </ul>
               <br />
 
               <h3>2. There are a number of benefits of CSS, including</h3>
               <ol>
-                <li><b>Faster Page Speed: </b>More code means slower page speed. And CSS enables you to use less code. CSS allows you to use one CSS rule and apply it to all occurrences of a certain tag within an HTML document.</li>
+                <li><b>Faster Page Speed: </b>More code means slower page speed. And CSS enables us to use less code. 
+                CSS allows to use one CSS rule and apply it to all occurrences of a certain tag within an HTML document.</li>
                 <li><b>Better User Experience: </b>It allows for user-friendly formatting. When buttons and text are in logical places and well organized, user experience improves.</li>
                 <li><b>Easy Formatting Changes: </b></li>
                 <li><b>Compatibility Across Devices: </b></li>
@@ -716,22 +646,11 @@ class CssBasics extends Component {
               <br />
 
               <h3>5. How do you specify units in the CSS?. What are the different ways to do it?</h3>
-              <ol>
-                <li>px gives fine-grained control and
-                  maintains alignment because 1 px or multiple of 1px to look sharp. px is not cascade.
-                  Em, will cascade 1em is equal to the current font-size of the element or the browser
-                  default. The common practice is to set default body font-size to 62.5% (equal to 10px).</li>
-                <li>1em = 16px (Pixel).</li>
-                <li>pt(point) are traditionally used in print. 1pt = 1/72 inch and it is a fixed-size unit.</li>
-                <li>%(percentage) sets font-size relative to the font size of the body. Hence, you have to set the font-size of the body to a
-                  reasonable size.</li>
-              </ol>
-              <br />
               <b>What is VH/VW (viewport height/ viewport width) in CSS?</b>
               <ol>
                 <li>It’s a CSS unit used to measure the height and width in percentage w.r.t viewport. It is used mainly in responsive
-                  design techniques. The measure VH is equal to 1/100 of the height of the viewport.</li>
-                <li>If the height of the browser is 1000px, 1vh is equal to 10px. Similarly, if the width is 1000px, then 1 vw is equal to 10px.</li>
+                  design techniques.<br/> VH = 1/100 of the height of the viewport.</li>
+                <li>If the height of the browser is 1000px, 1vh = 10px. Similarly, if the width is 1000px, then 1vw = 10px.</li>
               </ol>
               <br />
               <div style={titles}>
@@ -809,7 +728,7 @@ class CssBasics extends Component {
               <h3>13. Difference between coding a website to be responsive versus using a mobile-first strategy?</h3>
               <p>
                 Making a website responsive means the some elements will respond by adapting its size or other functionality according to the
-                device's screen size, typically the viewport width, through CSS media queries.
+                device's screen size.
               </p>
               A mobile-first strategy has 2 main advantages:
               <ol>
@@ -847,15 +766,7 @@ class CssBasics extends Component {
                 <br />
                 <tr>
                   <td>Focuses on developing websites based on multiple fixed layout sizes.</td>
-                  <td>Rocuses on showing content on the basis of available browser space.</td>
-                </tr>
-                <br />
-                <tr>
-                  <td>When a website developed using adaptive design is opened on the desktop browser, first the available space is detected and
-                    then the layout with most appropriate sizes are picked and used for the display of contents. Resizing of browser window has
-                    no affect on the design.</td>
-                  <td>When a website developed using responsive design is opened on a desktop browser and when we try to resize the browser window,
-                    the content of the website is dynamically and optimally rearranged to accomodate the window.</td>
+                  <td>Focuses on showing content on the basis of available browser space.</td>
                 </tr>
                 <br />
                 <tr>
@@ -868,8 +779,7 @@ class CssBasics extends Component {
                 <tr>
                   <td>It takes a lot of time and effort to first examine the options and realities of the end users and then design best possible
                     adaptive solutions them.</td>
-                  <td>Generally, Responsive design takes much less work to build and design fluid websites that can accomodate content from screen
-                    depending on the screen size.</td>
+                  <td>esponsive design takes much less work to build and design fluid websites.</td>
                 </tr>
                 <br />
                 <tr>
@@ -892,8 +802,7 @@ class CssBasics extends Component {
 
               <h3>16. What is progressive rendering? How do you implement progressive rendering in the website?. What are the advantages of it?</h3>
               <ol>
-                <li>Techniques used to improve the performance of a webpage (improve
-                  perceived load time) to render content for display as quickly as possible.</li>
+                <li>Techniques used to improve the performance of a webpage to render content for display as quickly as possible.</li>
                 <li>We can implement the progressive rendering of the page by loading the lazy loading of the images.  We can use Intersection
                   Observer API to lazy load the image. The API makes it simple to detect when an element the viewport and take an action
                   when it does. Once the image enters the viewport, we will start loading the images.</li>
@@ -914,12 +823,7 @@ class CssBasics extends Component {
               <ol>
                 <li><b>Validate HTML and CSS: </b>We
                   need to validate our HTML and CSS files for the missing closing tags, or missing semicolons in the syntaxes because there are chances
-                  that the old browsers will throw errors while rendering the code. We can avoid those errors by:</li>
-                <ul>
-                  <li>Maintaining well-aligned code that helps in easy readability.</li>
-                  <li>Inserting comments at necessary places.</li>
-                  <li>Make use of validation tools like Jigsaw CSS validator, W3C HTML Validators to identify syntax issues in the code.</li>
-                </ul>
+                  that the old browsers will throw errors while rendering the code.</li>
                 <br />
 
                 <li><b>Maintain Cross-Browser Compatibility in the Layouts: </b>Cross-Browser compatibility is a must while developing web applications.
@@ -934,7 +838,7 @@ class CssBasics extends Component {
                 </ul>
                 <br />
 
-                <li><b>Check JavaScript Library issues: </b>Ensure the libraries are used judiciously and the ones used are supported by the browsers.</li>
+                <li><b>Check JavaScript Library issues: </b>Ensure ones used are supported by the browsers.</li>
                 <br />
                 <li><b>Check DOCTYPE tag keyword: </b>The DOCTYPE keyword is meant for defining rules of what needs to be used in the code.
                   Older browser versions check for DOCTYPE tag at the beginning and if not found, the application rendering won't be proper.</li>
@@ -944,19 +848,11 @@ class CssBasics extends Component {
                   real devices parallelly.</li>
               </ol>
               <br />
-              <div style={titles}>
-                <PrismCode
-                  code={browserspecific}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
 
               <h3>18. What is the difference between inline, inline-block, and block?</h3>
               <ol>
                 <li><b>Block Element: </b>Always start on a new line. They will also take space for an entire row/ width.
-                  List of block elements are div, p.</li>
+                 <b> Ex. </b>div, p.</li>
                 <li><b>Inline Elements: </b>Don't start on a new line, they appear on the same line as the content and tags
                   beside them. <b>Ex. </b> span , strong, and img tags.</li>
                 <li><b>Inline Block Elements: </b>Similar to inline elements, except they can have padding and margins
@@ -1006,25 +902,18 @@ class CssBasics extends Component {
 
               <h3>21. How does the absolute positioning work?</h3>
               Absolute positioning allows users to place any element wherever they want in an
-              exact location. The CSS properties right, left, top, bottom and define the exact locations where you need to place the element.
-              In absolute positioning, the following points need to be considered:
+              exact location. In absolute positioning, the following points need to be considered:
               <br />
               <ul>
                 <li>The element to which the absolute positioning is applied is removed from the normal workflow of the HTML document.</li>
-                <ul>
-                  <li>The HTML layout does not create any space for that element in its page layout.</li>
-                </ul>
-                <br />
-                <li>The element is positioned relative to the closest positioned ancestor. If no such ancestor is present, then the element is
-                  placed relative to the initial container block.</li>
+                <li>The element is positioned relative to the closest positioned ancestor.</li>
                 <li>The final position of the element is determined based on values provided to the top, right, left, bottom.</li>
               </ul>
               <br />
 
               <h3>22. What is a z-index, how does it function?</h3>
-              z-index is used for specifying the vertical stacking of the overlapping elements that occur at the time of its positioning. It
-              specifies the vertical stack order of the elements positioned that helps to define how the display of elements should happen in
-              cases of overlapping.
+              z-index is used for specifying the vertical stacking of the overlapping elements that occur at the time of its positioning.
+              
               <br />
               <br />
               The default value of this property is 0 and can be either positive or negative. Apart from 0, the values of the z-index can be:
@@ -1035,7 +924,6 @@ class CssBasics extends Component {
                 <li><b>Initial: </b>The default value of 0 is set to the property.</li>
                 <li><b>Inherit: </b>The properties are inherited from the parent.</li>
               </ul>
-              The elements having a lesser value of z-index is stacked lower than the ones with a higher z-index.
               <br />
 
               <h3>23. What are the different ways to hide the element using CSS?</h3>
@@ -1058,13 +946,6 @@ class CssBasics extends Component {
               Used for specifying whether the content has to be clipped or the scrollbars have to be added to
               the content area when the content size exceeds the specified container size where the content is enclosed. If the value of
               overflow is hidden, the content gets clipped post the size of the container thereby making the content invisible.
-              <div style={titles}>
-                <PrismCode
-                  code={hidden}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
               <br />
 
               <h3>25. How do I restore the default value of a property?</h3>
@@ -1091,7 +972,6 @@ class CssBasics extends Component {
                 <li>Modify content on the page, e.g. the text in an input box.</li>
                 <li>Move a DOM element.</li>
                 <li>Animate a DOM element.</li>
-                <li>Take measurements of an element such as offsetHeight or getComputedStyle.</li>
                 <li>Change a CSS style.</li>
               </ol>
               <br />
@@ -1110,7 +990,7 @@ class CssBasics extends Component {
 
               <h3>28. Difference between reset vs normalize CSS?. How do they differ?</h3>
               <ol>
-                <li><b>Reset CSS: </b>CSS resets aim to remove all built-in browser styling. For example margins, paddings, font-sizes of all
+                <li><b>Reset CSS: </b>CSS resets aim to remove all built-in browser styling. <b>Ex. </b> margins, paddings, font-sizes of all
                   elements are reset to be the same. </li>
                 <li><b>Normalize CSS: </b>Aims to make built-in browser styling consistent across browsers. It also corrects bugs
                   for common browser dependencies.</li>
@@ -1121,11 +1001,8 @@ class CssBasics extends Component {
               We can use the concept of CSS counters. This lets us adjust the appearance of the content based on the location in a document.
               While using this, we need to first initialize the value of the counter-reset property which is 0 by default. The same property is
               also used for changing the value to any number that we need. Post initialization, the counter’s value can be incremented or
-              decremented by using the counter-increment property. The name of the counter cannot be CSS keywords like “none”, “initial”,
-              “inherit” etc. If the CSS keywords are used, then the declaration would be ignored.
+              decremented by using the counter-increment property.
               <br />
-              <br />
-              We can use the concept of CSS counters. This lets us adjust the appearance of the content based on the location in a document. While using this, we need to first initialize the value of the counter-reset property which is 0 by default. The same property is also used for changing the value to any number that we need. Post initialization, the counter’s value can be incremented or decremented by using the counter-increment property. The name of the counter cannot be CSS keywords like “none”, “initial”, “inherit” etc. If the CSS keywords are used, then the declaration would be ignored.
 
               <div style={titles}>
                 <PrismCode
@@ -1158,8 +1035,9 @@ class CssBasics extends Component {
               <ul>
                 <li>A transparent area surrounding the content (amount of space between the border and the content).
                   the padding property controls the space inside an element.</li>
-                <li>The element below has padding of 10px on the left and right sides, and padding of 15px on the top and bottom sides:</li>
-                <li>To create the gap, the padding either grows the element’s size or shrinks the content inside. By default, the size of the element increases. If you want to create the gap by shrinking the content, set the box-sizing property to border-box (i.e. box-sizing: border-box).</li>
+                <li>To create the gap, the padding either grows the element’s size or shrinks the content inside. By default, the 
+                  size of the element increases. If you want to create the gap by shrinking the content, set the box-sizing 
+                  property to border-box.</li>
               </ul>
               <br />
               <img src={contentsImg} alt="" className="responsive" style={{ width: "400px", height: "200px", float: 'right' }} />
@@ -1167,43 +1045,39 @@ class CssBasics extends Component {
               <b>Uses for Padding: </b>
               <ol>
                 <li>Add Space Between Content and Its Border.</li>
-              </ol>
-              <br />
-              <b>How to Add Padding in CSS</b>
-              <ul>
-                <li>padding has four sides to be declared: top, right, bottom, and left.</li>
                 <li>CSS Margins and Padding: Similar, But Not the Same.</li>
-              </ul>
+              </ol>
               <br />
 
               <h3>32. Margin</h3>
               <ul>
                 <li>A transparent Space between the border and any neighboring elements.</li>
-                <li>This means that there will be at least 10 pixels of space between this element and adjacent page elements — the margin “pushes away” its neighbors. If we put multiple of these elements together, we see how margins create whitespace between them, giving them room to breathe:</li>
+                <li>This means that there will be at least 10 pixels of space between this element and adjacent page elements.</li>
                 <img src={marginImg} alt="" className="responsive" style={{ width: "400px", height: "200px", float: 'right' }} />
               </ul>
               <br />
               <b>Uses for Margins:</b>
               <ol>
-                <li><b>Change an Element’s Position on the Page: </b>CSS margins can move an element up or down on the page, as well as left or right. If the width of your page is fixed, centering an element horizontally is simple: Just assign the value margin: auto.</li>
+                <li><b>Change an Element’s Position on the Page: </b></li>
                 <li><b>Set the Distance Between Nearby Elements: </b></li>
-                <li><b>Overlap Elements: </b>On the flip side, a negative margin value lets you overlap page elements. This can come in handy when trying to achieve a broken grid effect.</li>
+                <li><b>Overlap Elements: </b>On the flip side, a negative margin value lets you overlap page elements.</li>
               </ol>
               <br />
 
               <h3>33. Explain the CSS “box model” and the layout components that it consists of Provide some usage examples.</h3>
-              The CSS box model is used for page design and layout.  Essentially, every HTML element in a document is wrapped inside a layered box that consists of the margin, border, padding, and content.
+              The CSS box model is used for page design and layout.
               <img src={boxModels} alt="" className="responsive" style={{ width: "400px", height: "200px", float: 'right' }} />
               <br />
               The CSS box model is a rectangular layout paradigm for HTML elements that consists of the following:
               <ol>
-                <li><b>Content -</b> The content of the box, where text and images appear</li>
-                <li><b>Padding -</b> A transparent area surrounding the content (amount of space between the border and the content).</li>
-                <li><b>Border -</b> A border surrounding the padding (if any) and content.</li>
-                <li><b>Margin -</b> A transparent area surrounding the border (Space between the border and any neighboring elements).</li>
+                <li><b>Content </b></li>
+                <li><b>Padding </b></li>
+                <li><b>Border </b></li>
+                <li><b>Margin </b></li>
               </ol>
               <br />
-              The border is the layer of the CSS box model that sits between margin and padding. By default, the border does not have any width, but you can set one with the CSS border property.
+              The border is the layer of the CSS box model that sits between margin and padding. By default, the border does not 
+              have any width.
               <br />
               <div style={titles}>
                 <PrismCode
@@ -1243,7 +1117,7 @@ class CssBasics extends Component {
                   <li><b>cross-axis: </b>Vertical</li>
                 </ol>
                 <br />
-                <li>Flexbox is a 1-dimensional layouts while Grid is 2-dimensional layouts.</li>
+                <li>Flexbox is a 1-D layouts while Grid is 2-D layouts.</li>
                 <li>Flexbox solves problems such as vertical centering of elements within a container, sticky footer, etc.</li>
                 <li>Grid use for creating grid-based layouts.</li>
               </ul>
@@ -1252,19 +1126,17 @@ class CssBasics extends Component {
 
               <h3>36. Grid</h3>
               <ul>
-                <li>A grid is a set of intersecting horizontal and vertical lines defining columns and rows. Elements can be placed onto the grid within these column and row lines.</li>
-                <li>Grid is 2-dimensional layouts.</li>
+                <li>A grid is a set of intersecting horizontal and vertical lines defining columns and rows.</li>
+                <li>Grid is 2-D layouts.</li>
               </ul>
               <br />
               <ol>
                 <li><b>Properties for the Parent (Grid Container):</b></li>
                 <ul>
-                  <li><b>Display: </b>Defines the element as a grid container and establishes a new grid formatting context for its contents.</li>
-                  <li><b>Grid-template-rows: </b>Defines the columns and rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line.</li>
-                  <li>Grid lines are automatically assigned positive numbers from these assignments (-1 being an alternate for the very last row).</li>
-                  <li><b>grid-template-areas: </b>Defines a grid template by referencing the names of the grid areas which are specified with the grid-area property. Repeating the name of a grid area causes the content to span those cells. A period signifies an empty cell.</li>
-                  <li></li>
-                  <li></li>
+                  <li><b>Display: </b></li>
+                  <li><b>Grid-template-rows: </b>Defines the columns and rows of the grid with a space-separated list of values.</li>
+                  <li>Grid lines are automatically assigned positive numbers from these assignments.</li>
+                  <li><b>grid-template-areas: </b></li>
                 </ul>
               </ol>
 
@@ -1288,16 +1160,13 @@ class CssBasics extends Component {
               <br />
 
               <h3>38. Justify-items</h3>
-              Aligns grid items along the inline (row) axis (as opposed to align-items which aligns along the block (column) axis). This value applies to all grid items inside the container
-              <br />
-              <br />
-              <b>align-items: </b>Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.
+              <b>align-items: </b>Aligns grid items along the column. This value applies to all grid items inside the container.
               <ol>
                 <li><b>stretch: </b>fills the whole height of the cell (this is the default).</li>
                 <li><b>start: </b>aligns items to be flush with the start edge of their cell.</li>
                 <li><b>end: </b>aligns items to be flush with the end edge of their cell.</li>
                 <li><b>center: </b>aligns items in the center of their cell.</li>
-                <li><b>baseline: </b>align items along text baseline. There are modifiers to baseline — first baseline and last baseline which will use the baseline from the first or last line in the case of multi-line text.</li>
+                <li><b>baseline: </b>align items along text baseline.</li>
               </ol>
               <div style={titles}>
                 <PrismCode
@@ -1310,7 +1179,9 @@ class CssBasics extends Component {
 
               <h3>39. Justify-content</h3>
               <ol>
-                <li><b>justify-content: </b>Sometimes the total size of your grid might be less than the size of its grid container. This could happen if all of your grid items are sized with non-flexible units like px. In this case you can set the alignment of the grid within the grid container. This property aligns the grid along the inline (row) axis (as opposed to align-content which aligns the grid along the block (column) axis).</li>
+                <li><b>justify-content: </b>Sometimes the total size of your grid might be less than the size of its grid 
+                container. This could happen if all of your grid items are sized with non-flexible units like px. In this case 
+                you can set the alignment of the grid within the grid container. </li>
                 <li><b>align-content: </b>Sometimes the total size of your grid might be less than the size of its grid container. This could happen if all of your grid items are sized with non-flexible units like px. In this case you can set the alignment of the grid within the grid container. This property aligns the grid along the block (column) axis (as opposed to justify-content which aligns the grid along the inline (row) axis).</li>
                 <li><b>grid-auto-rows: </b>Specifies the size of any auto-generated grid tracks (aka implicit grid tracks). Implicit tracks get created when there are more grid items than cells in the grid or when a grid item is placed outside of the explicit grid.</li>
                 <li><b>grid-auto-flow: </b>If you have grid items that you don’t explicitly place on the grid, the auto-placement algorithm kicks in to automatically place the items. This property controls how the auto-placement algorithm works.</li>
@@ -1346,9 +1217,7 @@ class CssBasics extends Component {
 
               <h3>41. Properties of flexbox?</h3>
               Flexbox main purpose of providing an efficient way to handle
-              layouts, align elements within them and distribute spaces amongst the items in dynamic/ responsive conditions. It provides an
-              ability to alter the dimensions of the items and make use of the available space in the container efficiently. In order
-              to achieve this, CSS3 provides some properties.
+              layouts, align elements within them and distribute spaces amongst the items in dynamic/ responsive conditions. 
               <br />
               <br />
               <ul>
@@ -1380,10 +1249,6 @@ class CssBasics extends Component {
                   <li><b>space-around: </b>Displays the items having space between, before, around the items.</li>
                   <li><b>space-between: </b>Displays items with spaces between the lines.</li>
                 </ol>
-                <br />
-                <li><b>align-items: </b>Used for aligning flex items.</li>
-                <br />
-                <li><b>align-content: </b>Used for aligning the flex lines.</li>
               </ul>
               <br />
 
@@ -1394,7 +1259,7 @@ class CssBasics extends Component {
                   <li>Absolutely positioned page elements are removed from the flow of the webpage.</li>
                   <li>Float has 3 properties: Left, Right None and inherit(The element inherits the float value of its parent).</li>
                   <li>Each value indicates how an element should float. When float is set, each element will get out of its normal  flow and will be shifted to the specified direction, until it gets its container or another floated element.</li>
-                  <li>float has 2 properties: <b>Left, Right</b>.</li>
+                  <li>float has 3 properties: <b>Left, Right, None</b>.</li>
                   <li>div took 100% row space.</li>
                   <li>img don't took 100% row space.</li>
                 </ol>
@@ -1411,7 +1276,6 @@ class CssBasics extends Component {
               <b>How to Use Float in CSS</b>
               <br />
               <ol>
-                <li>Use float in CSS, you only need a CSS selector and the defined float property inside the brackets</li>
                 <li>float: left/ none/ inherit;</li>
               </ol>
               <div style={titles}>
@@ -1439,10 +1303,6 @@ class CssBasics extends Component {
 
               <h3>44. Explain the usage of "table-layout" property</h3>
               <p>The table-layout property defines the algorithm used to layout table cells, rows, and columns.</p>
-              <ul>
-                <li>The table-layout property defines what algorithm the browser should use to lay out table rows, cells, and columns.</li>
-                <li>table layout in general is usually a matter of taste and will vary depending on design choices. Browsers will, however, automatically apply certain constraints that will define how tables are laid out. This happens when the table-layout property is set to auto (the default). But these constraints can be lifted when table-layout is set to fixed.</li>
-              </ul>
               <ol>
                 <li><b>auto -</b> Browsers use an automatic table layout algorithm. The column width is set by the widest unbreakable content in
                   the cells.</li>
@@ -1542,10 +1402,8 @@ class CssBasics extends Component {
               used in the user interfaces. The main advantages of using sprites are:
               <br />
               <ol>
-                <li>It reduces the number of HTTP requests to get data of multiple images as they are acquired only by sending a single request.</li>
+                <li>It reduces the number of HTTP requests to get data of multiple images.</li>
                 <li>It helps in downloading assets in advance that help display icons/ images upon hover/ other pseudo-states.</li>
-                <li>When there are multiple images, the browser makes separate calls to get the image for each of them. Using sprites, the images
-                  are combined in one and we can just call all images using one call.</li>
                 <li>It use as a background image only.</li>
               </ol>
               <br />
@@ -1560,9 +1418,8 @@ class CssBasics extends Component {
 
               <h3>48. What do you understand by tweening in CSS?</h3>
               Tweening is the process of filling the gaps between the key sequences, i.e between the keyframes that are already created.
-              Keyframes are those frames that represent start and end point of animation action. Tweening involves generating intermediate
-              keyframes between two images that give the impression that the first one has evolved smoothly to the second image. For this
-              purpose, we use properties like transforms - matrix, translate, scale, rotate etc.
+              Keyframes are those frames that represent start and end point of animation action. 
+              <br/> we use properties like transforms - matrix, translate, scale, rotate etc.
               <br />
               <br />
               In the below example, we are generating intermediate frames of paragraph elements to slide through from the start to the right

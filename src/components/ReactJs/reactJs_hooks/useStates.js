@@ -22,72 +22,64 @@ const styles = theme => ({
   }
 })
 
+const states = `
+//components/myContext.js
+import React from 'react';
 
-const multiState = `
-const Score = () => {
-  const [teamScores, setTeamScores] = useState({
-    currentScore: 0,
-    totalScore: 308,
-    totalOvers: 1,
-    netRunRate: 6.5,
-    netRunRate2: 6.0,
-  });
+const MyContext = React.createContext();
 
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [balls, setBalls] = useState(6);
-  const [overs, setOvers] = useState(['0', '1', '2', '3', '4', '5', '6', 'wk', 'wd', 'nb'])
+export default MyContext;
 
-  const toggle = () => {
-    setIsActive(!isActive);
-  }
-  
-  // const handleCount = () => {
-  //   if (balls >= 1) {
-  //     setBalls([balls - 1, teamScores.isPlay=true])
-  //   }
-  // }
 
-  useEffect(() => {
-    let interval = null;
-    if (isActive && seconds <= 3) {
-      interval = setInterval(() => {
-        setSeconds(seconds => seconds + 1);
-        if(balls>0){
-          setBalls(balls - 1);
-          setOvers([...overs, {
-          id: overs.length,
-          values: overs[Math.floor(Math.random() * overs.length)]+""
-          }])
-        }
-      }, 1000);
-    } 
-    else if (seconds === 4) {
-      setSeconds(0);
-    }
-    
-    return () => clearInterval(interval);
-  }, [isActive, seconds, overs]);
-  
-  
-  const lastScore = overs[Math.floor(Math.random() * overs.length)];
+//components/compA.js
+import Comp2 from './compB';
 
-  return (
+const Comp = () => {
+  return(
     <div>
-      <div>
-        <h3>Total Score: {teamScores.totalScore}</h3>
-        <p>Total Overs: {teamScores.totalOvers}</p>
-        <p>Current Run Rate: {teamScores.netRunRate2}</p>
-        <b>Remaining Balls: {balls}</b>
-      </div>
-
-        <button
-          className={''$'{ isActive ?"active": "inactive"}'} onClick={toggle}>
-          {isActive ? "Pause" : "Start"}
-        </button>
+      <Comp2 />
     </div>
   )
 }
+
+export default Comp;
+
+
+//components/compB.js
+import MyContext from './myContext';
+
+const Comp2 = () => {
+    return(
+    <MyContext.Consumer>
+      {(data)=>(
+        <li>{data.name}</li>
+      )}
+    </MyContext.Consumer>
+    )
+  }
+
+export default Comp2;
+
+
+//App.js
+import React, { useState } from 'react';
+import MyContext from './components/myContext';
+import CompA from './components/compA';
+
+const App = () => {
+  const [ name ] = useState('Mukesh')
+  
+    return(
+      <div>
+        <MyContext.Provider
+          value={{name:name}}>
+          <CompA />
+        </MyContext.Provider>
+      </div>
+    )
+  }
+
+export default App;
 `.trim();
 
 const useReducers = `
@@ -130,65 +122,7 @@ export default function CallBackTutorial() {
 }
 `.trim();
 
-const UseImperativeHandles = `
-import React, { forwardRef, useImperativeHandle, useState, useRef } from "react";
 
-
-const Button = forwardRef((props, ref) => {
-  const [toggle, setToggle] = useState(false);
-
-  useImperativeHandle(ref, () => ({
-    alterToggle() {
-      setToggle(!toggle);
-    },
-  }));
-  return (
-    <>
-      <button>Button From Child</button>
-      {toggle && <span>Toggle</span>}
-    </>
-  );
-});
-
-function ImperativeHandle() {
-  const buttonRef = useRef(null);
-  return (
-    <div>
-      <button
-        onClick={() => {
-          buttonRef.current.alterToggle();
-        }}
-      >
-        Button From Parent
-      </button>
-      <Button ref={buttonRef} />
-    </div>
-  );
-}
-
-export default ImperativeHandle;
-`.trim();
-
-const UseLayoutEffects = `
-import { useLayoutEffect, useEffect, useRef } from "react";
-
-function LayoutEffectTutorial() {
-  const inputRef = useRef(null);
-
-  useLayoutEffect(() => {
-    console.log(inputRef.current.value);
-  }, []);
-
-  useEffect(() => {
-    inputRef.current.value = "HELLO";
-  }, []);
-
-  return (
-    <div className="App">
-      <input ref={inputRef} value="PEDRO" style={{ width: 400, height: 60 }} />
-    </div>
-  );
-}`.trim();
 
 class UseReducers extends Component {
   componentDidMount() {
@@ -207,17 +141,21 @@ class UseReducers extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>1. MultiState</h3>
+            <h3>1. Context API State</h3>
               <div style={titles}>
                 <PrismCode
-                  code={multiState}
+                  code={states}
                   language="js"
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br />
+              <br/>
+
+              
 
               <h3>2. useCallback</h3>
+              The useCallback and useMemo Hooks are similar. The main difference is that useMemo returns 
+              a memoized value and useCallback returns a memoized function. 
               <div style={titles}>
                 <PrismCode
                   code={useReducers}
@@ -226,25 +164,8 @@ class UseReducers extends Component {
                 />
               </div>
               <br />
-              <br />
-              <b>3. UseImperativeHandle</b>
-              <div style={titles}>
-                <PrismCode
-                  code={UseImperativeHandles}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-              <b>4. UseLayoutEffect</b>
-              <div style={titles}>
-                <PrismCode
-                  code={UseLayoutEffects}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
+           
+             
             </List>
           </Paper>
         </Grid>

@@ -133,192 +133,6 @@ const section = `
 </section>
 `.trim();
 
-const autocomplete = `
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font: 16px Arial;
-}
-
-.autocomplete {
-  position: relative;
-  display: inline-block;
-}
-
-input {
-  border: 1px solid transparent;
-  background-color: #f1f1f1;
-  padding: 10px;
-  font-size: 16px;
-}
-
-input[type=text] {
-  background-color: #f1f1f1;
-  width: 100%;
-}
-
-input[type=submit] {
-  background-color: DodgerBlue;
-  color: #fff;
-  cursor: pointer;
-}
-
-.autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  top: 100%;
-  left: 0;
-  right: 0;
-}
-
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff;
-  border-bottom: 1px solid #d4d4d4;
-}
-
-.autocomplete-items div:hover {
-  background-color: #e9e9e9;
-}
-
-.autocomplete-active {
-  background-color: DodgerBlue !important;
-  color: #ffffff;
-}
-</style>
-</head>
-<body>
-
-<h2>Autocomplete</h2>
-
-<p>Start typing:</p>
-
-<form autocomplete="off" action="/action_page.php">
-  <div class="autocomplete" style="width:300px;">
-    <input id="myInput" type="text" name="myCountry" placeholder="Country">
-  </div>
-  <input type="submit">
-</form>
-
-<script>
-function autocomplete(inp, arr) {
-  var currentFocus;
-  inp.addEventListener("input", function(e) {
-      var a, b, i, val = this.value;
-      
-      closeAllLists();                                                   //close already open lists of autocompleted values
-      if (!val) { return false;}
-      currentFocus = -1;
-      a = document.createElement("DIV");
-      a.setAttribute("id", this.id + "autocomplete-list");
-      a.setAttribute("class", "autocomplete-items");
-
-      this.parentNode.appendChild(a);
-      for (i = 0; i < arr.length; i++) {
-                                                              //check item starts with the same letters as text field value
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          b = document.createElement("DIV");                             //create DIV element for each matching element
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";           //make matching letters bold
-          b.innerHTML += arr[i].substr(val.length);
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";                   //insert current array item's
-      
-          b.addEventListener("click", function(e) {
-              inp.value = this.getElementsByTagName("input")[0].value;
-              closeAllLists();
-          });
-          a.appendChild(b);
-        }
-      }
-  });
- 
-  inp.addEventListener("keydown", function(e) {
-      var x = document.getElementById(this.id + "autocomplete-list");
-      if (x) x = x.getElementsByTagName("div");
-      if (e.keyCode == 40) {
-        
-        currentFocus++;                                        //If arrow DOWN key is pressed increase the currentFocus
-        addActive(x);                                          //make the current item more visible
-      } 
-      else if (e.keyCode == 38) {                            //up
-        currentFocus--;                                        //If arrow UP key is pressed,decrease
-        addActive(x);
-      } 
-      else if (e.keyCode == 13) {                            //If ENTER pressed, prevent the form being submitted
-        e.preventDefault();
-        if (currentFocus > -1) {
-          if (x) x[currentFocus].click();                     //simulate a click on the "active" item
-        }
-      }
-  });
-  
-  function addActive(x) {
-    if (!x) return false;                                    //function to classify an item as "active"
-    removeActive(x);                                         //start by removing the "active" class on all items
-    
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    x[currentFocus].classList.add("autocomplete-active");    //add class "autocomplete-active"
-  }
-  
-  function removeActive(x) {
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
-  
-  function closeAllLists(elmnt) {
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i]);
-      }
-    }
-  }
-
-  document.addEventListener("click", function (e) {
-      closeAllLists(e.target);
-  });
-}
-
-var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina",
-"Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium",
-"Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands",
-"Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands",
-"Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire",
-"Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador",
-"Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji",
-"Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar",
-"Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras",
-"Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica",
-"Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon",
-"Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi",
-"Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova",
-"Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands",
-"Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman",
-"Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal",
-"Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino",
-"Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia",
-"Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka",
-"St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan",
-"Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey",
-"Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom",
-"United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam",
-"Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
-
-autocomplete(document.getElementById("myInput"), countries);
-</script>`.trim();
-
 const geolocation = `
 //index.js
 function getLocation() {
@@ -394,7 +208,7 @@ document.getElementById("result").innerHTML += event.data + "<br>";
 
 const element = `
 <script>
-document.createElement﴾"myElement"﴿
+document.createElement("myElement")
 </script>
 
 
@@ -477,17 +291,6 @@ Temp: <meter min=0 max=10 value=".5" low="3" high="8" optimum="5"></meter>
 Download: <progress max="100" value="80"></progress>
 `.trim();
 
-const cellSpacing = `
-table {
-  border-spacing: 30px;
-}
-`.trim();
-
-const cellPadding = `
-th, td {
-  padding: 15px;
-}
-`.trim();
 
 
 class Html1 extends Component {
@@ -518,11 +321,11 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>1.What is a tag in HTML?</h3>
-              A tag instructs the Browser about how to format the HTML properly.<br /><br />
+              <h3>1. What is a tag in HTML?</h3>
+              A tag instructs the Browser about how to format the HTML properly.
               <br />
 
-              <h3>2.What is the difference between HTML elements and tags?</h3>
+              <h3>2. What is the difference between HTML elements and tags?</h3>
               HTML elements communicate to the Browser how to represent the text. They become HTML tags when enclosed within angular brackets.
               <br />
               <div style={titles}>
@@ -534,17 +337,16 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>3.HTML Attributes</h3>
+              <h3>3. HTML Attributes</h3>
               HTML attributes provide additional information about HTML elements.
               <ol>
                 <li>All HTML elements can have <b>attributes.</b></li>
-                <li>Attributes provide <b>additional information </b>about elements.</li>
                 <li>Attributes are always specified in <b>the start tag.</b></li>
                 <li>Attributes usually come in name/value pairs like: <b>name="value"</b></li>
               </ol>
               <br />
 
-              <h3>4.pre Element</h3>
+              <h3>4. pre Element</h3>
               <ol>
                 <li>The HTML 'pre' element defines preformatted text.</li>
                 <li>The text inside a 'pre' element is displayed in a fixed-width font (usually Courier), and it preserves both spaces and line breaks.</li>
@@ -558,7 +360,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>5.HTML Style Attribute</h3>
+              <h3>5. HTML Style Attribute</h3>
               <div style={titles}>
                 <PrismCode
                   code={htmlStyles}
@@ -575,41 +377,31 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>7.Non-semantic elements</h3>
+              <h3>7. Non-semantic elements</h3>
               These elements are without any definition. They don’t describe anything about their structure such as 'span' and 'div'.
               <br />
 
               <h3>8. What are void elements in HTML?</h3>
-              HTML elements which don't have closing Tags are Void elements. For Example br, img, hr, etc.
+              HTML elements which don't have closing Tags are Void elements. <b>Ex. </b>br, img, hr, etc.
               <br />
 
-              <h3>9. What is the advantage of collapsing white space?</h3>
-              A blank sequence of whitespace characters is treated as a single space character Because the browser collapses multiple
-              spaces into a single space character this helps as.
-              <ol>
-                <li>A developer to indent lines of text without worrying about multiple spaces</li>
-                <li>Maintain readability and understandability of HTML codes.</li>
-              </ol>
+              <h3>9. Is it possible to change an inline element into a block level element?</h3>
+              Yes, it is possible using the <b>display</b> property with its value as “block”, to change the inline element into 
+              a block-level elemen.
               <br />
 
-              <h3>10. Is it possible to change an inline element into a block level element?</h3>
-              Yes, it is possible using the “display” property with its value as “block”, to change the inline element into a block-level elemen.
-              <br />
-
-              <h3>11.What would happen if the HTML Document does not contain '!DOCTYPE'?</h3>
+              <h3>10. What would happen if the HTML Document does not contain '!DOCTYPE'?</h3>
               <ol>
                 <li>It instructs the Web Browser about the version of HTML used for creating the Web page.</li>
                 <li><b>What happens if you miss !DOCTYPE.</b></li>
                 <ol>
                   <li>then new features and tags provided by HTML5 will not be supported.</li>
                   <li>HTML enter Quirks mode.</li>
-                  <li>The correct page display is not guaranteed</li>
-                  <li>With !DOCTYPE declaration, browser knows what type of document to expect.</li>
                 </ol>
               </ol>
               <br />
 
-              <h3>12. What is the major difference between, Transitional and Strict doctype?</h3>
+              <h3>11. What is the major difference between, Transitional and Strict doctype?</h3>
               <b>Strict: </b>
               <br />
               This DTD contains all HTML components and properties. However, it does NOT INCLUDE presentational or expostulated components (like text style). It does not permit the use of Framesets.
@@ -621,7 +413,7 @@ class Html1 extends Component {
               This DTD contains all HTML components and properties, INCLUDING presentational and belittled components (like textual style). It does not allow the use of Framesets.
               <br />
 
-              <h3>13. What are the different kinds of Doctypes available?</h3>
+              <h3>12. What are the different kinds of Doctypes available?</h3>
               <ol>
                 <li>Strict Doctype</li>
                 <li>Transitional Doctype</li>
@@ -629,7 +421,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>14. Most Important HTML Tags for SEO, This tags should goes inside head tags.</h3>
+              <h3>13. Most Important HTML Tags for SEO, This tags should goes inside head tags.</h3>
               <ol>
                 <li>Title tag</li>
                 <li>Meta description tag</li>
@@ -640,7 +432,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>15.accept</h3>
+              <h3>14. Accept</h3>
               <b>input</b> accept Attribute is used to specifies the type of file that the server accepts.
               <div style={titles}>
                 <PrismCode
@@ -651,7 +443,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>16.iframe</h3>
+              <h3>15. iframe</h3>
               <ol>
                 <li>The iframe tag specifies an inline frame.</li>
                 <li>An inline frame is used to embed another document within the current HTML document.</li>
@@ -665,13 +457,13 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>17.autocapitalize</h3>
+              <h3>16. Autocapitalize</h3>
               autocapitalize attribute is used to define whether the text present inside the HTML element should be automatically capitalized or not.
               <b>Features: </b>
               <br />
               <ol>
                 <li>It specifies how the text will be automatically capitalized.</li>
-                <li>It indicates that the first letter of the word or sentence woold be in Capital.</li>
+                <li>It indicates that the first letter of the word or sentence would be in Capital.</li>
                 <li>It does not support input tag with type URL, Email, and Password.</li>
                 <li>It is a Global Attribute.</li>
               </ol>
@@ -685,7 +477,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>18.audio</h3>
+              <h3>17. Audio</h3>
               <b>audio</b> element is used to play an audio file on a web page.
               <ol>
                 <li><b>embed -</b>It provides a container for an external application.</li>
@@ -702,7 +494,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>19.Video</h3>
+              <h3>18. Video</h3>
               <b>video</b> element is used to show a video on a web page.
               <div style={titles}>
                 <PrismCode
@@ -713,7 +505,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>20.capture</h3>
+              <h3>19. Capture</h3>
               The capture attribute specifies that, optionally, a new file should be captured, and which device should be used to capture that
               new media of a type defined by the accept attribute.
               <br />
@@ -727,7 +519,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>21.textarea</h3>
+              <h3>20. Textarea</h3>
               <ol>
                 <li>Defines a multi-line text input control.</li>
                 <li>textarea element is often used in a form, to collect user inputs like comments or reviews.</li>
@@ -743,9 +535,9 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>22.area</h3>
+              <h3>21. Area</h3>
               <ol>
-                <li>The <b>area</b> tag defines an area inside an image map (an image map is an image with clickable areas).</li>
+                <li>The <b>area</b> tag defines an area inside an image map.</li>
                 <li><b>area</b> elements are always nested inside a <b>map</b> tag.</li>
               </ol>
               <br />
@@ -758,7 +550,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>23.object</h3>
+              <h3>22. Object</h3>
               <ol>
                 <li><b>object</b> tag defines a container for an external resource.</li>
                 <li>The external resource can be a web page, a picture, a media player, or a plug-in application.</li>
@@ -773,7 +565,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>24.optgroup</h3>
+              <h3>23. Optgroup</h3>
               The <b>optgroup</b> tag is used to group related options in a "select" element (drop-down list).
               <br />
               <br />
@@ -786,7 +578,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>25.output</h3>
+              <h3>24. Output</h3>
               <b>output</b> tag is used to represent the result of a calculation.
               <br />
               <br />
@@ -799,7 +591,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>26.section</h3>
+              <h3>25. Section</h3>
               <ol>
                 <li>Defines a section in a document.</li>
                 <li>Global Attributes.</li>
@@ -814,7 +606,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>27.Quotation and Citation Elements</h3>
+              <h3>26. Quotation and Citation Elements</h3>
               <ul>
                 <li><b>q: </b>Short Quotations.</li>
                 <li><b>abbr: </b>For Abbreviations</li>
@@ -829,7 +621,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>28.How can we create a new HTML element?</h3>
+              <h3>27. How can we create a new HTML element?</h3>
               <div style={titles}>
                 <PrismCode
                   code={element}
@@ -839,11 +631,11 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>29. What is a meter tag? What is the difference between progress tag and a meter tag?</h3>
+              <h3>28. What is a meter tag? What is the difference between progress tag and a meter tag?</h3>
               <ol>
                 <li>Defines a scalar measurement within a known range or a fractional value. We can also call it a gauge.</li>
                 <li>Items represented using 'meter' tag are Disk usage, the relevance of a query resot.</li>
-                <li><b>N: </b> The 'meter' tag should not be used to indicate progress (as in a progress bar). For progress bars, use the 'progress' tag.</li>
+                <li><b>N: </b> The 'meter' tag should not be used to indicate progress. For progress bars, use the 'progress' tag.</li>
               </ol>
               <br />
               <div style={titles}>
@@ -868,7 +660,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>33. Web Workers API</h3>
+              <h3>29. Web Workers API</h3>
               A web worker is a JavaScript running in the background, without affecting the performance of the page.
               <br />
               When executing scripts in an HTML page, the page becomes unresponsive until the script is finished.
@@ -898,7 +690,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <b>34. How does a Web worker work?</b>
+              <b>30. How does a Web worker work?</b>
               <br />
               A Web worker gets initialized with the URL of a JavaScript file that contains its code. This code sets event listeners and starts
               communication with the script that invoked the worker from the main page. The Syntax is as follows.
@@ -910,7 +702,7 @@ class Html1 extends Component {
                 />
               </div>
 
-              <h3>35. Server-Sent Events - One Way Messaging</h3>
+              <h3>31. Server-Sent Events - One Way Messaging</h3>
               A server-sent event is when a web page automatically gets updates from a server.
               <ol>
                 <li>HTML5 Server-Sent Events (SSE) is a new way for the web pages to communicate with the web server. It enables a webpage to get
@@ -919,7 +711,7 @@ class Html1 extends Component {
                   the communication is over.</li>
                 <br />
                 <li>However, there are some situations, where web pages require a long-term connection with the web server. A typical example is stock
-                  quotes on finance websites where price update happens automatically. Other examples are news feeds, sports resolts that run
+                  quotes on finance websites where price update happens automatically. Other examples are news feeds, sports results that run
                   continuously on media websites, Facebook/ Twitter updates.</li>
                 <br />
                 <li>We can achieve the above, using HTML5 using SSE. It enables a web page to hold an open connection to the web server so that it can
@@ -928,7 +720,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>36.Receive Server-Sent Event Notifications.</h3>
+              <h3>32. Receive Server-Sent Event Notifications.</h3>
               The EventSource interface contains the Server-Sent event API. We need to create an EventSource object to receive the Server-Sent
               event notifications.
               <br />
@@ -945,24 +737,24 @@ class Html1 extends Component {
               <ol>
                 <li>First, create a new EventSource object, and specify the URL of the page sending the updates</li>
                 <li>Every time an update arrives, onmessage event gets triggered.</li>
-                <li>When an onmessage event occurs, it places the received data into the element that has id = resolt.</li>
+                <li>When an onmessage event occurs, it places the received data into the element that has id = result.</li>
               </ol>
               <br />
 
-              <h3>37.What is the concept of Application Cache in HTML5? What are its advantages?</h3>
+              <h3>33. What is the concept of Application Cache in HTML5? What are its advantages?</h3>
               Following are the key advantages of Application Cache.
               <br />
               <ol>
                 <li><b>Offline browsing –</b>Users can use the application even when they are offline.</li>
                 <li><b>Speed  – </b>Cached resources load faster as compared to content that gets
                   downloaded, directly from the server.</li>
-                <li><b>Reduced server load –</b>The browser will only download updated/ modified resources from
+                <li><b>Reduced server load –</b>The browser will only download/ updated/ modified resources from
                   the server.</li>
               </ol>
               <br />
 
-              <h3>38.What is a Manifest file?</h3>
-              A Manifest file is a simple text file, that tells the browser what to cache and what not to cache.
+              <h3>34. What is a Manifest file?</h3>
+              A Manifest file is a simple text file, that tells the browser what to cache and what not.
               <br />
               <br />
               A Manifest file contains three Sections as
@@ -975,7 +767,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>39.What are the new features introduced in HTML5?</h3>
+              <h3>35. What are the new features introduced in HTML5?</h3>
               <ol>
                 <li><b>New Semantic Elements –</b>'header', 'footer', and 'section'.</li>
                 <li><b>Forms 2.0 –</b> It contains improvements to HTML web forms. It has introduced new attributes for the 'input' tag.</li>
@@ -992,7 +784,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>40.What are the various tags provided for better structuring in HTML5?</h3>
+              <h3>36. What are the various tags provided for better structuring in HTML5?</h3>
               <ol>
                 <li><b>article: </b>This tag defines an article.</li>
                 <li><b>aside: </b>It defines content other than the page content.</li>
@@ -1008,7 +800,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>41.Describe Form Input Types in HTML5?</h3>
+              <h3>37. Describe Form Input Types in HTML5?</h3>
               <ol>
                 <li><b>color –</b>It’s applicable for HTML elements that represent color.</li>
                 <li><b>date –</b>It allows the user to select a date.</li>
@@ -1034,7 +826,7 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>42.What are the new attributes provided in HTML5 for 'input' element?</h3>
+              <h3>38. What are the new attributes provided in HTML5 for 'input' element?</h3>
               <ul>
                 <b>1.autofocus</b>
                 <br />
@@ -1111,26 +903,20 @@ class Html1 extends Component {
               </ul>
               <br />
 
-              <h3>43. How can we club two or more rows or columns into a single row or column in an HTML table?</h3>
+              <h3>39. How can we club two or more rows or columns into a single row or column in an HTML table?</h3>
               With <b>rowspan</b> and <b>colspan</b> to make a cell span to multiple rows and columns respectively.
               <br />
 
-              <h3>44. How is Cell Padding different from Cell Spacing?</h3>
+              <h3>40. How is Cell Padding different from Cell Spacing?</h3>
               <ol>
                 <li>HTML tables can adjust the padding inside the cells, and also the space between the cells.</li>
                 <li><b>Cell Spacing: </b></li>
                 <ul>
                   <li>Cell spacing is the space between each cell.</li>
                   <li>By default the space is set to 2 pixels.</li>
-                  <li>To change the space between table cells, use the CSS border-spacing property on the table element</li>
                 </ul>
-                <div style={titles}>
-                  <PrismCode
-                    code={cellSpacing}
-                    language="js"
-                    plugins={["line-numbers"]}
-                  />
-                </div>
+                <br/>
+                
                 <li><b>Cell Padding: </b></li>
                 <ul>
                   <li>is the space between the cell edges and the cell content.</li>
@@ -1138,16 +924,9 @@ class Html1 extends Component {
                   <li>To add padding on table cells, use the CSS padding property.</li>
                 </ul>
               </ol>
-              <div style={titles}>
-                <PrismCode
-                  code={cellPadding}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
               <br />
 
-              <h3>45.What is HTML5 Graphics?</h3>
+              <h3>41. What is HTML5 Graphics?</h3>
               In HTML5, there are two types of graphics.
               <br />
               <br />
@@ -1170,7 +949,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>46.Explain the key differences between SVG and Canvas?</h3>
+              <h3>42. Explain the key differences between SVG and Canvas?</h3>
               <ol>
                 <li>Canvas is resolution dependent while SVG is not.</li>
                 <li>Canvas does not provide any support for event handlers while SVG does.</li>
@@ -1180,7 +959,7 @@ class Html1 extends Component {
               </ol>
               <br />
 
-              <h3>47. Drag and Drop API</h3>
+              <h3>43. Drag and Drop API</h3>
               <div style={titles}>
                 <PrismCode
                   code={dragDrop}
@@ -1190,23 +969,13 @@ class Html1 extends Component {
               </div>
               <br />
 
-              <h3>48.Geolocation API</h3>
+              <h3>44. Geolocation API</h3>
               The HTML Geolocation API is used to locate a user's position.
               <br />
               <br />
               <div style={titles}>
                 <PrismCode
                   code={geolocation}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>49.autocomplete</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={autocomplete}
                   language="js"
                   plugins={["line-numbers"]}
                 />

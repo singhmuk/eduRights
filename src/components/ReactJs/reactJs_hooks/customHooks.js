@@ -5,6 +5,7 @@ import { Grid, Paper, withStyles, List } from "@material-ui/core";
 import '../styles.css'
 import Sidebar from '../sidebar';
 import PrismCode from '../prismCode';
+import UseStates from '../../../assets/useState_useReducers.PNG'
 
 
 const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
@@ -22,63 +23,6 @@ const styles = theme => ({
   }
 })
 
-const useDocumentTitle = `
-//Count
-const App = () => {
-  const [count, setCount]=useState(0);
-  const [toggle, setIsPouse]=useState(false);
-
-  const handlePouse=()=>{
-    setIsPouse(!toggle)
-    console.log(toggle,"toggle")
-  }
-
-  const handleCount=()=>{
-    if(toggle==true){
-      setCount(count+1)
-    }
-    else{
-      setCount(count-1)
-    }
-  }
-
-  const reset=()=>{
-    setCount(0)
-  }
-
-  return(
-    <div>
-      {count}<br/>
-      <button onClick={handleCount}>count</button>
-      <button onClick={handlePouse}>Pouse</button>
-      <button onClick={reset}>Reset</button>
-    </div>
-  )
-}
-
-
-//Progress
-const App =() => {
-  const [count, setCount]=useState(0)
-  const [text,setText]=useState('Reach Maximum')
-
-  const handleProgress = () => {
-    if(count<100){
-      setCount(count+10)
-    }
-    else{
-      setText(text)
-    }
-  }
-
-  return(
-    <div>
-      {count<100 ? count: text}<br/>
-      <button onClick={handleProgress}>Progress</button>
-    </div>
-  )
-}
-`.trim()
 
 const DocTitleOne = `
 //Counter.js
@@ -96,7 +40,14 @@ function Counter() {
         setCounterTwo(counterTwo + 1)
         }
 
+    // const isEven = () => {
+    //     let i = 0
+    //     while (i < 2000000000) i++
+    //         return counterOne % 2 === 0
+    //         }
+
     const isEven = useMemo(() => {
+      console.log('call in button one')
       let i = 0
       while (i < 2000000000) i++
           return counterOne % 2 === 0
@@ -145,6 +96,129 @@ function App(props) {
   );
 }`.trim();
 
+const refsReact = `
+const App = () => {
+  const [count, setCount]=useState([]);
+  const inputRef = useRef()
+
+    const handleCount = () => {
+      setCount(count+1) 
+    }
+
+    const handleRef = () => {
+      console.log(inputRef.current)
+    }
+
+  return (
+    <>
+        useState<br/>
+        <input type="number" value={count} onChange={(e)=>setCount(e.target.value)} />
+        <br/>
+        useRef<br/>
+        <input type="number" ref={inputRef} value={count} onChange={(e)=>setCount(e.target.value)} /><br/>
+        {count}<br/>
+        <button onClick={handleCount}>State</button>
+        <button onClick={handleRef}>Ref</button>
+    </>
+  );
+};
+`.trim();
+
+const useReducers = `
+function App() {
+  const [sum, dispatch] = useReducer((state, action) => {
+    return state + action;
+  }, 0);
+
+  return (
+    <>
+      {sum}
+      <button onClick={() => dispatch(1)}>Add</button>
+    </>
+  );
+}`.trim();
+
+const useReducers2 = `
+import React, { useReducer, useRef } from 'react'
+
+const App = () => {
+  const inputRef = useRef();
+  const [items, dispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case "add":
+        return [
+          ...state,
+          {
+            id: state.length,
+            name: action.name
+          }
+        ];
+      case "remove":
+        return state.filter((_, index) => index != action.index);
+      default:
+        return state;
+    }
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "add",
+      name: inputRef.current.value
+    });
+    inputRef.current.value = "";
+  }
+
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <input ref={inputRef} />
+      </form>
+      <ul>
+        {items.map((item, index) => (
+          <li key={item.id}>
+            {item.name}{" "}
+            <button onClick={() => dispatch({ type: "remove", index })}>
+              X
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}`.trim();
+
+const useReducersCase = `
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "INCREMENT":
+      return { count: state.count + 1, showText: state.showText };
+    case "toggleShowText":
+      return { count: state.count, showText: !state.showText };
+    default:
+      return state;
+  }
+};
+
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, { count: 0, showText: true });
+
+  return (
+    <div>
+      <h1>{state.count}</h1>
+      <button
+        onClick={() => {
+          dispatch({ type: "INCREMENT" });
+          dispatch({ type: "toggleShowText" });
+        }}
+      >
+        Click Here
+      </button>
+
+      {state.showText && <p>This is a text</p>}
+    </div>
+  );
+};`.trim();
 
 
 class CustomHooks extends Component {
@@ -164,17 +238,47 @@ class CustomHooks extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>Custom Hooks</h3>
+            <h3>1. What are advantages of using React Hooks?</h3>
+              Enable the extraction and reuse of stateful logic that is common across multiple components without the burden 
+              of HOC or render props. Hooks allow to easily manipulate the state of our functional component without convert 
+              them into class components.
+              <br/>
+
+              <h3>Differences between a Class component and Functional component?</h3>
+              <ul>
+                <li><b>Class component: </b>
+                  <ul>
+                    <li>Uses ES6 class syntax. It can make use of the lifecycle methods.</li>
+                    <li>Extend from React.Component.</li>
+                  </ul>
+                </li>
+                <br/>
+                <li><b>Functional component: </b>
+                  <ul>
+                    <li>Mainly focuses on the UI of the application, not on the behavior.</li>
+                    <li>Can have state and mimic lifecycle events using Reach Hooks</li>
+                  </ul>
+                </li>
+              </ul>
+              <br/>
+
+              <h3>2. Custom Hooks</h3>
+              <p>
+                Instead of HOCs and render props, we can encapsulate our logic in a React hook and then import that hook whenever
+                we feel the need. In our example we can create a custom hooks for fetching data.
+                A custom hook is a JavaScript function whose name starts with "use".
+                     </p>
               <div style={titles}>
                 <PrismCode
-                  code={useDocumentTitle}
+                  code={customs}
                   language="js"
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br />
+              <br/>
 
-              <h3>Explain why and when would you use useMemo()?</h3>
+              <h3>3. Explain why and when would you use useMemo()?</h3>
+              useMemo/ useCallback are use for performance optimization.<br/>
               In the lifecycle of a component, React re-renders the component when an update is made. When React checks for any 
               changes in a component, it may detect an unintended or unexpected change due to how JavaScript handles equality 
               and shallow comparisons. This change in the React application will cause it to re-render unnecessarily.
@@ -193,15 +297,54 @@ class CustomHooks extends Component {
               </div>
               <br />
 
-              <h3>Custom Hooks</h3>
-              <p>
-                Instead of HOCs and render props, we can encapsulate our logic in a React hook and then import that hook whenever
-                we feel the need. In our example we can create a custom hooks for fetching data.
-                A custom hook is a JavaScript function whose name starts with "use".
-                     </p>
+              <h3>4. useRef</h3>
+              <ul>
+                <li>The useRef Hook allows you to persist values between renders.</li>
+                <li>It can be used to store a mutable value that does not cause a re-render when updated.</li>
+                <li>It can be used to access a DOM element directly.</li>
+                <li>Refs are created using useRef() method and attached to React elements via the ref attribute.</li>
+              </ul>
               <div style={titles}>
                 <PrismCode
-                  code={customs}
+                  code={refsReact}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+              <img src={UseStates} alt="Omega" className="responsive" />
+
+              <h3>5. useReducer</h3>
+              <p>
+                useReducer is another hook, convenient for dealing with more complex state changes in React components.
+                A “reducer” is a fancy word for a function that takes 2 values and returns 1 value.
+                reducer receives the current state and an action, and returns the new state.
+              </p>
+              <br />
+              <div style={titles}>
+                <PrismCode
+                  code={useReducers}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>2. useReducer 2</b>
+              <div style={titles}>
+                <PrismCode
+                  code={useReducers2}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+
+              <b>2. useReducer Case</b>
+              <div style={titles}>
+                <PrismCode
+                  code={useReducersCase}
                   language="js"
                   plugins={["line-numbers"]}
                 />

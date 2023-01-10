@@ -172,8 +172,8 @@ class Oops extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>OOP</h3>
-              The basic idea of OOP is that we use objects to model real world things that we want to represent inside our programs, and provide
+              <h3>OOPS</h3>
+              The basic idea of OOPS is that we use objects to model real world things that we want to represent inside our programs, and provide
               a simple way to access functionality that is hard/ impossible to make use.
               <br />
 
@@ -197,7 +197,7 @@ class Oops extends Component {
               <br />
 
               <h3>2.Encapsulations</h3>
-              Encapsulation is a process of binding the data (variables) with the functions acting on that
+              Encapsulation is a process of binding the data with the functions acting on that
               data. It allows us to control the data and validate it.
               <br />
               <br />

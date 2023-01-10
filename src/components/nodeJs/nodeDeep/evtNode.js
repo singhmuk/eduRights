@@ -83,8 +83,8 @@ function callback(count) {
 
 counter.addListener('incremented', callback);
 
-//counter.removeListener('incremented', callback);                 //To remove the event listeners bound to counte.
-//counter.on('incremented', callback);                             //counter.on and counter.addListener are interchangeable.
+//counter.removeListener('incremented', callback);      //To remove the event listeners bound to counte.
+//counter.on('incremented', callback);                  //counter.on and counter.addListener are interchangeable.
 
 counter.increment();
 counter.increment();`.trim();
@@ -205,7 +205,7 @@ emitter.on("addAuthorTitle", function (author, title) {                         
   console.log("Added Author and Title " + author + " - " + title);
 });
 
-emitter.emit("addAuthorTitle", author, title);                                       //add record to db then emit an event.
+emitter.emit("addAuthorTitle", author, title);                          //add record to db then emit an event.
 `.trim();
 
 
@@ -269,11 +269,11 @@ var fun2 = (msg) => {
 };
 
 for (var i = 0; i < 3; i++) {
-  eventEmitter1.addListener("myEvent1", fun1);                    // Listening to myEvent1 with 3 instance of fun1
+  eventEmitter1.addListener("myEvent1", fun1);                    //Listening to myEvent1 with 3 instance of fun1
 }
 
 for (var i = 0; i < 3; i++) {
-  eventEmitter2.addListener("myEvent2", fun2);                    // Listening to myEvent2 with 3 instance of fun2
+  eventEmitter2.addListener("myEvent2", fun2);                    //Listening to myEvent2 with 3 instance of fun2
 }
 
 eventEmitter1.emit("myEvent1", "Event1 occurred");
@@ -290,7 +290,7 @@ emitter.once("addAuthorTitle", function (author, title) {
 });
 
 
-emitter.emit("addAuthorTitle", author, title);                                  //add record to db then emit an event.
+emitter.emit("addAuthorTitle", author, title);                             //add record to db then emit an event.
 emitter.emit("addAuthorTitle", author, title);`.trim();
 
 const raiseHandle = `

@@ -26,7 +26,10 @@ const styles = theme => ({
 const projection = `
 @Component({
   selector: 'app-root',
-  template: '{{data.name}}',
+  template: '
+      {{data.name}}
+      <ng-content></ng-content>
+      ',
 })
 export class AppComponent {
   data={
@@ -297,6 +300,14 @@ class Projection12 extends Component {
           <Paper className={classes.paper}>
             <List>
               <h3>Content projection</h3>
+              Content projection is a pattern in which we insert or project, the content which want to use inside another component. 
+              <b>Ex.</b> We could have a Card component that accepts content provided by another component.
+              <br/>
+              <br/>
+              The <b>ng-content</b> element is a placeholder that does not create a real DOM element. Custom attributes applied 
+              to <b>ng-content</b> are ignored.
+              <br/>
+              <br/>
               <ul>
                 <li>Is used to project content in a component.</li>
                 <li>Allows to insert a shadow DOM in our component.</li>

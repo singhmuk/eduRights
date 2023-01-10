@@ -79,7 +79,8 @@ class Jest extends Component {
       <h3>1. Jest Features:</h3>
       <ul>
         <li><b>zero config:</b> Close to none configuration is required to get started with writing tests and deploying them. However, a config file can be supplied to the test suite as well.</li>
-        <li><b>snapshots:</b> Jest has the ability to enable snapshot testing as well. Essentially, the snapshots are matched with the saved snapshot and check for matching functionality.</li>
+        <li><b>snapshots:</b> Jest has the ability to enable snapshot testing as well. Essentially, the snapshots are matched with 
+        the saved snapshot and check for matching functionality.</li>
         <li><b>isolated tests:</b> Jest tests are run parallely to improve run time.</li>
       </ul>
       <br/>
@@ -91,11 +92,12 @@ class Jest extends Component {
           <li>Isolated unit test are when we try to check a single functionality of a single pices or single unit of code.</li>
           <li>An isolated unit test is performed independently without using any Angular dependencies or injected values.</li>
           <li>There are a few Angular units that can be tested in isolation.</li>
-          <li><b>Ex. </b>Pipe,Service, Class, Component, Directives.</li>
+          <li><b>Ex. </b>Pipe, Service, Class, Component, Directives.</li>
         </ul>
         </li>
         <br/>
-        <li><b>Integration: </b>With integration testing, we test how 2 or more components work with each other. We can do this when components are depending on each other.</li>
+        <li><b>Integration: </b>With integration testing, we test how 2 or more components work with each other. We can do this 
+        when components are depending on each other.</li>
       </ul>
       <br/>
 
@@ -116,7 +118,7 @@ class Jest extends Component {
       <ul>
         <li>Write a simple failing test</li>
         <li>Make the test pass by writing the minimum amount of code, don't bother with code quality</li>
-        <li>Refactor the code by applying design principles/patterns</li>
+        <li>Refactor the code by applying design principles/ patterns</li>
       </ul>
       <br/>
       
@@ -194,7 +196,6 @@ class Jest extends Component {
        <li>A developer will write or design test cases at the first stage that will help to check the functionality of each module independently.</li>
        <li>The best unit testing practice is to copy and paste the code in the testing environment instead of using the natural environment.</li>
        <li>You can use a unit test framework like Junit and TestNG for automating the testing process. These frameworks will help you verify either all test cases are written well or not. It will speed up the testing process to a larger extent.</li>
-       <li>So, the testing process can be divided into three categories broadly, designing test cases, reviewing, and executing test cases.</li>
      </ul>
      <br/>
      
@@ -261,7 +262,7 @@ class Jest extends Component {
           <li>Configures and initializes environment for unit testing and provides methods for creating components and services in unit tests.</li>
           <li>It creates a dependency injection (DI) context and allows us to override providers, services and whole modules.</li>
           <li>It compiles, instantiates and renders to HTML our components attaching them to the fixture instance. Any module, component or service that your tested component needs have to be included in the testbed.</li>
-          <li>Finally, after setting the configuration, Y0u call the comile component function.</li>
+          <li>Finally, after setting the configuration, You call the comile component function.</li>
         </ul>
       <br/>
 

@@ -33,20 +33,6 @@ arr.property = "value";                                         //Using arrays t
 console.log(arr);    
 `.trim();
 
-const forEach = `
-const event = {
-  name: 'Birthday Party',
-  guestList: ['Andrew', 'Jen', 'Mike'],
-  printGuestList() {
-      console.log('Guest list for ' + this.name)
-      
-      this.guestList.forEach((guest) => {
-          console.log(guest + ' is attending ' + this.name)
-      })
-  }
-}`.trim();
-
-
 const copyWithin = `
 function copyWith(){
   var arr = [];
@@ -141,14 +127,10 @@ let user = {
   name: 'Kenneth',
   age: 28,
   data: {
-    username: 'kennethCodesAllDay',
-    joinDate: 'March 26, 2016',
-    organization: 'freeCodeCamp',
-    friends: [
-      'Sam',
-      'Kira',
-      'Tomo'
-    ],
+    username:'kennethCodesAllDay',
+    joinDate:'March 26, 2016',
+    organization:'freeCodeCamp',
+    friends: ['Sam', 'Kira', 'Tomo'],
     location: {
       city: 'San Francisco',
       state: 'CA',
@@ -799,46 +781,6 @@ class Arrays extends Component {
               <div style={titles}>
                 <PrismCode
                   code={interpolation}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>12. Difference between Map and foreach.</h3>
-              <table>
-                <tr>
-                  <th>Value</th>
-                  <th>foreach</th>
-                  <th>Map</th>
-                </tr>
-                <tr>
-                  <td><b>Functionality</b></td>
-                  <td>Performs given operation on each element of the array</td>
-                  <td>Performs given "transformation" on "copy" of each element </td>
-                </tr>
-                <tr>
-                  <td><b>Return value</b></td>
-                  <td>undefined</td>
-                  <td>new array with tranformed elements leaving back original array unchanged.</td>
-                </tr>
-                <tr>
-                  <td><b>Processing</b></td>
-                  <td>Performing non-transformation like processing on each element.</td>
-                  <td>Obtaining array containing output of some processing done on each element of the array.</td>
-                </tr>
-              </table>
-              <br />
-
-              <ul>
-                <li>map() is chainable. This means we can attach reduce(), sort(), filter() and so on
-                  after performing a map() method on an array.</li>
-                <li>But we can't do with forEach()</li>
-              </ul>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={forEach}
                   language="js"
                   plugins={["line-numbers"]}
                 />

@@ -40,9 +40,6 @@ export default function Sidebar() {
         <MenuItem><Link to='/data_augmentation' className={classes.line}>data Augmentation</Link></MenuItem>
         <MenuItem><Link to='/transfer' className={classes.line}>Transfer</Link></MenuItem>
         <MenuItem><Link to='/word_embedding' className={classes.line}>Embedding</Link></MenuItem>
-        <MenuItem><Link to='/datatypests' className={classes.line}>Datatypes</Link></MenuItem>
-        <MenuItem><Link to='/typeScript_2' className={classes.line}>TS Function</Link></MenuItem>
-        <MenuItem><Link to='/typeScript_4' className={classes.line}>Type Assertion</Link></MenuItem>
       </MenuList>
       <div>
       </div>

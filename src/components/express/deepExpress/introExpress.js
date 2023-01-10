@@ -5,9 +5,15 @@ import { Grid, Paper, withStyles, List } from "@material-ui/core";
 import '../../ReactJs/styles.css'
 import Sidebar from '../sidebar';
 import PrismCode from '../../ReactJs/prismCode';
+import Graphs from '../../../assets/middleware.png';
 
 
 const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
+
+const redesign = {
+  height: 200,
+  width: 500
+}
 
 const styles = theme => ({
   paper: {
@@ -63,19 +69,19 @@ app.all('*', requireAuthentication, loadUser)
 app.all('*', requireAuthentication)
 app.all('*', loadUser)
 
-app.all('/api/*', requireAuthentication)                               //Restricts paths that start with “/api”.
+app.all('/api/*', requireAuthentication)        //Restricts paths that start with “/api”.
 `.trim();
 
 const engine = `
 app.engine('pug', require('pug').__express)
 
-app.engine('html', require('ejs').renderFile)                         //To map the EJS template engine to “.html” files.
+app.engine('html', require('ejs').renderFile)  //To map the EJS template engine to “.html” files.
 `.trim();
 
 const paramName = `
 app.param('user', function (req, res, next, id) {
                                                         
-  User.find(id, function (err, user) {                    //get user details from User model and attach to the request object
+  User.find(id, function (err, user) {     //get user details from User model and attach to the request object
     if (err) {
       next(err)
     } else if (user) {
@@ -104,11 +110,11 @@ app.use('/abc?d', function (req, res, next) {                  //Match paths sta
   next();
 });
 
-app.use('/ab+cd', function (req, res, next) {                 //Match paths starting with /abcd, /abbcd, /abbbbbcd, so on.
+app.use('/ab+cd', function (req, res, next) {        //Match paths starting with /abcd, /abbcd, /abbbbbcd, so on.
   next();
 });
 
-app.use('/ab\*cd', function (req, res, next) {                //Match paths starting /abcd, /abxcd, /abFOOcd, /abbArcd, ...
+app.use('/ab\*cd', function (req, res, next) {       //Match paths starting /abcd, /abxcd, /abFOOcd, /abbArcd, ...
   next();
 });
 
@@ -217,6 +223,31 @@ class IntroExpress extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
+              <h3>What is Middleware</h3>
+              <ul>
+                <li>A request handler with access to the application's request-response cycle is known as middleware.</li>
+                <li>It's a function that holds the request object, the response object, and the middleware function.</li>
+                <li>Middleware can also send the response to the server before the request.</li>
+                <li>The next middleware function is commonly represented as a variable named next.</li>
+                <li>Simply middleware is a function that can only be applied using routes.</li>
+                <li>We can access and modify request and response data using middleware.</li>
+              </ul>
+              <br/>
+              <br/>
+              <b>Functions of Middleware: </b>
+              <br/>
+              <ul>
+                <li>Executes any code.</li>
+                <li>We can make changes to the request-response objects.</li>
+                <li>Middleware can also End the request-response cycle.</li>
+                <li>Middleware can call the next middleware function in a stack.</li>
+              </ul>
+              We use these functions to modify our middleware to perform many tasks. If we want to block our site for some country or if 
+              we're going to check the authentication of a user etc., we use middleware for that.
+              <br/>
+              <img src={Graphs} alt="DeadLock" className="responsive" style={redesign} />
+              <br/>
+
               <h3>1.How to configure middleware using ExpressJS?</h3>
               <p>
                 @Express, a framework that sits on top of Node.js’s web server and makes it easier to use.Middleware and routing, two
@@ -266,7 +297,7 @@ class IntroExpress extends Component {
               <p>
                 Every peer has a public key that they share with every-body and a private key that they share with nobody. If I want
                 to send something to you,I encrypt the message with my private key and your public key. I can then send you messages that look
-                like garbage to any eaver droppers, and you decrypt them with your private key and my public key.
+                like garbage to any, and you decrypt them with your private key and my public key.
               </p>
               <br />
 

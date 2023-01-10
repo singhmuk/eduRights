@@ -155,26 +155,8 @@ class Tur1 extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>1. WeakMap</h3>
-              ES6's weakMap allows the use of non-strings as keys in a HashMap:
-              <div style={titles}>
-                <PrismCode
-                  code={weakMap}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-
-              <h3>2. Async-Await</h3>
-              <ul>
-                <li>It's an easier way to deal with Promises.</li>
-                <li>Promises is an easier way to deal with CB.</li>
-                <li>To handle an asynchronous process, we return a Promis object from a function.</li>
-                <li>By default any function without <b>return</b> statement return <b>undefined</b> in javascript.</li>
-                <li>By writing async function don't need to write return statement.</li>
-                <li>await make sure to wait till a Promise is settled, be resolved/ rejected.</li>
-                <li>The way we write then() for handling promise, now in await we can remove than() and replace it with await.</li>
-              </ul>
+              <h3>1. Async-Await</h3>
+              
               server.js
               <div style={titles}>
                 <PrismCode
@@ -202,10 +184,21 @@ class Tur1 extends Component {
               </div>
               <br />
 
-              <h3>3. Add two numbers</h3>
+              <h3>2. Add two numbers</h3>
               <div style={titles}>
                 <PrismCode
                   code={addNum}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>3. WeakMap</h3>
+              ES6's weakMap allows the use of non-strings as keys in a HashMap:
+              <div style={titles}>
+                <PrismCode
+                  code={weakMap}
                   language="js"
                   plugins={["line-numbers"]}
                 />

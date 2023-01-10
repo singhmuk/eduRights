@@ -41,12 +41,6 @@ this.setState({ value: 1 });
 console.log(this.state.value); // 0
 `.trim();
 
-const newState = `
-// assuming this.state = { value: 0 };
-this.setState({ value: this.state.value + 1});
-this.setState({ value: this.state.value + 1});
-this.setState({ value: this.state.value + 1});`.trim();
-
 const newStates = `
 // assuming this.state = { value: 0 };
 this.setState((state) => ({ value: state.value + 1}));
@@ -74,187 +68,6 @@ after: 1
 before: 2
 after: 2`.trim();
 
-
-const setCallback = `
-class App extends Component {
-  state = { count: 0 };
-  
-  handleButton = () => {
-    this.setState(previous => ({ count: previous.count + 1 }))
-  }
-  
-  render() {
-    return (
-      <>
-        {this.state.count}
-        <button type="button" onClick={this.handleButton}>btn</button>
-      </>
-    );
-  }
-}`.trim();
-
-const SetStates = `
-setState({ name: 'John' }, () => console.log('The name has updated and component re-rendered'))
-`.trim();
-
-const props1 = `
-const Person = props => {
-  const { name, skill } = props;
-  return (
-    <div>
-      <h2>
-        I am {name},I know {skill}
-      </h2>
-    </div>
-  );
-};
-
-
-const App =() => {
-  const [name, skill]=useState(['Krishan',"skill"])
-
-  return(
-    <div>
-      <Person name={name} skill={skill} />
-    </div>
-  )
-}
-
-export default App;`.trim();
-
-const props2 = `
-//Person.js
-const Person = props => {
-  const { name, age, skill } = props;
-  return (
-    <div>
-      <h2>
-        I am {name},My age is {age},I know {skill}
-      </h2>
-    </div>
-  );
-};
-export default Person;
-
-
-//NameList.js
-import React from "react";
-import Person from "./persons";
-function NameList() {
-  const persons = [
-    {
-      id: 1,
-      name: "kaptan",
-      age: 30,
-      skill: "react"
-    },
-    {
-      id: 2,
-      name: "rinku",
-      age: 29,
-      skill: "java"
-    },
-    {
-      id: 3,
-      name: "ankit",
-      age: 39,
-      skill: "vue"
-    }
-  ];
-  const personsList = persons.map(person => <Person person={person} />);
-  return <div>{personsList}</div>;
-}
-
-export default NameList;
-`.trim();
-
-const propsComponents = `
-//App.js
-function formatDate(date) {
-  return date.toLocaleDateString();
-}
-
-function App(props) {
-  return (
-      <div>
-        {props.author.name}---
-        {props.text}---
-        {formatDate(props.date)}
-      </div>
-  );
-}
-
-export default App;
-
-
-//comment.js
-const comment = {
-  date: new Date(),
-  text: 'I hope you enjoy learning React!',
-  author: {
-    name: 'Hello Kitty',
-    avatarUrl: 'https://placekitten.com/g/64/64',
-  },
-};  
-
-export { comment }
-
-
-//index.js
-import App from './App';
-import { comment } from './comment';
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App
-      date={comment.date}
-      text={comment.text}
-      author={comment.author}
-  />
-  </React.StrictMode>,
-`.trim();
-
-const Children = `
-//Props.js
-import Picture from './children_1';
-
-class Props extends Component{
-   state={
-    picture:[{id:1, src:'One'},
-             {id:2, src:'Two'},
-             {id:3, src:'Three'},
-          ]
-   }
-   render(){
-     let picture = this.state.picture;
-     return(
-      <div className='container'>
-      <Picture key={picture.id} src={picture.src}>
-          {picture.map((val) => (
-            <li>{val.id}</li>
-          ))}
-      </Picture>
-    </div>
-     );
-   }
- }
- 
- export default Props;
- 
- 
- //Picture.js
- const Picture = (props) => {
-  return (
-    <div>
-      <img src={props.src}/>
-      {props.children}
-    </div>
-  )
-}
- 
- export default Picture;`.trim();
-
-
 const Lazy = `
 import React, { Suspense, lazy } from 'react';
 const OtherComponent = lazy(() => import('./OtherComponent'));
@@ -267,6 +80,103 @@ consr Routes = () => (
    </Suspense>
     <Route component={()=> <h1>Page not found</h1>} />
   </Switch>`.trim();
+
+const Uncontrolled = `
+function App() {
+  const inputRef = useRef(null);
+  
+  const handleSubmitButton = () => {
+    alert(inputRef.current.value);
+  };
+  return (
+    <div className="App">
+      <input type="text" ref={inputRef} />
+      <input type="submit" value="submit" onClick={handleSubmitButton} />
+    </div>
+  );
+}`.trim();
+
+const Update = `
+class App extends Component{
+  forceUpdateHandler = () => {
+    this.forceUpdate();
+  };
+  
+  render(){
+    return(
+      <div>
+        <button onClick= {this.forceUpdateHandler} >FORCE UPDATE</button>
+        <h4>Random Number : { Math.random() }</h4>
+      </div>
+    );
+  }
+}`.trim();
+
+const code = `
+class App extends Component{
+  constructor(){
+      super();
+      this.state={count:0}
+  }
+
+  componentDidMount(){
+      console.log('When component render first time')
+  }
+
+  increment(){
+      this.setState({count:this.state.count + 1})
+  }
+
+  componentDidUpdate(prevProps, prevState){
+      console.log(prevState.count)
+      if(prevState.count !=this.state.count){
+          console.log('component update')
+      }
+  }
+
+  componentWillUnmount(){
+      console.log('countis about to be unmounted.')
+  }
+
+  render(){
+      return(
+          <div>
+              {this.state.count}
+              {/* <button onClick={this.increment.bind(this)}>bindThis</button> */}
+              <button onClick={()=>this.increment()}>clickMe</button>
+          </div>
+      )
+  }
+}
+
+
+//functional component
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(()=>{
+      console.log('Mounting')
+      console.log('Updating', count)
+
+      return ()=>{
+          console.log('Unmount')
+      }
+  },[count])
+
+  const increment = () => {
+      setCount(count+1)
+  }
+
+      return(
+          <div>
+              {count}
+              <button onClick={increment}>clickMe</button>
+          </div>
+      )
+  }
+`.trim();
+
+
 
 
 class IntroRectJs extends Component {
@@ -300,60 +210,27 @@ class IntroRectJs extends Component {
                 <li>2. Linting</li>
                 <li>3. Style-checking</li>
                 <li>4. Transpilation and Compilation</li>
-                <li>5. Minification</li>
+                <li>5. Minification and Compression</li>
                 <li>6. Source-Mapping</li>
               </ul>
-              <p>
-                Typically, we use build tools like Gulp, Watchify/Browserify, Broccoli, or Webpack to watch the a
-                filesystem for file events. After this occurs, the build tool is configured to carry out a group of sequential or
-                parallel tasks.
-              </p>
-              <p>
-                <b>Compilation - </b>specifically separate from transpiling ES6 and JSX to ES5, is the act
-                of including assets, processing CSS files as JSON, or other mechanisms that can load and inject external assets and
-                code into a file.
-              </p>
-              <p>
-                <b>Minification and Compression – </b>It is the act of minifying and compressing a JS file into fewer and/or smaller
-                files.
-              </p>
-              <p>
-                <b>Source-Mapping - </b>Help identify the line in
-                the original source code that corresponds with the line in the output.
-              </p>
               <br />
 
-              <h3>2.How Virtual-DOM is more efficient than Dirty checking</h3>
+              <h3>2. How Virtual-DOM is more efficient than Dirty checking</h3>
               <img src={VDom} alt="Omega" className="responsive" style={redesigns} />
               <p>
                 In React, each of our components have a state. This state is like an observable. Essentially, React
                 knows when to re-render the scene because it is able to observe when this data changes. Dirty checking
                 is slower than observables because we must poll the data at a regular interval and check all of the
                 values in the data structure recursively.
-                <br />
-                <br />
-
-                The virtual DOM is used for efficient re-rendering of the DOM. This isn’t really related to dirty
-                checking your data. We could re-render using a virtual DOM with or without dirty checking. In fact,
-                the diff algorithm is a dirty checker itself.
-                <br />
-                <br />
-                We aim to re-render the virtual tree only when the state changes. So using an observable to check if
-                the state has changed is an efficient way to prevent unnecessary re-renders, which would cause lots of
-                unnecessary tree diffs. If nothing has changed, we do nothing.
               </p>
 
-              <b>Virtual DOM: </b>Virtual DOM is about avoiding unnecessary changes to the DOM, which are expensive performance-wise, 
-              because changes to the DOM usually cause re-rendering of the page. Virtual DOM also allows to collect several changes to 
+              <b>Virtual DOM: </b>Virtual DOM is about avoiding unnecessary changes to the dom. 
+              Virtual DOM also allows to collect several changes to 
               be applied at once, so not every single change causes a re-render, but instead re-rendering only happens once after a set 
               of changes was applied to the DOM.
               <br/>
               <br/>
-              <b>Explain the Virtual DOM and its working: </b>
-              <br />
               A virtual DOM is a lightweight JS object. It is simply a copy of the real DOM.
-              <br />
-              The render() function in React is responsible for creating a node tree from the React components.
               <br />
               <br />
               <b>Virtual DOM operates in three simple steps:</b>
@@ -364,60 +241,26 @@ class IntroRectJs extends Component {
                   with only the things that actually underwent changes.</li>
               </ul>
               <br />
+
               <h3>How does the Real DOM differ from the Virtual DOM: </h3>
-              <b>DOM Manipulation – </b> Real DOM supports a very expensive DOM manipulation.
-              <br />
-              <b>Element Update –</b> Real DOM creates a new DOM when an element updates. While, virtual DOM updates the JSX.
-              <br />
-              <b>Memory Wastage –</b> Real DOM causes a lot of memory wastage while there is no memory
-              wastage for Virtual DOM.
-              <br />
-              <b>Update Speed –</b> Real DOM updates slowly.
-              <br />
-              <b>Updating HTML –</b> Real DOM can directly update HTML, while virtual DOM can’t update HTML
-              directly.
-              <br />
-
-              <h3>3.How do you tell React to build in Production mode and what will that do?</h3>
-              There are many ways to produce a production build, so it really depends on how we created our project and the tools
-              we are using in it.
               <ul>
-                <li>If we used create react app to develop our project, we will need to run `npm run build` or `yarn build`
-                  in the command line, on our project’s root folder. This will generate a “build” folder in our project, that has
-                  our entire app built ready for production.</li>
-                <li>If we set up our project manually, we should consult the bundler we are using. A common
-                  bundler is Webpack. If we used Webpack we can run `webpack` command in our command line. We
-                  may need to pass a different configuration to a production build. In that case we can tell Webpack
-                  what configuration to use when we run the `webpack` command.
-                  <br />
-                  <br />
-
-                  <b>For example: </b>`webpack —config config.prod.js`. The config has options for how to bundle
-                  things together, how to process our stylesheet, images, files, etc.., and where to save the
-                  production files. </li>
+                <li><b>DOM Manipulation: </b>Real DOM supports a very expensive DOM manipulation.</li>
+                <li><b>Element Update: </b>Real DOM creates a new DOM when an element updates. While, virtual DOM updates the JSX.</li>
+                <li><b>Memory Wastage: </b>Real DOM causes a lot of memory wastage while there is no memory
+              wastage for Virtual DOM.</li>
+                <li><b>Update Speed: </b>Real DOM updates slowly.</li>
+                <li><b>Updating HTML: </b>Real DOM can directly update HTML, while virtual DOM can’t update HTML directly.</li>
               </ul>
-              <p>
-                Ordinarily you'd utilize Webpack's Define Plugin to set NODE_ENV to production. This will strip out things
-                like propType approval and additional notices. It's minify ouw code.
-              </p>
               <br />
-              <h3>4.What do you understand with the term polling?</h3>
+              
+              <h3>3. What do you understand with the term polling?</h3>
               <p>
                 The server needs to be monitored for updates w.r.t.time.
                 This process is basically considered as pooling. It checks for the updates approximately after every 5 seconds.
-                Pooling make sure that no negative information is present on the servers.
-              </p>
-              <br />
-
-              <h3>5.Why do we use arrow function in React.</h3>
-              <p>
-                Arrow functions take the this from their surroundings (lexical binding).
-                <br />
-                The syntax allows an implicit return when there is no body block, resulting in shorter and
-                simpler code in some cases.
+                Poling make sure that no negative information is present on the servers.
               </p>
 
-              <h3>6.Difference between redux saga and redux thunk.</h3>
+              <h3>4. Difference between redux saga and redux thunk.</h3>
               Use Thunk instead of Saga for simple and trivial tasks like:
               <ul>
                 <li>AJAX calls</li>
@@ -432,7 +275,7 @@ class IntroRectJs extends Component {
               </ul>
               <br />
 
-              <h3>7.What is React? What are some of its standouts?</h3>
+              <h3>5. What is React? What are some of its standouts?</h3>
               Writing UI test cases is simple with React, which is also easy to integrate with Angular,
               Meteor, and other popular JS frameworks.
               <ul>
@@ -448,8 +291,8 @@ class IntroRectJs extends Component {
               <br />
               <br />
 
-              <h3>10. HOC</h3>
-              A HOC is a function that takes a component and returns a new component. They can accept any dynamically provided child 
+              <h3>6. HOC</h3>
+              A HOC is a function that takes a component as i/p and returns a new component. They can accept any dynamically provided child 
               component but they won’t modify or copy any behavior from their input components.
               <br/>
               <br/>
@@ -459,14 +302,15 @@ class IntroRectJs extends Component {
                 <li>Offers a high hacking facility</li>
                 <li>Supports state abstraction and manipulation</li>
               </ul>
-              <h3>11.Define Reducers in React?</h3>
+              <br/>
+
+              <h3>7. Define Reducers in React?</h3>
               Reducers are the pure functions that clearly states as to how the application state changes
               when certain actions are made. This way, it takes into account the previous state and action
               to turn out to a new state.
+              <br/>
 
-              <h3>12.State</h3>
-              <b>when would you use state?</b>
-              <br />
+              <h3>8. When would you use state</h3>
               When a component needs to keep track of information between renderings the component itself update, use state.
               <p>
                 Component state is a way of holding, processing information and allows to implement its logic.
@@ -479,8 +323,7 @@ class IntroRectJs extends Component {
               <br />
               <b>setState is asynchronous (*)</b>
               <br />
-              <p>The setState causes reconciliation (the process of re-rendering
-                the components tree) is base of the next property — setState is asynchronous. This
+              <p>The setState causes reconciliation is base of the next property — setState is asynchronous. This
                 allows us to have multiple calls to setState in a single scope and not trigger not
                 needed re-renders of the whole tree.</p>
               This is why you don’t see the new values in state right after you updated it.
@@ -492,17 +335,9 @@ class IntroRectJs extends Component {
                 />
               </div>
               <br />
-              <p>React will also try to group or batch setState calls into a single
-                call, which leads us to our first “gotcha”:</p>
-              <div style={titles}>
-                <PrismCode
-                  code={newState}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <i>After all the above calls are processed this.state.value will be 1, not 3</i>
-              <h3>setState accepts a function as its parameter</h3>
+              <br />
+
+              <b>setState accepts a function as its parameter</b><br/>
               <p>If you pass a function as the first argument of setState, React will
                 call it with the at-call-time-current state and expect you to return an
                 Object to merge into state. So updating our example above to:</p>
@@ -515,7 +350,8 @@ class IntroRectJs extends Component {
               </div>
               <i>Will give us this.state.value = 3</i>
               <br />
-              <h3>13.setState is … synchronous?</h3>
+
+              <h3>9. setState is … synchronous?</h3>
               <p>setState is asynchronous? Well, it not always the case! It depends on the execution context.</p>
               <div style={titles}>
                 <PrismCode
@@ -527,7 +363,7 @@ class IntroRectJs extends Component {
               <br />
               <br />
 
-              <b>Is setState() is async? Props should not changeWhy is setState() in React Async instead of Sync?</b>
+              <b>Is setState() is async? Props should not change. Why is setState() in React Async instead of Sync?</b>
               <br />
               <ul>
                 <li>setState() actions are asynchronous and are batched for performance gains. setState() does not immediately mutate
@@ -538,48 +374,15 @@ class IntroRectJs extends Component {
                 <li>Thus the setState calls are asynchronous as well as batched for better UI experience and performance.</li>
               </ul>
               <br />
-              <br />
-              <h3>setState accepts a callback</h3>
-              <p>
-                If need to execute some function, or verify if the state did indeed update correctly we
-                can pass a function as the second argument of setState call, the
-                function will be executed once the state was updated. Remember
-                since all updates in a scope are batched, if we have multiple calls to
-                setState each of their callbacks will be called with the fully-updated
-                state.
-              </p>
-              <div style={titles}>
-                <PrismCode
-                  code={setCallback}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-              <b>What is the purpose of callback function as an argument of setState()?</b>
-              <br />
-              <p>
-                The callback function is invoked when setState finished and the component gets re-ndered. Since setState() is
-                asynchronous the callback function is used for any post action.
-              </p>
-              <div style={titles}>
-                <PrismCode
-                  code={SetStates}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
 
-              <h3>Why can't you update state directly without setState()?.</h3>
+              <h3>10. Why can't you update state directly without setState()?.</h3>
               <ul>
                 <li>setState alwase trigger re-rendering of the component.</li>
                 <li>Mutating state directly can lead to odd bugs, and components that are hard to optimize.</li>
               </ul>
               <br />
 
-              <h3>14.Props should not change</h3>
+              <h3>11. Props should not change</h3>
               You used to be able to change props with setProps and replaceProps but these have been deprecated.
               <br />
               <p>Since props are passed in, and they cannot change, if a React
@@ -599,82 +402,16 @@ class IntroRectJs extends Component {
                 Props prints the name of the user depending on the props that were passed to it.
                 Here, the name of the prop will be name
               </p>
-              <div style={titles}>
-                <PrismCode
-                  code={props1}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <i>The name prop is assigned a value that is displayed accordingly.</i>
-              <br />
-              <br />
-              <b>Props 2</b>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={props2}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <h3>15.props Components & React.Children</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={propsComponents}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <h3>16.React Children</h3>
-              <p>
-                In JSX expressions that contain both an opening tag and a closing tag, the content between those tags is passed to
-                components automatically as a special prop: props.children. There are a number of methods available in the React API
-                to work with this prop. These include :
-              </p>
-              <ul>
-                <li>React.Children.map</li>
-                <li>React.Children.forEach</li>
-                <li>React.Children.count</li>
-                <li>React.Children.only</li>
-                <li>React.Children.toArray</li>
-              </ul>
-              <br />
-              <br />
-              The children, refer to the generic box whose contents are unknown until they’re passed from the parent component.
-              Means that the component will display whatever is included in between the opening and closing tags while invoking the component.
-              <br />
-              <br />
+            <br />
 
-              <b>The possible usage are:</b>
-              <ul>
-                <li>Grouping unknown number of similar elements into a parent element.</li>
-                <li>We don’t know elements ahead of the time.</li>
-                <li>The nested structure that needs a wrapper.</li>
-              </ul>
-              <br />
-
-              <div style={titles}>
-                <PrismCode
-                  code={Children}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-            </List>
+            <h3>12. Lazy Loading</h3>
+            <ul>
+              <li>We bundle the files in React application using tool such as webpack. Bundling in the end merges the files in the
+            sequence of their imports and creates a single file.</li>
+              <li>The problem with this approach is that the bundle file gets larger with the increase in files. User may not be sung
+            all the feature components but still bundle is loading them, this could affect the loading of application.</li>
+            </ul>
             <br />
-            <h3>17. Lazy Loading</h3>
-            We bundle the files in React application using tool such as webpack. Bundling in the end merges the files in the
-            sequence of their imports and creates a single file.
-            <br />
-            <br />
-            The problem with this approach is that the bundle file gets larger with the increase in files. User may not be sung
-            all the feature components but still bundle is loading them, this could affect the loading of application.
-            <br />
-            <br />
-            To avoid this, code splitting is used in React.
             <div style={titles}>
               <PrismCode
                 code={Lazy}
@@ -684,31 +421,182 @@ class IntroRectJs extends Component {
             </div>
             <br />
 
-            <h3>18. When do you use useLayoutEffect?</h3>
-            <p>when we need the browser to paint before the effect runs</p>
+            <h3>13. When might you use React.PureComponent?</h3>
+            <p>When we want a default implementation of shouldComponentUpdate()</p>
             <br />
 
-            <h3>19. When might you use React.PureComponent?</h3>
-            <p>when we want a default implementation of shouldComponentUpdate()</p>
+            <h3>14. What is the children prop?</h3>
+            <p>A property that lets you pass components as data to other components</p>
             <br />
 
-            <h3>20. What is the children prop?</h3>
-            <p>a property that lets you pass components as data to other components</p>
-            <br />
+            <h3>15. What is prop drilling and how can you avoid it?</h3>
+              <ul>
+                <li>When building a React application, there is often the need for a deeply nested component to use data provided 
+                  by another component that is much higher in the hierarchy. The simplest approach is to simply pass a prop from 
+                  each component to the next in the hierarchy from the source component to the deeply nested component. This is 
+                  called prop drilling.</li><br/>
+                <li>The primary disadvantage of prop drilling is that components that should not otherwise be aware of the data 
+                  become unnecessarily complicated and are harder to maintain.</li><br/>
+                <li>To avoid prop drilling, a common approach is to use React context. This allows a Provider component that 
+                  supplies data to be defined, and allows nested components to consume context data via either a Consumer 
+                  component or a useContext hook.</li>
+              </ul>
+              <br/>
 
-            <h3>21. When using webpack, why would you need to use a loader?</h3>
-            <p>to preprocess files</p>
-            <br />
+              <h3>17. Controlled component</h3>
+              We have 2 ways to handle the input value: Controlled & Uncontrolled
+              <p>In a controlled component, form data is handled by a React component. While in uncontroll, form data is handled 
+                by the DOM itself.</p>
+              <ul>
+                <li>In a controlled component, the form data is handled by the state within the component.</li>
+                <li>The controlled component is a way that can handle the form input value using the state and to change the input 
+                  value by using setState or useState</li>
+                <li>Change this state using one of the events like onChange and when the user starts writing any character 
+                  setState or useState will be called and update the state of this input then it will add the new value inside 
+                  the input.</li>
+              </ul>
+              <br />
 
-            <h3>22. What is sent to an Array.map() function?</h3>
-            <p>a callback function that is called once for each element in the array</p>
-            <br />
+              <b>Uncontrolled Components</b>
+              <br />
+              <p>The uncontrolled component is like traditional HTML form inputs that you will not be able to handle the value by yourself but the DOM will take care of handling the value of the input and save it then you can get this value using React Ref</p>
 
-            <h3>23. Why is it a good idea to pass a function to setState instead of an object?</h3>
-            <p>setState is asynchronous and might result in out of sync values.</p>
-            <br />
+              <div style={titles}>
+                <PrismCode
+                  code={Uncontrolled}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>Use the controlled component when you create</b>
+              <ul>
+                <li>Form validation so you always need to know the value of the input when typing to check if it’s a valid character or not!</li>
+                <li>Disable the submit button unless all fields have valid data</li>
+                <li>If you have a specific format like the credit card input</li>
+              </ul>
+              <br/>
 
-            <h3>25. Output</h3>
+              <h3>18. Force Update</h3>
+              Calling forceUpdate() will cause render() to be called on the component and skip shouldComponentUpdate().<br />
+              It will skip shouldComponentUpdate(), so you're not getting the optimization benefit.<br />
+              Also, using forceUpdate() "bypasses" the proper lifecycle, making your code less straight-forward and possibly harder to understand and maintain.
+              <div style={titles}>
+                <PrismCode
+                  code={Update}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>19. Lifecycle of Components</h3>
+              Each component in React has a lifecycle which you can monitor and manipulate during its
+              three main phases.
+              <br />
+              1. Mounting<br />
+              2. Updating and<br />
+              3. Unmounting<br />
+              <br />
+              <b>Mounting: </b>Mounting means putting elements into the DOM.
+              <br />
+              React has four built-in methods that gets called, in this order, when mounting a component:
+              <br />
+              <br />
+              1. constructor()<br />
+              3. <b>render():</b>  required and will always be called, the others are optional and will be called if you define them.<br />
+              4. componentWillMount()<br />
+              4. componentDidMount()<br />
+
+              <br />
+              <br />
+              <b>constructor(): </b>Is called before anything else, when the component is initiated,
+              and it is the natural place to set up the initial state and other initial values.
+              <br />
+              <br />
+              The constructor() method is called with the props, as arguments, and you should always start
+              by calling the super(props) before anything else, this will initiate the parent's constructor
+              method and allows the component to inherit methods from its parent.
+              <br />
+              <br />
+              <b>componentDidMount: </b>Method is called after the component is rendered.
+              <br />
+              This is where you run statements that requires that the component is already placed in the
+              DOM.
+              <br />
+              <br />
+              <b>Updating: </b>
+              A component is updated whenever there is a change in the component's state or props.
+              <br />
+              <ul>
+                <li>shouldComponentUpdate()</li>
+                <li>render()</li>
+                <li>componentDidUpdate()</li>
+              </ul>
+              <br />
+
+              <b>shouldComponentUpdate: </b>
+              In the shouldComponentUpdate() we can return a Boolean value that specifies whether
+              React should continue with the rendering or not.
+              <br />
+              <b>The default value is true.</b>
+              <br />
+              <br />
+
+              <b>render:</b>
+              Method is called when a component gets updated, it has to re-render
+              the HTML to the DOM, with the new changes.
+              <br />
+              <br />
+
+              <b>componentDidUpdate: </b>
+              The componentDidUpdate method is called after the component is updated in the DOM.
+              <br />
+              <br />
+              <b>Unmounting: </b>
+              componentWillUnmount:
+              <br />
+              This method is called when the component is about to be removed from the
+              DOM.
+              <br />
+              <div style={titles}>
+                <PrismCode
+                  code={code}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <p>This method is called when there is an error during rendering, in a lifecycle method, or in the constructor of any
+                child component. </p>
+              <ul>
+                <li>b. componentDidCatch</li>
+              </ul>
+              <br />
+
+              <h3>20. Event</h3>
+              <p>
+                In React, events are the triggered reactions to specific actions like mouse hover, mouse click, key press, etc.
+              </p>
+              <ul>
+                <li>1. Events are passed as functions instead of strings. </li>
+                <li>
+                  2. The event argument contains a set of properties, which are specific to an event. Each event type contains its own
+                  properties and behavior which can be accessed via its event handler only.
+                </li>
+              </ul>
+              <br />
+
+              <h3>21. What are synthetic events in React?</h3>
+              <p>
+                Synthetic events are the objects which act as a cross-browser wrapper around the browser’s native event. They combine
+                the behavior of different browsers into one API. This is done to make sure that the events show consistent properties
+                across different browsers.
+              </p>
+              <b>Ex. </b>preventDefault
+              <br />
+            </List>
           </Paper>
         </Grid>
       </Grid>

@@ -528,48 +528,7 @@ function validateInput() {
     return errors;
 }`.trim();
 
-const steps = `
-class App extends Component {
-   state = { inputValue: "" };
- 
- handleUpdate = (e) => {
-   if (e.target.validity.valid) {
-     this.setState({ inputValue: e.target.value }); 
-   }
- }
- 
- reset = () => {
-   this.setState({ inputValue: "" }); 
- }
- 
- render() {
-   return (
-     <div>
-       <input type="number" value={this.state.inputValue} onChange={this.handleUpdate} step="any" />
-       <button onClick={this.reset}>reset</button>
-     </div>
-   )
- }  
- }`.trim();
 
-const dateTime = `
- //1
- function date_time() {
-   return Date();
- }
- 
- //2
- function formatDate(dayOfWeek, day, month, year) {
-   var daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-   var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-       return daysOfWeek[dayOfWeek] + " " + months[month] + " " + day + " " + year; }
- 
-   var birthday = new Date(Date.UTC(2000,0,1)); 
-   var birthDay = formatDate(birthday.getUTCDay(), birthday.getUTCDate(),     
-   birthday.getUTCMonth(), birthday.getUTCFullYear())
- 
- 
- export { date_time, birthDay }`.trim();
 
 class NumberForm extends Component {
   componentDidMount() {
@@ -634,24 +593,7 @@ class NumberForm extends Component {
               </div>
               <br />
 
-              <h3>6. Step Input</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={steps}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-
-              <br />
-              <h3>7. Date_time</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={dateTime}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
+              
             </List>
           </Paper>
         </Grid>

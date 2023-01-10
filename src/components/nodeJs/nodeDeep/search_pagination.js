@@ -410,11 +410,11 @@ app.use("/items",PostRoutes)
 
 const postman = `
 {
-	"info": {
-		"_postman_id": "2adff8c6-a833-4fdd-8846-929dea464969",
-		"name": "NodejsAuth",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
+"info": {
+	"_postman_id": "2adff8c6-a833-4fdd-8846-929dea464969",
+	"name": "NodejsAuth",
+	"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+},
 	"item": [
 		{
 			"name": "Create Users",
@@ -729,9 +729,9 @@ const postman = `
 					"script": {
 						"id": "0e178f47-3f34-456f-b738-ca330497c1f3",
 						"exec": [
-							"if(pm.response.code === 200 ){",
-							"    pm.environment.set('authtoken', pm.response.json().token)",
-							"}"
+						"if(pm.response.code === 200 ){",
+						"pm.environment.set('authtoken', pm.response.json().token)",
+						"}"
 						],
 						"type": "text/javascript"
 					}

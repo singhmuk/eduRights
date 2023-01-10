@@ -171,6 +171,21 @@ export class ChildComponent implements
     }
 }`.trim();
 
+const fullResponse = `
+getUserResponse(): Observable<HttpResponse<User>> {
+  return this.http.get<User>(
+    this.userUrl, { observe: 'response' });
+}`.trim();
+
+const performError = `
+fetchUser() {
+  this.userService.getProfile()
+    .subscribe(
+      (data: User) => this.userProfile = { ...data }, // success path
+      error => this.error = error // error path
+    );
+}`.trim();
+
 
 class AngularLifeCycle extends Component {
   componentDidMount() {
@@ -188,7 +203,7 @@ class AngularLifeCycle extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>lifecycle hook</h3>
+              <h3>1. lifecycle hook</h3>
               Constructor excuite first. If we need to inject any
               dependencies into component, then Constructor is the best place to inject those dependencies.
               After excuitiing Constructor angular excuites its lifecycle hooks in a specific order.
@@ -307,6 +322,73 @@ class AngularLifeCycle extends Component {
               <div style={titles}>
                 <PrismCode
                   code={childcompo}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>2. Describe the MVVM architecture. </h3>
+              MVVM architecture removes tight coupling between each component. The MVVM architecture comprises of three parts:
+              <br />
+              <ul>
+                <li>Model</li>
+                <li>View</li>
+                <li>ViewModel</li>
+              </ul>
+              The architecture allows the children to have reference through observables and not directly to their parents.
+              <br />
+
+              <h3>3. How do you update the view if your data model is updated outside the ‘Zone’?</h3>
+              <ul>
+                <li>Using the <b>ApplicationRef.prototype.tick</b> method, which will run change detection on the entire component tree.</li>
+                <li>Using <b>NgZone.prototype.run</b> method, which will also run change detection on the entire tree. The run method under the hood itself calls tick, and the parameter takes the function you want to perform before tick.</li>
+                <li>Using the <b>ChangeDetectorRef.prototype.detectChanges</b> method, which will launch change detection on the current component and its children.</li>
+              </ul>
+              <br />
+
+              <h3>4. What is the use of Codelyzer</h3>
+              <ul>
+                <li>All enterprise applications follows a set of coding conventions and guidelines to maintain code
+                  in better way. Codelyzer is a tool to run and check whether the pre-defined coding guidelines has
+                  been followed or not.
+                  <br />
+                  Codelyzer does only static code analysis for angular and typescript project.</li>
+                <br />
+                <li>Codelyzer can be run via angular cli or npm directly.</li>
+              </ul>
+              <br />
+
+              <h3>5. Why should ngOnInit be used, if we already have a constructor</h3>
+              <ul>
+                <li>The Constructor is a default method of the class that is executed when the class is instantiated
+                  and ensures proper initialization of fields in the class and its subclasses.</li>
+                <li>ngOnInit is a life cycle hook called by Angular to indicate that Angular is done creating the
+                  component.</li>
+                <li>We use ngOnInit for all the initialization/ declaration in the constructor. The constructor should only be used to
+                  initialize class members but shouldn't do actual "work". So you should use constructor() to setup Dependency Injection
+                  and not much else. ngOnInit() is better place to "start" - it's where/ when components' bindings are resolved.</li>
+              </ul>
+              <br />
+
+              <h3>6. How can you read full response</h3>
+              The response body doesn't may not return full response data because sometimes servers also return special headers or status code which are important for the application workflow. Inorder to get full response, you should use observe option from HttpClient,
+              <div style={titles}>
+                <PrismCode
+                  code={fullResponse}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              Now HttpClient.get() method returns an Observable of typed HttpResponse rather than just the JSON data.
+              <br />
+
+              <h3>7. How do you perform Error handling</h3>
+              If the request fails reach the server due to network issues then HttpClient will return an error
+              object instead of a successful reponse. In this case, need to handle in the component by passing error object as a second callback to subscribe() method.
+              <div style={titles}>
+                <PrismCode
+                  code={performError}
                   language="js"
                   plugins={["line-numbers"]}
                 />

@@ -23,9 +23,7 @@ const styles = theme => ({
 })
 
 
-const variables = `var person = "John Doe"; `.trim();
 
-const object = `Const emp={id:102,name:"Shyam Kumar",salary:40000} `.trim();
 
 const Keywords = `
 function Person(first, last, age, interests) {
@@ -68,38 +66,7 @@ console.log(obj[ageField]);
 
 obj["greet me"]();`.trim();
 
-const constructor = `
-class obj{
-  constructor(id,name){
-    this.id=id,
-    this.name=name,
-    
-    this.display = function(other){
-      return console.log(other+"------"+this.name+"pppppp");
-      }
-    }
-  
-  show(){
-    return console.log(this.id,"----",this.name)
-    }
-  }
 
-const newObj=new obj(1,'Mukesh');
-newObj.show();
-newObj.display('890');
-`.trim();
-
-
-const destructure = `
-const hero = {
-  name: 'Batman',
-  realName: 'Bruce Wayne'
-};
-
-const { name, realName } = hero;
-console.log(name, realName)
-
-`.trim();
 
 const coercion = `
   const adder =true+5
@@ -127,89 +94,11 @@ JSON.stringify(undefined);                                                      
 JSON.stringify(function(){});                                                                   //undefined
 JSON.stringify([1,undefined,function(){},4]);                                                   //[1,null,null,4]
 JSON.stringify({a:2, b:function(){}});                                                          //{"a":2}
-   
-   
-//3
-var a={
-   val:[1,2,3],
-   toJSON: function(){
-       return this.val.slice(1);	
-       } 
-     };
-
-var b={				
-   val:[1,2,3],
-     toJSON: function(){                                                         // probably incorrect!
-       return [this.val.slice(1).join()];
-     }
- };
-
- console.log(JSON.stringify(a));                                                                 //[2,3]
- console.log(JSON.stringify(b));                                                                 //["2,3"]
-   
-   
-//Json Parse And Json Stringify
-var text = '{"employees":[' +
- '{"firstName":"John","lastName":"Doe" },' +
- '{"firstName":"Anna","lastName":"Smith" },' +
- '{"firstName":"Peter","lastName":"Jones" }]}';
-
-const obj = JSON.parse(text);
-console.log(obj);
-
-
-var obj2 = { name: "John", age: 30, city: "New York" };
-console.log(JSON.stringify(obj2));
 `.trim();
 
-const callbackJs = `
-function greeting(name) {
-  alert('Hello ' + name);
-}
 
-function main(callback) {
-  var name = prompt('Please enter your name.');
-  callback(name);
-}
-
-main(greeting);
-
-
-//2
-function greeting(name){
-  console.log('greeting', name);
-}
-
-function main(){
-  const str = "Welcome";
-  console.log(str);
-  greeting('name')
-}
-
-main();
-`.trim();
 
 const callbackFun = `
-//1
-const throwError = () => {
-  throw "Who made this function?"
- }
- 
- const someAsyncListener = (callback, ) => {
-  setTimeout(callback)
- }
- 
- // THIS DOES NOT CATCH!
- try {
-  someAsyncListener(throwError)
-}
-catch (error) {
- console.log(error)
-}
-console.log("I'm alive!");
-
-
-//2
 const someSyncListener = (callback, ) => {
   callback()
  }
@@ -318,54 +207,7 @@ getUser(user => {
   console.log(user.name) 
 })`.trim();
 
-const chaineds = `
- function one() {
-    console.log('one');
-    setTimeout(() => {
-      console.log('two');
-        }, 1000);
-      setTimeout(() => {
-        console.log("three");
-      });
-   }
- one();
- 
- 
- //2 Promises Chaning
- new Promise((resolve, reject) => {
-  setTimeout(() => resolve(1), 1000);
-    })
-    
-.then((result) => {
-    alert(result); return result * 3;
-    })
-.then((result) => {
-    alert(result); return result * 4;
-    })
-.then((result) => {
-    alert(result); return result * 6;
-});
 
-//asyncify
-function asyncify(fn) {
-  var orig_fn = fn,
-      intv = setTimeout(function() {
-          intv = null;
-          if (fn) fn();
-      }, 0);
-
-  fn = null;
-
-  return function() {
-      if (intv) {
-          fn = orig_fn.bind.apply(
-              orig_fn, [this].concat([].slice.cell(arguments))
-          );
-      } else {
-          orig_fn.apply(this, arguments);
-      }
-  }
-}`.trim();
 
 
 
@@ -461,81 +303,7 @@ class JsObject extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>1. Objects</h3>
-              An object is a collection of related data/ functionality (properties and methods).
-              <br />
-              <br />
-              <b>JavaScript Objects?</b>
-              <br />
-              <ul>
-                <li>A javaScript object is an entity having state and behavior.
-                </li>
-                <li>JavaScript is an object-based language. Everything is an object in JavaScript.</li>
-                <li>JavaScript is template based not class based. Here, we don't create class to get the
-                  object. But, we direct create objects.
-                </li>
-              </ul>
-              <br />
-              <br />
-
-              <i>There are 4 ways to create objects.</i>
-              <br />
-
-              <b>1.Objects are Variables</b>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={variables}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>2.Using an Object Literal</b>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={object}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-
-              <b>3. Constructors and object instances with new keyword</b>
-              <ul>
-                <li>Constructor functions used to define and initialize objects and their features.</li>
-                <li>constructors provide the means to create as many objects as need in an effective way,
-                  attaching data and functions to them as required.
-                </li>
-              </ul>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={Keywords}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>4.By using an Object constructor:</b>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={constructor}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>2. Extract Object Value</h3>
+              <h3>1. Extract Object Value</h3>
               <div style={titles}>
                 <PrismCode
                   code={extract}
@@ -545,23 +313,13 @@ class JsObject extends Component {
               </div>
               <br />
 
-              <h3>3. Object Destructuring</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={destructure}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>4. Array_like_Objects</h3>
+              <h3>2. Array_like_Objects</h3>
               Diﬀerence between Arrays and Array-like Objects is that Array-like objects inherit from Object.prototype
               instead of Array.prototype. This means that Array-like Objects can't access common Array
               prototype methods like forEach(), push(), map(), filter(), and slice().
               <br />
 
-              <h3>5. Coercion</h3>
+              <h3>3. Coercion</h3>
               <i>The first ! coerce the value to a boolean and inverse it. In this case, !value will return false. So to
                 reverse it back to true, we put another ! on it. Hence the double use !!.
               </i>
@@ -574,7 +332,7 @@ class JsObject extends Component {
               </div>
               <br />
 
-              <h3>6. JSON</h3>
+              <h3>4. JSON</h3>
               Converting a string to a native object is called deserialization, while converting a native object to a string
               so it can be transmitted across the network is called serialization.
               <br />
@@ -617,30 +375,7 @@ class JsObject extends Component {
               </div>
               <br />
 
-              <h3>7. Callback Function</h3>
-              <i>
-                A callback function is a function passed into another function as an argument, which is then
-                invoked inside the outer function to complete some kind of action.
-              </i>
-              <div style={titles}>
-                <PrismCode
-                  code={callbackJs}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <ul>
-                <li>with Callback function javaScript bild an asynchronous wold of a synchronous single-threaded language.</li>
-                <li>Almost anything that has to pull data into your app or push data out will always
-                  be asynchronous because it’s not going to be running in the same thread.
-                  callbacks do not work with try-catch.</li>
-                <li>Although, if your callback is synchronous, then you can catch errors using try-catch</li>
-              </ul>
-              <br />
-
+              <h3>5. Callback Function with try/catch</h3>
               <div style={titles}>
                 <PrismCode
                   code={callbackFun}
@@ -701,28 +436,7 @@ class JsObject extends Component {
               </div>
               <br />
 
-              <h3>8. Promises</h3>
-              <ul>
-                <li>
-                  Promise is an object that represents the completion/ failure of an asynchronous task and its resulting value.
-                </li>
-                <li>A promise is a returned object which contain callbacks, instead of passing callbacks into a function.</li>
-              </ul>
-              <br />
-              <br />
-
-              <b>Unlike old-fashioned passed-in callbacks, a promise comes with some guarantees:</b>
-              <br />
-              <ul>
-                <li>Callbacks will never be called before the completion of the current run of the JavaScript event loop.</li>
-                <li>Callbacks added with then(), will be called even after the success/ failure of the asynchronous operation.</li>
-                <li>Multiple callbacks may be added by calling then() several times. Each callback is executed one after another,
-                  in the order in which they were inserted.</li>
-                <li>One of the great things about using promises is chaining.</li>
-              </ul>
-              <br />
-              <br />
-
+              <h3>6. Promises</h3>
               <b>Callback Promises</b>
               <div style={titles}>
                 <PrismCode
@@ -731,22 +445,6 @@ class JsObject extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br />
-
-              <h3>9. Chaining</h3>
-              A common need is to execute two/ more asynchronous operations back to back, where each subsequent operation
-              starts when the previous operation succeeds, with the result from the previous step. This is promise chain.
-              <br />
-              <br />
-              <b>Chained Callback</b>
-              <div style={titles}>
-                <PrismCode
-                  code={chaineds}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              Always return results, otherwise callbacks won't catch the result of a previous promise.
               <br />
               <br />
 
@@ -783,10 +481,6 @@ class JsObject extends Component {
               In both cases, the event (PromiseRejectionEvent) has as members a promise property indicating the promise that
               was rejected, and a reason property that provides the reason given for the promise to be rejected.
               <br />
-              <br />
-              These make it possible to offer fallback error handling for promises, as well as to help debug issues with your
-              promise management. These handlers are global per context, so all errors will go to the same event handlers,
-              regardless of source.
               <div style={titles}>
                 <PrismCode
                   code={possible}
@@ -799,7 +493,7 @@ class JsObject extends Component {
               rejected promises go unhandled.
               <br />
 
-              <h3>10. Composition</h3>
+              <h3>7. Composition</h3>
               <ul>
                 <li>Promise.resolve() and Promise.reject() are shortcuts to manually create an already resolved or rejected promise respectively.</li>
                 <li>Promise.all() and Promise.race() are two composition tools for running asynchronous operations in parallel.</li>
@@ -815,7 +509,7 @@ class JsObject extends Component {
               </div>
               <br />
 
-              <h3>11. Timing</h3>
+              <h3>8. Timing</h3>
               To avoid surprises, functions passed to then() will never be called synchronously, even with an already-resolved promise.
               <br />
               Instead of running immediately, the passed-in function is put on a microtask queue, which means it runs later
@@ -829,7 +523,7 @@ class JsObject extends Component {
               </div>
               <br />
 
-              <h3>12. Task queues vs microtasks</h3>
+              <h3>9. Task queues vs microtasks</h3>
               <ul>
                 <li>Promise callbacks are handled as a <b>Microtask</b>.</li>
                 <li>setTimeout() callbacks are handled as <b>Task queues</b>.</li>

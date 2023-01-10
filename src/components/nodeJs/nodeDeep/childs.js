@@ -145,7 +145,7 @@ var numCPUs = require('os').cpus().length;
 
 if (cluster.isMaster) {
     for (var i = 0; i < numCPUs; i++) {
-        cluster.fork();
+        cluster.fork();                 
     }
 }
 
@@ -220,7 +220,7 @@ app.get("/", (req, res) => {
 
 if (cluster.isMaster) {
   for (let i = 0; i < numCpu; i++) {
-    cluster.fork();
+    cluster.fork();                     
   }
   cluster.on("exit", (Worker, code, signal) => {
     console.log('worker '$'{Worker.process.pid} died');
@@ -244,7 +244,7 @@ if (cluster.isMaster) {
   let noOcCups = os.cpus().length;
   console.log('Master Process is running', process.pid)
   for (let i = 0; i < noOcCups; i++) {
-    cluster.fork()
+    cluster.fork()                              //create copy of main server where required
   }
   cluster.on('exit', () => {
     console.log('One worker destroyed')
@@ -300,14 +300,7 @@ class ChildsPros extends Component {
                 cannot handle increasing workload so, the child_process module can be used to spawn child
                 processes. The child processes communicate with each other using a built-in messaging system.
               </p>
-              The following are the four different ways to create a child process in Node.js:
-              <ul>
-                <li>spawn() method</li>
-                <li>fork() method</li>
-                <li>exec() method</li>
-                <li>execFile() method</li>
-              </ul>
-              <br />
+              <br/>
 
               <h3>Spawning Processes</h3>
               <ul>
@@ -453,23 +446,7 @@ class ChildsPros extends Component {
               <br />
 
               <h3>Cluster Module</h3>
-              Cluster module allows to create child processes that each runs on their own single thread, to handle the load.
-              <br />
-              <br />
-              <ul>
-                <li>
-                  Cluster is a process to handle thread execution load while working with multi-core systems.
-                </li>
-                <li>
-                  To split a single Node process into multiple processes. The cluster module provides a way of creating child processes
-                  that runs simultaneously and share the same server port.
-                </li>
-                <li>
-                  But to take advantage of computers multi-core systems, the Cluster module allows you to easily create child processes
-                  that each runs on their own single thread, to handle the load.
-                </li>
-              </ul>
-              <br />
+              
               <div style={titles}>
                 <PrismCode
                   code={cpus}
@@ -569,18 +546,6 @@ class ChildsPros extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br />
-
-              <h3>Scaling node js using cluster</h3>
-              <ul>
-                <li>To handle large loads we cant take the advantage of multi-core systems, so we can use a cluster of Node.js processes to handle the load.</li>
-                <li>Cluster creates the copies of our programme and distributes among the process available which means if have four core machine then it will create the four copies of the programme and provides to each core. The cluster module allows easy creation of child processes that all share server ports.</li>
-                <li>Cluster manages with two methods of distributing incoming connections.</li>
-                <ul>
-                  <li>1. Round-robin approach, where the master process listens on a port, accepts new connections and distributes them across the workers in a round-robin fashion, with some built-in smarts to avoid overloading a worker process.</li>
-                  <li>2. In the master process creates the listen socket and sends it to interested workers. The workers then accept incoming connections directly. But the issue with that is load is not evenly distributed among all the processes.</li>
-                </ul>
-              </ul>
             </List>
           </Paper>
         </Grid>

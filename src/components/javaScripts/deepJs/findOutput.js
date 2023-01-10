@@ -193,42 +193,7 @@ console.log(Array.isArray(v1));                                                 
 console.log(Array.isArray(v2));                                                                     // true
 `.trim();
 
-const shallow = `
-//Deep copy array
-var arr = ['Mukesh', 'Rakesh', 'Niketh'];
-var newArr = arr;
-newArr[0] = '100';
-console.log(arr, newArr);
 
-
-//Deep copy object
-const obj2 = {size:10, owner:'Sid', isCarNonAc:true };
-const newObj2 = obj2;
-newObj2.model = "0%";
-obj2.isCarNonAc = false;
-console.log(newObj2, obj2)
-
-
-//Shallow Copy array:
-var arr = ['Mukesh', 'Rakesh', ['100', 200], {x:100} ];
-var arr2 = ['Sid']
-var newArr = arr2.concat(arr);
-newArr[0] = 'concat'
-newArr[4] = 'change'
-console.log(newArr, arr)
-
-
-//Shallow Copy Object:
-var obj={
-  age:10,
-  gender:'male',
-  hobbies: ['a', 'b', 'c']
-}
-
-var newObj = Object.assign({}, obj);
-newObj.age = 100;
-newObj.hobbies[0] = 'd';
-console.log(newObj, obj)`.trim();
 
 const commonEl = `
 const arr = [1, 2, 3, 3, 2];
@@ -275,29 +240,7 @@ arr = arr.concat(arr);
 
 console.log(arr)`.trim();
 
-const convertObj = `
-let obj = { id: "1", name: "Test User", age: "25", profession: "Developer" };
 
-
-console.log(Object.keys(obj));                     //Convert the keys to Array using - Object.keys().
-
-console.log(Object.values(obj));                   //Converts the Values to Array using - Object.values().
-
-console.log(Object.entries(obj));                  //Converts both keys and values using - Object.entries().
-`.trim();
-
-const convertArr = `
-let arr = ["1", "Test User", "25", "Developer"];
-let arr1 = [
-  ["id", "1"],
-  ["name", "Test User"],
-  ["age", "25"],
-  ["profession", "Developer"],
-];
-
-console.log(Object.assign({}, arr));
-console.log({ ...arr });
-console.log(Object.fromEntries(arr1));`.trim();
 
 const removeEl = `
 var arr = [1, 2, 3, 4, 5, 3]
@@ -538,6 +481,36 @@ delete courses[2];
 
 console.log(courses);
 console.log(courses.length);
+`.trim();
+
+const operators = `
+function test1(name) {
+  var a = name;
+  function test2() {
+    console.log(this.a);
+  }
+  test2();
+}
+test1("John");
+`.trim();
+
+const entire = `
+console.log(1); 
+Promise.resolve().then( 
+  console.log(2) 
+); 
+setTimeout(function () {
+ console.log(3) 
+}, 10); 
+Promise.resolve().then( 
+  console.log(4) 
+); 
+Promise.resolve().then( 
+ setTimeout(function () {
+    console.log(5) 
+  }, 10) 
+); 
+console.log(6);                                         // 1,6,2,4,5,3
 `.trim();
 
 // const diffop = ``.trim();
@@ -811,22 +784,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>16. Shallow Copy And Deep Copy</h3>
-              <ul>
-                <li><b>Shallow copy: </b>Coping one top level element.</li>
-                <li><b>Deep copy:</b>Coping nested elements.</li>
-                <li>Object and array are assigned by reference. By reference both array value changed</li>
-              </ul>
-              <div style={titles}>
-                <PrismCode
-                  code={shallow}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>17. Occurence elements in the array</h3>
+              <h3>16. Occurence elements in the array</h3>
               <div style={titles}>
                 <PrismCode
                   code={commonEl}
@@ -836,7 +794,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>18. Find unque element in array (hasOwnProperty)</h3>
+              <h3>17. Find unque element in array (hasOwnProperty)</h3>
               <p>
                 The hasOwnProperty() is used to check whether the object has the specified property as its
                 own property. It returns a boolean value indicating whether the object has the given
@@ -851,7 +809,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>19. Group Elements</h3>
+              <h3>18. Group Elements</h3>
               <div style={titles}>
                 <PrismCode
                   code={groupEl}
@@ -861,7 +819,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>20. Make duplicate elements in an array</h3>
+              <h3>19. Make duplicate elements in an array</h3>
               <div style={titles}>
                 <PrismCode
                   code={duplicateEl}
@@ -871,27 +829,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>21. How to convert an Object { } into an Array [] </h3>
-              <div style={titles}>
-                <PrismCode
-                  code={convertObj}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>22. How to convert an Array [] to Object { }</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={convertArr}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>23. Remove a specific item from an array</h3>
+              <h3>20. Remove a specific item from an array</h3>
               <div style={titles}>
                 <PrismCode
                   code={removeEl}
@@ -901,7 +839,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>24. Delete a property from an object</h3>
+              <h3>21. Delete a property from an object</h3>
               <div style={titles}>
                 <PrismCode
                   code={deletePro}
@@ -911,7 +849,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>25. Insert an element at specific place in Array</h3>
+              <h3>22. Insert an element at specific place in Array</h3>
               <div style={titles}>
                 <PrismCode
                   code={specificEl}
@@ -921,7 +859,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>26. Checking if a key exists in a JavaScript object</h3>
+              <h3>23. Checking if a key exists in a JavaScript object</h3>
               <div style={titles}>
                 <PrismCode
                   code={Checking}
@@ -931,7 +869,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>27.</h3>
+              <h3>24.</h3>
               <div style={titles}>
                 <PrismCode
                   code={findOutput}
@@ -941,7 +879,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>28.</h3>
+              <h3>25.</h3>
               <div style={titles}>
                 <PrismCode
                   code={findOutput2}
@@ -951,7 +889,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>29.</h3>
+              <h3>26.</h3>
               <ul>
                 <li>It’s because JavaScript initialization is not hoisted.</li>
                 <li>Why doesn’t it show the global value of 21? The reason is that when the function is executed, it
@@ -968,7 +906,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>30.</h3>
+              <h3>27.</h3>
               <div style={titles}>
                 <PrismCode
                   code={findOutput4}
@@ -978,7 +916,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>31.</h3>
+              <h3>28.</h3>
               <div style={titles}>
                 <PrismCode
                   code={findOutput5}
@@ -988,7 +926,7 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>32.</h3>
+              <h3>29.</h3>
               typeof 1 will return "number" and typeof "number" will return string.
               <div style={titles}>
                 <PrismCode
@@ -999,7 +937,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>33. Which operator returns true if the two compared values are not equal?</h3>
+              <h3>30. Which operator returns true if the two compared values are not equal?</h3>
               <div style={titles}>
                 <PrismCode
                   code={operator}
@@ -1009,19 +947,19 @@ class FindOutput extends Component {
               </div>
               <br />
 
-              <h3>34. How is a forEach statement different from a for statement?</h3>
+              <h3>31. How is a forEach statement different from a for statement?</h3>
               A for statement is generic, but a forEach statement can be used only with an array.
               <br/>
 
-              <h3>35. How does a function create a closure?</h3>
+              <h3>32. How does a function create a closure?</h3>
               It returns a reference to a variable in its parent scope.
               <br/>
 
-              <h3>36. Which Object method returns an iterable that can be used to iterate over the properties of an object?</h3>
+              <h3>33. Which Object method returns an iterable that can be used to iterate over the properties of an object?</h3>
               Object.keys()
               <br/>
 
-              <h3>37. What will be logged to the console?</h3>
+              <h3>34. What will be logged to the console?</h3>
               <div style={titles}>
                 <PrismCode
                   code={logged}
@@ -1031,7 +969,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>38. Add operator.</h3>
+              <h3>35. Add operator.</h3>
               <div style={titles}>
                 <PrismCode
                   code={addOp}
@@ -1041,11 +979,11 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>39. Which variable is an implicit parameter for every function in JavaScript?</h3>
+              <h3>36. Which variable is an implicit parameter for every function in JavaScript?</h3>
               Arguments
               <br/>
 
-              <h3>40. What will the value of y be in this code:</h3>
+              <h3>37. What will the value of y be in this code:</h3>
               <div style={titles}>
                 <PrismCode
                   code={vals}
@@ -1055,11 +993,11 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>41. Which keyword is used to create an error?</h3>
+              <h3>38. Which keyword is used to create an error?</h3>
               throw
               <br/>
 
-              <h3>42. What is the result in the console of running this code?</h3>
+              <h3>39. What is the result in the console of running this code?</h3>
               <div style={titles}>
                 <PrismCode
                   code={running}
@@ -1069,7 +1007,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>43. What will this code log to the console?</h3>
+              <h3>40. What will this code log to the console?</h3>
               <div style={titles}>
                 <PrismCode
                   code={thiscode}
@@ -1079,7 +1017,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>44. What does this code do?</h3>
+              <h3>41. What does this code do?</h3>
               <div style={titles}>
                 <PrismCode
                   code={doesCode}
@@ -1089,11 +1027,11 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>45. Upon encountering empty statements, what does the Javascript Interpreter do?</h3>
+              <h3>42. Upon encountering empty statements, what does the Javascript Interpreter do?</h3>
                 Ignores the statements.
               <br/>
 
-              <h3>46. What will be the output of the following code snippet?</h3>
+              <h3>43. What will be the output of the following code snippet?</h3>
               <div style={titles}>
                 <PrismCode
                   code={snippet}
@@ -1103,7 +1041,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>47. </h3>
+              <h3>44. </h3>
               <div style={titles}>
                 <PrismCode
                   code={outputs}
@@ -1113,7 +1051,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>48. </h3>
+              <h3>45. </h3>
               <div style={titles}>
                 <PrismCode
                   code={inside}
@@ -1122,7 +1060,7 @@ class FindOutput extends Component {
                 />
               </div>
 
-              <h3>49. </h3>
+              <h3>46. </h3>
               <div style={titles}>
                 <PrismCode
                   code={argu}
@@ -1132,7 +1070,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>50. </h3>
+              <h3>47. </h3>
               <div style={titles}>
                 <PrismCode
                   code={diffop}
@@ -1142,14 +1080,14 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>51. Is JavaScript a pass-by-reference or pass-by-value language?</h3>
+              <h3>48. Is JavaScript a pass-by-reference or pass-by-value language?</h3>
               It’s always pass by value, but for objects the value of the variable is a reference. Because of this, when you pass 
               an object and change its members, those changes persist outside of the function. This makes it look like pass by 
               reference. But if you actually change the value of the object variable you will see that the change does not 
               persist, proving it’s really pass by value.
               <br/>
 
-              <h3>52. </h3>
+              <h3>49. </h3>
               <div style={titles}>
                 <PrismCode
                   code={actually}
@@ -1159,7 +1097,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>53. How to “deep-freeze” object in JavaScript?</h3>
+              <h3>50. How to “deep-freeze” object in JavaScript?</h3>
               If you want make sure the object is deep frozen you have to create a recursive function to freeze each property 
               which is of type object.
               <div style={titles}>
@@ -1171,7 +1109,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>54.  Is it possible to write a multi-line string in JavaScript?</h3>
+              <h3>51.  Is it possible to write a multi-line string in JavaScript?</h3>
               <ul>
                 <li>Using backticks</li>
                 <li>Using + operator</li>
@@ -1186,7 +1124,7 @@ class FindOutput extends Component {
               </div>
               <br/>
 
-              <h3>55. </h3>
+              <h3>52. </h3>
               <div style={titles}>
                 <PrismCode
                   code={following}
@@ -1196,6 +1134,26 @@ class FindOutput extends Component {
               </div>
               <i>The delete operator does not really affect the entire length of the array as the operates removes only the value 
                 which is there at the position. </i>
+                <br/>
+
+              <h3>53. </h3>
+              <div style={titles}>
+                <PrismCode
+                  code={operators}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>54. </h3>
+              <div style={titles}>
+                <PrismCode
+                  code={entire}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
             </List>
           </Paper>
         </Grid>

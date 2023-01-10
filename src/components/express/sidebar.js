@@ -33,6 +33,8 @@ export default function Sidebar() {
         <MenuItem><Link to='/jqueries' className={classes.line}>jqueries</Link></MenuItem>
         <MenuItem><Link to='/backbonejs' className={classes.line}>Backbone</Link></MenuItem>
         <MenuItem><Link to='/underscorejs' className={classes.line}>Underscore</Link></MenuItem>
+        <b>Networks</b>
+        <MenuItem><Link to='/network' className={classes.line}>Underscore</Link></MenuItem>
       </MenuList>
       <div>
       </div>

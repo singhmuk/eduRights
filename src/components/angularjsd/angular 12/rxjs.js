@@ -22,66 +22,100 @@ const styles = theme => ({
   }
 })
 
-const purejs = `
-//html
-<html>
-  <script src="https://unpkg.com/@reactivex/rxjs@5.3.0/dist/global/Rx.js"></script>
-  <body>
-    <button>Click me</button>
-    <script src="app.js"></script>
-  </body>
-</html>
+const subscribes=`
+.subscribe(
+  (data => console.log(data),
+  (err => console.log(err),
+  (() => console.log('complate'))
+)`.trim();
 
+const rxjsfrom=`
+//import { from } from 'rxjs';
+export class AppComponent  {
+  ngOnInit(){
+    const data = from(fetch('https://jsonplaceholder.typicode.com/posts'));
 
-//js
-document.addEventListener('click', (event) => console.log(event));
-
-
-//2
-var button = document.querySelector('button');
-
-Rx.Observable.fromEvent(button, 'click')
-  .subscribe(
-    (value) => console.log(value.clientX)
-  );
+    data.subscribe({
+      next(res) { console.log(res); },
+      error(err) { console.error('Error: ' + err); },
+      complete() { console.log('Completed'); }
+    });
+  }
+}
 `.trim();
 
-const observables = `
+const mapfil=`
+//import { of } from 'rxjs';
+//import { map } from 'rxjs/operators';
 
+export class AppComponent  {
+  val:any=[];
+  
+  ngOnInit(){
+    const nums = of(1, 2, 3);
+
+    const squr = map((val: number) => val * val);
+    const sqNum = squr(nums);
+
+    sqNum.subscribe(x => this.val.push(x));
+  }
+}
 `.trim();
 
-const execs = `
-var button = document.querySelector('button');
+const mapipe=`
+//import { of } from 'rxjs';
+//import { filter, map } from 'rxjs/operators';
 
-var observer = {
-  next: function (value) {
-    console.log(value);
-  },
-  error: function (error) {
-    console.log(error);
-  },
-  complete: function () {
-    console.log('Completed');
+export class AppComponent  {
+  val:any=[];
+
+  ngOnInit(){
+    const squareOdd = of(1, 2, 3, 4, 5)
+    .pipe(
+      filter(n => n % 2 !== 0),
+      map(n => n * n)
+    );
+
+    squareOdd.subscribe(x => this.val.push(x));
   }
-};
+}
+`.trim();
 
-//Rx.Observable.fromEvent(button, 'click')
-var subscription = Rx.Observable.create(function (obs) {
-  //obs.next('A value');
-  //obs.error('Error');
-  //setTimeout(function() {
-  //	obs.complete();
-  //  obs.next('A second value');
-  //}, 2000);
-  button.onclick = function (event) {
-    obs.next(event);
+const stcreate=`
+//import { Component, ElementRef, ViewChild } from '@angular/core';
+//import { fromEvent } from 'rxjs';
+
+export class AppComponent  {
+  constructor(){}
+  @ViewChild('addBtn')
+  addBtn!: ElementRef;
+
+  //stream create
+  ngAfterViewInit(){
+    fromEvent(this.addBtn.nativeElement, 'click').subscribe(res=>{
+      console.log(res)
+    })
   }
-})
-  .subscribe(observer);
+}
+`.trim();
 
-setTimeout(function () {
-  subscription.unsubscribe();
-}, 5000);
+const unsubscribe=`
+//import { interval, Subscription } from 'rxjs';
+export class AppComponent  {
+  intervalval=0;
+  videoSub!: Subscription;
+
+  ngOnInit(){
+    const broadcast = interval(1000)
+    this.videoSub = broadcast.subscribe(res=>{
+      this.intervalval = res;
+
+      if(res>5){
+        this.videoSub.unsubscribe()
+      }
+    })
+  }
+}
 `.trim();
 
 const throttleTime = `
@@ -123,215 +157,6 @@ subject.complete();
 subject.next('New value');
 `.trim();
 
-const filteringrxjs = `
-var observable = Rx.Observable.interval(1000);
-
-observable
-  .filter(function (value) {
-    return value % 2 == 0;
-  })
-  .subscribe({
-    next: function (value) {
-      console.log(value);
-    },
-    error: function (error) {
-      console.log('Error: ', error);
-    }
-  });
-`.trim();
-
-const debounceTime = `
-//html
-<html>
-  <script src="https://unpkg.com/@reactivex/rxjs@5.3.0/dist/global/Rx.js"></script>
-  <body>
-    <input type="text">
-      <script src="app.js"></script>
-  </body>
-</html>
-
-
-//js
-var input = document.querySelector('input');
-var observable = Rx.Observable.fromEvent(input, 'input');
-
-observable
-  .subscribe({
-    next: function (event) {
-      console.log(event.target.value);
-    }
-  });
-  
-  
-  
-//2
-var input = document.querySelector('input');
-var observable = Rx.Observable.fromEvent(input, 'input');
-
-observable
-  .map(event => event.target.value)
-  .debounceTime(500)
-  .distinctUntilChanged()
-  .subscribe({
-    next: function (value) {
-      console.log(value);
-    }
-  });
-`.trim();
-
-const scan = `
-var input = document.querySelector('input');
-var observable = Rx.Observable.of(1, 2, 3, 4, 5);
-
-observable
-  .subscribe({
-    next: function (value) {
-      console.log(value);
-    }
-  });
-
-
-
-//2
-var observable = Rx.Observable.of(1, 2, 3, 4, 5);
-
-observable
-  .scan((total, currentValue) => {
-    return total + currentValue;
-  }, 0)
-  .subscribe({
-    next: function (value) {
-      console.log(value);
-    }
-  });
-`.trim();
-
-const pluck = `
-var input = document.querySelector('input');
-var observable = Rx.Observable.fromEvent(input, 'input');
-
-observable
-  .subscribe({
-    next: function (event) {
-      console.log(event.target.value);
-    }
-  });
-
-
-//2
-var input = document.querySelector('input');
-var observable = Rx.Observable.fromEvent(input, 'input');
-
-observable
-  .pluck('target', 'value')
-  .debounceTime(500)
-  .distinctUntilChanged()
-  .subscribe({
-    next: function (value) {
-      console.log(value);
-    }
-  });
-`.trim();
-
-const mergeMap = `
-//html
-<body>
-    <input type="text" id="input1">
-      <input type="text" id="input2">
-        <p>Combined value: <span></span></p>
-        <script src="app.js"></script>
-      </body>
-      
-      
-//js
-var input1 = document.querySelector('#input1');
-var input2 = document.querySelector('#input2');
-
-var span = document.querySelector('span');
-
-var obs1 = Rx.Observable.fromEvent(input1, 'input');
-var obs2 = Rx.Observable.fromEvent(input2, 'input');
-
-obs1.mergeMap(
-event1 => {
-return obs2.map(event2 => event1.target.value + ' ' + event2.target.value)
-      }
-    ).subscribe(
-    combinedValue => span.textContent = combinedValue
-  );
-`.trim();
-
-const switchMaps = `
-var button = document.querySelector('button');
-
-var obs1 = Rx.Observable.fromEvent(button, 'click');
-var obs2 = Rx.Observable.interval(1000);
-
-obs1.switchMap(
-  event => {
-    return obs2
-  }
-).subscribe(
-  (value) => console.log(value)
-);
-`.trim();
-
-const BehaviorSubject = `
-var clickEmitted = new Rx.Subject();
-var button = document.querySelector('button');
-var div = document.querySelector('div');
-
-button.addEventListener('click', () => clickEmitted.next('Clicked!'));
-
-clickEmitted.subscribe(
-  (value) => div.textContent = value
-);
-
-
-//2
-var clickEmitted = new Rx.BehaviorSubject('Not clicked');
-var button = document.querySelector('button');
-var div = document.querySelector('div');
-
-button.addEventListener('click', () => clickEmitted.next('Clicked!'));
-
-clickEmitted.subscribe(
-  (value) => div.textContent = value
-);
-`.trim();
-
-const map = `
-import {Observable, interval} from 'rxjs';
-import {map} from "rxjs/operators";
-
-interval(1000).pipe(map(data => data * 2))
-              .subscribe((data:number) => {
-                console.log(data)
-              });
-
-
-
-//map
-import {Observable, interval, Subscriber, pipe} from 'rxjs';
-import {map} from "rxjs/operators";
-
-function fetchUser(){
-  const newObservable = new Observable((observer:Subscriber<unknown>) => {
-    const user={
-      data:{firstName: 'Sam', mob: 2345342290}
-    }
-    observer.next(user)
-  });
-  return newObservable.pipe(map(user)=>{
-    return user.data
-  })
-}
-
-
-fetchUser().Subscriber((user)=>{
-  console.log(user)
-})`.trim();
-
 const filter = `
 import {interval} from 'rxjs';
 import {filter, map} from "rxjs/operators";
@@ -344,104 +169,6 @@ observable.subscribe(data => {
   console.log(data);
 })
 `.trim();
-
-const switchMap = `
-import {Observable} from 'rxjs';
-import {switchMap} from "rxjs/operators";
-
-function buySugarInBulk(){
-  return new Observable(observer=>{
-    observer.next('Suger Perchased');
-  })
-}
-
-function getSuger(quantity){
-  return new Observable((observer)=>{
-    return observer.next('Suger ' +quantity+ 'for you' )
-  })
-}
-
-function getSugarFromShop(quantity){
-  return buySugarInBulk().pipe(switchMap(()=>{
-    return getSuger(quantity);
-  }));
-}
-
-getSugarFromShop('1Kg').subscribe(data=>{
-  console.log(data);
-});`.trim();
-
-const concatMap = `
-import {timer} from "rxjs";
-import {concatMap, map} from "rxjs/operators";
-
-const timer$ = timer(100, 500)
-                .pipe(map(data => data + 'timer1'));
-
-const timer2$ = timer(100, 500)
-                .pipe(map(data => data + 'timer2'));
-
-const observables = timer$.pipe(concatMap(timer1Data => {
-                 return timer2$.pipe(map(data => data + timer1Data));
-}))
-
-
-observables.subscribe(data => console.log(data));`.trim();
-
-const observableVsPromises = `
-function isBreadAvailable(){
-  return true;
-}
-
-function isAggAvailable(){
-  return false;
-}
-
-function bringBread(){
-  return new Promise((res, rej) =>{
-    if(isBreadAvailable()) {
-      res('Bread is Available');
-    }
-    else if(isAggAvailable){
-      res('Agg is Available')
-    }
-    else{
-      rej('Bread is bring')
-    }
-  })
-}
-
-bringBread().then((data)=>{
-  console.log(data);
-})
-.catch(err => {
-  console.log(err)
-})`.trim();
-
-const observableV = `
-import {BehaviorSubject, timeout} from 'rxjs';
-
-const data = ['A', 'B', 'C', 'D', 'E'];
-const fm = new BehaviorSubject('First Data');
-
-function changeSongs(){
-  for(let song of data){
-    fm.next(song);
-  }
-}
-
-
-fm.subscribe((song:string)=>{
-  console.log(song);
-});
-
-changeSongs();
-
-setTimeout(()=>{
-  fm.subscribe((song:string)=>{
-  console.log(song);
-});
-},1000);`.trim();
 
 const rxjxLibrary = `import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';`.trim();
@@ -523,6 +250,15 @@ export class PlaceholderService {
 }
 `.trim();
 
+const notifications = `
+interface Observer<T> {
+  closed?: boolean;
+  next: (value: T) => void;
+  error: (err: any) => void;
+  complete: () => void;
+}
+`.trim();
+
 
 class Rxjs extends Component {
   componentDidMount() {
@@ -540,10 +276,190 @@ class Rxjs extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>Rxjs With Pure Js (Reactive Extension for JavaScript)</h3>
+            <h3>1. What is HttpClient, and what are its benefits?</h3>
+                Angular applications communicate with backend services over HTTP protocol using HttpClient which is based on top of the XMLHttpRequest interface.
+                <br/>
+                <b>advantages:</b>
+                <ul>
+                  <li>Contains testability features</li>
+                  <li>Provides typed request and response objects</li>
+                  <li>Intercept request and response</li>
+                  <li>Supports Observable APIs</li>
+                  <li>Supports streamlined error handling</li>
+                </ul>
+                <br/>
+                <b>HttpClient implement 'Simplified syntax for headers' while, HTTP not.</b>
+              <br/>
+
+              <h3>2. Rxjs With Pure Js (Reactive Extension for JavaScript)</h3>
+              <ul>
+                <li>Rxjs is an external library, which used in reactive programming. we use observable to achieve asynchronous task.</li>
+                <li>Reactive Programming is programming with asynchronous data streams.</li>
+              </ul>
+              <br/>
+
+              <ul>
+                <li>Rxjs can use non-angular projects.</li>
+                <li>In angular project Rxjs not need to install because it come with angular.</li>
+                <li>RxJS makes it easy for JavaScript developers to write asynchronous code using composable Observables 
+                    instead of callbacks and Promises.</li>
+              </ul>
+              <br/>
+
+              <ul>
+                <li>Observables introduced in Rxjs. it's a data source. Observables work on data stream. to use those 
+                    stream data we need to subscribe. For subscribe observables data we use Observer. Observer is not 
+                    useful untill it subscribe. </li>
+                <li>Observables deals with synchronous and asynchronous both.</li>
+              </ul>
+              <br/>
+
+              <ul>
+                <b>Create Observables stream: </b><br/>
+                <li>User input(click button)</li>
+                <li>Http Request</li>
+                <li>Array</li>
+                <li>Objects</li>
+                <br/>
+                <br/>
+                <b>Observable handle(Subscribe): </b><br/>
+                <li>Data</li>
+                <li>Error</li>
+                <li>Completion</li>
+              </ul>
+              <br/>
+              <b>Subscribe accept 3 values: </b>
+              <br/>
               <div style={titles}>
                 <PrismCode
-                  code={purejs}
+                  code={subscribes}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>3. What are Observables?</h3>
+              <ul>
+                <li>Observables are declarative which provide support for passing messages between publishers and subscribers in 
+                  our application.</li><br/>
+                <li>They are mainly used for event handling, asynchronous programming, and handling multiple values. In this case,
+                   you define a function for publishing values, but it is not executed until a consumer subscribes to it. The 
+                   subscribed consumer then receives notifications until the function completes, or until they unsubscribe.</li>
+              </ul>
+              <br/>
+
+              <h3>4. What is an Observer?</h3>
+              Observer is an interface for a consumer of push-based notifications delivered by an Observable. It has below structure.
+              <div style={titles}>
+                <PrismCode
+                  code={notifications}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>5. What is Subscribing</h3>
+              <ul>
+                <li>A Subscription is an object that represents a disposable resource, usually the execution of an Observable.</li>
+                <li>A Subscription has one important method, unsubscribe, that takes no argument and just disposes of the resource 
+                  held by the subscription.</li>
+              </ul>
+              <br />
+
+              <h3>6. What will happen if you do not supply handler for observer</h3>
+              Normally an observer object can define any combination of next, error and complete notification type handlers. If 
+              you don't supply a handler for a notification type, the observer just ignores notifications of that type.
+              <br />
+
+              <h3>7. What is RxJS With Angular</h3>
+              RxJS is a library for composing asynchronous and callback-based code in a functional, reactive style using Observables. Many APIs such as HttpClient produce and consume RxJS Observables and also uses operators for processing observables.
+              <div style={titles}>
+                <PrismCode
+                  code={rxjxLibrary}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>8. What are the utility functions provided by RxJS</h3>
+              The RxJS library also provides below utility functions for creating and working with observables.
+              <ul>
+                <li>Converting existing code for async operations into observables</li>
+                <li>Iterating through the values in a stream</li>
+                <li>Mapping values to different types</li>
+                <li>Filtering streams</li>
+                <li>Composing multiple streams</li>
+              </ul>
+              <br />
+
+              <h3>9. What are observable creation functions</h3>
+              RxJS provides creation functions for the process of creating observables from things such as promises, events, timers and Ajax requests.
+              <br />
+              <b>1. Create an observable from a promise</b>
+              <div style={titles}>
+                <PrismCode
+                  code={observableFun}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>10. What does subscribing mean in RxJS?</h3>
+              In RxJS, when using observables, we need to subscribe to an observable to use the data that flows through that 
+              observable. This data is generated from a publisher and is consumed by a subscriber. When we subscribe to an 
+              observable, we pass in a function for the data and another function for errors so that, in case there is some error, 
+              we can show some message or process the message in some way.
+              <br/>
+
+              <h3>From</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={rxjsfrom}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>Map</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={mapfil}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>Pipe</h3>
+              pipe() function is also a method on the RxJS Observable.
+              <div style={titles}>
+                <PrismCode
+                  code={mapipe}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>Stream create</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={stcreate}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>Unsubscribe</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={unsubscribe}
                   language="js"
                   plugins={["line-numbers"]}
                 />
@@ -570,109 +486,7 @@ class Rxjs extends Component {
               </div>
               <br />
 
-              <h3>filter() OPERATOR</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={filteringrxjs}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>debounceTime & distinctUntilChanged </h3>
-              <div style={titles}>
-                <PrismCode
-                  code={debounceTime}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>scan() vs reduce()</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={scan}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>pluck()</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={pluck}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>mergeMap()</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={mergeMap}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>switchMap()</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={switchMaps}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>BehaviorSubject</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={BehaviorSubject}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-
-              <h3>What is RxJS With Angular</h3>
-              RxJS is a library for composing asynchronous and callback-based code in a functional, reactive style using Observables. Many APIs such as HttpClient produce and consume RxJS Observables and also uses operators for processing observables.
-              <div style={titles}>
-                <PrismCode
-                  code={rxjxLibrary}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>What are the utility functions provided by RxJS</h3>
-              The RxJS library also provides below utility functions for creating and working with observables.
-              <ul>
-                <li>Converting existing code for async operations into observables</li>
-                <li>Iterating through the values in a stream</li>
-                <li>Mapping values to different types</li>
-                <li>Filtering streams</li>
-                <li>Composing multiple streams</li>
-              </ul>
-              <br />
-
-              <h3>What are observable creation functions</h3>
-              RxJS provides creation functions for the process of creating observables from things such as promises, events, timers and Ajax requests.
-              <br />
-              <b>1. Create an observable from a promise</b>
-              <div style={titles}>
-                <PrismCode
-                  code={observableFun}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
+              
 
               <b>2. Create an observable that creates an AJAX request</b>
               <div style={titles}>
@@ -702,19 +516,6 @@ class Rxjs extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-
-              <h3>Map</h3>
-              <ul>
-                <li>map change observable value.</li>
-                <li>map to transform a collection of items into a collection of different items.</li>
-              </ul>
-              <div style={titles}>
-                <PrismCode
-                  code={map}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
               <br />
 
               <h3>Filter</h3>
@@ -725,49 +526,6 @@ class Rxjs extends Component {
                   language="js"
                   plugins={["line-numbers"]}
                 />
-                <br />
-
-                <h3>SwitchMap</h3>
-                switchMap operator is basically a combination of two operators - switchAll and map. The map part lets you map a value from a higher-order source observable to an inner observable stream. When a new value arrives from a source observable, execute a map function that returns an inner observable.
-                <div style={titles}>
-                  <PrismCode
-                    code={switchMap}
-                    language="js"
-                    plugins={["line-numbers"]}
-                  />
-                </div>
-                <br />
-
-                <h3>concatMap</h3>
-
-                <div style={titles}>
-                  <PrismCode
-                    code={concatMap}
-                    language="js"
-                    plugins={["line-numbers"]}
-                  />
-                </div>
-                <br />
-
-                <h3>OservableVsPromises</h3>
-
-                <div style={titles}>
-                  <PrismCode
-                    code={observableVsPromises}
-                    language="js"
-                    plugins={["line-numbers"]}
-                  />
-                </div>
-                <br />
-
-                <h3>BehaviorSubject ObservableV:</h3>
-                <div style={titles}>
-                  <PrismCode
-                    code={observableV}
-                    language="js"
-                    plugins={["line-numbers"]}
-                  />
-                </div>
               </div>
               <br />
 

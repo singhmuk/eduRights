@@ -35,8 +35,8 @@ console.log(buf);
 const firstBuf = `
 const firstBuf = Buffer.alloc(1024);
 const filledBuf = Buffer.alloc(1024, 1);
-const asciiBuf = Buffer.alloc(5, 'a', 'ascii');          //create a buffer five bytes long and stores only ASCII characters
-
+const asciiBuf = Buffer.alloc(5, 'a', 'ascii');          //create a buffer five bytes long 
+                                                         //and stores only ASCII characters
 console.log(asciiBuf);
 `.trim();
 

@@ -135,42 +135,6 @@ function App() {
   );
 }`.trim();
 
-const moveButton = `
-const MoveButton = (props) => {
-  return (
-      <button onClick={props.onClick}>
-          Click To Move
-      </button>
-  );
-}
-
-const BoxOne = () => <p>Box1</p>;
-
-const BoxTwo = () => <p>Box2</p>;
-
-
-class App extends Component {
-state = { positions: 0 }
-
-handleClick = () => {
-  this.setState({ positions: (this.state.positions + 1) % 3 })
-}
-
-render () { 
-const positions = this.state.positions;
-  return (
-      <div>
-          { positions === 0 ? <MoveButton onClick={this.handleClick}/> : ''}
-          <BoxOne />
-          { positions === 1 ? <MoveButton onClick={this.handleClick}/> : ''}
-          <BoxTwo />
-          { positions === 2 ? <MoveButton onClick={this.handleClick}/> : ''}
-      </div>
-  );
-}
-}`.trim();
-
-
 const navigations = `
 import React,{useState, useCallback}  from "react";
 
@@ -271,18 +235,8 @@ class SSRendering extends Component {
               </div>
               <br />
 
-              <b>3. onClick move button</b>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={moveButton}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-              <b>4. Tab Button</b>
+              
+              <h3>4. Tab Button</h3>
               <br />
               <div style={titles}>
                 <PrismCode

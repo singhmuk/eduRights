@@ -120,9 +120,63 @@ export const HEROES: Hero[] = [
 ];
 `.trim();
 
-// const projection = ``.trim();
+const tempLocal = `
+@Component({
+  selector: 'app-root',
+  template: '
+    <input #inputInfo type = "text" name = "template" value = "property">
+    <br/>
+    <button (click) = "getInfo(inputInfo)"> Refrence Varriable</button>
+  '})
+export class AppComponent {
+  getInfo(inputInfo){
+    console.log(inputInfo)
+    console.log(inputInfo.name)
+  }
+}`.trim();
+
+const objects = `
+@Component({
+  selector: 'app-root',
+  template: '
+  <input(keyup)="onKey($event)">
+    <p>{{values}}</p>
+  '})
+
+export class AppComponent {
+  values = '';
+
+  onKey(event: any) {
+    this.values += event.target.value + ' | ';
+  }`.trim();
 
 
+  const keyEvents = `
+  @Component({
+   selector: 'app-root',
+   template: '
+   <input #box (keyup.enter) = "onEnter(box.value)">
+     <p>{{value}}</p>
+   '})
+ 
+ export class AppComponent {
+   values = '';
+ 
+   value = '';
+   onEnter(value: string) { this.value = value; }
+ }`.trim();
+ 
+ const onBlur = `
+     <input #box
+       (keyup.enter)="update(box.value)"
+       (blur)="update(box.value)">
+     <p>{{value}}</p>'})
+ 
+ export class AppComponent {
+   value = '';
+   update(value: string) { this.value = value; }
+ }
+ `.trim();
 
 class AngularFor extends Component {
   componentDidMount() {
@@ -176,6 +230,47 @@ class AngularFor extends Component {
               <div style={titles}>
                 <PrismCode
                   code={iterates}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>4. Template/local reference variables: Access by id '#inputInfo'</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={tempLocal}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>5. Get user input from the $event object:</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={objects}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>6. Key event filtering (with key.enter):</h3>
+              bind to Angular's keyup.enter pseudo-event. Then Angular calls the event handler only when the user presses Enter.
+              <div style={titles}>
+                <PrismCode
+                  code={keyEvents}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>7. On blur</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={onBlur}
                   language="js"
                   plugins={["line-numbers"]}
                 />

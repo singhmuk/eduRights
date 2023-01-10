@@ -51,6 +51,214 @@ const step3 = `
   ]
 })`.trim();
 
+const changeDetection = `
+//1
+import { Component, ChangeDetectorRef ,ChangeDetectionStrategy } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: '
+  < button(click)="detech()"> detech</button>
+    <button (click) = "reattach()"> reattach</button>
+      <button (click) = "detect()"> detect</button>
+        <br />
+      {{count}}
+  ',
+  
+  // changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,  //count stop by this
+})
+export class AppComponent {
+   count=0;
+  constructor(private changeDR: ChangeDetectorRef){
+    setInterval(() => {
+      this.count++;
+      this.changeDR.markForCheck();
+    },1000)
+  }
+
+ detech(){
+   //stop change detection
+   this.changeDR.detach();
+ }
+
+ reattach(){
+   //satrt change detection from stopping place
+   this.changeDR.reattach();
+ }
+
+ detect(){
+   //satrt change detection from continue increased place but count remain stop
+   this.changeDR.detectChanges();
+ }
+}
+
+
+
+//2 childs.ts
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+@Component({
+  selector: 'app-childs',
+  // changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '
+          {{data.name}} <br/>
+          {{data.email}}
+  '})
+  
+export class Child {
+  @Input() data
+}
+
+
+//app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: '
+    <app-childs [data]="parentVar"></app-childs>
+    <button (click)="defaultStratgy()">default</button>
+    <button (click)="defaultObj()">defaultObj</button>',
+})
+export class AppComponent {
+  private parentVar: { name: string, email?: string }
+
+  constructor(){
+    this.parentVar = {
+      name: "Mukesh",
+      email: 'mukesh7@gmail.com'
+    }
+  }
+
+  defaultStratgy(){
+    this.parentVar.name="Rakesh";
+  }
+
+  defaultObj(){
+    this.parentVar = {
+      name: "Ritesh",
+      email: "ritesh@gmail.com"
+    }
+  }
+}`.trim();
+
+const myProvider = `
+export class MyProvider{
+  constructor(){
+    console.log('myProvider called')
+  }
+  varProvider = "varProvider";
+}
+
+export class MyProvider2{
+  constructor(){}
+  varProvider2 = "varProvider2";
+
+  getString(str){
+    console.log('myProvider called2', str)
+  }
+}
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  viewProviders: [MyProvider, MyProvider2]
+})
+export class AppComponent {
+  constructor(public obj:MyProvider, public obj2:MyProvider2){
+    obj2.getString('Mukesh')
+    console.log(obj.varProvider);
+    console.log(obj2.varProvider2);
+  }
+}`.trim();
+
+const viewChild = `
+//childs.ts
+import { Component } from '@angular/core';
+@Component({
+  selector: 'app-childs',
+  template: '
+Username: {{username}}
+      <br/>
+    <button (click) = "clickMe()"> click</button>
+  '
+})
+export class Child {
+  username="default Value"
+  clickMe(){
+    alert(this.username)
+  }
+}
+
+
+//viewChild_2.ts
+import { Component, ViewContainerRef, ViewChild } from '@angular/core';
+@Component({
+  selector: 'app-root',
+  template: '
+  < button(click)="show()"> Show</button>
+    <div id="layout" *ngIf="display">
+      <div #contentPlaceholder></div>
+</div >
+  '
+})
+export class AppComponent {
+  display = false;
+    @ViewChild('contentPlaceholder', {read: ViewContainerRef}) viewContainerRef;
+
+    show() {
+        this.display = true;
+        console.log(this.viewContainerRef); // undefined
+        setTimeout(()=> {
+            console.log(this.viewContainerRef); // OK
+        }, 1);
+    }
+}
+
+
+//app.component.ts
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Child } from './childs';
+
+@Component({
+  selector: 'app-root',
+  template: '<div #box>
+  <p>{{username}}</p>
+</div>
+<div>
+  <button (click)="changeProperty()">Change Child Property</button>
+  <button (click)="changeMethod()">Change Child Method</button>
+</div>
+
+<app-childs></app-childs>'
+})
+
+export class AppComponent implements OnInit {
+  username="username";
+  @ViewChild('box', {static: false}) box:ElementRef
+  constructor(){}
+
+  ngOnInit(){ }
+  ngAfterViewInit(){
+    // console.log(this.box);
+    // this.box.nativeElement.style.backgroundColor="blue";
+    // this.box.nativeElement.classList="viewChild accept class";
+    // this.box.nativeElement.innerHTML="Can change innerHTML value";
+
+    console.log(this.child)
+  }
+
+  @ViewChild(Child, {static: false}) child:Child;
+  changeProperty(){
+    this.child.username = "Mukesh"
+  }
+
+  changeMethod(){
+    this.child.clickMe()
+  }
+}`.trim();
+
 
 class AngularDir extends Component {
   componentDidMount() {
@@ -73,28 +281,12 @@ class AngularDir extends Component {
                 <li>to add in project: ng add @angular/elements </li>
                 <li>It offers functionality that allows to convert a normal Angular component to a native web component.</li>
                 <li>Theoretically use it in any web page - no matter if that page uses Angular or not.</li>
-                <li>Angular Elements hosts an Angular component, providing a bridge between the data and logic defined in the component and standard DOM APIs, thus, providing a way to use Angular components in non-Angular environments.</li>
-                <li>Transforming a component to a custom element makes all of the required Angular infrastructure available to the browser. Creating a custom element is simple and straightforward, and automatically connects your component-defined view with change detection and data binding.</li>
                 <li>Custom elements bootstrap themselves - they start automatically when they are added to the DOM,
                   and are automatically destroyed when removed from the DOM.</li>
               </ul>
               <br />
 
-              <h3>2. What happens if you use script tag inside template</h3>
-              Angular recognizes the value as unsafe and automatically sanitizes it, which removes the script tag but keeps safe content such as the text content of the script tag. This way it eliminates the risk of script injection attacks. If you still use it then it will be ignored and a warning appears in the browser console.
-              <br />
-              <br />
-              Let's take an example of innerHtml property binding which causes XSS vulnerability,
-              <div style={titles}>
-                <PrismCode
-                  code={happens}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>3. Custom Element</h3>
+              <h3>2. Custom Element</h3>
               <ul>
                 <li>A Custom Element provides a way to create web components i.e new DOM elements that behave like standard HTML elements.</li>
                 <li>We are bootstrapping our Angular Component as a custom element in the ngDoBootstrap() method.</li>
@@ -112,19 +304,19 @@ class AngularDir extends Component {
               <br />
               <br />
 
-              <h3>4. What is the browser support of Angular Elements</h3>
+              <h3>3. What is the browser support of Angular Elements</h3>
               Since Angular elements are packaged as custom elements the browser support of angular elements is same as custom elements support.
               <br />
               <br />
 
-              <h3>5. Do I need to bootstrap custom elements</h3>
+              <h3>4. Do I need to bootstrap custom elements</h3>
               No, custom elements bootstrap automatically when they are added to the DOM, and are automatically
               destroyed when removed from the DOM. Once a custom element is added to the DOM for any page, it looks
               and behaves like any other HTML element.
               <br />
               <br />
 
-              <h3>6. Explain how custom elements works internally</h3>
+              <h3>5. Explain how custom elements works internally</h3>
               Below are the steps in an order about custom elements functionality,
               <br />
               <ul>
@@ -141,7 +333,7 @@ class AngularDir extends Component {
               <br />
               <br />
 
-              <h3>7. How to transfer components to custom elements</h3>
+              <h3>6. How to transfer components to custom elements</h3>
               Transforming components to custom elements involves two major steps.
               <ul>
                 <li><b>Build custom element class: </b>Angular provides the createCustomElement function for converting an Angular component (along with its dependencies) to a custom element. The conversion process implements NgElementConstructor interface, and creates a constructor class which is used to produce a self-bootstrapping instance of Angular component.</li>
@@ -154,7 +346,7 @@ class AngularDir extends Component {
               <br />
               <br />
 
-              <h3>8. animations</h3>
+              <h3>7. animations</h3>
               <ul>
                 <li>The main Angular modules for animations are @angular/animations and @angular/platform-browser.</li>
                 <li><b>Step 1: </b>Import BrowserAnimationsModule, which introduces the animation capabilities into your Angular root application module.</li>
@@ -177,6 +369,50 @@ class AngularDir extends Component {
                   />
                 </div>
               </ul>
+              <br/>
+
+              <h3>8. JQuery</h3>
+              <ul>
+                <li>first install jquery as npm install jquery</li>
+                <li>inside ./angular-cli.json file, find script, and include the path to jQuery as <br />
+                  "script":["./node_moules/jquery/dist/jquery.min.js"]</li>
+                <li><b>Note:</b> jQuery should be before bootstrap, if use both.</li>
+              </ul>
+              <br />
+
+              <h3>9. Change Detection</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={changeDetection}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>10. ViewProvider</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={myProvider}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>11. Providers have services list which use by component.</h3>
+              If component need any service than it ask to injector not to Promises, Injector will create that service by 
+              getting blue-print from Promises, But if injector have that service instance than directly provide to component.
+              <br />
+
+              <h3>12. ViewChild</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={viewChild}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
             </List>
           </Paper>
         </Grid>

@@ -35,18 +35,13 @@ export default function Sidebar() {
 
         <p>Angular 12</p>
         <MenuItem><Link to='/introAngularjs' className={classes.line}>Intro</Link></MenuItem>
-        <MenuItem><Link to='/flows' className={classes.line}>Interviews</Link></MenuItem>
-        <MenuItem><Link to='/angularDir2' className={classes.line}>Architecture</Link></MenuItem>
-        <MenuItem><Link to='/metedata' className={classes.line}>MetaData</Link></MenuItem>
-        <MenuItem><Link to='/ngFor' className={classes.line}>NgFor</Link></MenuItem>
-        <MenuItem><Link to='/pipes' className={classes.line}>Pipes</Link></MenuItem>
-        <MenuItem><Link to='/anguRoutes' className={classes.line}>Routes</Link></MenuItem>
+        <MenuItem><Link to='/depenInjection' className={classes.line}>Architecture</Link></MenuItem>
+        <MenuItem><Link to='/flows' className={classes.line}>Routes</Link></MenuItem>
         <MenuItem><Link to='/lifeCycleAng' className={classes.line}>LifeCycle</Link></MenuItem>
-        <MenuItem><Link to='/angularSelector' className={classes.line}>Change Detection</Link></MenuItem>
         <MenuItem><Link to='/angularDir' className={classes.line}>Custom Elements</Link></MenuItem>
-        <MenuItem><Link to='/viewProvider' className={classes.line}>ViewProvider</Link></MenuItem>
-        <MenuItem><Link to='/dynamicallyLoad' className={classes.line}>DynamicallyLoad</Link></MenuItem>
         <MenuItem><Link to='/rxjs' className={classes.line}>Rxjs</Link></MenuItem>
+        <MenuItem><Link to='/ngFor' className={classes.line}>NgFor</Link></MenuItem>
+        <MenuItem><Link to='/dynamicallyLoad' className={classes.line}>DynamicallyLoad</Link></MenuItem>
         <MenuItem><Link to='/ngrxCurd' className={classes.line}>Ngrx</Link></MenuItem>
         <MenuItem><Link to='/ngrxCounter' className={classes.line}>NgrxCounter</Link></MenuItem>
 

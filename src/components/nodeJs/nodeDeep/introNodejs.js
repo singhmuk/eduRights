@@ -28,42 +28,6 @@ process.on('uncaughtException', (err) => {
 });
 `.trim();
 
-
-const readable = `
-const fs = require("fs");
-
-var data = "";
-const readerStream = fs.createReadStream("index.txt");                          //Create a readable stream
-readerStream.setEncoding("UTF8");                                             //Set the encoding to be utf8.
-
-readerStream.on("data", (chunk) => {                                 //Handle stream events --> data, end, error
-  data += chunk;
-});
-
-readerStream.on("end", () => {
-  console.log(data);
-});
-
-readerStream.on("error", (err) => {
-  console.log(err.stack);
-});
-`.trim();
-
-const writable = `
-const data = "Simply Easy Learning";
-const writerStream = fs.createWriteStream("output.txt");                        // Create a writable stream
-
-writerStream.write(data, "UTF8");
-writerStream.end();
-
-writerStream.on("finish", () => {
-  console.log("Write completed.");
-});
-
-writerStream.on("error", (err) => {
-  console.log(err.stack);
-});`.trim();
-
 const chaningStrems = `
 var zlib = require("zlib");
 
@@ -112,49 +76,7 @@ console.log(process.env[arg]);
 });
 `.trim();
 
-const handles = `
-const args = process.argv.slice(2);
 
-args.forEach(arg => {
-let envVar = process.env[arg];
-if (envVar === undefined) {
- console.error(Could not find "'$'{arg}" in environment);
-} else {
- console.log(envVar);
-}
-});
-`.trim();
-
-const Render_HTML = `var http = require('http').createServer(onRequest);
-  var fs = require('fs');
-    function onRequest(request, response) {
-       response.writeHead(200, { 'Content-Type': 'text/html' });
-         fs.readFile('./index.html', null, ((error, data) => {
-           if (error) {
-               response.writeHead(404);
-               response.write('File not found!');
-             } 
-             else {
-               response.write(data);
-           }
-         response.end();
-      })
-    );
-  }
-  
-http.listen(8000);
-`.trim()
-
-const Date_time_main = `var http = require('http').createServer(onRequest);
-  var dt = require('./date_time');
-    function onRequest(req, res) {
-       res.writeHead(200, { 'Content-Type': 'text/html' });
-       res.write("The date and time currently" + dt.myDateTime());
-     res.end();
-  }
-  
-http.listen(4000);
-`.trim()
 
 const globalsObj = `
 var x = global                                                                  //list of global objects
@@ -227,30 +149,7 @@ fs.stat(__filename, () => {
 console.log(++pos + " LAST");
 `.trim();
 
-const ipc = `
-setInterval(() => {}, 1e6);
-process.on('SIGINT', () => {
-    console.log('SIGINT signal received');
-    process.exit(1);
-})
-`.trim();
 
-const nextTick = `
-const events = require('events').EventEmitter;
-const emitter = new events();
-
-const getEmitter = () => {
-  process.nextTick(() => {
-    emitter.emit('start');
-  });
-  return emitter;
-}
-
-const myEmitter = getEmitter();
-myEmitter.on('start', () => {
-  console.log('Started');
-})
-`.trim();
 
 const ProcessObjects = `
 const size = process.argv[2];
@@ -299,27 +198,7 @@ process.nextTick(() => console.log("nextTick"));
 console.log("current event loop");
 `.trim();
 
-const timers = `
-console.log("Foo: Start", new Date().toLocaleTimeString());
 
-setTimeout(() => {
-  console.log("Poo", new Date().toLocaleTimeString());
-}, 5000);
-
-const waitlogForNseconds = (seconds) => {
-  const startTime = new Date().getTime();
-  const milliseconds = 1000;
-  const endTime = startTime + seconds * milliseconds;
-  let currTime = new Date().getTime();
-
-  while (endTime > currTime) {
-    currTime = new Date().getTime();
-  }
-  console.log('Goo: To be called after '$'{seconds} End ', new Date().toLocaleTimeString());
-};
-
-waitlogForNseconds(10);
-`.trim();
 
 
 class IntroNodeJs extends Component {
@@ -359,6 +238,7 @@ class IntroNodeJs extends Component {
                   <li>Asynchronous</li>
                   <li><b>Scalable: </b>Take fewer resources for the application to accept concurrent connections.</li>
                   <li>No Buffering</li>
+                  <li>Event Loop</li>
                 </ul>
               </p>
               <br />
@@ -370,22 +250,61 @@ class IntroNodeJs extends Component {
                   <li>Can collect form data Can add, delete, modify data in our database.</li>
                 </ul>
               </p>
-              <br />
 
               <h3>3. What are the two types of API functions in Node.js?</h3>
               <ul>
                 <li><b>Asynchronous, non-blocking functions: </b>Means server never waits for a API to return data. Server moves to next API after
                   calling it.</li>
-                <li>Synchronous, blocking functions</li>
+                <li><b>Synchronous, blocking functions: </b></li>
+              </ul>
+              <br />
+              <br />
+
+              <b>4 different ways to create a child process in Node.js:</b>
+              <br/>
+              <ul>
+                <li>spawn() method</li>
+                <li>fork() method</li>
+                <li>exec() method</li>
+                <li>execFile() method</li>
               </ul>
               <br />
 
-              <h3>4. Node.js Process Model.</h3>
-              Node.js runs in a single process and the application code runs in a single thread and thereby needs less resources than other platforms. All the user requests
-              to your web application will be handled by a single thread and all the I/O work or long running job is performed asynchronously for a particular request.
+              <h3>5. Cluster Module</h3>
+              Cluster module allows to create child processes that each runs on their own single thread, to handle the load.
+              <br />
+              <br />
+              <ul>
+                <li>
+                  Cluster is a process to handle thread execution load while working with multi-core systems.
+                </li>
+                <li>
+                  To split a single Node process into multiple processes. The cluster module provides a way of creating child processes
+                  that runs simultaneously and share the same server port.
+                </li>
+                <li>
+                  But to take advantage of computers multi-core systems, the Cluster module allows you to easily create child processes
+                  that each runs on their own single thread, to handle the load.
+                </li>
+              </ul>
               <br />
 
-              <h3>5. Node.js Global Objects.</h3>
+              <h3>6. Scaling node js using cluster</h3>
+              <ul>
+                <li>Cluster manages with two methods of distributing incoming connections.</li>
+                <ul>
+                  <li>1. Round-robin approach, where the master process listens on a port, accepts new connections and distributes them across the workers in a round-robin fashion, with some built-in smarts to avoid overloading a worker process.</li>
+                  <li>2. In the master process creates the listen socket and sends it to interested workers. The workers then accept incoming connections directly. But the issue with that is load is not evenly distributed among all the processes.</li>
+                </ul>
+              </ul>
+              <br />
+
+              <h3>7. Node.js Process Model.</h3>
+              Node.js runs in a single process and the application code runs in a single thread and thereby needs less resources than other platforms. All the user requests
+              to our web application will be handled by a single thread and all the I/O work or long running job is performed asynchronously for a particular request.
+              <br />
+
+              <h3>8. Node.js Global Objects.</h3>
               Node.js Global Objects are the objects that are available in all modules. Global Objects are built-in objects that are part of the JavaScript and can be used
               directly in the application without importing any particular module. The Node.js Global Objects are listed below:
               <br />
@@ -393,7 +312,7 @@ class IntroNodeJs extends Component {
               And  <b>global:</b> It is a global namespace. Defining a variable within this namespace makes it globally accessible.
               <br />
 
-              <h3>6. Nodejs Global Objects</h3>
+              <h3>9. Nodejs Global Objects</h3>
               <ul>
                 <li><b>Global Varriables: </b></li>
                 <ul>
@@ -418,7 +337,7 @@ class IntroNodeJs extends Component {
               <i>node server.js hello</i>
               <br />
 
-              <h3>7. Multiple Environment Verriables</h3>
+              <h3>10. Multiple Environment Verriables</h3>
               <div style={titles}>
                 <PrismCode
                   code={multi}
@@ -429,14 +348,12 @@ class IntroNodeJs extends Component {
               <i>node echo.js HOME PWD</i>
               <br />
 
-              <h3>8. Why Node.js is single threaded?</h3>
+              <h3>11. Why Node.js is single threaded?</h3>
               <p>
                 Node.js uses a single threaded model in order to support async processing. With async processing, an application can
                 perform better and is more scalable under web loads. Thus, Node.js makes use of a single-threaded model approach
                 rather than typical thread-based implementation.
               </p>
-              <br />
-              <br />
 
               <b>Benefits of single threaded programming</b>
               <ul>
@@ -454,19 +371,17 @@ class IntroNodeJs extends Component {
               </ul>
               <br />
 
-              <h3>9.Since the node is a single-threaded process, how to make use of all CPUs?</h3>
+              <h3>12. Since the node is a single-threaded process, how to make use of all CPUs?</h3>
               <p>
                 Use of node topology, node achieve internal communication
                 between two nodes. This communication between the two nodes makes use of all CPUs.
               </p>
-              <br />
               <br />
 
               <b>If Node.js is single threaded then how it handles concurrency?</b>
               <p>
                 It follows the Single-Threaded with Event Loop Model.
               </p>
-              <br />
               <div style={titles}>
                 <PrismCode
                   code={eventLoops}
@@ -476,33 +391,16 @@ class IntroNodeJs extends Component {
               </div>
               <br />
 
-              <h3>10. What's the event loop?</h3>
-              <ul>
-                <li>
-                  With the help of event loop allows Node.js to perform non-blocking I/O operations.
-                </li>
-                <li>
-                  Every I/O requires a callback - once they are done they are pushed onto the event loop for execution.
-                  When one of these
-                  operations completes, the appropriate callback may be added to the poll queue to
-                  eventually be executed.
-                </li>
-                <li>By providing callback function Node prevents blocking code.</li>
-              </ul>
-              <br />
-
-              <h3>11. How you can monitor a file for modifications in Node.js ?</h3>
+              <h3>13. How you can monitor a file for modifications in Node.js ?</h3>
               <p>With the help of <b>File System watch()</b> function which watches the changes of the file.</p>
-              <br />
 
-              <h3>12. What does emitter do and what is dispatcher?</h3>
+              <h3>14. What does emitter do and what is dispatcher?</h3>
               <p>
                 The emitter is one which makes communication between two nodes. When the job of the scheduler is completed in a
                 program than dispatched takes the task to the desired status.
               </p>
-              <br />
 
-              <h3>13.What is REPL?</h3>
+              <h3>15. What is REPL?</h3>
               <p>
                 REPL stands for Read Eval Print Loop and it represents a computer environment like a Windows console or Unix/Linux shell where a command is entered and the system responds
                 with an output in an interactive mode. Node.js comes bundled with a REPL environment. It performs the following tasks −
@@ -513,9 +411,8 @@ class IntroNodeJs extends Component {
                   <li><b>Loop :</b>Loops the above command until the user presses ctrl-c twice.</li>
                 </ul>
               </p>
-              <br />
 
-              <h3>14. What is a child_process module in Node.js?</h3>
+              <h3>16. What is a child_process module in Node.js?</h3>
               <ul>
                 <li>Node.js supports the creation of child processes to help in parallel processing along with the event-driven model.</li>
                 <li>The Child processes always have three streams <b>child.stdin, child.stdout, and child.stderr</b>.</li>
@@ -527,16 +424,15 @@ class IntroNodeJs extends Component {
               </ul>
               <br />
 
-              <h3>15. Difference between the cluster and child_process modules?</h3>
+              <h3>17. Difference between the cluster and child_process modules?</h3>
               <p>
                 <ul>
                   <li>Cluster is when one master programme is running two/ more nodes at a single running time. </li>
                   <li>A child process starts a new script on the system, it is quite similar to the cluster.</li>
                 </ul>
               </p>
-              <br />
 
-              <h3>16. Explain what is Reactor Pattern in Node.js?</h3>
+              <h3>18. Explain what is Reactor Pattern in Node.js?</h3>
               <ul>
                 <li>
                   Reactor Pattern is an idea of non-blocking I/O operations in Node.js.
@@ -554,71 +450,35 @@ class IntroNodeJs extends Component {
               </ul>
               <br />
 
-              <h3>17. How to avoid callback hell in Node.js?</h3>
+              <h3>19. What is a control flow function? What are the steps does it execute?</h3>
               <p>
-                Node.js internally uses a single-threaded event loop to process queued events. But this approach may lead to blocking
-                the entire process if there is a task running longer than expected. Node.js addresses this problem by incorporating
-                callbacks. So whenever a long-running process finishes its execution, it triggers the callback associated. But
-                sometimes, it could lead to complex and unreadable code. More the no. of callbacks, longer the chain of returning
-                callbacks would be. With such an unprecedented complexity, it’s hard to debug the code and can cause a lot
-                of time. 
-                <br/>
-                <br/>
-                <b>To avoid callback hell by: </b>
+                Control flow function runs in between several asynchronous function calls.
                 <ul>
-                <li>modularization: break callbacks into independent functions.</li>
-                <li>use Promises.</li>
-                <li>use yield with Generators and/or Promises.</li>
-              </ul>
+                  <li>Control the order of execution. </li>
+                  <li>Collect data.</li>
+                  <li>Limit concurrency. </li>
+                  <li>Call the next step in the program.</li>
+                </ul>
               </p>
               <br />
 
-              <h3>18. Event Loop</h3>
-              <ul>
-                <li>Node.js support concurrency via the concept of event and callbacks.
-                  Node thread keeps an event loop and whenever a task gets completed, it fires the corresponding event for
-                  function to execute.</li>
-                <li>Node.js uses events heavily and couse of it Node.js is pretty fast. As soon as Node starts its server, it simply initiates its
-                  variables, declares functions and then simply waits for the event to occur.</li>
-                <li>In an event-driven application, there is generally a main loop that listens for events, and then triggers a callback function when one of those events is detected.</li>
-              </ul>
+              <h3>20. Explain the working mechanism of control flow function?</h3>
+              <i>
+                Control flow function is the sequence in which statements or functions are executed. Since I/O operations are 
+                non-blocking in Node.js, control flow cannot be linear. Therefore, it registers a callback to the event loop and 
+                passes the control back to the node, so that the next lines of code can run without interruption. <b>Ex: </b>Read File
+              </i>
               <br />
+              <ul>
+                <li><b>fs.state(): </b>It helps to get various statistic of a file.</li>
+                <br />
+                To deal with directories here are 2 methods.
+                <li><b>opendir(): </b>readfile()/ writefile()</li>
+                <li><b>opendirSync(): </b>readfileSync()/ writefileSync()</li>
+              </ul>
               <br />
 
-              The difference between events and callbacks is.
-              <ul>
-                <li>callback functions are called when an asynchronous function returns its result.</li>
-                <li>event handling works on the observer pattern. The functions that listen to events act as Observers. Whenever an event gets
-                  fired, its listener function starts executing.</li>
-              </ul>
-              Node.js has multiple in-built events available through events module and EventEmitter class which are used to bind events and event-listeners.
-              <br />
-
-              <h3>19. What are the timing features of Node.js?</h3>
-              <p>The Timers module in Node.js contains functions that execute code after a set period of time.</p>
-              <ul>
-                <li><b>setTimeout/ clearTimeout -</b> Can be used to schedule code execution after a designated amount of milliseconds.</li>
-                <li><b>setInterval/ clearInterval -</b> Can be used to execute a block of code multiple times.</li>
-                <li><b>setImmediate/ clearImmediate -</b> Will execute code at the end of the current event loop cycle.</li>
-                <li><b>process.nextTick -</b> Used to schedule a callback function to be invoked in the next iteration of the Event Loop.</li>
-              </ul>
-              <i>On any given context process.nextTick() has higher priority over setImmediate().</i>
-              <br />
-              <br />
-              <ul>
-                <li><b>timers: </b>This phase executes callbacks scheduled by setTimeout() and setInterval().</li>
-                <li><b>pending callbacks: </b>executes I/O callbacks deferred to the next loop iteration.</li>
-                <li><b>idle prepare: </b>only used internally.</li>
-                <li><b>poll: </b>retrieve new I/O events; execute I/O related callbacks (almost all with the exception of close callbacks, the ones scheduled by timers, and setImmediate()); node will block here when appropriate.</li>
-                <li><b>check: </b>setImmediate() callbacks are invoked here.</li>
-                <li><b>close callbacks: </b>some close callbacks, e.g. socket.on('close', ...)</li>
-                setImmediate() is processed in the Check handlers phase, while process.nextTick() is processed at the starting of the event
-                loop and between each phase of the event loop.
-              </ul>
-              <br />
-              <br />
-
-              <b>Four Source Of Trurt</b>
+              <h3>21. Four Source Of Trurt</h3>
               <div style={titles}>
                 <PrismCode
                   code={fourSourceOfTrurt}
@@ -629,30 +489,7 @@ class IntroNodeJs extends Component {
               <br />
               <br />
 
-              <b>ipc</b>
-              <div style={titles}>
-                <PrismCode
-                  code={ipc}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>nextTick </b>
-              This code set up a simple transaction when an instance  of
-              <div style={titles}>
-                <PrismCode
-                  code={nextTick}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>Process Objects </b>
+              <h3>22. Process Objects </h3>
               <ul>
                 <li>it would be executed like so:</li>
                 <ul><li><b>node ProcessObjects.js 1000000 100</b></li></ul>
@@ -674,9 +511,8 @@ class IntroNodeJs extends Component {
                 />
               </div>
               <br />
-              <br />
 
-              <b>setInterval </b>
+              <h3>23. setInterval </h3>
               Polling a data source every few seconds and pushing updates is a common pattern. Running the next step in an animation
               every few milliseconds, as is collecting garbage
               <div style={titles}>
@@ -687,9 +523,8 @@ class IntroNodeJs extends Component {
                 />
               </div>
               <br />
-              <br />
 
-              <b>nextTick</b>
+              <h3>24. nextTick</h3>
               <div style={titles}>
                 <PrismCode
                   code={nextTicks}
@@ -698,9 +533,8 @@ class IntroNodeJs extends Component {
                 />
               </div>
               <br />
-              <br />
 
-              <b>setImmediate</b>
+              <h3>25. setImmediate</h3>
               <div style={titles}>
                 <PrismCode
                   code={setImmediate}
@@ -709,19 +543,8 @@ class IntroNodeJs extends Component {
                 />
               </div>
               <br />
-              <br />
 
-              <b>Timers</b>
-              <div style={titles}>
-                <PrismCode
-                  code={timers}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>20. What is the preferred method of resolving unhandled exceptions in Node.js?</h3>
+              <h3>26. What is the preferred method of resolving unhandled exceptions in Node.js?</h3>
               <p>
                 Unhandled exceptions in Node.js can be caught at the Process level by attaching a handler for uncaughtException
                 event.
@@ -742,7 +565,7 @@ class IntroNodeJs extends Component {
               </p>
               <br />
 
-              <h3>21. Disconnect()</h3>
+              <h3>27. Disconnect()</h3>
               <p>
                 Disconnects all workers exited After Disconnect-Returns true if a worker was exited after disconnect,
                 or the kill method fork() Creates a new worker.
@@ -762,13 +585,12 @@ class IntroNodeJs extends Component {
               </ul>
               <br />
 
-              <h3>22. How to stop the master process without suspending all of its child processes?</h3>
+              <h3>28. How to stop the master process without suspending all of its child processes?</h3>
               <p>
               With the help of the <b>Upstart process management system</b>, you can stop the master process without suspending all of its child processes.
               </p>
-              <br />
 
-              <h3>23. Stream</h3>
+              <h3>29. Stream</h3>
               Streams are objects that read data from a source or write data to a destination in a continuous fashion. In Node.js, there are
               four types of streams. –
               <br />
@@ -792,28 +614,6 @@ class IntroNodeJs extends Component {
               <br />
               <br />
 
-              <b>Readable Stream</b>
-              <div style={titles}>
-                <PrismCode
-                  code={readable}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>Writable Stream</b>
-              <div style={titles}>
-                <PrismCode
-                  code={writable}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
               <b>Chaning Strems</b>
               <ul>
                 <li><b>Chaning Process: </b>It’s an approach to connect the output of one stream to the input of another stream,
@@ -833,7 +633,7 @@ class IntroNodeJs extends Component {
               </div>
               <br />
 
-              <h3>24. Piping the Streams</h3>
+              <h3>30. Piping the Streams</h3>
               Piping is a mechanism where we provide the output of one stream as the input to another stream. It is normally used to get data
               from one stream and to pass the output of that stream to another stream. There is no limit on piping operations.
               <br />
@@ -846,7 +646,7 @@ class IntroNodeJs extends Component {
               </div>
               <br />
 
-              <h3>25. Server Port</h3>
+              <h3>31. Server Port</h3>
               <b>100 - Information</b>
               <br />
               <ul>
@@ -943,45 +743,12 @@ class IntroNodeJs extends Component {
               </ul>
               <br />
 
-              <h3>26. Handling Undefined Input</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={handles}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <i>node echo.js HOME PWD NOT_DEFINED</i>
-              <br />
-
-              <h3>27. Node.js on Browser</h3>
-              <b> Render HTML</b>
-              <div style={titles}>
-                <PrismCode
-                  code={Render_HTML}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>Date time main</b>
-              <div style={titles}>
-                <PrismCode
-                  code={Date_time_main}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>28. What is error first callback.</h3>
+              <h3>32. What is error first callback.</h3>
               Error-First Callback in Node. js is a function which either returns an error object or any successful data returned by the function. The first argument in
               the function is reserved for the error object. If any error has occurred during the execution of the function, it will be returned by the first argument.
               <br />
 
-              <h3>29. What is stub node js.</h3>
+              <h3>33. What is stub node js.</h3>
               <ul>
                 <li>Stubs are functions or programs that affect the behavior of components or modules.</li>
                 <li>Stubs are dummy objects for testing. Stubs implement a pre-programmed response.</li>
@@ -990,29 +757,7 @@ class IntroNodeJs extends Component {
               </ul>
               <br />
 
-              <h3>30. Difference Between Promise and Async/Await.</h3>
-              <b>Promise:</b>
-              <ol>
-                <li>Promise is an object representing intermediate state of operation which is guaranteed to complete its execution at some point in future.</li>
-                <li>Promise has 3 states – resolved, rejected and pending.</li>
-                <li>If the function “fxn1” is to executed after the promise, then promise.then(fxn1) continues execution of the current function after adding the fxn1 call to
-                  the callback chain.</li>
-                <li>Error handling is done using .then() and .catch() methods.</li>
-                <li>Promise chains can become difficult to understand sometimes.</li>
-              </ol>
-              <br />
-
-              <b>Async/Await:</b>
-              <ol>
-                <li>Async/ Await is a syntactic sugar for promises, a wrapper making the code execute more asynchronously.</li>
-                <li>It does not have any states. It returns a promise either resolved or rejected.</li>
-                <li>If the function “fxn1” is to executed after await, then await X() suspends execution of the current function and then fxn1 is executed.</li>
-                <li>Error handling is done using .try() and .catch() methods.</li>
-                <li>Using Async/ Await makes it easier to read and understand the flow of the program as compared to promise chains.</li>
-              </ol>
-              <br/>
-
-              <h3>31. Read CLArguments</h3>
+              <h3>34. Read CLArguments</h3>
               <div style={titles}>
                 <PrismCode
                   code={readscli}
@@ -1021,40 +766,6 @@ class IntroNodeJs extends Component {
                 />
               </div>
               <i>node echo.js HOME</i>
-              <br />
-
-              <h3>32. Provide some example of config file separation for dev and prod environments.</h3>
-              <p>A perfect and flawless configuration setup should ensure:</p>
-              <ul>
-                <li>Keys can be read from file and from environment variable.</li>
-                <li>Secrets are kept outside committed code.</li>
-              </ul>
-              <br />
-
-              <h3>33. Explain usage of NODE_ENV .</h3>
-              <p>
-              NODE_ENV allows components to provide better diagnostics during development, for example by disabling
-                caching or emitting verbose log statements. Setting NODE_ENV to production makes our application 3 times faster.
-              </p>
-              <br />
-
-              <h3>34. Why should you separate Express 'app' and 'server'?</h3>
-              <ul>
-                <li>
-                  Keeping the API declaration separated from the network related configuration (port, protocol, etc) allows testing the
-                  API in-process, without performing network calls.
-                </li>
-                <li>
-                  fast testing execution and getting coverage metrics of the code. It also allows deploying the same API under flexible
-                  and different network conditions.
-                </li>
-                <li>
-                  Better separation of concerns and cleaner code. API declaration.
-                </li>
-              </ul>
-              <br />
-
-              <h3>35. OS - Provides information about the operation system</h3>
             </List>
           </Paper>
         </Grid>

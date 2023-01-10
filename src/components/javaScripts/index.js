@@ -8,7 +8,6 @@ const Clousers = lazy(() => import('./deepJs/clousers'));
 const FindOutput = lazy(() => import('./deepJs/findOutput'));
 const JsObject = lazy(() => import('./deepJs/jsObjects'));
 const Logic = lazy(() => import('./deepJs/logic'));
-const Methods = lazy(() => import('./deepJs/this'));
 
 const Oops = lazy(() => import('./deepJs/oops'));
 const Prototypes = lazy(() => import('./deepJs/prototypes'));
@@ -20,11 +19,14 @@ const HackerRank1 = lazy(() => import('./deepJs/hackerRank'));
 const HackerRank6 = lazy(() => import('./deepJs/hackerRank6'));
 const McqJs = lazy(() => import('./deepJs/mcqjs'));
 
+const Datatypests = lazy(() => import('./deepJs/datatypests'));
+const TypeScript2 = lazy(() => import('./deepJs/typeScript_2'));
+const TypeScript4 = lazy(() => import('../javaScripts/deepJs/typeScript_4'));
 
 const components = {
-  Arrays, Clousers, FindOutput, JsObject, Logic, Methods, Prototypes, IntroJs,
+  Arrays, Clousers, FindOutput, JsObject, Logic, Prototypes, IntroJs,
   Oops, ArraysApi, KeyedCollections, RegularExp, McqJs, HackerRank1,
-  HackerRank6
+  HackerRank6, Datatypests, TypeScript2, TypeScript4
 };
 
 export { components };

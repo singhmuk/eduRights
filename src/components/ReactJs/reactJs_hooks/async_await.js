@@ -121,79 +121,6 @@ setEmployee(result);
   )
 }`.trim();
 
-const sideMenus = `
-//App.js
-const navLinks = [
-  { url: '/about-us', name: 'About Us' },
-  { url: '/projects', name: 'Projects' },
-  { url: '/services', name: 'Services' },
-  { url: '/contact-us', name: 'Contact Us' },
-];
-
-class App extends React.Component {  
-    state = {
-      style:"menu",
-      menuStatus:"open"
-    };
-
-  handleClick = () => {
-    switch(this.state.menuStatus) {
-      case "open":
-        this.setState({
-          menuStatus:"close",
-          style:"menu active"
-        });
-        break;
-      case "close":
-        this.setState({
-          menuStatus:"open",
-          style:"menu"
-        });
-        break;
-    }        
-  }
-
-  render() {
-    return (      
-      <div>
-        <button onClick={this.handleClick}>menu</button>
-        <div className={this.state.style}>               
-            {navLinks.map(({ url, name }) => (
-              <li>
-                <a href={url}>{name}</a>
-              </li>
-            ))}
-        </div>
-      </div>
-    );
-  }
-}
-
-
-
-//index.css
-.menu {
-  background: #34495e;
-  height: 100vh;
-  width: 250px;
-  opacity:0; 
-  transition: all 0.25s ease;
-}
-
-  a {
-    color: #fff;
-    text-decoration: none;
-    display: block;
-    padding: 20px;
-  }
-
-.active {
-  opacity:1;
-  visibility: visible;
-  transition: all 0.25s ease;
-  transform: translateX(0);
-}`.trim();
-
 const mouseHovers = `
 const App = () => {
   const [isHovering, setHovering] = useState(false);
@@ -215,105 +142,7 @@ const App = () => {
   );
 }`.trim();
 
-const ssr = `
-1. ReactDOM.render(<App />, document.getElementById('root'));
 
- replace with 
- 
-ReactDOM.hydrate(<App />, document.getElementById('root'));
-
-
-2. npm install express
-   npm install @babel/register @babel/preset-env @babel/preset-react ignore-styles
-  
-3. Let’s create an entry point in server/index.js:
-require('ignore-styles')
-
-require('@babel/register')({
- ignore: [/(node_modules)/],
- presets: ['@babel/preset-env', '@babel/preset-react']
-})
-
-require('./server')
-   
-4. Make Build and run with node
-    npm run build
-    node server/index.js
- 
-    
-//App.js
-function App() {
-  return (
-    <div>
-      <h1>Server Side Rendering.</h1>
-    </div>
-  );
-}
-
-
-//server/server.js
-import path from 'path'
-import fs from 'fs'
-
-import express from 'express'
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-// import { StaticRouter } from 'react-router-dom';
-
-import App from '../src/App'
-
-const PORT = 8080
-const app = express()
-
-const router = express.Router()
-
-
-app.get('/*', (req, res) => {
-    const context = {};
-    const app = ReactDOMServer.renderToString(
-      // <StaticRouter location={req.url} context={context}>
-        <App />
-      // </StaticRouter>
-    );
-  
-    const indexFile = path.resolve('./build/index.html');
-    fs.readFile(indexFile, 'utf8', (err, data) => {
-      if (err) {
-        console.error('Something went wrong:', err);
-        return res.status(500).send('Oops, better luck next time!');
-      }
-  
-      return res.send(
-        data.replace('<div id="root"></div>', '<div id="root">'$'{app}</div>')
-      );
-    });
-  });
-
-
-  
-router.use(
-  express.static(path.resolve(__dirname, '..', 'build'), { maxAge: '30d' })
-)
-
-// tell the app to use the above rules
-app.use(router)
-
-app.use(express.static('./build'))
-app.listen(PORT, () => {
-  console.log(SSR running on port '$'{PORT})
-})
-
-
-//index.js
-require('ignore-styles')
-
-require('@babel/register')({
-  ignore: [/(node_modules)/],
-  presets: ['@babel/preset-env', '@babel/preset-react']
-})
-
-require('./server')
-`.trim();
 
 const getLists = `
 const App =() => {
@@ -339,6 +168,86 @@ const App =() => {
   )
 }`.trim();
 
+const MoveButton = `
+const MoveButton = (props) => {
+  return (
+      <button onClick={props.onClick}>
+          Click To Move
+      </button>
+  );
+}
+
+const BoxOne = () => <p>Box1</p>;
+
+const BoxTwo = () => <p>Box2</p>;
+
+
+class App extends Component {
+state = { positions: 0 }
+
+handleClick = () => {
+  this.setState({ positions: (this.state.positions + 1) % 3 })
+}
+
+render () { 
+const positions = this.state.positions;
+  return (
+      <div>
+          { positions === 0 ? <MoveButton onClick={this.handleClick}/> : ''}
+          <BoxOne />
+          { positions === 1 ? <MoveButton onClick={this.handleClick}/> : ''}
+          <BoxTwo />
+          { positions === 2 ? <MoveButton onClick={this.handleClick}/> : ''}
+      </div>
+  );
+}
+}
+
+export default App;`.trim();
+
+const steps = `
+class App extends Component {
+   state = { inputValue: "" };
+ 
+ handleUpdate = (e) => {
+   if (e.target.validity.valid) {
+     this.setState({ inputValue: e.target.value }); 
+   }
+ }
+ 
+ reset = () => {
+   this.setState({ inputValue: "" }); 
+ }
+ 
+ render() {
+   return (
+     <div>
+       <input type="number" value={this.state.inputValue} onChange={this.handleUpdate} step="any" />
+       <button onClick={this.reset}>reset</button>
+     </div>
+   )
+ }  
+ }`.trim();
+
+const dateTime = `
+ //1
+ function date_time() {
+   return Date();
+ }
+ 
+ //2
+ function formatDate(dayOfWeek, day, month, year) {
+   var daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+   var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+       return daysOfWeek[dayOfWeek] + " " + months[month] + " " + day + " " + year; }
+ 
+   var birthday = new Date(Date.UTC(2000,0,1)); 
+   var birthDay = formatDate(birthday.getUTCDay(), birthday.getUTCDate(),     
+   birthday.getUTCMonth(), birthday.getUTCFullYear())
+ 
+ 
+ export { date_time, birthDay }`.trim();
+
 
 class AsyncAwait extends Component {
   componentDidMount() {
@@ -357,7 +266,7 @@ class AsyncAwait extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>Get Lists</h3>
+              <h3>1. Get Lists</h3>
               <div style={titles}>
                 <PrismCode
                   code={getLists}
@@ -367,7 +276,7 @@ class AsyncAwait extends Component {
               </div>
               <br/>
 
-              <h3>1. Async-Await</h3>
+              <h3>2. Async-Await</h3>
               <div style={titles}>
                 <PrismCode
                   code={App}
@@ -377,7 +286,7 @@ class AsyncAwait extends Component {
               </div>
               <br/>
 
-              <h3>2. Recived data from two different APIS in one function to multiple calls.</h3>
+              <h3>3. Recived data from two different APIS in one function to multiple calls.</h3>
               <div style={titles}>
                 <PrismCode
                   code={multiple}
@@ -385,9 +294,9 @@ class AsyncAwait extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-
               <br />
-              <h3>2. Search items</h3>
+
+              <h3>4. Search items</h3>
               <div style={titles}>
                 <PrismCode
                   code={Uncontroll}
@@ -397,17 +306,7 @@ class AsyncAwait extends Component {
               </div>
               <br />
 
-              <h3>3. Side Menu</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={sideMenus}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>4. Mouse Hover on Card</h3>
+              <h3>5. Mouse Hover on Card</h3>
               <div style={titles}>
                 <PrismCode
                   code={mouseHovers}
@@ -417,10 +316,30 @@ class AsyncAwait extends Component {
               </div>
               <br />
 
-              <h3>5. SSR</h3>
+              <h3>6.onClick move button</h3>
               <div style={titles}>
                 <PrismCode
-                  code={ssr}
+                  code={MoveButton}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>7. Step Input</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={steps}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              
+              <h3>8. Date_time</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={dateTime}
                   language="js"
                   plugins={["line-numbers"]}
                 />

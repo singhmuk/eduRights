@@ -61,7 +61,7 @@ var express = require('express')
 var app = express()
 var router = express.Router()
 
-router.param(function (param, option) {                                       // customizing the behavior of router.param()
+router.param(function (param, option) {                              //customizing the behavior of router.param()
   return function (req, res, next, val) {
     if (val === option) {
       next()
@@ -72,7 +72,7 @@ router.param(function (param, option) {                                       //
 })
 
 
-router.param('id', '1337')                                                    // using the customized router.param()
+router.param('id', '1337')                                                // using the customized router.param()
 
 router.get('/user/:id', function (req, res) {                                 // route to trigger the capture
   res.send('OK')
@@ -140,7 +140,7 @@ var express = require('express')
 var app = express()
 var router = express.Router()
 
-router.use(function (req, res, next) {                        // all requests to this router will first hit this middleware
+router.use(function (req, res, next) {               //all requests to this router will first hit this middleware
   console.log('%s %s %s', req.method, req.url, req.path)
   next()
 })
@@ -177,7 +177,7 @@ app.get('/example/b', function (req, res, next) {
   res.send('Hello from B!')
 })
 
-var cb0 = function (req, res, next) {                                 //An array of callback functions can handle a route.
+var cb0 = function (req, res, next) {                     //An array of callback functions can handle a route.
   console.log('CB0')
   next()
 }
@@ -195,8 +195,8 @@ app.get('/example/c', [cb0, cb1, cb2])
 
 
 
-
-var cb0 = function (req, res, next) {     //Combination of independent functions and arrays of functions can handle a route. 
+//Combination of independent functions and arrays of functions can handle a route.
+var cb0 = function (req, res, next) {      
   console.log('CB0')
   next()
 }
@@ -271,7 +271,7 @@ class IntroAlgo extends Component {
               <p>Routing refers to how an application’s endpoints (URIs) respond to client requests.</p>
               <p>
                 These routing methods specify a callback function called when the application receives a request
-                to the specified route (endpoint) and HTTP method.
+                to the specified endpoint and HTTP method.
               </p>
               <p>
                 In fact, the routing methods can have more than one callback function as arguments. With multiple
@@ -283,16 +283,18 @@ class IntroAlgo extends Component {
                 “mini-application,” capable only of performing middleware and routing functions. Every Express
                 application has a built-in app router.
               </p>
-              <p>The top-level express object has a Router() method that creates a new router object.</p>
+              <p>The express object has a Router() method that creates a new router object.</p>
               <br />
 
               <h3>router.all(path, [callback, ...] callback):</h3>
               <p>
-                This method is just like the router.METHOD() methods, except that it matches all HTTP methods (verbs).
+                This method except all matches HTTP methods (verbs).
               </p>
               <p>
                 This method is extremely useful for mapping “global” logic for specific path prefixes or
-                arbitrary matches. For example, if you placed the following route at the top of all other route
+                arbitrary matches. 
+                <br/>
+                <b>Ex. </b>if you placed the following route at the top of all other route
                 definitions, it would require that all routes from that point on would require authentication,
                 and automatically load a user. Keep in mind that these callbacks do not have to act as end points;
                 loadUser can perform a task, then call next() to continue matching subsequent routes.

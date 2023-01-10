@@ -38,7 +38,32 @@ const code = `
                             size : 5242880, 
                             max : 5000
                            }); 
-`.trim()
+`.trim();
+
+const createInd = `
+//Create index
+db.users.ensureIndex({"email":1, "roll":-1})
+
+//Drop index
+db.users.dropIndex({"email":1})
+
+//getIndexes
+db.users.getIndexes()                           //returns the description of all the indexes int the collection.
+`.trim();
+
+// const code = ``.trim();
+
+// const code = ``.trim();
+
+// const code = ``.trim();
+
+// const code = ``.trim();
+
+// const code = ``.trim();
+
+// const code = ``.trim();
+
+// const code = ``.trim();
 
 
 class IntroMD extends Component {
@@ -65,10 +90,18 @@ class IntroMD extends Component {
                 <li>High availability (HA)</li>
                 <li>Easy scalability</li>
                 <li>Rich query language</li>
+                <li><b>Support ad hoc queries:</b> As the entire query is known only at the time of execution depending upon the value of username passed.</li> 
+                <b>"select * from persons WHERE name = " + username;</b>
+                <br/>
+                <br/>
+                <li>Indexing</li>
+                <li>Replication</li>
+                <li>Load balancing</li>
+                <li>Stores files pf any size easily without complicating our stack.</li>
               </ul>
               <br />
 
-              <h3>2.If you remove an object attribute, is it deleted from the database?</h3>
+              <h3>2. If you remove an object attribute, is it deleted from the database?</h3>
               <p>Yes, it is deleted. Hence, it is better to eliminate the attribute and then save the object again.</p>
               <br />
               <img src={mongoDB} alt="Omega" className="responsive" style={redesign} />
@@ -108,7 +141,7 @@ class IntroMD extends Component {
                 <br />
 
                 <li>
-                  Eventual consistency means exactly that: the system is eventually consistent–if no updates are made to a given data
+                  Eventual consistency means, if no updates are made to a given data
                   item for a “long enough” period of time, sometime after hardware and network failures heal, then, eventually, all
                   reads to that item will return the same consistent value.
                 </li>
@@ -127,7 +160,7 @@ class IntroMD extends Component {
               <p>Vertical scaling adds more CPU and storage resources to increase capacity.</p>
               <br />
 
-              <h3>8.Define Horizontal Scaling.</h3>
+              <h3>8. Define Horizontal Scaling.</h3>
               <p>Horizontal scaling divides the dataset and distributes data over multiple servers, or shards.</p>
               <br />
 
@@ -161,7 +194,7 @@ class IntroMD extends Component {
                 <li>Schema design and definition</li>
                 <li>Performance</li>
                 <li>Speed</li>
-                <li>Normalization, and many more.</li>
+                <li>Normalization.</li>
               </ul>
               <br />
 
@@ -192,13 +225,6 @@ class IntroMD extends Component {
                 <li>
                   It depends from your goals. Normalization will provide an update efficient data representation. Denormalization will
                   make data reading efficient.
-                </li>
-                <br />
-
-                <li>
-                  In general, use embedded data models (denormalization) when: you have “contains”
-                  relationships between entities. you have one-to-many relationships between entities. In these relationships the
-                  “many” or child documents always appear with or are viewed in the context of the “one” or parent documents.
                 </li>
                 <br />
 
@@ -241,112 +267,56 @@ class IntroMD extends Component {
               </p>
               <br />
 
-              <h3>21.mongoDB_data_types</h3>
+              <h3>21. MongoDB data types</h3>
               <p>MongoDB supports many datatypes.Some of them are:</p>
               <ul>
-                <li>String- String in MongoDB must be UTF - 8 valid.</li>
-                <br />
-
-                <li>Integer- Integer can be 32 bit or 64 bit depending upon your server.</li>
-                <br />
-
-                <li>Boolean Double- This type is used to store floating point values.</li>
-                <br />
-
-                <li>Min/Max keys- This type is used to compare a value against the lowest and highest BSON elements.</li>
-                <br />
-
-                <li>Arrays- This type is used to store arrays or list or multiple values into one key.</li>
-                <br />
-
-                <li>Timestamp- This can be handy for recording when a document has been modified or added.</li>
-                <br />
-
-                <li>Object- This datatype is used for embedded documents.</li>
-                <br />
-
-                <li>Null- This type is used to store a Null value.</li>
-                <br />
-
+                <li><b>String- </b>String in MongoDB must be UTF - 8 valid.</li>
+                <li><b>Integer- </b>Integer can be 32 bit or 64 bit depending upon our server.</li>
+                <li><b>Boolean Double- </b>Used to store floating point values.</li>
+                <li><b>Min/Max keys- </b>Compare a value against the lowest and highest BSON elements.</li>
+                <li><b>Arrays- </b>Used to store arrays or list or multiple values into one key.</li>
+                <li><b>Timestamp- </b>Can be handy for recording when a document has been modified or added.</li>
+                <li><b>Object- </b>Used for embedded documents.</li>
+                <li><b>Null- </b>Used to store a Null value.</li>
                 <li>
-                  Symbol- This datatype is used identically to a string; however, it 's generally reserved for languages that use a
+                <b>Symbol- </b>This datatype is used identically to a string; however, it 's generally reserved for languages that use a
                   specific symbol type.
                 </li>
                 <br />
 
                 <li>
-                  Date- This datatype is used to store the current date or time in UNIX time format.You can specify your own date time
+                  <b>Date- </b>This datatype is used to store the current date or time in UNIX time format.You can specify your own date time
                   by creating object of Date and passing day, month, year into it.
                 </li>
                 <br />
 
-                <li>Object ID- This datatype is used to store the document's ID. </li>
-                <br />
-
-                <li>Binary data- This datatype is used to store binary data. </li>
-                <br />
-
-                <li>Code- This datatype is used to store JavaScript code into the document. </li>
-                <br />
-
-                <li>Regular expression- This datatype is used to store regular expression.</li>
+                <li><b>Object ID- </b>This datatype is used to store the document's ID. </li>
+                <li><b>Binary data- </b>This datatype is used to store binary data. </li>
+                <li><b>Code- </b>This datatype is used to store JavaScript code into the document. </li>
+                <li><b>Regular expression- </b>This datatype is used to store regular expression.</li>
               </ul>
               <br />
 
-              <h3>22.Advantages of MongoDB over RDBMS:</h3>
+              <h3>22. Advantages of MongoDB over RDBMS:</h3>
               <ul>
                 <li>
                   Schema less − MongoDB is a document database in which one collection holds different documents. Number of fields,
                   content and size of the document can differ from one document to another.
                 </li>
-                <br />
-
                 <li>Structure of a single object is clear. </li>
-                <br />
-
                 <li>No complex joins.</li>
-                <br />
-
-                <li>Ease of scale-out − MongoDB is easy to scale.</li>
-                <br />
-
+                <li>MongoDB is easy to scale.</li>
                 <li>Conversion/mapping of application objects to database objects not needed.</li>
               </ul>
               <br />
 
-              <h3>23.Why Use MongoDB?</h3>
-              <ul>
-                <li>Document Oriented Storage − Data is stored in the form of JSON style documents.</li>
-                <br />
-
-                <li>Index on any attribute Replication and high availability Auto-Sharding Rich queries Fast in-place updates.</li>
-                <br />
-
-                <li>Big Data Content Management and Delivery Mobile and Social Infrastructure User Data Management Data Hub.</li>
-              </ul>
-              <br />
-
-              <h3>24.Difference between DELETE, DROP and TRUNCATE:</h3>
+              <h3>24. Difference between DELETE, DROP and TRUNCATE:</h3>
               <p>TRUNCATE</p>
               <ul>
                 <li>TRUNCATE SQL query removes all rows from a table, without logging the individual row deletions.</li>
-                <br />
-
                 <li>TRUNCATE is faster than the DELETE query.</li>
-                <br />
-
                 <li>TRUNCATE is executed using a table lock and the whole table is locked to remove all records.</li>
-                <br />
-
-                <li>
-                  TRUNCATE removes all rows from a table. Minimal logging in the transaction log, so it is faster
-                  performance-wise.
-                </li>
-                <br />
-
                 <li>Truncate uses less transaction space than the Delete statement.</li>
-                <br />
-
                 <li>Truncate cannot be used with indexed views.</li>
               </ul>
               <br />
@@ -366,28 +336,17 @@ class IntroMD extends Component {
                 <li>The DROP command removes a table from the database. All the tables' rows, indexes, and privileges will also be
                   removed.
                 </li>
-                <br />
-
                 <li>No DML triggers will be fired.</li>
-                <br />
-
                 <li>The operation cannot be rolled back.</li>
-                <br />
-
                 <li>DROP and TRUNCATE are DDL commands, whereas DELETE is a DML command.</li>
-                <br />
-
                 <li>DELETE operations can be rolled back (undone), while DROP and TRUNCATE operations cannot be rolled</li>
-                <br />
               </ul>
               <br />
 
-              <h3>25.Replication</h3>
+              <h3>25. Replication</h3>
               <p>
                 Replication is the process of synchronizing data across multiple servers. Replication provides redundancy and
-                increases data availability with multiple copies of data on different database servers. Replication protects a
-                database from the loss of a single server. Replication also allows you to recover from hardware failure and service
-                interruptions.
+                increases data availability with multiple copies of data on different database servers. 
               </p>
               <b>Why Replication?</b>
               <br />
@@ -444,15 +403,13 @@ class IntroMD extends Component {
                 <br />
               </ul>
 
-              <h3>26.Projection</h3>
+              <h3>26. Projection</h3>
               <p>Projection means selecting only the necessary data rather than selecting whole of the data of a document.</p>
-              <br />
               <p>
                 If a document has 5 fields and you need to show only 3, then select only 3 fields from them. when you execute find()
                 method, then it displays all fields of a document. To limit this, you need to set a list of fields with value 1 or 0.
                 1 is used to show the field while 0 is used to hide the fields.
               </p>
-              <br />
 
               <h3>27. Creating a Capped Collection</h3>
               <ul>
@@ -465,8 +422,6 @@ class IntroMD extends Component {
                   the size allocated on the disk. Capped collections are best for storing log information, cache data, or any other
                   high volume data. </li>
               </ul>
-              <br />
-
               <div style={titles}>
                 <PrismCode
                   code={code}
@@ -475,6 +430,110 @@ class IntroMD extends Component {
                 />
               </div>
               <i>This will create a collection named student, with maximum size of 5 megabytes and maximum of 5000 documents.</i>
+              <br />
+
+              <h3>28. What is mongodb indexing</h3>
+              MongoDB uses indexing in order to make the query processing more efficient. If there is no indexing, then the MongoDB must 
+              scan every document in the collection and retrieve only those documents that match the query. Indexes are special data 
+              structures that stores some information related to the documents such that it becomes easy for MongoDB to find the right data 
+              file. The indexes are order by the value of the field specified in the index. 
+              <div style={titles}>
+                <PrismCode
+                  code={createInd}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>29. Humongous</h3>
+              <ul>
+                <li><b>Humongous: </b>Extremely large. So MongoDb is name.</li>
+                <li><b>Spider Monkey: </b>MongoDb internally used Moilla's Spider Monkey JavaScript engine.</li>
+              </ul>
+              <br/>
+
+              <ul>
+                <li>MongoDb Physical database contains several logical databases.</li>
+                <li>Each database contains several collections. Collection is something like table in relational database.</li>
+                <li>Each collection contains several documents. Document is something like record/row in relational database.</li>
+              </ul>
+
+              <h3>30. Key characteristics of MongoDb database</h3>
+                  <ul>
+                    <li>All information related to a document will be stored in a single place. To retrieve data, It's not required to 
+                        perform join operations and hance retrieval is very fast.</li>
+                    <li>Documents are independent of each other and no schema. Hence we can store unstructure data like videos, audio files etc.</li>
+                    <li>We can store very huge amount of data and hence scalability is more.</li>
+                    <li>Performance and Flexibility are biggest assets of MongoDb.</li>
+                  </ul>
+              <br/>
+
+              <h3>31. MongoDb Shell vs MongoDb Server</h3>
+                  <ul>
+                    <li>Once we installed MongoDb, We will get MongoDb Shell and MongoDb Server.</li>
+                    <li>MongoDb Server is responsible to store our data in database.</li>
+                    <li>MongoDb Shell is responsible to manage Server. By using this Shell we can perform all required CURD operations.</li>
+                  </ul>
+                  <br/>
+
+                  <ul>
+                    <li>MongoDb Server can be either local or remote.</li>
+                    <li><b>mongod: </b>To Launch MongoDb Server</li>
+                    <li><b>mongo: </b>To Launch MongoDb Shell</li>
+                  </ul>
+              <br/>
+
+              <h3>32. Default Databases</h3>
+              <ul>
+                <li><b>admin: </b>
+                    <ul>
+                      <li>admin db is used to store user authentication and authorization information like username, password, roles etc.</li>
+                      <li>This database is used by administrators while creating, deleting and updating users and while assigning roles.</li>
+                    </ul>
+                </li>
+                <br/>
+
+                <li><b>config: </b>
+                    <ul>
+                      <li>To store configuration information of MongoDb server.</li>
+                    </ul>
+                </li>
+                <br/>
+
+                <li><b>local: </b>
+                    <ul>
+                      <li>Can be used by admin while performing Replication process.</li>
+                    </ul>
+                </li>
+              </ul>
+
+              <br/>
+
+              <h3>33. Data Formats</h3>
+                  <ul>
+                    <li>JSON: --- BSON and that BSON will be stored.</li>
+                    <li>BSON Formats required less memory.</li>
+                    <li>BSON support extra data types.</li>
+                    <li><b>EJSON (Extended JSON): </b>At the time of retrieval BSON data will be converted to EJSON.</li>
+                  </ul>
+              <br/>
+
+              <h3>34. </h3>
+                  <ul>
+                    <li>Database will be created dynamically.</li>
+                    <li>If anything prefixed with $ symbol, then it is predefined word.</li>
+                    <li><b>load("D:\users.js"): </b>To load documents.</li>
+                    <li><b>Inserting documents from JSON file. : </b>
+                      <ul>
+                        <li><b>mongoimport: </b>Tool to import documents from JSON file into MongoDb.</li>
+                        <li>mongoimport is not available by default.</li>
+                      </ul>
+                    </li>
+                    <br/>
+                    <li><b>db.getName(): </b>To check current database name.</li>
+                  </ul>
+              <br/>
             </List>
           </Paper>
         </Grid>

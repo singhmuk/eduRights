@@ -5,7 +5,6 @@ import { Grid, Paper, withStyles, List } from "@material-ui/core";
 import '../../ReactJs/styles.css'
 import Sidebar from '../sidebar';
 import PrismCode from '../../ReactJs/prismCode';
-import Ngrx from '../../../assets/ngrx.png';
 
 
 const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }

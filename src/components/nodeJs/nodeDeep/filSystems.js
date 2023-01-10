@@ -86,7 +86,7 @@ fs.open('input.txt', 'r+', (err, fd) => {
       } 
       console.log(bytes + " bytes read"); 
       
-      if(bytes > 0){                                                        // Print only read bytes to avoid junk. 
+      if(bytes > 0){                                            //Print only read bytes to avoid junk. 
          console.log(buf.slice(0, bytes).toString()); 
       } 
    }); 
@@ -249,31 +249,7 @@ class FileSys extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>What is a control flow function? What are the steps does it execute?</h3>
-              <p>
-                Control flow function runs in between several asynchronous function calls.
-                <ul>
-                  <li>Control the order of execution. </li>
-                  <li>Collect data.</li>
-                  <li>Limit concurrency. </li>
-                  <li>Call the next step in the program.</li>
-                </ul>
-              </p>
-              <br />
-
-              <h3>Explain the working mechanism of control flow function?</h3>
-              <i>
-                Control flow function is the sequence in which statements or functions are executed. Since I/O operations are non-blocking in Node.js, control flow cannot be linear. Therefore, it registers a callback to the event loop and passes the control back to the node, so that the next lines of code can run without interruption. Ex:Read File
-              </i>
-              <br />
-              <ul>
-                <li><b>fs.state(): </b>It helps to get various statistic of a file.</li>
-                <br />
-                To deal with directories here are 2 methods.
-                <li><b>opendir(): </b>readfile()/ writefile()</li>
-                <li><b>opendirSync(): </b>readfileSync()/ writefileSync()</li>
-              </ul>
-              <br />
+              <h3>1. File System</h3>
               <div style={titles}>
                 <PrismCode
                   code={fsdir}

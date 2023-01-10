@@ -50,10 +50,10 @@ app.post("/", function (req, res) {
 
   var cryptoFiat = req.body.cryptoSelection + req.body.currencySelection
 
-  restClient.getTickerDataPerSymbol('global', req.body.cryptoSelection + req.body.currencySelection, function (response) {
-    console.log(response);
+  restClient.getTickerDataPerSymbol('global',req.body.cryptoSelection +req.body.currencySelection,function (res){
+    console.log(res);
 
-    var data = JSON.parse(response);
+    var data = JSON.parse(res);
     var currentData = data.display_timestamp;
     var price = data.last;
 integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymou
@@ -159,12 +159,12 @@ app.post("/", function (req, res) {
     body: jsonData
   }
 
-  request(options, function (error, response, body) {
+  request(options, function (error, res, body) {
     if (error) {
       console.log(error);
       res.sendFile(__dirname + "/failure.html");
     } else {
-      if (response.statusCode == 200) {
+      if (res.statusCode == 200) {
         res.sendFile(__dirname + "/success.html");
       } else {
         res.sendFile(__dirname + "/failure.html");
@@ -195,7 +195,8 @@ app.listen(process.env.PORT || 3000, function () {
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+      </script>
 
     <link href="css/signin.css" rel="stylesheet">
   </head>
@@ -222,7 +223,7 @@ app.listen(process.env.PORT || 3000, function () {
   //success.html
   <div class="container">
       <h1 class="display-4">Awesome!!</h1>
-      <p class="lead">You have successfully signed up to the newsletter, look forward to lots of awesome content!</p>
+      <p class="lead">You have successfully signed up to the newsletter</p>
     </div>
     
     
@@ -231,7 +232,8 @@ app.listen(process.env.PORT || 3000, function () {
   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
-  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
 </head>
 
 <body>

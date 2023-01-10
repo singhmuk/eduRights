@@ -23,244 +23,6 @@ const styles = theme => ({
 })
 
 
-const code = `
-class App extends Component {
-  state = {show: true};
-
-  delHeader = () => {
-    this.setState({show: !this.state.show});
-  }
-  render() {
-    let myheader;
-    if (this.state.show) {
-      myheader = <Child />;
-    };
-    return (
-      <>
-        {myheader}
-        <button type="button" onClick={this.delHeader}>Delete Header</button>
-      </>
-    );
-  }
-}
-
-class Child extends Component {
-  componentWillUnmount() {
-    alert("The component named Header is about to be unmounted.");
-  }
-  render() {
-    return (
-      <h1>Hello World!</h1>
-    );
-  }
-}`.trim();
-
-
-const storeData = `
-export default class App extends Component {
-  state = { user: '', rememberMe: false };
-  
-  componentDidMount() {
-    const rememberMe = localStorage.getItem('rememberMe') === 'true';
-    const user = rememberMe ? localStorage.getItem('user') : '';
-    this.setState({ user, rememberMe });
-  }
- 
-  handleChange = (e) => {
-    const input = e.target;
-    const value = input.type === 'checkbox' ? input.checked : input.value;
- 
-    this.setState({ [input.name]: value });
-  };
- 
-  handleFormSubmit = () => {
-    const { user, rememberMe } = this.state;
-    localStorage.setItem('rememberMe', rememberMe);
-    localStorage.setItem('user', rememberMe ? user : '');
-  };
- 
-  render() {
-    return (
-      <form onSubmit={this.handleFormSubmit}>
-        <label>
-          User: <input name="user" value={this.state.user} onChange={this.handleChange}/>
-        </label>
-        <label>
-          <input name="rememberMe" checked={this.state.rememberMe} 
-                 onChange={this.handleChange} type="checkbox"/> Remember me
-        </label>
-        <button type="submit">Sign In</button>
-      </form>
-    );
-  }
-}`.trim();
-
-const shibling = `
-class ErrorBoundary extends Component {
-  state = { error: null, errorInfo: null };
-  
-  componentDidCatch(error, errorInfo) {
-    this.setState({ error, errorInfo })
-  }
-  
-  render() {
-    if (this.state.errorInfo) {
-      // Error path
-      return (
-        <>
-          <h2>Something went wrong.</h2>
-          <details>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
-        </>
-      );
-    }
-    
-    return this.props.children;
-  }  
-}
-
-
-
-//BuggyCounter.js
-const BuggyCounter = () => {
-  const [ counter, setCounter ] = useState(0)
-
-  const handleClick = () => {
-    setCounter({counter: counter + 1})
-  }
-
-  if (counter === 5) {
-    throw new Error('I crashed!');
-  }
-  return <h1 onClick={handleClick}>{counter}</h1>;
-}
-
-
-
-function App() {
-  return (
-    <div>
-      <ErrorBoundary>
-        <BuggyCounter />
-      </ErrorBoundary>
-    </div>
-  );
-}
-
-export default App;`.trim();
-
-const body = `
-  const App = OriginalComponent => {
-    class NewComponent extends Component {
-      constructor(props) {
-        super(props)
-        this.state={
-          count:0
-        }
-      }
-      
-      incrementCount = () => {
-        this.setState(prevState => {
-          return { count: prevState.count +1 }
-        })
-      }
-      render(){
-        return(
-           <OriginalComponent 
-            count={this.state.count}
-            incrementCount={this.incrementCount}
-         />
-        )
-      }
-    }
-    return NewComponent;
-  }
-  
-  
-  
-  const ClickCounter = (props) => {
-      const { count, incrementCount } = props;
-      return (
-        <div>
-          <button onClick={incrementCount}>
-            Click {count} times
-          </button>
-        </div>
-      )
-    }
-  //export default App(ClickCounter);
-  
-  
-  
-  const HoverCounter = (props) => {
-      const { count, incrementCount } = props;
-      return (
-        <div>
-          <button onMouseOver={incrementCount}>
-            Hover {count} times
-          </button>
-        </div>
-      )
-    }
-  
-  export default App(HoverCounter, ClickCounter);
-  //export default App(HoverCounter)`.trim()
-
-const form = `
-const App = () => {
-  const usersData = [
-    { id: 1, name: "AAA", username: "aiueo" }
-  ];
-
-  const initialFormState = { id: null, name: "", username: "" };
-  const [mockData, setMockData] = useState(usersData);
-  const [user, setUser] = useState(initialFormState);
-
-  const handleInputChange = e => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-
-  const addUser = user => {
-    user.id = mockData.length + 1;
-    setMockData([...mockData, user]);
-    setUser(initialFormState);
-  };
-
-  const deleteUser = id => {
-    setMockData(mockData.filter(user => user.id !== id));
-  };
-
-  return (
-    <div className="container">
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          addUser(user);
-        }}
-      >
-        <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleInputChange} />
-        <input type="text" name="username" value={user.username} placeholder="Username" onChange={handleInputChange} />
-        <button>Add new user</button>
-      </form>
-      
-          {mockData.map(user => (
-            <li key={user.id}>
-              {user.name}---
-              {user.username}
-              <button onClick={() => deleteUser(user.id)}>Delete</button>
-            </li>
-          ))
-        }
-    </div>
-  );
-};
-`.trim();
-
-
 const sliderBox = `
 //App.js
 class App extends Component {
@@ -354,114 +116,6 @@ class App extends Component {
 }
 `.trim();
 
-const formMul = `
-class App extends Component {
-  state = {
-    username: '',
-    city: '',
-    country: '',
-    age: null,
-    mockData: []
-  };
-
-handleChange = (e) => {
-  let name = e.target.name;
-  this.setState({[name]: e.target.value});
-
-  console.log(name)
-}
-
-handleSubmit = (e) => {
-  e.preventDefault();
-  let age = this.state.age;
-
-  const newItem = {
-    username: this.state.username,
-    city: this.state.city,
-    country: this.state.country,
-    age: this.state.age
-  };
-
-  this.setState(state => ({
-    mockData: state.mockData.concat(newItem),
-      username: '',
-      city: '',
-      country: '',
-      age: '',
-      }));
-
-  if (!Number(age)) {
-    alert("Your age must be a number");
-  }
-}
-
-render() {
-  return (
-    <div>
-    <form onSubmit={this.handleSubmit}>
-      <input type='text' name='username' onChange={this.handleChange} />
-      <input type='text' name='city' onChange={this.handleChange} />
-      <input type='text' name='city' onChange={this.handleChange} />
-      <input type='text' name='age' onChange={this.handleChange} />
-      
-      <button>Submit</button>
-    </form>
-
-      {this.state.mockData.map(item => (
-        <div>
-          <li>{item.username} --- {item.city} --- {item.city} --- {item.age}</li>
-        </div> 
-      ))}
-    </div>
-  );
-}
-}`.trim();
-
-const eventPass = `
-const App = () => {
-  const usersData = [
-    { id: 1, name: "AAA", username: "aiueo" }
-  ];
-
-  const initialFormState = { id: null, name: "", username: "" };
-  const [mockData, setMockData] = useState(usersData);
-  const [user, setUser] = useState(initialFormState);
-
-  const handleInputChange = e => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-
-  const addUser = user => {
-    user.id = mockData.length + 1;
-    setMockData([...mockData, user]);
-    setUser(initialFormState);
-  };
-
-  return (
-    <div className="container">
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          addUser(user);
-        }}
-      >
-        <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleInputChange} />
-        <input type="text" name="username" value={user.username} placeholder="Username" onChange={handleInputChange} />
-        <button>Add new user</button>
-      </form>
-      
-          {mockData.map(user => (
-            <li key={user.id}>
-              {user.name}---
-              {user.username}
-            </li>
-          ))
-        }
-    </div>
-  );
-};`.trim();
-
 const editForm = `
 import EditUserForm from "./EditUserForm";
 
@@ -518,7 +172,7 @@ const App = () => {
         }}
       >
         <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleInputChange} />
-        <input type="text" name="username" value={user.username} placeholder="Username" onChange={handleInputChange} />
+        <input type="text" name="username" value={user.username} onChange={handleInputChange} />
         <button>Add new user</button>
       </form>
 }
@@ -562,38 +216,192 @@ const EditUserForm = props => {
 };
 `.trim();
 
-const increase = `
+const curdcom = `
+class App extends Component {
+  state = {
+    mockData: [],
+    text: "",
+    id: Math.random(1,100),
+    editItem: false
+  };
+  
+  handleChange = e => {
+    this.setState({text: e.target.value});
+  };
+  
+  handleAdd = e => {
+    e.preventDefault();
+    if (this.state.text.length === 0) return;
+
+    const newItem = {
+      id: this.state.id,
+      title: this.state.text
+    };
+    
+    const updatedItems = [...this.state.mockData].concat(newItem);
+
+    this.setState({
+      mockData: updatedItems,
+      text: "",
+      id: Math.random(1,100),
+      editItem: false
+    });
+  };
+  
+  clearList = () => {
+    this.setState({ mockData: [] });
+    };
+    
+  handleDelete = (id) => {
+      this.setState({ mockData: this.state.mockData.filter(item => item.id !== id) });
+    };
+    
+  handleEdit = id => {
+    const filteredItems = this.state.mockData.filter(item => item.id !== id);
+    const selectedItem = this.state.mockData.find(item => item.id === id);
+
+    this.setState({
+      mockData: filteredItems,
+      text: selectedItem.title,
+      editItem: true,
+      id: id
+    });
+  };
+  
+  render() {
+    return (
+      <div>
+         <form onSubmit={this.handleAdd}>
+          <div>
+            <input type="text" value={this.state.text} onChange={this.handleChange} />
+          </div>
+          <button>{this.state.editItem ? "edit item" : "add item"}</button>
+        </form>
+            
+        <ul>
+        {this.state.mockData.map(item => {
+          return (
+            <div>
+              <h1>{item.title}</h1>
+            
+              <button onClick={() => this.handleEdit(item.id)}>edit</button>
+              <button onClick={() => this.handleDelete(item.id)}>delete</button>
+            </div>
+          );
+        })}
+
+        <button onClick={this.clearList}>clear list</button>
+        </ul>
+      </div>
+    );
+  }
+}`.trim();
+
+const localStorage = `
+import React, { useState, useEffect } from "react";
+
 const App = () => {
-  const [count, setCount]=useState(0);
-  const [toggle, setIsPouse]=useState(false);
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState("");
+  const [todoEditing, setTodoEditing] = useState(null);
+  const [editingText, setEditingText] = useState("");
 
-  const handlePouse=()=>{
-    setIsPouse(!toggle)
-    console.log(toggle,"toggle")
-  }
-
-  const handleCount=()=>{
-    if(toggle==true){
-      setCount(count+1)
+  useEffect(() => {
+    const json = localStorage.getItem("todos");
+    const loadedTodos = JSON.parse(json);
+    if (loadedTodos) {
+      setTodos(loadedTodos);
     }
-    else{
-      setCount(count-1)
-    }
+  }, []);
+
+  useEffect(() => {
+    const json = JSON.stringify(todos);
+    localStorage.setItem("todos", json);
+  }, [todos]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const newTodo = {
+      id: new Date().getTime(),
+      text: todo,
+      completed: false,
+    };
+    setTodos([...todos].concat(newTodo));
+    setTodo("");
   }
 
-  const reset=()=>{
-    setCount(0)
+  function deleteTodo(id) {
+    let updatedTodos = [...todos].filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
   }
 
-  return(
-    <div>
-      {count}<br/>
-      <button onClick={handleCount}>count</button>
-      <button onClick={handlePouse}>Pouse</button>
-      <button onClick={reset}>Reset</button>
+  function toggleComplete(id) {
+    let updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  }
+
+  function submitEdits(id) {
+    const updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.text = editingText;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+    setTodoEditing(null);
+  }
+
+  return (
+    <div id="todo-list">
+      <h1>Todo List</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          onChange={(e) => setTodo(e.target.value)}
+          value={todo}
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+      {todos.map((todo) => (
+        <div key={todo.id} className="todo">
+          <div className="todo-text">
+            <input
+              type="checkbox"
+              id="completed"
+              checked={todo.completed}
+              onChange={() => toggleComplete(todo.id)}
+            />
+            {todo.id === todoEditing ? (
+              <input
+                type="text"
+                onChange={(e) => setEditingText(e.target.value)}
+              />
+            ) : (
+              <div>{todo.text}</div>
+            )}
+          </div>
+          <div className="todo-actions">
+            {todo.id === todoEditing ? (
+              <button onClick={() => submitEdits(todo.id)}>Submit Edits</button>
+            ) : (
+              <button onClick={() => setTodoEditing(todo.id)}>Edit</button>
+            )}
+
+            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+          </div>
+        </div>
+      ))}
     </div>
-  )
-}
+  );
+};
+
+export default App;
 `.trim();
 
 class MainCompo extends Component {
@@ -612,172 +420,17 @@ class MainCompo extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>1. Lifecycle of Components</h3>
-              Each component in React has a lifecycle which you can monitor and manipulate during its
-              three main phases.
-              <br />
-              1. Mounting<br />
-              2. Updating and<br />
-              3. Unmounting<br />
-              <br />
-              <b>Mounting: </b>Mounting means putting elements into the DOM.
-              <br />
-              React has four built-in methods that gets called, in this order, when mounting a component:
-              <br />
-              <br />
-              1. constructor()<br />
-              3. <b>render():</b>  required and will always be called, the others are optional and will be called if you define them.<br />
-              4. componentDidMount()<br />
-
-              <br />
-              <br />
-              <b>constructor(): </b>Is called before anything else, when the component is initiated,
-              and it is the natural place to set up the initial state and other initial values.
-              <br />
-              <br />
-              The constructor() method is called with the props, as arguments, and you should always start
-              by calling the super(props) before anything else, this will initiate the parent's constructor
-              method and allows the component to inherit methods from its parent.
-              <br />
-              <br />
-              <b>componentDidMount: </b>Method is called after the component is rendered.
-              <br />
-              This is where you run statements that requires that the component is already placed in the
-              DOM.
-              <br />
-              <br />
-              <b>Updating: </b>
-              A component is updated whenever there is a change in the component's state or props.
-              <br />
-              <ul>
-                <li>shouldComponentUpdate()</li>
-                <li>render()</li>
-                <li>componentDidUpdate()</li>
-              </ul>
-              <br />
-
-              <b>shouldComponentUpdate: </b>
-              In the shouldComponentUpdate() we can return a Boolean value that specifies whether
-              React should continue with the rendering or not.
-              <br />
-              <b>The default value is true.</b>
-              <br />
-              <br />
-
-              <b>render:</b>
-              Method is called when a component gets updated, it has to re-render
-              the HTML to the DOM, with the new changes.
-              <br />
-              <br />
-
-              <b>componentDidUpdate: </b>
-              The componentDidUpdate method is called after the component is updated in the DOM.
-              <br />
-              <br />
-              <b>Unmounting: </b>
-              componentWillUnmount:
-              <br />
-              This method is called when the component is about to be removed from the
-              DOM.
-              <br />
+              <h3>1. Curd Component</h3>
               <div style={titles}>
                 <PrismCode
-                  code={code}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <p>This method is called when there is an error during rendering, in a lifecycle method, or in the constructor of any
-                child component. </p>
-              <ul>
-                <li>b. componentDidCatch</li>
-              </ul>
-              <br />
-
-              <h3>2. Error Boundries</h3>
-              <p>Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering.
-                A component can become an Error boundary if it contains the definition of the <b>'componentDidCatch'</b>.</p>
-              <div style={titles}>
-                <PrismCode
-                  code={shibling}
+                  code={curdcom}
                   language="js"
                   plugins={["line-numbers"]}
                 />
               </div>
               <br />
 
-              <h3>3. Local Storage</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={storeData}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>4. Event</h3>
-              <p>
-                In React, events are the triggered reactions to specific actions like mouse hover, mouse click, key press, etc.
-              </p>
-              <ul>
-                <li>1. Events are passed as functions instead of strings. </li>
-                <li>
-                  2. The event argument contains a set of properties, which are specific to an event. Each event type contains its own
-                  properties and behavior which can be accessed via its event handler only.
-                </li>
-              </ul>
-              <div style={titles}>
-                <PrismCode
-                  code={eventPass}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>What are synthetic events in React?</h3>
-              <p>
-                Synthetic events are the objects which act as a cross-browser wrapper around the browser’s native event. They combine
-                the behavior of different browsers into one API. This is done to make sure that the events show consistent properties
-                across different browsers.
-              </p>
-              <b>Ex. </b>preventDefault
-              <br />
-
-              <h3>5. Higher Order Component</h3>
-              <i>HOCs are the coined term for a custom Component that accepts dynamically provided children.</i>
-              <div style={titles}>
-                <PrismCode
-                  code={body}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>6. Form</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={form}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>7. Form multi input</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={formMul}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>7. Edit Form</h3>
+              <h3>2. Curd</h3>
               <div style={titles}>
                 <PrismCode
                   code={editForm}
@@ -787,17 +440,16 @@ class MainCompo extends Component {
               </div>
               <br />
 
-              <h3>Increase-Decrease</h3>
+              <h3>3. Curd Local Storage</h3>
               <div style={titles}>
                 <PrismCode
-                  code={increase}
+                  code={localStorage}
                   language="js"
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br />
 
-              <h3>8. Slider on click</h3>
+              <h3>4. Slider on click</h3>
               <div style={titles}>
                 <PrismCode
                   code={sliderBox}

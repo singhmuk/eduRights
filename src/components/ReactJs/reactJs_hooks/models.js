@@ -76,43 +76,6 @@ const Previews = (props) => {
 }
 `.trim();
 
-
-const childData = `
-class App extends Component {
-  state={ourData:''}
-  
-  changeText = (myData) => {
-    this.setState({ourData:myData});
-  }
-  render(){
-    return(
-      <div>
-        {this.state.ourData}
-        <First refer = {this.changeText} />
-      </div>
-    )
-  }
-}
-
-
-// first.js
-class First extends Component {
-  state={data:'first'}
-   
-   changeText = () => {
-     var myData = this.state.data;
-     this.props.refer(myData)
-   }
-   render(){
-     return(
-       <div>
-         <button onClick = {()=>this.changeText()} >Click</button> 
-       </div>
-     )
-   }
- }`.trim();
-
-
 const download = `
    import {CSVLink, CSVDownload} from 'react-csv';
    import axios from 'axios';
@@ -401,17 +364,7 @@ class Models extends Component {
                 />
               </div>
               <br />
-              <h3>2. Call Child Data</h3>
-              Snario in which we call state from child to parrent component.<br />
-              <i>Here App.js is parent class, and child component (First.js) have state data that we call in App component.</i>
-              <div style={titles}>
-                <PrismCode
-                  code={childData}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
+              
               <h3>3. Download CSV File</h3>
               <div style={titles}>
                 <PrismCode

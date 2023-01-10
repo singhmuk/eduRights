@@ -192,6 +192,15 @@ function arrCounts(){
 }
 
 arrCounts();  
+
+
+//
+let arr=[0,9,8,7,6,6,0];
+arr=arr.reduce((acc,curr)=>{
+  return acc[curr]? ++acc[curr]:acc[curr]=1, acc
+},{})
+
+console.log(arr)
 `.trim();
 
 const find132pattern = `
@@ -360,6 +369,39 @@ function findMissingRanges(nums, lower, upper) {
 console.log(findMissingRanges([1,2,3,-2,4]))
 `.trim();
 
+const sortname = `
+var objs = [ 
+  { first: 'Mukesh', last: 'Jamf' },
+  { first: 'Rakesh', last: 'Bodine' },
+  { first: 'Bicky', last: 'Prentice' }
+];
+
+function compare(a, b) {
+  if (a.first < b.first){
+    return -1;
+  }
+  if (a.first > b.first){
+    return 1;
+  }
+  return 0;
+}
+
+const obj = objs.sort(compare);
+console.log(obj)
+`.trim();
+
+const concatarr = `
+const arr1 =[{id:1,name:"sai"}, {id:2,name: "King"}];
+const arr2 = [{id:1,age:23},{id:2,age:24}];
+
+function fun(){
+   const result = arr1[0].name.concat(arr2[1].age);
+   console.log(result)
+}
+
+fun();
+`.trim();
+
 const permute = `
 function permute(nums = []){
   const result = [];
@@ -459,6 +501,27 @@ function countSmaller(nums) {
 }
 
 console.log(countSmaller([5,2,6,1]))
+`.trim();
+
+const replaceNum = `
+function replaceNum(){
+let arr=[2,3,6,7,1];
+const target = 1;
+let indexVal=0;
+const num=10;
+
+
+for(let i=0; i<arr.length; i++){
+  if(arr[i]==target){
+      indexVal = arr.indexOf(arr[i]);
+  }
+}
+
+arr.splice(indexVal,4,num)
+console.log(arr)   
+}
+
+replaceNum()
 `.trim();
 
 
@@ -580,6 +643,16 @@ class DSLogic2 extends Component {
               </div>
               <br/>
 
+              <h3>10. Replace Element</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={replaceNum}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
               <h3>10. Shuffle the Array.</h3>
               <div style={titles}>
                 <PrismCode
@@ -647,7 +720,27 @@ class DSLogic2 extends Component {
               </div>
               <br/>
 
-              <h3>15. Find First and Last Position of Element in Sorted Array</h3>
+              <h3>15. Sort name.</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={sortname}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>16. Concat 2 array on the basis of id</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={concatarr}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>17. Find First and Last Position of Element in Sorted Array</h3>
               Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
               <br/>
               Your algorithm's runtime complexity must be in the order of O(log n).<br/>
@@ -665,7 +758,7 @@ class DSLogic2 extends Component {
                 />
               </div>
 
-              <h3>16. Permutations.</h3>
+              <h3>18. Permutations.</h3>
               Given a collection of distinct integers, return all possible permutations.
               <div style={titles}>
                 <PrismCode
@@ -676,7 +769,7 @@ class DSLogic2 extends Component {
               </div>
               <br/>
 
-              <h3>17. Number of Good Pairs.</h3>
+              <h3>19. Number of Good Pairs.</h3>
               <b>Input: </b>nums = [1,2,3,1,1,3] <br/>
               <b>Output: </b>4 <br/>
               <b>Explanation: </b>There are 4 good pairs (0,3), (0,4), (3,4), (2,5) 0-indexed.
@@ -689,7 +782,7 @@ class DSLogic2 extends Component {
               </div>
               <br/>
 
-              <h3>18. Product of Array Except Self.</h3>
+              <h3>20. Product of Array Except Self.</h3>
               <div style={titles}>
                 <PrismCode
                   code={productExceptSelf}
@@ -699,7 +792,7 @@ class DSLogic2 extends Component {
               </div>
               <br/>
 
-              <h3>19. Count of Smaller Numbers After Self.</h3>
+              <h3>21. Count of Smaller Numbers After Self.</h3>
               You are given an integer array nums and you have to return a new counts array. The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].
               <br/>
               <b>Input: </b>nums = [5,2,6,1]<br/>
@@ -720,7 +813,7 @@ class DSLogic2 extends Component {
               </div>
               <br/>
 
-              <h3>20. Array Counter</h3>
+              <h3>22. Array Counter</h3>
               <div style={titles}>
                 <PrismCode
                   code={arrayCounter}
@@ -730,7 +823,7 @@ class DSLogic2 extends Component {
               </div>
               <br />
 
-              <h3>21. Summary Ranges.</h3>
+              <h3>23. Summary Ranges.</h3>
               Given a sorted integer array without duplicates, return the summary of its ranges.
               <div style={titles}>
                 <PrismCode

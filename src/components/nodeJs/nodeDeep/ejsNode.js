@@ -263,6 +263,97 @@ const fun=()=>{
 
 module.exports={fun}`.trim();
 
+const ipc = `
+setInterval(() => {}, 1e6);
+process.on('SIGINT', () => {
+    console.log('SIGINT signal received');
+    process.exit(1);
+})
+`.trim();
+
+const nextTick = `
+const events = require('events').EventEmitter;
+const emitter = new events();
+
+const getEmitter = () => {
+  process.nextTick(() => {
+    emitter.emit('start');
+  });
+  return emitter;
+}
+
+const myEmitter = getEmitter();
+myEmitter.on('start', () => {
+  console.log('Started');
+})
+`.trim();
+
+const timers = `
+console.log("Foo: Start", new Date().toLocaleTimeString());
+
+setTimeout(() => {
+  console.log("Poo", new Date().toLocaleTimeString());
+}, 5000);
+
+const waitlogForNseconds = (seconds) => {
+  const startTime = new Date().getTime();
+  const milliseconds = 1000;
+  const endTime = startTime + seconds * milliseconds;
+  let currTime = new Date().getTime();
+
+  while (endTime > currTime) {
+    currTime = new Date().getTime();
+  }
+  console.log('Goo: To be called after '$'{seconds} End ', new Date().toLocaleTimeString());
+};
+
+waitlogForNseconds(10);
+`.trim();
+
+const handles = `
+const args = process.argv.slice(2);
+
+args.forEach(arg => {
+let envVar = process.env[arg];
+if (envVar === undefined) {
+ console.error(Could not find "'$'{arg}" in environment);
+} else {
+ console.log(envVar);
+}
+});
+`.trim();
+
+const Render_HTML = `var http = require('http').createServer(onRequest);
+  var fs = require('fs');
+    function onRequest(request, response) {
+       response.writeHead(200, { 'Content-Type': 'text/html' });
+         fs.readFile('./index.html', null, ((error, data) => {
+           if (error) {
+               response.writeHead(404);
+               response.write('File not found!');
+             } 
+             else {
+               response.write(data);
+           }
+         response.end();
+      })
+    );
+  }
+  
+http.listen(8000);
+`.trim()
+
+const Date_time_main = `var http = require('http').createServer(onRequest);
+  var dt = require('./date_time');
+    function onRequest(req, res) {
+       res.writeHead(200, { 'Content-Type': 'text/html' });
+       res.write("The date and time currently" + dt.myDateTime());
+     res.end();
+  }
+  
+http.listen(4000);
+`.trim()
+
 
 class Ejs extends Component {
   componentDidMount() {
@@ -280,7 +371,7 @@ class Ejs extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>modules</h3>
+              <h3>1. modules</h3>
               Every file is module by default.<br/>
               Modules - Encapsulated Code (only share minimum)
               <div style={titles}>
@@ -292,7 +383,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>Async-Patterns</h3>
+              <h3>2. Async-Patterns</h3>
               <div style={titles}>
                 <PrismCode
                   code={patterns}
@@ -302,7 +393,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>Await-Pattern</h3>
+              <h3>3. Await-Pattern</h3>
               <div style={titles}>
                 <PrismCode
                   code={awaitPat}
@@ -312,7 +403,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>fs-sync</h3>
+              <h3>4. fs-sync</h3>
               <div style={titles}>
                 <PrismCode
                   code={fSync}
@@ -321,9 +412,8 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-              <br />
 
-              <h3>fs-async</h3>
+              <h3>5. fs-async</h3>
               <div style={titles}>
                 <PrismCode
                   code={fsAsync}
@@ -333,7 +423,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>Http</h3>
+              <h3>6. Http</h3>
               <div style={titles}>
                 <PrismCode
                   code={http}
@@ -343,7 +433,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>EventEmitter</h3>
+              <h3>7. EventEmitter</h3>
               <div style={titles}>
                 <PrismCode
                   code={EventEmitter}
@@ -353,7 +443,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>Request-Event</h3>
+              <h3>8. Request-Event</h3>
               Emits request event subcribe to it / listen for it / respond to it.
               <div style={titles}>
                 <PrismCode
@@ -364,7 +454,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>create Big File</h3>
+              <h3>9. create Big File</h3>
               <div style={titles}>
                 <PrismCode
                   code={createBigFile}
@@ -374,7 +464,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>Streams</h3>
+              <h3>10. Streams</h3>
               default 64kb<br/>
               last buffer - remainder<br/>
               highWaterMark - control size<br/>
@@ -387,7 +477,7 @@ class Ejs extends Component {
               </div>
               <br />
 
-              <h3>http-stream</h3>
+              <h3>11. http-stream</h3>
               <div style={titles}>
                 <PrismCode
                   code={httpStream}
@@ -395,6 +485,126 @@ class Ejs extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+              <br/>
+
+              <h3>12. What are the timing features of Node.js?</h3>
+              <p>The Timers module in Node.js contains functions that execute code after a set period of time.</p>
+              <ul>
+                <li><b>setTimeout/ clearTimeout -</b> Can be used to schedule code execution after a designated amount of milliseconds.</li>
+                <li><b>setInterval/ clearInterval -</b> Can be used to execute a block of code multiple times.</li>
+                <li><b>setImmediate/ clearImmediate -</b> Will execute code at the end of the current event loop cycle.</li>
+                <li><b>process.nextTick -</b> Used to schedule a callback function to be invoked in the next iteration of the Event Loop.</li>
+              </ul>
+              <i>On any given context process.nextTick() has higher priority over setImmediate().</i>
+              <br />
+              <br />
+              <ul>
+                <li><b>timers: </b>This phase executes callbacks scheduled by setTimeout() and setInterval().</li>
+                <li><b>pending callbacks: </b>executes I/O callbacks deferred to the next loop iteration.</li>
+                <li><b>idle prepare: </b>only used internally.</li>
+                <li><b>poll: </b>retrieve new I/O events; execute I/O related callbacks (almost all with the exception of close callbacks, the ones scheduled by timers, and setImmediate()); node will block here when appropriate.</li>
+                <li><b>check: </b>setImmediate() callbacks are invoked here.</li>
+                <li><b>close callbacks: </b>some close callbacks, e.g. socket.on('close', ...)</li>
+                setImmediate() is processed in the Check handlers phase, while process.nextTick() is processed at the starting of the event
+                loop and between each phase of the event loop.
+              </ul>
+              <br />
+
+              <h3>13. ipc</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={ipc}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>14. nextTick </h3>
+              This code set up a simple transaction when an instance  of
+              <div style={titles}>
+                <PrismCode
+                  code={nextTick}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>15. Timers</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={timers}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>16. Handling Undefined Input</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={handles}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <i>node echo.js HOME PWD NOT_DEFINED</i>
+              <br />
+
+              <h3>17. Node.js on Browser</h3>
+              <b> Render HTML</b>
+              <div style={titles}>
+                <PrismCode
+                  code={Render_HTML}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>18. Date time main</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={Date_time_main}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>19. Provide some example of config file separation for dev and prod environments.</h3>
+              <p>A perfect and flawless configuration setup should ensure:</p>
+              <ul>
+                <li>Keys can be read from file and from environment variable.</li>
+                <li>Secrets are kept outside committed code.</li>
+              </ul>
+              <br />
+
+              <h3>20. Explain usage of NODE_ENV .</h3>
+              <p>
+              NODE_ENV allows components to provide better diagnostics during development, for example by disabling
+                caching or emitting verbose log statements. Setting NODE_ENV to production makes our application 3 times faster.
+              </p>
+              <br />
+
+              <h3>21. Why should you separate Express 'app' and 'server'?</h3>
+              <ul>
+                <li>
+                  Keeping the API declaration separated from the network related configuration (port, protocol, etc) allows testing the
+                  API in-process, without performing network calls.
+                </li>
+                <li>
+                  fast testing execution and getting coverage metrics of the code. It also allows deploying the same API under flexible
+                  and different network conditions.
+                </li>
+                <li>
+                  Better separation of concerns and cleaner code. API declaration.
+                </li>
+              </ul>
+              <br />
+
+              <h3>22. OS - Provides information about the operating system</h3>
             </List>
           </Paper>
         </Grid>

@@ -22,128 +22,6 @@ const styles = theme => ({
   }
 })
 
-const ReactShareSimplified = `
-import {
-  FacebookShareButton,
-  GooglePlusShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  EmailShareButton,
-  FacebookIcon,
-  TwitterIcon,
-  GooglePlusIcon,
-  EmailIcon,
-  WhatsappIcon
-} from "react-share";
-
-
-class ReactShareSimplified extends Component {
-  render() {
-    const {url,title,facebook,googlePlus,twitter,whatsapp,email,addClass,Previewemail} = this.props;
-    let {facebookClass,twitterClass,googlePlusClass,whatsappClass,emailClass} = this.props || "shareIcon";
-    console.log("iconsize",this.props.iconSize);
-    
-    let iconSize = 32;
-    if(this.props.iconSize!==undefined){
-        iconSize = this.props.iconSize
-    }
-    
-    return (
-      <span className={addClass}>
-        {facebook && (<FacebookShareButton url={url} quote={title} style={{outline:'none'}} className={facebookClass}>
-          <FacebookIcon
-            size={iconSize}
-            round />
-        </FacebookShareButton>)}
-        
-        {googlePlus && (<GooglePlusShareButton url={url} quote={title} style={{outline:'none'}} className={googlePlusClass}>
-          <GooglePlusIcon
-            size={iconSize}
-            round />
-        </GooglePlusShareButton>)}
-        
-        {twitter && (<TwitterShareButton url={url} quote={title} style={{outline:'none'}}  className={twitterClass}>
-          <TwitterIcon
-            size={iconSize}
-            round />
-        </TwitterShareButton>)}
-        
-        {whatsapp && (<WhatsappShareButton url={url} quote={title} style={{outline:'none'}} className={whatsappClass}>
-          <WhatsappIcon
-            size={iconSize}
-            round />
-        </WhatsappShareButton>)}
-        
-        {email && (<EmailShareButton url={url} quote={title} style={{outline:'none'}} className={emailClass}>
-          <EmailIcon
-            size={iconSize}
-            round />
-        </EmailShareButton>)}
-        {Previewemail && (<EmailShareButton url={url} quote={title} style={{outline:'none'}} className={emailClass}>
-          <EmailIcon
-            size={iconSize}
-            round />
-        </EmailShareButton>)}
-      </span>
-    );
-  }
-}
-export default ReactShareSimplified;`.trim();
-
-const ShareApp = `
-import ReactShareSimplified from './dist/ReactShareSimplified'
-import './App.css';
-
-class App extends Component {
-  render() {
-    const url = "https://www.github.com";
-    const title = "React share simplified";
-    return (
-      <div className="App">
-        <div className="align-inline" style={{marginTop:'10px'}}>
-          <span className="share-title">Share: </span>
-          <ReactShareSimplified
-            url={url}
-            title={title}
-            facebook={true}
-            facebookClass="iconStyle"
-            googlePlus={true}
-            googlePlusClass="iconStyle"
-            twitter={true}
-            twitterClass="iconStyle"
-            email={true}
-            emailClass="iconStyle"
-            whatsapp={true}
-            whatsappClass="iconStyle"
-            iconSize={32}
-            addClass="align-inline"
-          />
-        </div>
-      </div>
-    );
-  }
-}
-
-export default App;`.trim();
-
-const ShareAppCss = `
-.share-title {
-  justify-content: center;
-  align-self: center;
-  font-size: 17px;
-  font-family: "Nunito";
-  font-weight: 500;
-  margin-right: 5px;
-}
-.align-inline {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-}
-.iconStyle {
-    margin: 0 5px 5px;
-    cursor: pointer;
-}`.trim();
 
 const minMaxs = `
 import { makeStyles } from '@material-ui/core/styles';
@@ -194,43 +72,6 @@ function App() {
     </form>
     </div>
   );
-}
-
-export default App;`.trim();
-
-const MoveButton = `
-const MoveButton = (props) => {
-  return (
-      <button onClick={props.onClick}>
-          Click To Move
-      </button>
-  );
-}
-
-const BoxOne = () => <p>Box1</p>;
-
-const BoxTwo = () => <p>Box2</p>;
-
-
-class App extends Component {
-state = { positions: 0 }
-
-handleClick = () => {
-  this.setState({ positions: (this.state.positions + 1) % 3 })
-}
-
-render () { 
-const positions = this.state.positions;
-  return (
-      <div>
-          { positions === 0 ? <MoveButton onClick={this.handleClick}/> : ''}
-          <BoxOne />
-          { positions === 1 ? <MoveButton onClick={this.handleClick}/> : ''}
-          <BoxTwo />
-          { positions === 2 ? <MoveButton onClick={this.handleClick}/> : ''}
-      </div>
-  );
-}
 }
 
 export default App;`.trim();
@@ -337,41 +178,7 @@ class TicGame extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>1.Share</h3>
-              <b>dist/ReactShareSimplified.js</b>
-              <div style={titles}>
-                <PrismCode
-                  code={ReactShareSimplified}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>App.js</b>
-              <div style={titles}>
-                <PrismCode
-                  code={ShareApp}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <h3>App.css</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={ShareAppCss}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <h3>2.Min-Max date</h3>
+              <h3>1. Min-Max date</h3>
               <div style={titles}>
                 <PrismCode
                   code={minMaxs}
@@ -380,20 +187,8 @@ class TicGame extends Component {
                 />
               </div>
               <br />
-              <br />
 
-              <h3>3.onClick move button</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={MoveButton}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <h3>4.slideshow</h3>
+              <h3>2. Slideshow</h3>
               <div style={titles}>
                 <PrismCode
                   code={slideshow}

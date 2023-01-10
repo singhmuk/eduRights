@@ -1,9 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 
 const IntroAngular = lazy(() => import('./deepAngularjs/introAngular'));
-const Datatypests = lazy(() => import('./angular 12/datatypests'));
-const TypeScript2 = lazy(() => import('./angular 12/typeScript_2'));
-const TypeScript4 = lazy(() => import('./angular 12/typeScript_4'));
 const AngularCompile = lazy(() => import('./deepAngularjs/angCompiler'));
 const NeyralNetwork = lazy(() => import('./deepAngularjs/neural'));
 const ActivationFuns = lazy(() => import('./deepAngularjs/activationFunctions'));
@@ -24,8 +21,8 @@ const TensorFlows = lazy(() => import('./deepAngularjs/tensorflow'));
 
 
 const components = {
-  IntroAngular, AngularCompile, Datatypests, NeyralNetwork, ActivationFuns,
-  Loss, GradientNeural, Stochastic, TypeScript2, TypeScript4, Tensorboards, Benchmarking, Customer,
+  IntroAngular, AngularCompile, NeyralNetwork, ActivationFuns,
+  Loss, GradientNeural, Stochastic, Tensorboards, Benchmarking, Customer,
   RegularizationDeep, Imbalanced, Imbalanced2, Convolutionals, dataAugmentation, Transfer,
   WordEmbedding, TensorFlows
 };

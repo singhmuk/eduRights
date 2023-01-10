@@ -22,80 +22,7 @@ const styles = theme => ({
   }
 })
 
-const lexicalScop = `
-function init() {
-  var name = 'Mozilla'; 
-  function displayName() { 
-    alert(name); 
-  }
-  displayName();
-}
-init();`.trim();
 
-const code = `
-const outerFun = (a) => {
-  let b=2;
-  const innerFun = () => {
-      let sum = a+b;
-      console.log('sum is',sum)
-    }
-  innerFun();
-}
-
-outerFun(1);
- `.trim();
-
-const closers = `
-function z(){
-  var b =900;
-  function x(){
-    var a = 7; 
-    function y(){
-      console.log(a, b);
-    }
-    y();
-  }
-  x();
-}
-z();`.trim();
-
-const scopeChain = `
-//anonymous functions
-var e = 10;       // global scope
-function sum(a){
-  return function(b){
-    return function(c){
-            // outer functions scope
-      return function(d){
-            // local scope
-        return a + b + c + d + e;
-      }
-    }
-  }
-}
-
-console.log(sum(1)(2)(3)(4))
-
-
-//2
-var e = 10;
-function sum(a){
-  return function sum2(b){
-    return function sum3(c){
-      return function sum4(d){
-        return a + b + c + d + e;
-      }
-    }
-  }
-}
-
-var s = sum(1);
-var s1 = s(2);
-var s2 = s1(3);
-var s3 = s2(4);
-console.log(s3)
-
-`.trim();
 
 
 const closersSet = `
@@ -193,6 +120,127 @@ function formatDate(dayOfWeek, day, month, year) {
                 birthday.getUTCMonth(), birthday.getUTCFullYear()));
  `.trim();
 
+ const asyncAwait=`
+const mockdata=[
+  { name:'Krishana', address:'Gokul' },
+  { name:'Ram', address:'Ayodaya' }]
+
+  function getDatas(){
+    setTimeout(()=>{
+      let output="";
+      mockdata.forEach((data, index) => (
+      output += '<li>'$'{data.name}</li>'
+      ))
+    document.body.innerHTML = output;
+    },1000);
+  }
+
+  function createData(obj){
+    setTimeout(()=>{
+      mockdata.push(obj)
+    },2000)
+  }
+
+createData({name:'Payal', address:'Ranchi'})
+getDatas();
+
+
+//callback
+const mockdata=[
+  { name:'Krishana', address:'Gokul' },
+  { name:'Ram', address:'Ayodaya' }]
+
+  function getDatas(){
+    setTimeout(()=>{
+      let output="";
+      mockdata.forEach((data, index) => (
+      output += '<li>'$'{data.name}</li>'
+      ))
+      document.body.innerHTML = output;
+    },1000);
+  }
+
+  function createData(obj, cb){
+    setTimeout(()=>{
+      mockdata.push(obj)
+      cb()
+    },2000)
+  }
+
+  createData({name:'Payal', address:'Ranchi'}, getDatas)
+
+
+//Promise
+const mockdata=[
+  { name:'Krishana', address:'Gokul' },
+  { name:'Ram', address:'Ayodaya' }]
+
+  function getDatas(){
+    setTimeout(()=>{
+      let output="";
+      mockdata.forEach((data, index) => (
+        output += '<li>'$'{data.name}</li>'
+      ))
+      document.body.innerHTML = output;
+    },1000);
+  }
+
+  function createData(obj){
+    return new Promise((resolve, reject) => {
+      setTimeout(()=>{
+        mockdata.push(obj)
+        let err=false;
+          if(!err){
+            resolve();
+          }else{
+          reject('Something wrong...')
+        }
+      },2000)
+    })
+  }
+
+createData({name:'Payal', address:'Ranchi'}).then(getDatas);
+createData({name:'Payal', address:'Ranchi'}).then(getDatas).catch(err=>console.log(err));
+
+
+//Async-Await
+const mockdata=[
+  { name:'Krishana', address:'Gokul' },
+  { name:'Ram', address:'Ayodaya' }]
+
+  function getDatas(){
+    setTimeout(()=>{
+      let output="";
+      mockdata.forEach((data, index) => (
+        output += '<li>'$'{data.name}</li>'
+      ))
+        document.body.innerHTML = output;
+    },1000);
+  }
+
+  function createData(obj){
+    return new Promise((resolve, reject) => {
+      setTimeout(()=>{
+        mockdata.push(obj)
+        let err=false;
+        if(!err){
+          resolve();
+        }else{
+        reject('Something wrong...')
+        }
+      },2000)
+    })
+  }
+
+
+async function start(){
+await createData({name:'Payal', address:'Ranchi'})
+getDatas();
+}
+
+start()
+`.trim();
+
 class Clousers extends Component {
   componentDidMount() {
     setTimeout(() => Prism.highlightAll(), 0)
@@ -209,109 +257,6 @@ class Clousers extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>1. What are closures? Explain with example.</h3>
-              <ul>
-                <li>A closure is the combination of a function bundled together with references to its surrounding state (lexical environment).</li>
-                <li>Or a closure gives access to an outer function’s scope from an inner function.</li>
-                <li>In JavaScript, closures are created every time a function is created, at function creation time.</li>
-              </ul>
-              <br />
-
-              <div style={titles}>
-                <PrismCode
-                  code={lexicalScop}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <i>Note that the displayName() function has no local variables of its own. However, since inner functions have
-                access to the variables of outer functions, displayName() can access the variable name declared in the parent
-                function, init().</i>
-              <br />
-              <ul>
-                <li>
-                  Closures are important because they control what is and isn’t in scope in a particular function, along with
-                  which variables are shared between sibling functions in the same containing scope.
-                </li>
-                <br />
-                <li>
-                  To use a closure, define a function inside another function and expose it. To expose a function, return it
-                  or pass it to another function. The inner function will have access to the variables in the outer function
-                  scope, even after the outer function has returned.
-                </li>
-              </ul>
-              <br />
-              A function can also access variables defined outside the function, like this.
-
-              <div style={titles}>
-                <PrismCode
-                  code={code}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>Closers</b>
-              <br />
-              Clouser is a function bundled together in a lexical scope.<br />
-              <ul>
-                <li>Uses: Module Design Pattern</li>
-                <li>Currying</li>
-                <li>Functions like once</li>
-                <li>Memoize</li>
-                <li>Maintaining state in async world</li>
-                <li>setTimeouts</li>
-                <li>Iterators</li>
-              </ul>
-              <br />
-
-              <div style={titles}>
-                <PrismCode
-                  code={closers}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              This is closure in action that is inner function can have access to the outer function variables as well as
-              all the global variables.
-              <br />
-
-              <h3>2. What is the role of closures in JavaScript?</h3>
-              The script builds a closure in JavaScript at the time of making of a function. It is a local variable that is 
-              present in the memory even after the function finishes its execution. Besides, it has a great access to the variable 
-              in three scopes: variable in its scope, global variables, and variables in the enclosing function’s scope. However, 
-              closures are tough in JavaScript to make sure the variable privacy, that is, to build private variables. Since 
-              JavaScript has no modifiers for access, closures permit the programmer to make variables that are not directly 
-              accessible.
-              <br />
-
-              <h3>2. Closure Scope Chain</h3>
-              Every closure has three scopes:
-              <ul>
-                <li>Local Scope (Own scope)</li>
-                <li>Outer Functions Scope</li>
-                <li>Global Scope</li>
-              </ul>
-              <br />
-              In the case where the outer function is itself a nested function, access to the outer function's scope includes the
-              enclosing scope of the outer function—effectively creating a chain of function scopes.
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={scopeChain}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <i>there's a series of nested functions, all of which have access to the outer functions' scope. In this context, we
-                can say that closures have access to all outer function scopes.</i>
-              <br />
-              <br />
-
               <b>Closers + setTimeout</b>
               <br />
               <div style={titles}>
@@ -376,6 +321,24 @@ class Clousers extends Component {
               <div style={titles}>
                 <PrismCode
                   code={Time_Zone}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>1. Async-Await</h3>
+              getDatas() excute and refrece in 1s, and after refrencing browser update getDatas() values. 
+              while, createData() excute after 2s which excuite after page refreced so createData() values 
+              not update in browser DOM. To solve this proble we can use.
+              <ul>
+                <li><b>callback: </b>getDatas() called when obj pushed into mockdata and called function as callback.</li>
+                <li><b>promise: </b></li>
+                <li><b>async-await: </b></li>
+              </ul>
+              <div style={titles}>
+                <PrismCode
+                  code={asyncAwait}
                   language="js"
                   plugins={["line-numbers"]}
                 />

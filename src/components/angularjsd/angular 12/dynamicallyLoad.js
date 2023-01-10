@@ -308,7 +308,7 @@ const cpuIntensiveWork = function () {
 }
 `.trim();
 
-const ViewContainerRef = `let componentRef = viewContainerRef.createComponent(componentFactory);`.trim();
+
 
 class DynamicallyLoad extends Component {
   componentDidMount() {
@@ -326,58 +326,7 @@ class DynamicallyLoad extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>Dynamically Load Component</h3>
-              <ul>
-                <li>Dynamic components are the components in which components location in the application is not defined at build 
-                    time.i.e, They are not used in any angular template. But the component is instantiated and placed in the 
-                    application at runtime.</li><br/>
-                <li>Mainly, in the component template, a component is loaded using the component selector at angular
-                    compile time. The component can also be loaded dynamically at runtime with the help of
-                    <b>ComponentFactory, ComponentFactoryResolver</b>, and <b>ViewContainerRef</b>.</li><br/>
-                <li>Those components which need to be loaded dynamically must also be configured in <b>entryComponents</b>
-                    metadata of @NgModule decorator. To load a dynamic component in a template we required an insert
-                    location and to get it we need <b>ViewContainerRef</b> of a decorator or a component.</li><br/>
-                <li>ComponentFactory is used to create an instance of components where ComponentFactoryResolver resolves a
-                    ComponentFactory for a particular component. It is used as follows.</li>
-              <b>let componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);</b>
-              </ul>
-              <br />
-              <br />
-              
-              <b>ViewContainerRef</b><br />
-              <ul>
-                <li>ViewContainerRef represents a container where we can attach one or more views to a component and
-                  also show an API to create components. Some important methods of ViewContainerRef are:
-                  <ul>
-                    <li>createEmbeddedView()</li>
-                    <li>clear()</li>
-                    <li>get()</li>
-                    <li>insert()</li>
-                    <li>move()</li>
-                    <li>createComponent()</li>
-                  </ul>
-                </li>
-                <br />
-
-                <li><b>CreateEmbeddedView()</b> instantiates an embedded view and inserts it into container.</li>
-                <li><b>createComponent()</b> instantiates a single component and inserts its host view into the container at
-                  a specified index.</li>
-              </ul>
-              <br />
-              In dynamic component loader, load component using createComponent() of ViewContainerRef.
-              <br />
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={ViewContainerRef}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              clear() method of ViewContainerRef destroys all existing views in the container.
-              <br />
-              <br />
+            <h3>1. Dynamically Load Component</h3>
               <div style={titles}>
                 <PrismCode
                   code={dynamically}
@@ -387,7 +336,7 @@ class DynamicallyLoad extends Component {
               </div>
               <br />
 
-              <h3>Web-Worker (Blocking UI)</h3>
+              <h3>2. Web-Worker (Blocking UI)</h3>
               <div style={titles}>
                 <PrismCode
                   code={blocking}
@@ -397,7 +346,7 @@ class DynamicallyLoad extends Component {
               </div>
               <br />
 
-              <h3>Web-Worker (Non-Blocking UI)</h3>
+              <h3>3. Web-Worker (Non-Blocking UI)</h3>
               <div style={titles}>
                 <PrismCode
                   code={nonBlocking}

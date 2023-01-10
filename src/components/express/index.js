@@ -9,10 +9,12 @@ const routerDocs = lazy(() => import('./deepExpress/routerDocs'));
 const JQueies = lazy(() => import('./deepExpress/jqueries'));
 const Backbonejs = lazy(() => import('./deepExpress/backbonejs'));
 const UnderscorJs = lazy(() => import('./deepExpress/underscorejs'));
+const Networks = lazy(() => import('./deepExpress/network'));
 
 
 const components = {
-  Middleware, IntroExpress, LoopbackCli, ResDocs, routerDocs, JQueies, Backbonejs, UnderscorJs
+  Middleware, IntroExpress, LoopbackCli, ResDocs, routerDocs, JQueies, Backbonejs, UnderscorJs,
+  Networks
 };
 
 export { components };
