@@ -1,191 +1,307 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = {backgroundColor:'#F0F8FF', padding:'1px', fontSize:'16px'}
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
-      margin: theme.spacing(1),
-      padding: theme.spacing(1)
+    margin: theme.spacing(1),
+    padding: theme.spacing(1),
   },
   smMargin: {
-      margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-      textAlign: "center"
-  }
+    textAlign: "center",
+  },
+});
+
+const CustomersComponent = `
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-customers',
+  template: '<p>Customer List</p>',
 })
-
-const resetForm = `
-<button ng-click="reset()">RESET</button>`.trim();
-
-const ngRepeat = `
-var app = angular.module("myApp", [])
-  
-app.controller("myCtrl", myCtrl);
-
-function myCtrl($scope) {
-  this.myList = [1,2,3,4,'hello']
-}
-
-// index.html
-<body ng-controller="myCtrl as ctrl">
-<div>
-    <p ng-repeat="i in ctrl.myList">Hello</p>
-    <p  ng-repeat="i in ctrl.myList">{{i}}</p>
-</div>
-</body>
-`.trim()
-
-
-const scopeCtre = `
-var app = angular.module("myApp", [])
-  
-app.controller("myCtrl", myCtrl);
-
-function myCtrl($scope) {
-  $scope.myList = [1,2,3,4,'hello']
-}
-
-// index.html
-<body ng-controller="myCtrl">
-    <div>
-        <p ng-repeat="i in myList">Hello</p>
-        <p  ng-repeat="i in myList">{{i}}</p>
-    </div>
-</body>
+export class CustomersComponent {}
 `.trim();
 
-const ngObject = `
-var app = angular.module("myApp", [])
-  
-app.controller("myCtrl", myCtrl);
+const AddCustomerComponent = `
+import { Component } from '@angular/core';
 
-function myCtrl($scope) {
-   $scope.myList = [
-      {'name':"Foo", 'age':20},
-      {'name':"Bar", 'age':30},
-      {'name':"Baz", 'age':40},
-      {'name':"Buzz", 'age':50},
-      {'name':"None", 'age':60}
-   ]
+@Component({
+  selector: 'app-add-customer',
+  template: '<p>Add New Customer</p>',
+})
+export class AddCustomerComponent {}
+`.trim();
+
+const CustomersRoutingModule = `
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddCustomerComponent } from './add-customer.component';
+import { CustomersComponent } from './customers.component';
+
+const routes: Routes = [
+  { path: '', component: CustomersComponent },
+  { path: 'add-customer', component: AddCustomerComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class CustomersRoutingModule {}`.trim();
+
+const CustomersModule = `
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { CustomersRoutingModule } from './customers-routing.module';
+import { CustomersComponent } from './customers.component';
+import { AddCustomerComponent } from './add-customer.component';
+
+@NgModule({
+  declarations: [CustomersComponent, AddCustomerComponent],
+  imports: [CommonModule, CustomersRoutingModule],
+})
+export class CustomersModule {}`.trim();
+
+const OrdersComponent = `
+@Component({
+  selector: 'app-orders',
+  template: '<p>Order List</p>',
+})
+export class OrdersComponent {}`.trim();
+
+const OrdersRoutingModule = `
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { OrdersComponent } from './orders.component';
+
+const routes: Routes = [{ path: '', component: OrdersComponent }];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class OrdersRoutingModule { }`.trim();
+
+const OrdersModule = `
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { OrdersRoutingModule } from './orders-routing.module';
+import { OrdersComponent } from './orders.component';
+
+
+@NgModule({
+  declarations: [
+    OrdersComponent
+  ],
+  imports: [
+    CommonModule,
+    OrdersRoutingModule
+  ]
+})
+export class OrdersModule { }
+`.trim();
+
+const AppRoutingModule = `
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) }, 
+  { path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule) }];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+`.trim();
+
+const AppComponent = `
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: ' <h2>Welcome</h2>
+
+    <ul>
+      <li>
+        <a routerLink="">Home</a>
+      </li>
+
+      <li>
+        <a routerLink="/customers">Customers</a>
+      </li>
+
+      <li>
+        <a routerLink="/customers/add-customer">Add customer</a>
+      </li>
+
+      <li>
+        <a routerLink="/orders">Orders</a>
+      </li>
+    </ul>
+
+    <router-outlet> </router-outlet>',
+})
+export class AppComponent {
+  title = 'LazyLoaingAngular';
 }
+`.trim();
 
+const AppModule = `
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-//index.html
-<body ng-controller="myCtrl">
-        <div  ng-repeat="obj in myList">
-            <p>Element: {{ $index }}</p>
-            <p>Name: {{ obj.name }}</p>
-            <p>Age: {{ obj.age }}</p>
-            <hr/>
-    </div>
-</body>
-`.trim()
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
-const moduleContro = `
-//app.js
-var app = angular.module("myApp", ["myHelloModule"]);
-  
-
-// myModule.js
-var myHelloModule = angular.module("myApp", []);
-
-myHelloModule.controller("myCtrl", myCtrl);
-
-function myCtrl($scope) {
-    $scope.msg = "I'm from the my module";
-}
-
-
-//index.html
-<head>
-    <script src="app.js"></script>
-    <script src="myModule.js"></script>
-</head>
-<body ng-controller="myCtrl">
-           {{msg}}
-</body>
-}`.trim()
-
-
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+`.trim();
 
 class NgRepeat extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
     return (
       <Grid container>
-            <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                    <h4><Sidebar /></h4>
-                </Paper>
-            </Grid>
-<Grid item xs={10}>
-<Paper className={classes.paper}>
-<List>
-    <h3>Reser Form</h3>
-    <div style={titles}>
-        <PrismCode
-          code={resetForm}
-          language="js"
-          plugins={["line-numbers"]}
-        />
-        </div>
-        <br/>
-      <h3>ng-repeat (with this)</h3>
-      <div style={titles}>
-      <PrismCode
-        code={ngRepeat}
-        language="js"
-        plugins={["line-numbers"]}
-      />
-      </div>
-        <br/>
-        <br/>
-        <h3>ng-repeat (with $scope)</h3>
-      <div style={titles}>
-      <PrismCode
-        code={scopeCtre}
-        language="js"
-        plugins={["line-numbers"]}
-      />
-      </div>
-        <br/>
-        <br/>
-        <h3>ng-repeate object</h3>
-      <div style={titles}>
-      <PrismCode
-        code={ngObject}
-        language="js"
-        plugins={["line-numbers"]}
-      />
-      </div>
-        <br/>
-        <br/>
-        <h3>Module</h3>
-      <b>app.js</b>
-      <div style={titles}>
-      <PrismCode
-        code={moduleContro}
-        language="js"
-        plugins={["line-numbers"]}
-      />
-      </div>
-      </List>
-      </Paper>
+        <Grid item xs={2}>
+          <Paper className={classes.paper}>
+            <h4>
+              <Sidebar />
+            </h4>
+          </Paper>
+        </Grid>
+        <Grid item xs={10}>
+          <Paper className={classes.paper}>
+            <List>
+              <b>customers/customers.component.ts</b>
+              <div style={titles}>
+                <PrismCode
+                  code={CustomersComponent}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>customers/add-customer.component.ts</b>
+              <div style={titles}>
+                <PrismCode
+                  code={AddCustomerComponent}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>customers/customers-routing.module.ts</b>
+              <div style={titles}>
+                <PrismCode
+                  code={CustomersRoutingModule}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>customers/customers.module.ts</b>
+              <div style={titles}>
+                <PrismCode
+                  code={CustomersModule}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>orders/orders.component</b>
+              <div style={titles}>
+                <PrismCode
+                  code={OrdersComponent}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>orders/orders-routing.module</b>
+              <div style={titles}>
+                <PrismCode
+                  code={OrdersRoutingModule}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>orders/orders.module</b>
+              <div style={titles}>
+                <PrismCode
+                  code={OrdersModule}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>app-routing.module.ts</b>
+              <div style={titles}>
+                <PrismCode
+                  code={AppRoutingModule}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>app.component.ts</b>
+              <div style={titles}>
+                <PrismCode
+                  code={AppComponent}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <br />
+              <b>app.module.ts</b>
+              <div style={titles}>
+                <PrismCode
+                  code={AppModule}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+            </List>
+          </Paper>
+        </Grid>
       </Grid>
-      </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(NgRepeat));
+export default withStyles(styles)(NgRepeat);

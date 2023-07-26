@@ -1,33 +1,32 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
-import EventLoop from '../../../assets/imgs.svg';
+import EventLoop from "../../../assets/imgs.svg";
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
 const redesign = {
   height: 350,
-  width: 600
-}
+  width: 600,
+};
 
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
+    textAlign: "center",
+  },
+});
 
 const undeclaredVar = `
 var a
@@ -53,7 +52,23 @@ var x = 23;
   })();                                                           
 `.trim();
 
-const spreadRest=`
+const spreadRests = `
+function obj(name) {
+  this.name = name;
+}
+
+obj.prototype.greet = function() {
+  console.log('hello, '$'{this.name}');
+};
+
+const obj1 = new obj('John');
+const obj2 = new obj('Jane');
+
+obj1.greet(); 
+obj2.greet();
+`.trim();
+
+const spreadRest = `
 //Rest
 function add(a,b,c,...other){
   console.log(other);
@@ -73,42 +88,9 @@ function addSpread(num, num2, num3){
 // console.log(addSpread(num[0], num[1], num[2]));
 addSpread(...num);
 addSpread(num);
-
-
-//3
-var obj={
-  name:'Ajay',
-  age:"30",
-  hobbies:['Songs', 'Footbal', 'Laugh']
-}
-
-const nwObj={
-  ...obj,
-  age: 18 
-}
-
-const { name,  hobbies,} = obj;
-
-console.log(hobbies); 
-console.log(nwObj);
 `.trim();
 
 const currying = `
-function sum(a){
-  return function(b){
-    return function(c){
-      return a+b+c;
-    }
-  }
-}
-
-let sumcall = sum(2);
-let bcall = sumcall(3);
-let ccall = bcall(4)
-
-console.log(ccall)
-
-
 //clousers implements in curry
 function sum(a){
   return function(b){
@@ -125,17 +107,6 @@ console.log(sumcall)
 //2
 var prism = l => w => h => l * w * h;
 console.log(prism(2)(3)(5))
-
-
-//infinite curring
-function add(a){
-  return function(b){
-    if(b) return add(a+b);
-    return a;
-  }
-}
-
-console.log(add(2)(3)(4)(5)())
 `.trim();
 
 const generator = `
@@ -155,7 +126,7 @@ const generator = `
    
    console.log(iterable.next().value);
    console.log(iterable.next().done);
- `.trim()
+ `.trim();
 
 const yields = `
 function* generator_function_1(){
@@ -171,7 +142,7 @@ function* generator_function_2() {
 
 var generator = generator_function_2();
 console.log(generator.next().value);
-console.log(generator.next().value);`.trim()
+console.log(generator.next().value);`.trim();
 
 const stricts = `
 'use strict';
@@ -185,32 +156,20 @@ function sum(a, a, c) {                                                         
 }
 `.trim();
 
+const eventLoop = `
+console.log("Start");
 
+// Asynchronous setTimeout function
+setTimeout(function() {
+  console.log("Timeout callback executed");
+}, 1000);
 
-const management = `
-var x = { a: { b: 2 } };
+// Synchronous loop
+for (let i = 0; i < 5; i++) {
+  console.log("Loop iteration:", i);
+}
 
-var y = x;                                                          
-x = 1;                                      
-
-var z = y.a;                                 
-y = 'mozilla';                               
-z = null;                                    
-`.trim();
-
-const eventLoop = `var eventLoop =[];
- var event;
- while(true){
-    if (eventLoop.length > 0) {
-      event = eventLoop.shift();
-        try {
-        event();
-        }
-      catch (err){
-      reportError(err);
-      }
-    }
-  }
+console.log("End");
  `.trim();
 
 const security = `
@@ -245,47 +204,6 @@ import('/index.js')
     // Do something with the module.
   });
 `.trim();
-
-const Bubblings = `
-<style>
-div {
-  min-width:100px;
-  min-height: 100px;
-  padding: 30px;
-  border: 1px solid black;
-}
-</style>
-</head>
-<body>
-<div id="grandParrent">
-  <div id="parent">
-    <div id="child">
-    </div>
-  </div>
-</div>
-<script src="input.js"></script>
-</body> 
-
-
----------------------------------------------js-------------------
-
-document.querySelector('#grandParrent')
-  .addEventListener('click', ()=> {
-    console.log('GrandParent Clicked')                                    // Event Bubbling
-  }, false);                                                  //If don't pass 3rd argument it default false.
-                                                                                
-  
-  document.querySelector('#parent')
-  .addEventListener('click', (e)=> {
-    console.log('parent Clicked')
-    e.stopPropagation();                                                        //Stop Bubbling/Capturing
-  },false);                                                                     // Event Bubbling
-  
-  document.querySelector('#child')
-  .addEventListener('click', ()=> {
-    console.log('child Clicked')
-  },true);                                                                      // Event Capturing
-  `.trim();
 
 const debouncing = `
 <input typt="text" onkeyup="betterDebouncing()" />
@@ -369,51 +287,152 @@ const outerFun = (a) => {
 outerFun(1);
  `.trim();
 
- const variables = `
-//1. Objects are Variables
-var person = "John Doe"; 
-
-
-//2. Using an Object Literal
+const variables = `
+//1. Using an Object Literal
 Const emp={id:102,name:"Shyam Kumar",salary:40000}
 
-//3
+
+//2. Constructor functions
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const john = new Person('John', 30);
+
+
+//3. ES6 Classes
+class Person {
+  constructor(name, age) {
+    this.name = name;
+  }
+}
+
+const john = new Person('John');
+
+
+//4. Object.create()
 const obj = Object.create(emp);
 `.trim();
 
-const constructor = `
-class obj{
-  constructor(id,name){
-    this.id=id,
-    this.name=name,
-    
-    this.display = function(other){
-      return console.log(other+"------"+this.name+"pppppp");
-      }
-    }
-  
-  show(){
-    return console.log(this.id,"----",this.name)
-    }
-  }
+const proCallbacks = `
+const mocks=[
+  {name:'A', Profession:'SE'},
+  {name:'B', Profession:'SE'},
+]
 
-const newObj=new obj(1,'Mukesh');
-newObj.show();
-newObj.display('890');
+function fun(){
+  setTimeout(()=>{
+    let result='';
+    mocks.forEach(data=>(
+      result += data.name+","
+    ))
+    console.log(result)
+  },1000)
+}
+
+function main(newdata){
+  setTimeout(()=>{
+    mocks.push(newdata)
+  },2000);
+}
+
+fun();
+main({name:'C', Profession:'Developer'})
+
+
+//Solve by callback.
+function fun(){
+  setTimeout(()=>{
+    let result='';
+    mocks.forEach(data=>(
+      result += data.name+","
+    ))
+    console.log(result)
+  },1000)
+}
+
+function main(newdata, cb){
+  setTimeout(()=>{
+    mocks.push(newdata)
+    cb();
+  },2000);
+}
+
+main({name:'C', Profession:'Developer'}, fun)
+`.trim();
+
+const promisePro = `
+const mocks=[
+  {name:'A', Profession:'SE'},
+  {name:'B', Profession:'SE'},
+]
+
+function fun(){
+  setTimeout(()=>{
+    let result='';
+    mocks.forEach(data=>(
+      result += data.name+","
+    ))
+    console.log(result)
+  },1000)
+}
+
+function main(newdata){
+  return new Promise((resolve, reject) => {
+    setTimeout(()=>{
+      mocks.push(newdata)
+      let err=false;
+      if(!err){
+        resolve();
+      }else{
+        reject('Error ocuur')
+      }
+    },2000);
+  })
+  
+}
+
+main({name:'C', Profession:'Developer'}).then(fun).catch(err=>console.log(err));
 `.trim();
 
 const callbackJs = `
-function greeting(name){
-  console.log('greeting', name);
+const mocks=[
+  {name:'A', Profession:'SE'},
+  {name:'B', Profession:'SE'},
+]
+
+function fun(){
+  setTimeout(()=>{
+    let result='';
+    mocks.forEach(data=>(
+      result += data.name+","
+    ))
+    console.log(result)
+  },1000)
 }
 
-function main(){
-  const str = "Welcome";
-  console.log(str);
-  greeting('name')
+function main(newdata){
+  return new Promise((resolve, reject) => {
+    setTimeout(()=>{
+      mocks.push(newdata)
+      let err=false;
+      if(!err){
+        resolve();
+      }else{
+        reject('Error ocuur')
+      }
+    },2000);
+  })
+  
 }
 
-main();
+async function demo(){
+  await main({name:'C', Profession:'Developer'});
+  fun()
+}
+
+demo();
 `.trim();
 
 const chaineds = `
@@ -434,27 +453,38 @@ const chaineds = `
 `.trim();
 
 const thisKey = `
-const obj={
-  name:'Krishana',
-  address:'Gokul',
-
-  show: function(){
-      console.log(this.name,'---', this)
+const person = {
+  name: 'John',
+  greet() {
+    console.log(this.name);
   }
-}
+};
 
-obj.show();
+person.greet(); 
 `.trim();
 
-const thisBind = `
-function bike() {
+const thisKey2 = `
+function greet() {
   console.log(this.name);
- }
+}
 
-  var name = "Ninja";
-  var obj = { name: "Pulsar" }
-  
-  bike.call(obj);`.trim();
+const person = {
+  name: 'John'
+};
+
+const boundGreet = greet.bind(person);
+boundGreet();`.trim();
+
+const thisKey3 = `
+<button id="myButton">Click me</button>
+
+<script>
+  const button = document.querySelector('#myButton');
+  button.addEventListener('click', function() {
+    console.log(this === button); // true
+  });
+</script>
+`.trim();
 
 const bind_2 = `
 const obj={
@@ -468,7 +498,7 @@ function show(){
 
 const newObj=show.bind(obj);
 newObj();
-`.trim()
+`.trim();
 
 const calls = `
 //call use to borrow function.
@@ -534,46 +564,75 @@ console.log({ ...arr });
 console.log(Object.fromEntries(arr1));`.trim();
 
 const shallow = `
-//Deep copy array
-var arr = ['Mukesh', 'Rakesh', 'Niketh'];
-var newArr = arr;
-newArr[0] = '100';
-console.log(arr, newArr);
 
+`.trim();
 
-//Deep copy object
-const obj2 = {size:10, owner:'Sid', isCarNonAc:true };
-const newObj2 = obj2;
-newObj2.model = "0%";
-obj2.isCarNonAc = false;
-console.log(newObj2, obj2)
+const argumentsk=`
+function outer() {
+  const innerArrow = () => {
+    console.log(arguments);
+  };
 
-
-//Shallow Copy array:
-var arr = ['Mukesh', 'Rakesh', ['100', 200], {x:100} ];
-var arr2 = ['Sid']
-var newArr = arr2.concat(arr);
-newArr[0] = 'concat'
-newArr[4] = 'change'
-console.log(newArr, arr)
-
-
-//Shallow Copy Object:
-var obj={
-  age:10,
-  gender:'male',
-  hobbies: ['a', 'b', 'c']
+  innerArrow(1, 2, 3);
 }
 
-var newObj = Object.assign({}, obj);
-newObj.age = 100;
-newObj.hobbies[0] = 'd';
-console.log(newObj, obj)`.trim();
+outer(4, 5, 6);
+`.trim();
 
+const firstClass = `
+function fun(){
+  return 'Argument';
+}
+
+function main(cb, name){
+  console.log(cb(), name)
+}
+
+main(fun, 'Krishans')
+
+
+//2
+function main(){
+  return function fun(){
+    console.log('Return bt another function.');
+  }
+}
+
+const obj = main();
+obj();
+
+
+//3
+const main = function (){
+  console.log('Assigned as a value.');
+}
+
+main();
+`.trim();
+
+const hoFunction = `
+function fun(arr, cal) {
+  const result = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    result.push(cal(arr[i]));
+  }
+
+  return result;
+}
+
+const numbers = [1, 2, 3, 4, 5];
+
+const double = fun(numbers, (num) => num * 2);
+const square = fun(numbers, (num) => num ** 2);
+
+console.log(double); 
+console.log(square); 
+`.trim();
 
 class IntroJs extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -581,16 +640,23 @@ class IntroJs extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
               <h3>1. What are JavaScript Data Types?</h3>
-                Default javaScript is Synchronous.<br/>
-              <i>In JavaScript null is <b>nothing</b>. It is supposed to be something that
-                <b> doesn't exist</b>. In JavaScript, the data type of null is an <b>object</b>.</i>
+              Default javaScript is Synchronous.
+              <br />
+              <i>
+                In JavaScript null is <b>nothing</b>. It is supposed to be
+                something that
+                <b> doesn't exist</b>. In JavaScript, the data type of null is
+                an <b>object</b>.
+              </i>
               <br />
               <ol>
                 <li>Number</li>
@@ -602,13 +668,36 @@ class IntroJs extends Component {
               </ol>
               <br />
 
+              <h3>What is first class object in javascript</h3>
+              <ul>
+                <li>Can be passed as an argument.</li>
+                <li>Can be return by another function.</li>
+                <li>Can be assigned as a value to a variable, object or array.</li>
+              </ul>
+              <div style={titles}>
+                <PrismCode
+                  code={firstClass}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
               <h3>2. What are undeclared and undefined variables?</h3>
               <i>
                 <ul>
-                  <li><b>Undeclared variables: </b> Are those that do not exist in a program and are not declared. If the program
-                    tries to read the value of an undeclared variable, then a runtime error is encountered.</li>
-                  <li><b>Undefined variables: </b> are those that are declared in the program but have not been given any value.
-                    If the program tries to read the value of an undefined variable, an undefined value is returned.</li>
+                  <li>
+                    <b>Undeclared variables: </b> Are those that do not exist in
+                    a program and are not declared. If the program tries to read
+                    the value of an undeclared variable, then a runtime error is
+                    encountered.
+                  </li>
+                  <li>
+                    <b>Undefined variables: </b> are those that are declared in
+                    the program but have not been given any value. If the
+                    program tries to read the value of an undefined variable, an
+                    undefined value is returned.
+                  </li>
                 </ul>
               </i>
               <br />
@@ -620,24 +709,25 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-              
               <h3>3. Objects</h3>
-              An object is a collection of related data/ functionality (properties and methods).
+              An object is a collection of related data/ functionality
+              (properties and methods).
               <br />
               <br />
               <b>JavaScript Objects?</b>
               <br />
               <ul>
-                <li>A javaScript object is an entity having state and behavior.
+                <li>
+                  A javaScript object is an entity having state and behavior.
                 </li>
-                <li>JavaScript is an object-based language. Everything is an object in JavaScript.</li>
-                <li>JavaScript is template based not class based. Here, we don't create class to get the
-                  object. But, we direct create objects.
+                <li>
+                  JavaScript is an object-based language. Everything is an
+                  object in JavaScript.
                 </li>
+                <li>JavaScript is template based.</li>
               </ul>
               <br />
               <br />
-
               <i>There are 4 ways to create objects.</i>
               <div style={titles}>
                 <PrismCode
@@ -648,19 +738,7 @@ class IntroJs extends Component {
               </div>
               <br />
               <br />
-
-              <b>By using an Object constructor:</b>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={constructor}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>5. How to convert an Object { } into an Array [] </h3>
+              <h3>5. How to convert an Object {} into an Array [] </h3>
               <div style={titles}>
                 <PrismCode
                   code={convertObj}
@@ -669,8 +747,7 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
-              <h3>6. How to convert an Array [] to Object { }</h3>
+              <h3>6. How to convert an Array [] to Object {}</h3>
               <div style={titles}>
                 <PrismCode
                   code={convertArr}
@@ -679,13 +756,55 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
-              <h3>7. Shallow Copy And Deep Copy</h3>
+              <h3>7. Difference between local storage, cookies and Session.</h3>
+              There are three common ways to store data on the
+              client-side: local storage, cookies, and session storage. Each has
+              its own advantages and disadvantages, and the choice of which to
+              use depends on the specific needs of the application.
               <ul>
-                <li><b>Shallow copy: </b>Coping one top level element.</li>
-                <li><b>Deep copy:</b>Coping nested elements.</li>
-                <li>Object and array are assigned by reference. By reference both array value changed</li>
+                <li>
+                  <b>Local Storage: </b>
+                  <ul>
+                    <li>Local storage is a web storage API in modern web browsers.</li>
+                    <li>Data stored in it is not automatically sent to the server with HTTP requests.</li>
+                    <li>Local storage is a key-value store that
+                  allows data to be stored on the client-side in a persistent
+                  manner. The data stored in local storage is accessible even
+                  after the browser is closed, and can be accessed by any page
+                  in the same domain. Local storage is a good option for storing
+                  large amounts of data that need to persist between sessions.</li>
+                  </ul>
+                </li>
+                <br />
+                <li>
+                  <b>Cookies: </b>
+                  <ul>
+                    <li>Sent data to the server with every HTTP request to provide information about the client's state and identity. </li>
+                    <li>Cookies are small text files that are stored
+                  on the client-side by the browser. Cookies can be used to
+                  store small amounts of data, such as user preferences or
+                  authentication tokens. Cookies are accessible by any page in
+                  the same domain and can be set to expire after a certain
+                  period of time.</li>
+                  </ul>
+                  
+                </li>
+                <br />
+                <li>
+                  <b>Session Storage: </b>
+                  <ul>
+                    <li>Sessions store data on the server-side and use a session identifier (usually stored in a cookie) to associate the client's request with the corresponding session data on the server. Unlike cookies and local storage, session data is stored on the server, and only a session identifier is stored on the client-side. </li>
+                    <li>Session storage is similar to local
+                  storage, but the data stored in session storage is only
+                  accessible within the current browser session. Once the
+                  browser is closed, the data is deleted. Session storage is a
+                  good option for storing data that needs to be accessible
+                  across multiple pages within the same session, but does not
+                  need to persist between sessions.</li>
+                  </ul>
+                </li>
               </ul>
+              <br />
               <div style={titles}>
                 <PrismCode
                   code={shallow}
@@ -694,16 +813,21 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>8. Difference between Object.freeze() vs const</h3>
-              <b>const</b> and <b>Object.freeze</b> are two completely different things.
+              <b>const</b> and <b>Object.freeze</b> are two completely different
+              things.
               <br />
               <br />
               <i>
                 <ul>
-                  <li>const applies to bindings <b>variables</b>.
-                    It creates an immutable binding.</li>
-                  <li>Object.freeze works on values. It makes an object immutable, i.e. cannot change its properties.</li>
+                  <li>
+                    const applies to bindings <b>variables</b>. It creates an
+                    immutable binding.
+                  </li>
+                  <li>
+                    Object.freeze works on values. It makes an object immutable,
+                    i.e. cannot change its properties.
+                  </li>
                 </ul>
               </i>
               <br />
@@ -714,32 +838,65 @@ class IntroJs extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-             <br/>
-
-             <h3>9. Why do we use arrow function.</h3>
+              <br />
+              <h3>9. Why do we use arrow function.</h3>
               <p>
-                Arrow functions take the this from their surroundings (lexical binding).
-                <br />
-                The syntax allows an implicit return when there is no body block, resulting in shorter and
-                simpler code in some cases.
+                <ul>
+                  <li>
+                    <b>Implicit returns: </b>If the body of an arrow function
+                    consists of a single expression, that expression is
+                    automatically returned.{" "}
+                  </li>
+                  <br />
+                  <li>
+                    <b>Lexical this binding: </b>Inherit the this value from the enclosing context in which they are defined.
+                  </li>
+                  <br />
+                  <li><b>No binding of arguments: </b> Arrow functions do not have their own arguments object. Instead, they inherit the arguments object from the enclosing scope. This makes it easier to access the arguments passed to the surrounding function without the need for the arguments keyword.</li>
+                  <br />
+                </ul>
+              <div style={titles}>
+                <PrismCode
+                  code={argumentsk}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
               </p>
-
-             <h3>10. Object prototypes</h3>
+              <h3>10. Object prototypes</h3>
               <ul>
-                <li>Prototypes are the mechanism by which <b>JavaScript objects inherit features</b> from one another.</li>
-                <li>Each object has a private property which holds a link to another object called its prototype. That
-                  prototype object has a prototype of its own, and so on until an object is reached with null as its
-                  prototype.</li>
-                <li>By definition, null has no prototype, and acts as the final link in this prototype chain.</li>
+                <li>
+                  Prototypes are the mechanism by which{" "}
+                  <b>JavaScript objects inherit features</b> from one another.
+                </li>
+                <li>
+                Every object in JavaScript has a prototype, which is like a blueprint or a template that defines the shared properties and methods for objects of a particular type. When you access a property or method on an object, JavaScript first looks for it in the object itself. If it doesn't find it there, it continues searching for it in the object's prototype, and so on, forming a chain known as the prototype chain.
+                </li>
+                <li>
+                  By definition, null has no prototype, and acts as the final
+                  link in this prototype chain.
+                </li>
               </ul>
+              <div style={titles}>
+                <PrismCode
+                  code={spreadRests}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
               <br />
 
-             <h3>11. Spread & Rest Operator</h3>
+              <h3>11. Spread & Rest Operator</h3>
               <ul>
                 <li>Rest & Spread both use in object and array.</li>
-                <li><b>Rest: </b>The rest operator is used to put the rest of some specific user-supplied values into a 
-                JavaScript array.</li>
-                <li><b>Spread: </b>Allows us to quickly copy all or part of an existing array or object into another array or object.</li>
+                <li>
+                  <b>Rest: </b>The rest operator is used to put the rest of some
+                  specific user-supplied values into a JavaScript array.
+                </li>
+                <li>
+                  <b>Spread: </b>Allows us to quickly copy all or part of an
+                  existing array or object into another array or object.
+                </li>
               </ul>
               <div style={titles}>
                 <PrismCode
@@ -749,27 +906,47 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>12. Hosting</h3>
-              Hoisting is JavaScript's default behavior of moving declarations to the top.<br/>
-              <br/>
-              Variables defined with let and const are hoisted to the top of the block, but not initialized.
-              <br/>
-              Meaning: The block of code is aware of the variable, but it cannot be used until it has been declared.
-              <br/>
+              Hoisting is JavaScript's default behavior of moving declarations
+              to the top.
+              <br />
+              <ul>
+                <li>
+                Hosting in JavaScript refers to the behavior of how variable and function declarations are processed by the JavaScript engine. It allows you to access and use variables and functions before they are physically declared in your code.
+                </li>
+                <br />
+                <li>
+                In JavaScript, when the JavaScript engine executes your code, it goes through two main phases: the creation phase and the execution phase.
+                </li>
+                <br />
+                <li>During the creation phase, the JavaScript engine sets up the environment for your code execution. One important step in this phase is the process of hoisting. Hoisting moves variable and function declarations to the top of their respective scopes, allowing you to use them before they appear in the code.</li>
+              </ul>
+              <br />
               Hosting mainly relate to Memory management.
-              <br/>
+              <br />
 
               <h3>13. What are closures? Explain with example.</h3>
               <b>scope: </b> Local, Global, Lexical.
-              <br/>
-              In normal programming when we call function after than any varriables or parameter declared in that function 
-              we can't use again. But with help of closers we can use function variables after function excuite in lexicalScop.
-              <br/>
+              <br />
+              In normal programming when we call function after than any
+              varriables or parameter declared in that function we can't use
+              again. But with help of closers we can use function variables
+              after function excuite in lexicalScop.
+              <br />
               <ul>
-                <li>A closure is the combination of a function bundled together with references to its surrounding state (lexical environment).</li>
-                <li>Or a closure gives access to an outer function’s scope from an inner function.</li>
-                <li>In JavaScript, closures are created every time a function is created, at function creation time.</li>
+                <li>
+                  A closure is the combination of a function bundled together
+                  with references to its surrounding state (lexical
+                  environment).
+                </li>
+                <li>
+                  Or a closure gives access to an outer function’s scope from an
+                  inner function.
+                </li>
+                <li>
+                  In JavaScript, closures are created every time a function is
+                  created, at function creation time.
+                </li>
               </ul>
               <br />
               <div style={titles}>
@@ -781,10 +958,10 @@ class IntroJs extends Component {
               </div>
               <br />
               <br />
-
               <b>Closers</b>
               <br />
-              Clouser is a function bundled together in a lexical scope.<br />
+              Clouser is a function bundled together in a lexical scope.
+              <br />
               <ul>
                 <li>Uses: Module Design Pattern</li>
                 <li>Currying</li>
@@ -796,17 +973,10 @@ class IntroJs extends Component {
               </ul>
               <br />
               <br />
-
-              <h3>What is the role of closures in JavaScript?</h3>
-              The script builds a closure in JavaScript at the time of making of a function. It is a local variable that is 
-              present in the memory even after the function finishes its execution. <br/>
-               Since JavaScript has no modifiers for access, closures permit the programmer to make variables that are not directly 
-              accessible.
-              <br />
-
               <h3>14. Function Express & Function Statement</h3>
-              function expressions and function statements are very similar in JavaScript, the difference is how the
-              browser loads them into the execution context.
+              function expressions and function statements are very similar in
+              JavaScript, the difference is how the browser loads them into the
+              execution context.
               <div style={titles}>
                 <PrismCode
                   code={execution}
@@ -816,90 +986,76 @@ class IntroJs extends Component {
               </div>
               <br />
               <p>
-                <b>function statement: </b> loads before any code is executed. This behavior of function statements is
-                called hoisting, which allows a function to be used before it is defined.
+                <b>function statement: </b> loads before any code is executed.
+                This behavior of function statements is called hoisting, which
+                allows a function to be used before it is defined.
               </p>
               <p>
-                <b>function expression: </b>associates a value with a variable, just like any other assignment statement. function
-                expressions load only when the interpreter reaches the definition of the function.
+                <b>function expression: </b>associates a value with a variable,
+                just like any other assignment statement. function expressions
+                load only when the interpreter reaches the definition of the
+                function.
               </p>
               <ul>
-                <li>Difference between Function Statement and Function Expression is the "Hosting".</li>
+                <li>
+                  Difference between Function Statement and Function Expression
+                  is the "Hosting".
+                </li>
               </ul>
               <br />
-
               <h3>15. What is 'this' keyword in JavaScript?</h3>
-              This keyword used for self-refrencung, Like to point our object.
-
-              <div style={titles}>
-                <PrismCode
-                  code={thisKey}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
+              this refers to the current execution context. The value of this
+              depends on how a function is called.
               <br />
-
-              <b>Explicit and Fixed Binding of “this” keyword </b>
-              <br />
-              If we use call and apply method with calling function, both of those methods take as their first
-              parameter as execution context. that is this binding.
-              <div style={titles}>
-                <PrismCode
-                  code={thisBind}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
               <ul>
-                <li><b>Explicit binding: </b>If we invoke the function bike with call() method passing execution context
-                  object obj as first argument, then obj gets assigned to this object and it prints “Pulsar” which is
-                  nothing but obj.name.</li>
-                <li><b>Fixed binding/Hard binding: </b>We can force the this object to be same always no matter from
-                  where and how it gets called.</li>
+                <li>
+                  <b>Global context: </b>In the global context, this refers to
+                  the global object (e.g., window in a web browser).
+                </li>
+                <br />
+                <li>
+                  <b>Object context: </b>In the context of an object method,
+                  this refers to the object itself
+                </li>
+                <div style={titles}>
+                  <PrismCode
+                    code={thisKey}
+                    language="js"
+                    plugins={["line-numbers"]}
+                  />
+                </div>
+                <br />
+                <li>
+                  <b>Function context: </b>In the context of a regular function,
+                  this refers to the global object by default, but it can be
+                  bound to a different value using bind, call, or apply
+                </li>
+                <div style={titles}>
+                  <PrismCode
+                    code={thisKey2}
+                    language="js"
+                    plugins={["line-numbers"]}
+                  />
+                </div>
+                <br />
+                <li>
+                  <b>Event context: </b> In the context of an event handler
+                  function, this refers to the element that triggered the event:
+                </li>
+                <div style={titles}>
+                  <PrismCode
+                    code={thisKey3}
+                    language="js"
+                    plugins={["line-numbers"]}
+                  />
+                </div>
+                <br />
               </ul>
               <br />
               <br />
-
-              <b>In JavaScript, why is the “this” operator inconsistent?</b>
-              The value of <b>this</b> changes depending on how the function is called. We say that a function is invoked with 
-              some a particular this value — the this value is determined at invocation time, not definition time.
-              <br/>
-              <br/>
-              <ul>
-                <li>If the function is called as a “raw” function, this will be the global object or undefined if the function 
-                  runs in strict mode.</li>
-                <li>If it is called as a method on an object, this will be the calling object.</li>
-                <li>If you call a function with call or apply, this is specified as the first argument to call or apply.</li>
-                <li>If it is called as an event listener, this will be the element that is the target of the event.</li>
-                <li>If it is called as a constructor with new, this will be a newly-created object whose prototype is set to the 
-                  prototype property of the constructor function.</li>
-                <li>If the function is the result of a bind operation, the function will always and forever have this set to the 
-                  first argument of the bind call that produced it. (This is the single exception to the “functions don’t have a 
-                  fixed this” rule — functions produced by bind actually do have an immutable this.)</li>
-              </ul>
-              <br/>
-
               <h3>16. Bind()</h3>
-              Bind function similar to call function, But bind don't use direct function it create a copy of function
-              and call that copied function when required.
-              <ul>
-                <li>Creates a new function, when called.</li>
-                <li>Returns a new function, when invoked, has its this sets to a specific value.</li>
-                <li>Unlike the call() and apply() methods, the bind() method doesn’t immediately execute the function. It just
-                  returns the function.
-                </li>
-                <li>When a method an object is passed to another function as a callback, the this value is lost.
-                  That’s because bindExample() received the function bindExample.details separately from the bindExample object.
-                </li>
-                <li>The bind() method allows an object to borrow a method from another object without making a copy of that method.</li>
-                <li>When we assign method to varryble than lost this binding bind set context of this.</li>
-                <li>Bind method exactly same as the call method, Only diffrences instead of caling method, Bind method
-                  with the object and return the copy of that method.
-                </li>
-              </ul>
+              The bind() is used to create a new function with a specified this value and, optionally, initial arguments. It allows you to control the context in which a function is invoked. 
               <br />
-
               <div style={titles}>
                 <PrismCode
                   code={bind_2}
@@ -908,25 +1064,16 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>17. call(), apply()</h3>
-              The call() method calls a function with a given this value and arguments provided individually.
+              <b>Call: </b>Method is a built-in method in JavaScript that is
+              used to call a function with a specified this value and arguments
+              provided individually.
               <br />
               <br />
-              The main differences between bind() and call() is that the call() method:<br />
-              <ul>
-                <li>Accepts additional parameters as well</li>
-                <li>The call() method does not make a copy of the function it is being called on.</li>
-                <li>call() and apply() serve the exact same purpose. The only difference between how they work is that.</li>
-                <ul>
-                  <li>call() expects all parameters to be passed in individually.</li>
-                  <li>apply() expects an array of all of our parameters.</li>
-                </ul>
-              </ul>
-              <br />
-              <br />
-
-              <b>Call: </b>This value depend from where to call it.
+              The call() method is used to change the context (this value) of a
+              function. When a function is called using call(), the first
+              argument passed to the method is used to set the this value for
+              the function.
               <br />
               <br />
               call: accept two properties:
@@ -934,7 +1081,6 @@ class IntroJs extends Component {
                 <li>(i) what is context of this.</li>
                 <li>(ii) Parameter.</li>
               </ul>
-
               <div style={titles}>
                 <PrismCode
                   code={calls}
@@ -944,10 +1090,21 @@ class IntroJs extends Component {
               </div>
               <br />
               <br />
-
-              <b>Apply</b>
+              <b>Apply: </b>function is a built-in function in JavaScript that
+              allows you to call a function with a specified this value and
+              arguments provided as an array or an array-like object.
               <br />
-              Pass Array as argument instead of parameter.
+              <br />
+              The apply() function takes two arguments:
+              <ul>
+                <li>
+                  The value to use as this inside the function being called.
+                </li>
+                <li>
+                  An array or an array-like object containing the arguments to
+                  pass to the function.
+                </li>
+              </ul>
               <div style={titles}>
                 <PrismCode
                   code={applys}
@@ -956,18 +1113,21 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>18. Polyfill</h3>
-              A polyfill is a browser fallback, made in JavaScript, that allows functionality expect to work in modern browsers also work in
-              older browsers.
+              A polyfill is a browser fallback, made in JavaScript, that allows
+              functionality expect to work in modern browsers also work in older
+              browsers.
               <br />
               <ul>
-                <li>It “fills in” the gap and adds missing implementations in old browser.</li>
+                <li>
+                  It “fills in” the gap and adds missing implementations in old
+                  browser.
+                </li>
               </ul>
               <br />
-
               <h3>19. What is Functional Programming?</h3>
-              functional programming:<br />
+              functional programming:
+              <br />
               <ul>
                 <li>Pure functions</li>
                 <li>Function composition</li>
@@ -976,85 +1136,121 @@ class IntroJs extends Component {
                 <li>Avoid side effects</li>
               </ul>
               <br />
-
               <ul>
-                <li><b>Function composition: </b>is the process of combining two/ more functions in order to produce a new function or perform
-                  some computation.</li>
+                <li>
+                  <b>Function composition: </b>is the process of combining two/
+                  more functions in order to produce a new function or perform
+                  some computation.
+                </li>
               </ul>
               <br />
               <br />
-
-              <b>A pure function has following properties:</b>
+              <b>
+                A pure function or first class function has following
+                properties:
+              </b>
               <br />
               <ul>
-                <li>The function always returns the same result if the same arguments are passed
-                  in. It does not depend on any state, or data, change during a program's
-                  execution. It must only depend on its input arguments.</li>
-                <li>The function does not produce any observable side effects such as network
-                  requests, input and output devices, or data mutation.</li>
-                <li>The same arguments must always lead to the same outcome.</li>
-                <li>A pure function cannot depend on any variable declared outside its scope.</li>
-              </ul>
-              <br />
-
-              <h3>20. First Class Function</h3>
-              functions are treated like any other first-class object — they can be stored in variables, passed around, returned
-              from other functions, and even hold their own properties.
-              <br />
-              <br />
-              <b>first-class objects can:</b>
-              <ul>
-                <li>Be stored in a variable.</li>
-                <li>Be passed as arguments to functions.</li>
-                <li>Be returned by functions.</li>
-                <li>Be stored in some data structure and</li>
-                <li>Hold their own properties and methods.</li>
+                <li>
+                  The function always returns the same result if the same
+                  arguments are passed in. It does not depend on any state, or
+                  data, change during a program's execution. It must only depend
+                  on its input arguments.
+                </li>
+                <li>
+                  The function does not produce any observable side effects such
+                  as network requests, input and output devices, or data
+                  mutation.
+                </li>
+                <li>
+                  The same arguments must always lead to the same outcome.
+                </li>
+                <li>
+                  A pure function cannot depend on any variable declared outside
+                  its scope.
+                </li>
               </ul>
               <br />
               <br />
-
-              <b>Uses of a First-Class Function:</b>
-              <br />
-              First-class functions give us a wide variety of flexible and powerful design patterns. These
-              patterns let us write more readable, more dynamic, and more concise code.
-              <br />
-              <ul>
-                <li>Higher-Order Functions</li>
-                <li>Partial Function Application</li>
-                <li>Asynchronous Functions</li>
-              </ul>
-              <br />
-
               <h3>21. Combinators</h3>
-              Combinators are similar to pure functions. With one more a combinator contains no free variables.
+              Combinators are similar to pure functions. With one more a
+              combinator contains no free variables.
               <br />
               <br />
-              A free variable is any variable whose values cannot be accessed independently. Every
-              variable in a combinator must be passed through parameters.
+              A free variable is any variable whose values cannot be accessed
+              independently. Every variable in a combinator must be passed
+              through parameters.
               <br />
+              <h3>21. Callback</h3>
+              <b>Callback: </b>A callback is a function that is passed as an argument to another function and is executed at a later time or when a certain event occurs. It allows you to define what should happen once a specific task or operation is completed. 
+              <br />
+              <br />
+              <ul>
+                <li>
+                  with Callback function javaScript build an asynchronous wold
+                  of a synchronous single-threaded language.
+                </li>
+                <li>
+                  Almost anything that has to pull data into your app or push
+                  data out will always be asynchronous because it’s not going to
+                  be running in the same thread. callbacks do not work with
+                  try-catch.
+                </li>
+                <li>
+                  Although, if your callback is synchronous, then you can catch
+                  errors using try-catch
+                </li>
+              </ul>
+              <div style={titles}>
+                <PrismCode
+                  code={proCallbacks}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>Promises</h3>
+              <ul>
+                <li>
+                promise is an object that represents the eventual completion (or failure) of an asynchronous operation and allows you to handle the result as either a resolved value or an error. Promises provide a more structured and elegant way to work with asynchronous code compared to callbacks. 
+                </li>
+              </ul>
+              <div style={titles}>
+                <PrismCode
+                  code={promisePro}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
 
               <h3>22. Async-Await</h3>
               <ul>
-                  <li>It's an easier way to deal with Promises.</li>
-                  <li>Promises is an easier way to deal with CB.</li>
-                  <li>To handle an asynchronous process, we return a Promis object from a function.</li>
-                  <li>By default any function without <b>return</b> statement return <b>undefined</b> in javascript.</li>
-                  <li>By writing async function don't need to write return statement.</li>
-                  <li>await make sure to wait till a Promise is settled, be resolved/ rejected.</li>
-                  <li>The way we write then() for handling promise, now in await we can remove than() and replace it with await.</li>
-              </ul>
-              <br />
-              <br />
-              <b>Callback: </b>A callback function is a function passed into another function as an argument, which is then
-                invoked inside the outer function to complete some kind of action.
+                <li>
+                Async/await introduces two new keywords: async and await. The async keyword is used to define an asynchronous function, while the await keyword is used to pause the execution of an async function until a promise is resolved or rejected.
+                </li>
                 <br/>
-                <ul>
-                <li>with Callback function javaScript build an asynchronous wold of a synchronous single-threaded language.</li>
-                <li>Almost anything that has to pull data into your app or push data out will always
-                  be asynchronous because it’s not going to be running in the same thread.
-                  callbacks do not work with try-catch.</li>
-                <li>Although, if your callback is synchronous, then you can catch errors using try-catch</li>
+                <li>
+                  By default any function without <b>return</b> statement return{" "}
+                  <b>undefined</b> in javascript.
+                </li>
+                <li>
+                  By writing async function don't need to write return
+                  statement.
+                </li>
+                <li>
+                  await make sure to wait till a Promise is settled, be
+                  resolved/ rejected.
+                </li>
+                <li>
+                  The way we write then() for handling promise, now in await we
+                  can remove than() and replace it with await.
+                </li>
               </ul>
+              <br />
+              <br />
+              
               <div style={titles}>
                 <PrismCode
                   code={callbackJs}
@@ -1063,24 +1259,16 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-              <br/>
-
-                <b>Promise: </b>
-                <ul>
-                <li>
-                  Promise is an object that represents the completion/ failure of an asynchronous task and its resulting value.
-                </li>
-                <li>A promise is a returned object which contain callbacks, instead of passing callbacks into a function.</li>
-              </ul>
-              <br />
               <br />
 
-              <b>Chaining</b><br />
-              A common need is to execute two/ more asynchronous operations back to back, where each subsequent operation
-              starts when the previous operation succeeds, with the result from the previous step. This is promise chain.
+              <b>Chaining</b>
+              <br />
+              A common need is to execute two/ more asynchronous operations back
+              to back, where each subsequent operation starts when the previous
+              operation succeeds, with the result from the previous step. This
+              is promise chain.
               <br />
               <br />
-
               <b>Chained Callback</b>
               <div style={titles}>
                 <PrismCode
@@ -1089,48 +1277,70 @@ class IntroJs extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              Always return results, otherwise callbacks won't catch the result of a previous promise.
+              Always return results, otherwise callbacks won't catch the result
+              of a previous promise.
               <br />
               <br />
-
-              <b>Unlike old-fashioned passed-in callbacks, a promise comes with some guarantees:</b>
+              <b>
+                Unlike old-fashioned passed-in callbacks, a promise comes with
+                some guarantees:
+              </b>
               <br />
               <ul>
-                <li>Callbacks will never be called before the completion of the current run of the JavaScript event loop.</li>
-                <li>Callbacks added with then(), will be called even after the success/ failure of the asynchronous operation.</li>
-                <li>Multiple callbacks may be added by calling then() several times. Each callback is executed one after another,
-                  in the order in which they were inserted.</li>
-                <li>One of the great things about using promises is chaining.</li>
+                <li>
+                  Callbacks will never be called before the completion of the
+                  current run of the JavaScript event loop.
+                </li>
+                <li>
+                  Callbacks added with then(), will be called even after the
+                  success/ failure of the asynchronous operation.
+                </li>
+                <li>
+                  Multiple callbacks may be added by calling then() several
+                  times. Each callback is executed one after another, in the
+                  order in which they were inserted.
+                </li>
+                <li>
+                  One of the great things about using promises is chaining.
+                </li>
               </ul>
               <br />
-
               <b>How are observables different from promises?</b>
-              <br/>
-              The first difference is that an Observable is lazy whereas a Promise is eager.
-              <br/>
-            <table>
-              <tr>
-                <th>Observables</th>
-                <th>Promises</th>
-              </tr>
-              <tr>
-                <td>Handle a sequence of asynchronous events over a period of time.</td>
-                <td>Deal with one asynchronous event at a time</td>
-              </tr>
-              <tr>
-                <td>Lazy. An observable is not called until we subscribe() to the observable</td>
-                <td>Not Lazy, Execute immediately after creation.</td>
-              </tr>
-              <tr>
-                <td>Can be cancelled by using the unsubscribe() method</td>
-                <td>Cannot be cancelled</td>
-              </tr>
-              <tr>
-                <td>Observable provides operators like map, forEach, filter, reduce, retry, retryWhen etc.</td>
-              </tr>
-            </table>
-              <br/>
-
+              <br />
+              The first difference is that an Observable is lazy whereas a
+              Promise is eager.
+              <br />
+              <table>
+                <tr>
+                  <th>Observables</th>
+                  <th>Promises</th>
+                </tr>
+                <tr>
+                  <td>
+                    Handle a sequence of asynchronous events over a period of
+                    time.
+                  </td>
+                  <td>Deal with one asynchronous event at a time</td>
+                </tr>
+                <tr>
+                  <td>
+                    Lazy. An observable is not called until we subscribe() to
+                    the observable
+                  </td>
+                  <td>Not Lazy, Execute immediately after creation.</td>
+                </tr>
+                <tr>
+                  <td>Can be cancelled by using the unsubscribe() method</td>
+                  <td>Cannot be cancelled</td>
+                </tr>
+                <tr>
+                  <td>
+                    Observable provides operators like map, forEach, filter,
+                    reduce, retry, retryWhen etc.
+                  </td>
+                </tr>
+              </table>
+              <br />
               <h3>23. Difference between Map and foreach.</h3>
               <table>
                 <tr>
@@ -1139,63 +1349,105 @@ class IntroJs extends Component {
                   <th>Map</th>
                 </tr>
                 <tr>
-                  <td><b>Functionality</b></td>
+                  <td>
+                    <b>Functionality</b>
+                  </td>
                   <td>Performs given operation on each element of the array</td>
-                  <td>Performs given "transformation" on "copy" of each element </td>
+                  <td>
+                    Performs given "transformation" on "copy" of each element{" "}
+                  </td>
                 </tr>
                 <tr>
-                  <td><b>Return value</b></td>
+                  <td>
+                    <b>Return value</b>
+                  </td>
                   <td>undefined</td>
-                  <td>new array with tranformed elements leaving back original array unchanged.</td>
+                  <td>
+                    new array with tranformed elements leaving back original
+                    array unchanged.
+                  </td>
                 </tr>
                 <tr>
-                  <td><b>Processing</b></td>
-                  <td>Performing non-transformation like processing on each element.</td>
-                  <td>Obtaining array containing output of some processing done on each element of the array.</td>
+                  <td>
+                    <b>Processing</b>
+                  </td>
+                  <td>
+                    Performing non-transformation like processing on each
+                    element.
+                  </td>
+                  <td>
+                    Obtaining array containing output of some processing done on
+                    each element of the array.
+                  </td>
                 </tr>
               </table>
               <br />
-
               <ul>
-                <li>map() is chainable. This means we can attach reduce(), sort(), filter() and so on
-                  after performing a map() method on an array.</li>
+                <li>
+                  map() is chainable. This means we can attach reduce(), sort(),
+                  filter() and so on after performing a map() method on an
+                  array.
+                </li>
                 <li>But we can't do with forEach()</li>
               </ul>
               <br />
-
               <h3>24. Hoc:</h3>
-              A higher order function is a function either:<br />
+              A higher order function is a function either:
+              <br />
               <ul>
                 <li>1. Accept a function as an argument.</li>
                 <li>2.Return a function.</li>
               </ul>
               <br />
-
-              HOF are:<br />
+              HOF are:
+              <br />
               <ul>
                 <li>forEach</li>
                 <li>map</li>
                 <li>filter</li>
                 <li>sort</li>
               </ul>
+              <div style={titles}>
+                <PrismCode
+                  code={hoFunction}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
               <br />
 
               <h3>25. Event loop</h3>
               <ul>
-                <li>Browser have a mechanism that handles executing multiple chunks	of program	over
-              time, at each moment invoking	the	JS engine, called the "event loop."</li><br/>
-                <li>With the help of event loop allows Node.js to perform non-blocking I/O operations.</li><br/>
-                <li>Every I/O requires a callback - once they are done they are pushed onto the event loop for execution. When 
-                  one of these operations completes, the appropriate callback may be added to the poll queue to eventually be 
-                  executed.</li><br/>
-                <li>By providing callback function Node prevents blocking code.</li><br/>
-                <li><b>Scheduled "events"	:</b>
-              The	browser	is	set	up to listen for the response from the network, and	when it	has
-              something to give us, it schedules the callback function to be, executed by inserting it into
-              the event loop.</li><br/>
+                <li>
+                  The event loop is a fundamental concept in JavaScript that handles the execution of code and manages asynchronous operations. It ensures that JavaScript remains responsive and non-blocking, allowing for the execution of multiple tasks simultaneously. 
+                </li>
+                <br />
+                <li>
+                In JavaScript, code execution occurs in an event loop, which continuously checks for tasks to execute. The event loop has a simple purpose: to handle tasks and events. It follows a specific order of operations to process and execute tasks efficiently.
+                </li>
+                <br />
+                <br />
+                <li>
+                The event loop starts by checking the call stack, which keeps track of the functions that need to be executed. If the call stack is empty, the event loop moves to the next step.
+                </li>
+                <br />
+                <li>
+                The event loop checks the task queue, where asynchronous tasks (such as timer events, network requests, or user interactions) are queued for execution.
+                </li>
+                <br />
+                <li>
+                If there are tasks in the task queue, the event loop takes the first task and moves it to the call stack, allowing it to be executed.
+                </li>
+                <br/>
+                <li>The task in the call stack is executed. If the task is synchronous, it runs to completion. If the task is asynchronous, it may initiate a web API call, such as a setTimeout or fetch, and move to the next step.</li>
+                <li>While the asynchronous task is being handled by the web API, the event loop continues to check the call stack and task queue. If the call stack is empty and there are pending tasks in the task queue, the event loop moves the next task from the task queue to the call stack for execution.</li><br/>
+                <li>Once the web API call (asynchronous task) is completed or when a specified time interval elapses, the task is added to the task queue for execution.</li><br/>
+                <li>The event loop repeats this process indefinitely, continuously checking for tasks in the task queue and executing them when the call stack is empty.</li><br/>
+                <br/>
+                <br/>
+                The event loop ensures that JavaScript can handle both synchronous and asynchronous tasks efficiently without blocking the execution of other code. It allows JavaScript to remain responsive by handling tasks in an ordered manner and avoiding the risk of long-running operations freezing the entire program.
               </ul>
               <br />
-              
               EventLoop is an array that acts as a queue (first-in, first-out).
               <div style={titles}>
                 <PrismCode
@@ -1205,64 +1457,78 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>26. Concurrency model and the event loop</h3>
-              JavaScript has a concurrency model based on an event loop, which is responsible for executing the code, collecting
-              and processing events, and executing queued sub-tasks.
+              JavaScript has a concurrency model based on an event loop, which
+              is responsible for executing the code, collecting and processing
+              events, and executing queued sub-tasks.
               <br />
               <br />
-              <img src={EventLoop} alt="" className="responsive" style={redesign} />
+              <img
+                src={EventLoop}
+                alt=""
+                className="responsive"
+                style={redesign}
+              />
               <br />
               <br />
-
               <h3>27. Event bubbling and Capturing</h3>
-              Event bubbling and capturing are two ways of event propagation in the HTML DOM API, when an event
-              occurs in an element inside another element, and both elements have registered a handle for that
-              event.<br />
+              Event bubbling and capturing are two ways of event propagation in
+              the HTML DOM API, when an event occurs in an element inside
+              another element, and both elements have registered a handle for
+              that event.
+              <br />
               <ul>
                 <li>
-                  <b>bubbling: </b>the event is first captured and handled by the innermost element and then
-                  propagated to outer elements.
+                  <b>bubbling: </b>the event is first captured and handled by
+                  the innermost element and then propagated to outer elements.
+                </li>
+                <br/>
+                When an event occurs on an element, such as a click or a keypress, the event is first handled on the element that triggered it. Then, the event is propagated to the parent element, and if there are event handlers attached to that parent element, they are also triggered. This process continues upwards through the DOM hierarchy until reaching the root element, like the document or window.
+                <br/>
+                <br/>
+                <li>
+                  <b>capturing: </b>the event is first captured by the outermost
+                  element and propagated to the inner elements.
                 </li>
                 <li>
-                  <b>capturing: </b>the event is first captured by the outermost element and propagated to the inner elements.
-                </li>
-                <li>
-                  Event bubbling set by default. If we pass true parameter in callback function than it became event capturing
+                  Event bubbling set by default. If we pass true parameter in
+                  callback function than it became event capturing
                 </li>
               </ul>
               <br />
-              <div style={titles}>
-                <PrismCode
-                  code={Bubblings}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
               <br />
-
               <h3>28. What is the JavaScript Event Delegation Model?</h3>
-              When we are bubbling and 
-              capturing, it permit functions to apply a single handler to several elements at a specific time then it’s called 
-              Event Delegation. <br/>
-              It basically permits you to put event listeners to single parent instead of particular nodes. That 
-              specific listener analyzes the bubbled events to get a match on the child elements.
-              <br/>
-
+              When we are bubbling and capturing, it permit functions to apply a
+              single handler to several elements at a specific time then it’s
+              called Event Delegation. <br />
+              It basically permits you to put event listeners to single parent
+              instead of particular nodes. That specific listener analyzes the
+              bubbled events to get a match on the child elements.
+              <br />
               <h3>29. event.stopPropagation</h3>
-              event.stopPropagation and event.preventDefault, seem to be doing the same thing.
+              event.stopPropagation and event.preventDefault, seem to be doing
+              the same thing.
               <ul>
-                <li><b>stopPropagation: </b>Stops the event from bubbling up the event chain.</li>
-                <li><b>preventDefault: </b>Prevents the default action the browser makes on that event.</li>
+                <li>
+                  <b>stopPropagation: </b>Stops the event from bubbling up the
+                  event chain.
+                </li>
+                <li>
+                  <b>preventDefault: </b>Prevents the default action the browser
+                  makes on that event.
+                </li>
               </ul>
               <br />
-
               <h3>30. Event Debouncing</h3>
-              Debouncing in JavaScript is a practice used to improve browser performance. There might be some functionality in a 
-              web page which requires time-consuming computations. If such a method is invoked frequently, it might greatly 
-              affect the performance of the browser, as JavaScript is a single threaded language. Debouncing is a programming 
-              practice used to ensure that time-consuming tasks do not fire so often, that it stalls the performance of the web 
-              page. In other words, it limits the rate at which a function gets invoked.
+              Debouncing in JavaScript is a practice used to improve browser
+              performance. There might be some functionality in a web page which
+              requires time-consuming computations. If such a method is invoked
+              frequently, it might greatly affect the performance of the
+              browser, as JavaScript is a single threaded language. Debouncing
+              is a programming practice used to ensure that time-consuming tasks
+              do not fire so often, that it stalls the performance of the web
+              page. In other words, it limits the rate at which a function gets
+              invoked.
               <div style={titles}>
                 <PrismCode
                   code={debouncing}
@@ -1271,10 +1537,10 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>31. Throttling/ Throttle function </h3>
-              Throttling is a practice used in websites. Throttling is used to call a function after every millisecond or a 
-              particular interval of time only the first click is executed immediately.
+              Throttling is a practice used in websites. Throttling is used to
+              call a function after every millisecond or a particular interval
+              of time only the first click is executed immediately.
               <div style={titles}>
                 <PrismCode
                   code={throttle}
@@ -1283,20 +1549,22 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>32. IIFE</h3>
-              Because our application could include many functions and global variables from different source files, it's important to limit 
-              the number of global variables.
-
-              <br/>
-              <br/>
+              Because our application could include many functions and global
+              variables from different source files, it's important to limit the
+              number of global variables.
+              <br />
+              <br />
               <ul>
                 <li>IIFE used to solve scoping problem.</li>
-                <li>Any variables declared inside the IIFE are not visible to the outside world.</li>
+                <li>
+                  Any variables declared inside the IIFE are not visible to the
+                  outside world.
+                </li>
                 <li>IIFE return a value that can be assigned to a variable.</li>
                 <li>
-                  Parentheses around the function expression basically force the function to become an expression
-                  instead of a statement.
+                  Parentheses around the function expression basically force the
+                  function to become an expression instead of a statement.
                 </li>
               </ul>
               <br />
@@ -1308,10 +1576,10 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>33. Curry</h3>
-              Curring is a process in functional programming in which we can transform a function with multiple
-              arguments into a sequence of nesting functions. It returns a new function that expects the next
+              Curring is a process in functional programming in which we can
+              transform a function with multiple arguments into a sequence of
+              nesting functions. It returns a new function that expects the next
               argument inline.
               <div style={titles}>
                 <PrismCode
@@ -1321,30 +1589,40 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>34. Generator</h3>
               <ul>
-                <li>Generators are functions which can be exited and later re-entered. Their context (variable bindings)
-                  will be saved across re-entrances.
+                <li>
+                  Generators are functions which can be exited and later
+                  re-entered. Their context (variable bindings) will be saved
+                  across re-entrances.
                 </li>
-                <li>Generator functions are written using the function* syntax.</li>
-                <li>When called initially, generator functions do not execute any of their code, instead returning
-                  a type of iterator called a Generator.
+                <li>
+                  Generator functions are written using the function* syntax.
                 </li>
-                <li>When a value is consumed by calling the generator's next method, the Generator function executes
-                  until it encounters the yield keyword.
+                <li>
+                  When called initially, generator functions do not execute any
+                  of their code, instead returning a type of iterator called a
+                  Generator.
+                </li>
+                <li>
+                  When a value is consumed by calling the generator's next
+                  method, the Generator function executes until it encounters
+                  the yield keyword.
                 </li>
               </ul>
               <br />
               <b>When should we use generators:</b>
               <br />
               <ul>
-                <li>1.one can choose to jump out of a function and let outer code to determine when to jump back into
-                  the function.
+                <li>
+                  1.one can choose to jump out of a function and let outer code
+                  to determine when to jump back into the function.
                 </li>
-                <li>2.the control of asynchronous call can be done outside of your code
-                  The most important feature in generators—we can get the next value in only when we really need
-                  it, not all the values at once. 
+                <li>
+                  2.the control of asynchronous call can be done outside of your
+                  code The most important feature in generators—we can get the
+                  next value in only when we really need it, not all the values
+                  at once.
                 </li>
               </ul>
               <br />
@@ -1357,7 +1635,6 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <b>35. Yield</b>
               <div style={titles}>
                 <PrismCode
@@ -1367,32 +1644,28 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>36. Strict mode</h3>
               <ul>
-                <li>Makes debugging easier. Code errors that have been ignored/ failed silently now generate errors.</li>
-                <li>Prevents accidental globals. Without strict mode, assigning a value to an undeclared variable automatically creates a global
-                  variable with that name. In strict mode, attempting to do so throws an error.</li>
-                <li>Eliminates this coercion. Without strict mode, a reference to a this value of null/ undefined is automatically coerced to the global.</li>
-                <li>Fixes mistakes that make it difficult for JavaScript engines to perform optimizations.</li>
+                <li>
+                  Makes debugging easier. Code errors that have been ignored/
+                  failed silently now generate errors.
+                </li>
+                <li>
+                  Prevents accidental globals. Without strict mode, assigning a
+                  value to an undeclared variable automatically creates a global
+                  variable with that name. In strict mode, attempting to do so
+                  throws an error.
+                </li>
+                <li>
+                  Eliminates this coercion. Without strict mode, a reference to
+                  a this value of null/ undefined is automatically coerced to
+                  the global.
+                </li>
+                <li>
+                  Fixes mistakes that make it difficult for JavaScript engines
+                  to perform optimizations.
+                </li>
               </ul>
-              <br />
-
-              <b>Converting mistakes into errors</b>
-              <ul>
-                <li>In normal code assigning to NaN does nothing, no receives failure feedback. In strict mode
-                  assigning to NaN throws an exception.</li>
-                <li>all properties named in an object literal be unique. The normal code may duplicate property
-                  names, with the last one determining the property's value. Duplicate property names are a syntax
-                  error in strict mode:</li>
-                <li>strict mode requires that function parameter names be unique.</li>
-              </ul>
-              <br />
-
-              <b>Invoking strict mode</b>
-              <br />
-              Strict mode applies to entire scripts or to individual functions. It doesn't apply to block statements enclosed
-              in { } braces.
               <br />
               <br />
               <b>Strict mode for scripts</b>
@@ -1405,29 +1678,25 @@ class IntroJs extends Component {
               </div>
               <br />
               <br />
-
               <h3>37. Modules</h3>
               <b>Differences between modules and standard scripts</b>
               <ul>
-                <li>If we try to load the HTML file locally, will run into CORS errors due to JavaScript module security requirements.</li>
+                <li>
+                  If we try to load the HTML file locally, will run into CORS
+                  errors due to JavaScript module security requirements.
+                </li>
                 <li>modules use strict mode automatically.</li>
-                <li>Modules are only executed once, even if they have been referenced in multiple "script" tags.</li>
+                <li>
+                  Modules are only executed once, even if they have been
+                  referenced in multiple "script" tags.
+                </li>
               </ul>
               <br />
               <br />
-
-              <b>Default exports versus named exports</b>
-              <ul>
-                <li>Named exports are useful to export several values.</li>
-                <li>In default export, there is only a single default export per module. A default
-                  export can be a function, a class or an object.</li>
-              </ul>
-              <br />
-              <br />
-
               <b>Creating a module object</b>
               <br />
-              To import each module's features inside a module object. The following syntax form does that:
+              To import each module's features inside a module object. The
+              following syntax form does that:
               <div style={titles}>
                 <PrismCode
                   code={features}
@@ -1435,8 +1704,9 @@ class IntroJs extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              This grabs all the exports available inside module.js, and makes them available as members of an object Module,
-              effectively giving it its own namespace.
+              This grabs all the exports available inside module.js, and makes
+              them available as members of an object Module, effectively giving
+              it its own namespace.
               <br />
               <br />
               <b>the exports are all</b>
@@ -1449,11 +1719,12 @@ class IntroJs extends Component {
               </div>
               <br />
               <br />
-
               <b>Dynamic module loading</b>
               <br />
-              The newest part of the JavaScript modules functionality to be available in browsers is dynamic module loading.
-              This allows you to dynamically load modules only when they are needed, rather than having to load everything.
+              The newest part of the JavaScript modules functionality to be
+              available in browsers is dynamic module loading. This allows you
+              to dynamically load modules only when they are needed, rather than
+              having to load everything.
               <br />
               <br />
               <div style={titles}>
@@ -1464,27 +1735,35 @@ class IntroJs extends Component {
                 />
               </div>
               <br />
-
               <h3>38. JavaScript static Method:</h3>
-              The JavaScript provides static methods that belong to the class instead. These methods are called directly on the 
-              class itself.
+              The JavaScript provides static methods that belong to the class
+              instead. These methods are called directly on the class itself.
               <br />
               <br />
               <ul>
                 <li>static keyword is used to declare a static method.</li>
                 <li>A class can contain more than one static method.</li>
-                <li>If we declare more than one static method with a similar name, the JavaScript always invokes the last one.</li>
+                <li>
+                  If we declare more than one static method with a similar name,
+                  the JavaScript always invokes the last one.
+                </li>
                 <li>static method can be used to create utility functions.</li>
-                <li>We can use this keyword to call a static method within another static method.</li>
-                <li>We cannot use this keyword directly to call a static method within the non-static method. In such case, we can call the static
-                  method either using the class name or as the property of the constructor.</li>
+                <li>
+                  We can use this keyword to call a static method within another
+                  static method.
+                </li>
+                <li>
+                  We cannot use this keyword directly to call a static method
+                  within the non-static method. In such case, we can call the
+                  static method either using the class name or as the property
+                  of the constructor.
+                </li>
               </ul>
-              <br/>
-
-              <h3>39. Proxies</h3>
-              Proxy objects allow you to intercept certain operations and to implement custom behaviors.
               <br />
-
+              <h3>39. Proxies</h3>
+              Proxy objects allow you to intercept certain operations and to
+              implement custom behaviors.
+              <br />
               <div style={titles}>
                 <PrismCode
                   code={proxies}
@@ -1492,105 +1771,127 @@ class IntroJs extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <i>The Proxy object defines a target (an empty object here) and a handler object, in which a get
-                trap is implemented. Here, an object that is proxied will not return undefined when getting
-                undefined properties, but will instead return the number 42.</i>
+              <i>
+                The Proxy object defines a target (an empty object here) and a
+                handler object, in which a get trap is implemented. Here, an
+                object that is proxied will not return undefined when getting
+                undefined properties, but will instead return the number 42.
+              </i>
               <br />
               <br />
-              <b>The following terms are used when talking about the functionality of proxies:</b>
+              <b>
+                The following terms are used when talking about the
+                functionality of proxies:
+              </b>
               <br />
               <ul>
-                <li><b>handler: </b>Placeholder object which contains traps.</li>
-                <li><b>traps: </b>Methods that provide property access. (This is analogous to the concept of traps in operating systems.)</li>
-                <li><b>target: </b>Object which the proxy virtualizes. It is often used as storage backend for the proxy. Invariants
-                  (semantics that remain unchanged) regarding object non-extensibility or non-configurable properties are verified
-                  against the target.</li>
-                <li><b>invariants: </b>Semantics that remain unchanged when implementing custom operations are called invariants. If we violate the
-                  invariants of a handler, a TypeError will be thrown.</li>
+                <li>
+                  <b>handler: </b>Placeholder object which contains traps.
+                </li>
+                <li>
+                  <b>traps: </b>Methods that provide property access. (This is
+                  analogous to the concept of traps in operating systems.)
+                </li>
+                <li>
+                  <b>target: </b>Object which the proxy virtualizes. It is often
+                  used as storage backend for the proxy. Invariants (semantics
+                  that remain unchanged) regarding object non-extensibility or
+                  non-configurable properties are verified against the target.
+                </li>
+                <li>
+                  <b>invariants: </b>Semantics that remain unchanged when
+                  implementing custom operations are called invariants. If we
+                  violate the invariants of a handler, a TypeError will be
+                  thrown.
+                </li>
               </ul>
               <br />
-
               <h3>40. What is the function of close () in JavaScript?</h3>
-              The function of close () is mainly used to close the latest window. You have to write window.close() to make sure that this 
-              command is clearly associated with a window object and not the other JavaScript object.
-              <br/>
-
+              The function of close () is mainly used to close the latest
+              window. You have to write window.close() to make sure that this
+              command is clearly associated with a window object and not the
+              other JavaScript object.
+              <br />
               <h3>41. Memory Management</h3>
               <ul>
-                <li>JavaScript will automatically allocate memory when values are initially declared.</li>
-                <li>The purpose of a garbage collector is to monitor memory allocation and determine when a
-                  block of allocated memory is no longer needed and reclaim it. </li>
-                <li>A JavaScript object has a reference to its prototype (implicit reference) and to its
-                  properties values (explicit reference).</li>
-              </ul>
-              <h3>Reference-counting garbage collection</h3>
-              <ul>
-                <li>This algorithm reduces the problem from determining whether or not an object is still needed to determining if an
-                  object still has any other objects referencing it. An object is said to be "garbage", if there are
-                  zero references pointing to it.</li>
-                <li><i>2 objects are created. One is referenced by the other as one of its properties.
-                  The other is referenced by virtue of being assigned to the 'x' variable.
-                  Obviously, none can be garbage-collected.</i></li>
-              </ul>
-              <br />
-
-              <div style={titles}>
-                <PrismCode
-                  code={management}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>42. Heap</h3>
-              Objects are allocated in a heap which is just a name to denote a large (mostly unstructured) region of memory.
-              <h3>Queue</h3>
-              <ul>
-                <li>At some point during the event loop, the runtime starts handling the messages on the queue, starting with the oldest
-                  one. To do so, the message is removed from the queue and its corresponding function is called with the message as an
-                  input parameter. As always, calling a function creates a new stack frame for that function's use.</li>
-                <li>The processing of functions continues until the stack is once again empty. Then, the event loop will process the next
-                  message in the queue (if there is one).</li>
+                <li>
+                  JavaScript will automatically allocate memory when values are
+                  initially declared.
+                </li>
+                <li>
+                  The purpose of a garbage collector is to monitor memory
+                  allocation and determine when a block of allocated memory is
+                  no longer needed and reclaim it.{" "}
+                </li>
+                <li>
+                  A JavaScript object has a reference to its prototype (implicit
+                  reference) and to its properties values (explicit reference).
+                </li>
               </ul>
               <br />
-
+              <br />
               <h3>43. async and defer</h3>
-              Two modern features we can use to bypass the problem of the blocking script — async and defer.
+              Two modern features we can use to bypass the problem of the
+              blocking script — async and defer.
               <br />
               <br />
               <ul>
-                <li>Scripts loaded using the "async" attribute will download the script without blocking rendering the page and will execute it as soon
-                  as the script finishes downloading.</li>
-                <li>No guarantee that scripts will run in any specific order, only that they will not stop the rest of the page from displaying.</li>
-                <li>It is best to use async when the scripts in the page run independently from each other and depend on no other script on the page.</li>
-                <li>async should be used when we have a bunch of background scripts to load in, and we just want to get them in place as soon as possible.</li>
-              </ul>
-              <br />
-              <br />
-
-              <ul>
-                <li>Scripts loaded using the "defer" attribute will run in the order they appear in the page and execute them as soon as the script
-                  and content are downloaded.</li>
-                <li>All the scripts with the defer attribute will load in the order they appear on the page.</li>
-                <li>They won't run until the page content has all loaded, which is useful if our scripts depend on
-                  the DOM being in place.
+                <li>
+                  Scripts loaded using the "async" attribute will download the
+                  script without blocking rendering the page and will execute it
+                  as soon as the script finishes downloading.
+                </li>
+                <li>
+                  No guarantee that scripts will run in any specific order, only
+                  that they will not stop the rest of the page from displaying.
+                </li>
+                <li>
+                  It is best to use async when the scripts in the page run
+                  independently from each other and depend on no other script on
+                  the page.
+                </li>
+                <li>
+                  async should be used when we have a bunch of background
+                  scripts to load in, and we just want to get them in place as
+                  soon as possible.
                 </li>
               </ul>
               <br />
               <br />
-
               <ul>
-                <li>44. async and defer both instruct the browser to download the scripts in a separate thread,
-                  while the rest of the page is downloading, so the page loading is not blocked by the scripts.
+                <li>
+                  Scripts loaded using the "defer" attribute will run in the
+                  order they appear in the page and execute them as soon as the
+                  script and content are downloaded.
                 </li>
-                <li>2. If our scripts should be run immediately and they don't have any dependencies, then use async.</li>
+                <li>
+                  All the scripts with the defer attribute will load in the
+                  order they appear on the page.
+                </li>
+                <li>
+                  They won't run until the page content has all loaded, which is
+                  useful if our scripts depend on the DOM being in place.
+                </li>
               </ul>
               <br />
               <br />
-              If your scripts need to wait for parsing and depend on other scripts and/or the DOM being in place, load them using defer.
+              <ul>
+                <li>
+                  44. async and defer both instruct the browser to download the
+                  scripts in a separate thread, while the rest of the page is
+                  downloading, so the page loading is not blocked by the
+                  scripts.
+                </li>
+                <li>
+                  2. If our scripts should be run immediately and they don't
+                  have any dependencies, then use async.
+                </li>
+              </ul>
               <br />
-              
+              <br />
+              If your scripts need to wait for parsing and depend on other
+              scripts and/or the DOM being in place, load them using defer.
+              <br />
               <div style={titles}>
                 <PrismCode
                   code={security}
@@ -1602,8 +1903,8 @@ class IntroJs extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(IntroJs));
+export default withStyles(styles)(IntroJs);

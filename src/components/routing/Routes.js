@@ -1,104 +1,292 @@
-import React, { Suspense, lazy } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import HeaderSection from '../../components/dashboard/blog/HeaderSection';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import HeaderSection from "../../components/dashboard/blog/HeaderSection";
 
-import { components as ReactMains } from '../ReactJs';
+import { components as ReduxMains } from "../Redux";
+import { components as PyMains } from "../pythone";
+import { components as AngularJs } from "../angularjs";
+import { components as AngularJsd } from "../angularjsd";
+import { components as MlMains } from "../ml";
+import About from "../../components/dashboard/about";
 
-import { components as CssMains } from '../css';
+import MainCompo from "../ReactJs/reactJs_hooks/mainCompo";
+import AsyncAwait from "../ReactJs/reactJs_hooks/async_await";
+import IntroRectJs from "../ReactJs/reactJs_hooks/introReact";
+import SSRendering from "../ReactJs/reactJs_hooks/serverSideRend";
+import HackeRank from "../ReactJs/reactJs_hooks/hackeRank";
+import Models from "../ReactJs/reactJs_hooks/models";
+import Like from "../ReactJs/reactJs_hooks/like";
+import DropdownSelect from "../ReactJs/reactJs_hooks/dropdownSelect";
+import CustomHooks from "../ReactJs/reactJs_hooks/customHooks";
+import NumberForm from "../ReactJs/reactJs_hooks/numberFormats";
+import TicGame from "../ReactJs/reactJs_hooks/ticGame";
+import PureComp from "../ReactJs/reactJs_hooks/pureComp";
+import UseStates from "../ReactJs/reactJs_hooks/useStates";
+import LinkGet from "../ReactJs/reactJs_hooks/linkGet";
+import TextEditors from "../ReactJs/reactJs_hooks/textEditors";
+import Kanban from "../ReactJs/reactJs_hooks/kanban";
+import ReactInter from "../ReactJs/reactJs_hooks/reactInter";
+import SortItems from "../ReactJs/reactJs_hooks/sortItems";
+
+import NodeJsCodes from "../nodeJs/nodeDeep/codes";
+import Token from "../nodeJs/nodeDeep/codes";
+import ServerSide from "../nodeJs/nodeDeep/serverSide";
+import IntroNodeJs from "../nodeJs/nodeDeep/introNodejs";
+import Tur1 from "../nodeJs/nodeDeep/tut_1";
+import Tut2 from "../nodeJs/nodeDeep/tut_2";
+import Tut6 from "../nodeJs/nodeDeep/tut_6";
+import Udemy from "../nodeJs/nodeDeep/udemy";
+import Ejs from "../nodeJs/nodeDeep/ejsNode";
+import Nodetext from "../nodeJs/nodeDeep/nodetext";
+import SignUps from "../nodeJs/nodeDeep/authentications";
+import BufferNode from "../nodeJs/nodeDeep/buffers";
+import ChildsPros from "../nodeJs/nodeDeep/childs";
+import SendEmail from "../nodeJs/nodeDeep/sendEmail";
+import SearchPagination from "../nodeJs/nodeDeep/search_pagination";
+import PushNotifications from "../nodeJs/nodeDeep/push_notifications";
+import EvtNode from "../nodeJs/nodeDeep/evtNode";
+import FileSys from "../nodeJs/nodeDeep/filSystems";
+import UrlShortenerService from "../nodeJs/nodeDeep/url_shortener";
+import StripePayment from "../nodeJs/nodeDeep/stripe_payment";
+import FileUpload from "../nodeJs/nodeDeep/file_upload";
+import EmailAcco from "../nodeJs/nodeDeep/e_acco_veri";
+import TwoFA from "../nodeJs/nodeDeep/2fa_speakearst";
 
 
-import { components as ReduxMains } from '../Redux';
+import MongoCurd from "../mongoDB/deepMongodb/mongoCurd";
+import GridFs from "../mongoDB/deepMongodb/gridFs";
+import Intro from "../mongoDB/deepMongodb/intro";
+import MongodbMethods from "../mongoDB/deepMongodb/mongodbMethods";
+import IntroMD from "../mongoDB/deepMongodb/infoMD";
+import CurdOp from "../mongoDB/deepMongodb/curdOp";
+import BulkWright from "../mongoDB/deepMongodb/bulkRight";
+import MysqlCurd from "../mongoDB/deepMongodb/mysqlCurd";
+import Mysql from "../mongoDB/deepMongodb/mySql";
+import PostgresSQL from "../mongoDB/deepMongodb/postgressql";
+import MongoQueries from "../mongoDB/deepMongodb/mongoQueries";
+import SearchErrorHandling from "../mongoDB/deepMongodb/searchErrorHandling";
+import JoinOp from "../mongoDB/deepMongodb/joinOp";
+import SortOp from "../mongoDB/deepMongodb/sortOp";
 
-import { components as JsMains } from '../javaScripts';
+import MernLoic from "../mern/projects/javaScript";
+import MernReactCurd from "../mern/projects/3_reactCurdMern";
+import MernReactHooks from "../mern/projects/4_reactCurdHooks";
+import Pagination from "../mern/projects/pagination";
+import ImageGallery from "../mern/projects/imageGallery";
+import PropsModel from "../mern/projects/propsModel";
+import Strips from "../mern/projects/stripes";
+import PaginationsMerns from "../mern/projects/paginationsMern";
+import GoogleMaps from "../mern/projects/googleMap";
+import VideoChat from "../mern/projects/videoChat";
+import SetUpFiles from "../mern/projects/setUpFiles";
+import QrCode from "../mern/projects/qrSccaners";
+import ReactShare from "../mern/projects/react_share";
+import SocialSignUp from "../mern/projects/socialSignUp";
+import MernSocial from "../mern/projects/mernSocial";
 
-import { components as NodeMains } from '../nodeJs';
+import IntroJs from "../javaScripts/deepJs/introJs";
+import Arrays from "../javaScripts/deepJs/array";
+import Clousers from "../javaScripts/deepJs/clousers";
+import FindOutput from "../javaScripts/deepJs/findOutput";
+import JsObject from "../javaScripts/deepJs/jsObjects";
+import Logic from "../javaScripts/deepJs/logic";
+import Logic2 from "../javaScripts/deepJs/logic2";
+import Prototypes from "../javaScripts/deepJs/prototypes";
+import ArraysApi from "../javaScripts/deepJs/arrayApi";
+import Oops from "../javaScripts/deepJs/oops";
+import McqJs from "../javaScripts/deepJs/mcqjs";
+import Datatypests from "../javaScripts/deepJs/datatypests";
+import TypeScript2 from "../javaScripts/deepJs/typeScript_2";
+import TypeScript4 from "../javaScripts/deepJs/typeScript_4";
+import KeyedCollections from "../javaScripts/deepJs/keyedCollections";
+import RegularExp from "../javaScripts/deepJs/regular";
+import HackerRank1 from "../javaScripts/deepJs/hackerRank";
+import HackerRank6 from "../javaScripts/deepJs/hackerRank6";
 
-import { components as MongodbMains } from '../mongoDB';
+import Middleware from "../express/deepExpress/middleware";
+import IntroExpress from "../express/deepExpress/introExpress";
+import LoopbackCli from "../express/deepExpress/loopbackcli";
+import ResDocs from "../express/deepExpress/resDocs";
+import routerDocs from "../express/deepExpress/routerDocs";
+import JQueies from "../express/deepExpress/jqueries";
+import Backbonejs from "../express/deepExpress/backbonejs";
+import UnderscorJs from "../express/deepExpress/underscorejs";
+import Networks from "../express/deepExpress/network";
 
-import { components as ExpressMains } from '../express';
+import CssBasics from "../css/cssbasics";
+import Sass from "../css/sass";
+import ReatAPIS from "../css/restApi";
+import Jest from "../css/jest";
+import Enzymes from "../css/enzymes";
+import Enzymes2 from "../css/enzyme2";
+import Enzymes3 from "../css/enzyme3";
+import Matchers from "../css/matchers";
+import DevTools from "../css/devtools";
+import Html1 from "../css/html_1";
+import CssCodes from "../css/csscodes";
 
-import { components as PyMains } from '../pythone';
+import IntroAlgo from "../algorithams/deepAlgorithams/introAlgo";
+import Graph from "../algorithams/deepAlgorithams/graph";
+import LinkedList from "../algorithams/deepAlgorithams/linkedList";
+import Queue from "../algorithams/deepAlgorithams/queue";
+import Stack from "../algorithams/deepAlgorithams/stack";
+import Sort from "../algorithams/deepAlgorithams/sort";
+import Search from "../algorithams/deepAlgorithams/searchAlgo";
+import Heap from "../algorithams/deepAlgorithams/heap";
+import TopTech from "../algorithams/deepAlgorithams/topTech";
+import DSLogic from "../algorithams/deepAlgorithams/stringAlgo";
+import DSLogic2 from "../algorithams/deepAlgorithams/arrayAlgo";
+import DSLogic3 from "../algorithams/deepAlgorithams/nestingArrAlgo";
+import DSLogic4 from "../algorithams/deepAlgorithams/numbersAlgo";
+import DSLogic5 from "../algorithams/deepAlgorithams/gameAlgo";
+import DSLogic6 from "../algorithams/deepAlgorithams/arrayStrAlgo";
+import DSLogic7 from "../algorithams/deepAlgorithams/introAlgo";
+import DSLogic8 from "../algorithams/deepAlgorithams/dslogic8";
+import Trees from "../algorithams/deepAlgorithams/trees";
 
-import { components as AlMains } from '../algorithams';
 
-import { components as AngularJs } from '../angularjs';
+const {
+  ReduxState,
+  ReduxMethods,
+  Git,
+  Skills,
+  IntroRedux,
+  ReactRedux,
+  ContctHooks,
+  ExpenseTraMern,
+  GitConcepts,
+  CountersRedux,
+  MernRedux,
+  ReduxCurd,
+  SignUp,
+  ComSkils,
+  TechSkils,
+  TechInto,
+} = ReduxMains;
 
-import { components as AngularJsd } from '../angularjsd';
+const {
+  PyIntro,
+  PyLogic,
+  IntroPython,
+  Collections,
+  CsvPython,
+  Json,
+  Logics,
+  Mathematics,
+  OopsPyton,
+  Regex,
+  Tkinter,
+  LogicalsPy,
+  Abstract,
+  Tuples,
+  StringPy,
+  IteratorsPy,
+  ExceptionsPy,
+  Logging,
+  Threadings,
+  FlaskSignUp,
+  GetSearch,
+  LoadSearch,
+  Conroures,
+  FlaskIns,
+  HttpsMethods,
+} = PyMains;
 
-import { components as MlMains } from '../ml';
-
-import { components as MernProjectss } from '../mern';
-
-import About from '../../components/dashboard/about';
-
-
-const { MainCompo, AsyncAwait, IntroRectJs, SSRendering, HackeRank, Models, Like, DropdownSelect, 
-    CustomHooks, NumberForm, TicGame, PureComp, UseStates, LinkGet,
-  TextEditors, Kanban, ReactInter, SortItems } = ReactMains;
-
-const { CssBasics, Sass, ReatAPIS, Jest, Enzymes, Matchers, Enzymes2, Enzymes3, DevTools,
-  Html1 } = CssMains;
-
-const { ReduxState, ReduxMethods, Git, Skills, IntroRedux, ReactRedux, ContctHooks, ExpenseTraMern, GitConcepts,
-  CountersRedux, MernRedux, ReduxCurd, SignUp, ComSkils, TechSkils, TechInto } = ReduxMains;
-
-const { Arrays, Clousers, FindOutput, JsObject, Logic, 
-  IntroJs, Prototypes, ArraysApi, Oops, Reduce, McqJs, Datatypests, TypeScript2, TypeScript4,
-  KeyedCollections, RegularExp, HackerRank1, HackerRank6 } = JsMains;
-
-const { NodeJsCodes, ServerSide, IntroNodeJs, Tur1, Tut2, Tut6, Udemy, Ejs, Nodetext,
-  SignUps, BufferNode, Token, ChildsPros, SendEmail, SearchPagination, PushNotifications,
-  EvtNode, FileSys, UrlShortenerService, StripePayment, FileUpload, EmailAcco, TwoFA
- } = NodeMains;
-
-const { GridFs, Intro, MongodbMethods, IntroMD, CurdOp, BulkWright, MysqlCurd, MongoCurd, Mysql, 
-  PostgresSQL, MongoQueries, SearchErrorHandling, JoinOp, SortOp
-} = MongodbMains;
-
-const { Middleware, IntroExpress, LoopbackCli, ResDocs, routerDocs, JQueies, Backbonejs, UnderscorJs,
-        Networks } = ExpressMains;
-
-const { PyIntro, PyLogic, IntroPython, Collections, CsvPython, Json, Logics, Mathematics, OopsPyton,
-  Regex, Tkinter, LogicalsPy, Abstract, Tuples, StringPy, IteratorsPy,
-  ExceptionsPy, Logging, Threadings, FlaskSignUp, GetSearch, LoadSearch, Conroures, FlaskIns,
-  HttpsMethods } = PyMains;
-
-const { Graph, LinkedList, Queue, Stack, Sort, Search, IntroAlgo, Heap, TopTech, 
-        DSLogic, DSLogic2, DSLogic3, DSLogic4, DSLogic5, DSLogic6, DSLogic7, DSLogic8,
-         Trees } = AlMains;
-
-const { IntroAngular, Calculator, ActivationFuns, Loss, Stochastic, Tensorboards,
-  AngularCompile, NeyralNetwork, GradientNeural, RegularizationDeep, Imbalanced, 
-  Benchmarking, Customer, Imbalanced2, Convolutionals, Transfer, WordEmbedding,
-  Projection, dataAugmentation, TensorFlows
+const {
+  IntroAngular,
+  Calculator,
+  ActivationFuns,
+  Loss,
+  Stochastic,
+  Tensorboards,
+  AngularCompile,
+  NeyralNetwork,
+  GradientNeural,
+  RegularizationDeep,
+  Imbalanced,
+  Benchmarking,
+  Customer,
+  Imbalanced2,
+  Convolutionals,
+  Transfer,
+  WordEmbedding,
+  Projection,
+  dataAugmentation,
+  TensorFlows,
 } = AngularJs;
 
-const { IntroAngulard, NgModel, Calculators, NgRepeat, AngularCond, Rxjs, NgrxCurd, NgrxCounter,
-  Logic3, AngularDir, AngularLifeCycle, Aflows,
-  Directives, AungularEvents, Fiters, AngularForm, AngularFor, 
-  Scope, Services, Validations, Filterss, 
-  Projection12, AngularCurd12, FilterPlace, DynamicallyLoad,
-  RadioButton12, Services12, Vote, MultiCheck, DropDownAngular,
+const {
+  IntroAngulard,
+  NgModel,
+  Calculators,
+  NgRepeat,
+  AngularCond,
+  Rxjs,
+  NgrxCurd,
+  NgrxCounter,
+  Logic3,
+  AngularDir,
+  AngularLifeCycle,
+  Aflows,
+  Directives,
+  AungularEvents,
+  Fiters,
+  AngularForm,
+  AngularFor,
+  Scope,
+  Services,
+  Validations,
+  Filterss,
+  Projection12,
+  AngularCurd12,
+  FilterPlace,
+  DynamicallyLoad,
+  RadioButton12,
+  Services12,
+  MultiCheck,
+  DropDownAngular,
   DepenInjection,
-  Debounce, Paginations, Loader
+  Debounce,
+  Paginations,
+  Loader,
 } = AngularJsd;
 
-const { Capture, JoinImages, K_Mean, Pandas, Numpys, DecisionTree, KnnPy, LdaPy,
-  InfoML, Adaboots, LogisticReg, NaiveBrs, PcaPy,
-  LeanearRegression, Perceptron, RandomForest, Rgrations, SvmPy, Superwise,
-  Libraries, Gradient,
-  Traning, LogisticRegs, GreedSearch, Regularizations, Bagging, FeaturesEng } = MlMains;
+const {
+  Capture,
+  JoinImages,
+  K_Mean,
+  Pandas,
+  Numpys,
+  DecisionTree,
+  KnnPy,
+  LdaPy,
+  InfoML,
+  Adaboots,
+  LogisticReg,
+  NaiveBrs,
+  PcaPy,
+  LeanearRegression,
+  Perceptron,
+  RandomForest,
+  Rgrations,
+  SvmPy,
+  Superwise,
+  Libraries,
+  Gradient,
+  Traning,
+  LogisticRegs,
+  GreedSearch,
+  Regularizations,
+  Bagging,
+  FeaturesEng,
+} = MlMains;
 
-const { MernReactCurd, MernReactHooks, Pagination, MernLoic, ImageGallery,
-  PropsModel, Strips, PaginationsMerns, GoogleMaps, VideoChat, SetUpFiles,
-  QrCode, ReactShare, SocialSignUp, MernSocial } = MernProjectss;
 
-const Routes = props => {
+const Routes = (props) => {
   return (
     <section className="container">
       <HeaderSection />
       <Switch>
-        <Suspense fallback={<div>Loading Page...</div>}>
           <Route exact path="/async_await" component={AsyncAwait} />
           <Route exact path="/reactInter" component={ReactInter} />
           <Route exact path="/mainCompo" component={MainCompo} />
@@ -119,6 +307,7 @@ const Routes = props => {
           <Route exact path="/kanban" component={Kanban} />
 
           <Route exact path="/cssbasics" component={CssBasics} />
+          <Route exact path="/csscodes" component={CssCodes} />
           <Route exact path="/sass" component={Sass} />
           <Route exact path="/html_1" component={Html1} />
           <Route exact path="/restApi" component={ReatAPIS} />
@@ -128,7 +317,6 @@ const Routes = props => {
           <Route exact path="/enzyme2" component={Enzymes2} />
           <Route exact path="/enzyme3" component={Enzymes3} />
           <Route exact path="/devtools" component={DevTools} />
-
 
           <Route exact path="/reduxState" component={ReduxState} />
           <Route exact path="/reduxMethods" component={ReduxMethods} />
@@ -156,18 +344,17 @@ const Routes = props => {
           <Route exact path="/typeScript_2" component={TypeScript2} />
           <Route exact path="/typeScript_4" component={TypeScript4} />
 
-
           <Route exact path="/jsObjects" component={JsObject} />
           <Route exact path="/array" component={Arrays} />
           <Route exact path="/arrayApi" component={ArraysApi} />
           <Route exact path="/clousers" component={Clousers} />
           <Route exact path="/findOutput" component={FindOutput} />
           <Route exact path="/logic" component={Logic} />
+          <Route exact path="/logic2" component={Logic2} />
           <Route exact path="/introJs" component={IntroJs} />
           <Route exact path="/prototypes" component={Prototypes} />
 
           <Route exact path="/oops" component={Oops} />
-          <Route exact path="/reduces" component={Reduce} />
 
           <Route exact path="/codes" component={NodeJsCodes} />
           <Route exact path="/serverSide" component={ServerSide} />
@@ -187,17 +374,24 @@ const Routes = props => {
           <Route exact path="/stripe_payment" component={StripePayment} />
           <Route exact path="/sendEmail" component={SendEmail} />
           <Route exact path="/search_pagination" component={SearchPagination} />
-          <Route exact path="/push_notifications" component={PushNotifications} />
+          <Route
+            exact
+            path="/push_notifications"
+            component={PushNotifications}
+          />
           <Route exact path="/nodetext" component={Nodetext} />
           <Route exact path="/file_upload" component={FileUpload} />
           <Route exact path="/e_acco_veri" component={EmailAcco} />
           <Route exact path="/2fa_speakearst" component={TwoFA} />
 
-
           <Route exact path="/infoMD" component={IntroMD} />
           <Route exact path="/mongoCurd" component={MongoCurd} />
           <Route exact path="/mongoQueries" component={MongoQueries} />
-          <Route exact path="/searchErrorHandling" component={SearchErrorHandling} />
+          <Route
+            exact
+            path="/searchErrorHandling"
+            component={SearchErrorHandling}
+          />
           <Route exact path="/mysqlCurd" component={MysqlCurd} />
           <Route exact path="/joinOp" component={JoinOp} />
           <Route exact path="/intro" component={Intro} />
@@ -245,7 +439,6 @@ const Routes = props => {
           <Route exact path="/httpsMethods" component={HttpsMethods} />
           <Route exact path="/flasksIn" component={FlaskIns} />
 
-
           <Route exact path="/introAlgo" component={IntroAlgo} />
           <Route exact path="/graph" component={Graph} />
           <Route exact path="/linkedList" component={LinkedList} />
@@ -274,7 +467,11 @@ const Routes = props => {
           <Route exact path="/tensors" component={Tensorboards} />
           <Route exact path="/benchmarking" component={Benchmarking} />
           <Route exact path="/customer" component={Customer} />
-          <Route exact path="/regularizationDeep" component={RegularizationDeep} />
+          <Route
+            exact
+            path="/regularizationDeep"
+            component={RegularizationDeep}
+          />
           <Route exact path="/imbalanced" component={Imbalanced} />
           <Route exact path="/imbalanced2" component={Imbalanced2} />
           <Route exact path="/convolutionals" component={Convolutionals} />
@@ -287,7 +484,6 @@ const Routes = props => {
           <Route exact path="/angCompilers" component={AngularCompile} />
           <Route exact path="/neural" component={NeyralNetwork} />
 
-
           <Route exact path="/capture" component={Capture} />
           <Route exact path="/joinImages" component={JoinImages} />
           <Route exact path="/k_meanClustring" component={K_Mean} />
@@ -299,7 +495,11 @@ const Routes = props => {
           <Route exact path="/decisiontree" component={DecisionTree} />
           <Route exact path="/knn" component={KnnPy} />
           <Route exact path="/lda" component={LdaPy} />
-          <Route exact path="/leanearRegression" component={LeanearRegression} />
+          <Route
+            exact
+            path="/leanearRegression"
+            component={LeanearRegression}
+          />
           <Route exact path="/logisticRegrations" component={LogisticReg} />
           <Route exact path="/naiveBar" component={NaiveBrs} />
           <Route exact path="/pcaPy" component={PcaPy} />
@@ -332,7 +532,7 @@ const Routes = props => {
           <Route exact path="/socialSignUp" component={SocialSignUp} />
           <Route exact path="/mernSocial" component={MernSocial} />
           <Route exact path="/setUpFiles" component={SetUpFiles} />
-          
+
           <Route exact path="/introAngularjs" component={IntroAngulard} />
           <Route exact path="/depenInjection" component={DepenInjection} />
           <Route exact path="/flows" component={Aflows} />
@@ -356,7 +556,6 @@ const Routes = props => {
           <Route exact path="/filterPlace" component={FilterPlace} />
           <Route exact path="/radioButton" component={RadioButton12} />
           <Route exact path="/services12" component={Services12} />
-          <Route exact path="/vote" component={Vote} />
           <Route exact path="/multiCheck" component={MultiCheck} />
           <Route exact path="/dropdownsAngu" component={DropDownAngular} />
           <Route exact path="/angularDir" component={AngularDir} />
@@ -369,7 +568,6 @@ const Routes = props => {
           <Route exact path="/debounce" component={Debounce} />
           <Route exact path="/loader" component={Loader} />
           <Route exact path="/paginations" component={Paginations} />
-        </Suspense>
       </Switch>
     </section>
   );

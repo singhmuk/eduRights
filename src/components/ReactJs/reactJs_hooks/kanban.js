@@ -279,7 +279,7 @@ class Kanban extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>GKanban</h3>
+              <h3>Kanban</h3>
               <div style={titles}>
                 <PrismCode
                   code={getLists}

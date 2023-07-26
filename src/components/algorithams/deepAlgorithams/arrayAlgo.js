@@ -54,6 +54,13 @@ console.log(arr);
 //Greatest Product Of 3
 max = arr[arr.length-1] * arr[arr.length-2] * arr[arr.length-3]
 console.log(max);
+
+
+//optimsed
+const arr = [0, 9, 8, 7, 6];
+arr.sort((a, b) => a - b);
+
+console.log(arr);
 `.trim()
 
 const duplicates = `
@@ -153,31 +160,28 @@ plusOne();
 `.trim();
 
 const arrayCounter = `
-function arrCounter(arr){
-  var counter = 0;
-  var maxCount = 0;
+function fun(arr) {
+  let maxDepth = 0;
+  let stack = arr.map(element => ({ nestedArr: element, depth: 1 }));
 
-    function inner(n){
-      if(!Array.isArray(n)){
-        maxCount = Math.max(maxCount, counter);
-     counter = 0;
-     return
-   }
-   
-   n.forEach(num => {
-   counter ++;
-   inner(num);
-   })
- }
- 
- inner(arr);
- console.log(maxCount)
- return maxCount;
+  while (stack.length > 0) {
+    const { nestedArr, depth } = stack.pop();
+
+    if (!Array.isArray(nestedArr)) {
+      maxDepth = Math.max(maxDepth, depth); // If it's not an array, it's the end of a branch
+    } else {
+      for (const element of nestedArr) { //push its elements to the stack with increased depth
+        stack.push({ nestedArr: element, depth: depth + 1 });
+      }
+    }
+  }
+
+  console.log(maxDepth);
 }
 
-arrCounter([[3]])
-arrCounter([[[[[[[9]]]]]]])
-arrCounter([])
+fun([[3]]);
+fun([[[[[[[9]]]]]]]); 
+fun([]); 
 `.trim()
 
 const countElements = `
@@ -202,6 +206,24 @@ arr=arr.reduce((acc,curr)=>{
 
 console.log(arr)
 `.trim();
+
+const occurings = `
+function fun() {
+  const arr = [1, 2, 3, 4, 5, 6, 1, 2, 1, 3];
+  const hash = {};
+
+  for (let i = 0; i < arr.length; i++) {
+    if (hash[arr[i]]) {
+      hash[arr[i]] += 1;
+    } else {
+      hash[arr[i]] = 1;
+    }
+  }
+
+console.log(hash);
+}
+
+fun();`.trim();
 
 const find132pattern = `
 function pattern123() {
@@ -241,30 +263,24 @@ console.log(numIdenticalPairs([1,2,3,1,1,3]))
 `.trim();
 
 const removeElement = `
-function removeEle(){
+function fun(){
   const arr=[1,2,3,5,4];
-  let ele=3;
-  let removeEle=[];
-  
-  while(ele>0){ 
-      removeEle +=arr.pop(ele)
-      ele--;
-  }
+  const num=5;
 
-  console.log(removeEle)
-  console.log("Remain elements", arr)
+  const index = arr.indexOf(num);
+  arr.splice(index,1)
+  console.log(arr)
 }
 
-removeEle();
+fun();
 `.trim();
 
 const shuffle = `
-function shuffle() {
+function fun(){
   const arr = [7,8,9,10];
-  const n=3;
 
-  for (let i=arr.length-1; i>0; i--) {
-    let j = Math.floor(Math.random() *(i+n));
+  for(let i=0;i<arr.length;i++){
+    const j = Math.floor(Math.random() * (i + 1));
     let temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
@@ -272,7 +288,7 @@ function shuffle() {
   console.log(arr);
 }
 
-shuffle()
+fun();
 `.trim();
 
 const searchRange = `
@@ -376,6 +392,22 @@ var objs = [
   { first: 'Bicky', last: 'Prentice' }
 ];
 
+function fun(){
+  for(let i=0;i<objs.length;i++){
+    for(let j=i;j<objs.length;j++){
+      if(objs[i].first>objs[j].first){
+        let temp=objs[i];
+        objs[i]=objs[j];
+        objs[j]=temp;
+      }
+    }
+    console.log(objs[i])
+  }
+}
+
+fun()
+
+//2
 function compare(a, b) {
   if (a.first < b.first){
     return -1;
@@ -467,63 +499,129 @@ console.log(summaryRanges([1,2,3,4,6,7,9]))
 `.trim();
 
 const productExceptSelf = `
-function arrProducts(){
+function fun(){
   const arr = [1,2,3,4];
   const result = [];
-  let product, i, j;
 
-  for(i=0; i<arr.length; i++){
-    product = 1;
-    for(j=0; j<arr.length; j++){
-       if(i !==j) product *= arr[j];
+  for(let i=0;i<arr.length;i++){
+    let prod=1;
+    for(let j=0;j<arr.length;j++){
+      if(arr[i] !==arr[j]){
+        prod *=arr[i]
+      }
     }
-    result.push(product);
+    result.push(prod)
   }
-  console.log(result);
+  console.log(result)
 }
 
-arrProducts();
+fun()
 `.trim();
 
 const countSmaller = `
-function countSmaller(nums) {
-  const result = nums.map(() => 0);
+function fun(){
+  const arr = [5,2,6,1];
+  const result = arr.map(() => 0);
 
-  for (let i=0; i<nums.length; i++) {
-    for (let j=(i+ 1); j<nums.length; j++) {
-      if (nums[j]<nums[i]) {
-        result[i] += 1
+  for(let i=0;i<arr.length;i++){
+    for(let j=(i+1);j<arr.length;j++){
+      if(arr[i]>arr[j]){
+        result[i] +=1;
       }
     }
   }
-  
-  return result
+  console.log(result)
 }
 
-console.log(countSmaller([5,2,6,1]))
+fun()
 `.trim();
 
 const replaceNum = `
-function replaceNum(){
-let arr=[2,3,6,7,1];
-const target = 1;
-let indexVal=0;
-const num=10;
+function fun(){
+  const arr=[1,2,3,5,4];
+  const num=5;
+  const newnum=6;
 
+  const index=arr.indexOf(num)
+  arr.splice(index,1,newnum)
 
-for(let i=0; i<arr.length; i++){
-  if(arr[i]==target){
-      indexVal = arr.indexOf(arr[i]);
+  console.log(arr)
+}
+
+fun();
+`.trim();
+
+const occurence = `
+function fun() {
+  const arr = [1, 2, 3, 4, 5, 6];
+  const target = 6;
+  const hash = {};
+  const result = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    const num = arr[i];
+    if (hash[target - num] !== undefined) {
+      result.push(hash[target - num], num);
+    }
+
+    hash[num] = num;
+  }
+
+  return console.log(result);
+}
+
+fun();
+
+`.trim();
+
+const flateArr = `
+// arr = [10,'h',2,'k',['e','z','y','g'],[44,67,'b','c','a'],[25,100,101,'m','l'],'f',60,55,'x']
+// output [a,b,c,..., 1,2,3....]
+
+const newArr = [];
+for (let i = 0; i < arr.length; i++) {
+  if (Array.isArray(arr[i])) {
+    newArr.push(...arr[i]);
+  } else {
+    newArr.push(arr[i]);
   }
 }
 
-arr.splice(indexVal,4,num)
-console.log(arr)   
+const result = [];
+for (let i = 0; i < newArr.length; i++) {
+  for (let j = i; j < newArr.length; j++) {
+    if (newArr[i] > newArr[j]) {
+      let temp = newArr[i];
+      newArr[i] = newArr[j];
+      newArr[j] = temp;
+    }
+  }
+  result.push(newArr[i]);
 }
 
-replaceNum()
-`.trim();
+console.log(result);
 
+
+// 2. Separate number and string.
+const arr=[
+  2,   'a', 10,  'b', 'c', 'e',
+  'f', 'g', 25,  44,  'h', 'k',
+  'l', 55,  60,  67,  'm', 'x',
+  'y', 100, 101, 'z'
+]
+const str=[], num=[];
+
+for(let i=0; i<arr.length; i++){
+    if(typeof arr[i]==='number'){
+        num.push(arr[i])
+    }else if(typeof arr[i]==='string'){
+        str.push(arr[i])
+    }
+}
+
+console.log(num);
+console.log(str);
+`.trim();
 
 class DSLogic2 extends Component {
   componentDidMount() {
@@ -549,6 +647,11 @@ class DSLogic2 extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+              <ul>
+                <li><b>Time: </b>O(n), where n is the length of the string str. This is because the split() method iterates over the string str once, and the join() method iterates over the array strArray once.</li><br/>
+                <li><b>Space: </b>O(n), where n is the length of the string str. This is because the strArray array can store up to n characters.</li><br/>
+                <li>In simple words, the code takes a linear amount of time to run, and it uses a linear amount of space.</li>
+              </ul>
               <br />
 
               <h3>2. Sort</h3>
@@ -559,6 +662,11 @@ class DSLogic2 extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+              <ul>
+                <li><b>Time: </b>O(n^2), where n is the length of the array arr. This is because the for loop iterates over the array arr twice, and the inner for loop iterates over the array arr once.</li><br/>
+                <li><b>Space: </b>O(1), where n is the length of the array arr. This is because the algorithm only uses the variables i, j, temp, and arr.</li><br/>
+                <li>In simple words, the code takes a quadratic amount of time to run, and it uses a constant amount of space.</li>
+              </ul>
               <br />
 
               <h3>3. Remove Duplicates</h3>
@@ -582,6 +690,11 @@ class DSLogic2 extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+              <ul>
+                <li><b>Time: </b>O(n), where n is the length of the array nums. This is because the for loop iterates over the array nums once, and the map[num] lookup takes constant time.</li><br/>
+                <li><b>Space: </b>O(n), where n is the length of the array nums. This is because the map object can store up to n keys.</li><br/>
+                <li>In simple words, the containsDuplicate() function takes a linear amount of time to run, and it uses a linear amount of space.</li>
+              </ul>
               <br/>
 
               <h3>5. Compare Array</h3>
@@ -598,6 +711,54 @@ class DSLogic2 extends Component {
               <div style={titles}>
                 <PrismCode
                   code={countElements}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <b>1:</b><br/>
+              <ul>
+                <li><b>Time: </b>O(n), where n is the length of the array arr. This is because the while loop iterates over the array arr once, and the arr[result]!==undefined check takes constant time.</li><br/>
+                <li><b>Space: </b>O(1), where n is the length of the array arr. This is because the function only uses the variables arr and result.</li><br/>
+                <li>In simple words, the arrCounts() function takes a linear amount of time to run, and it uses a constant amount of space.</li>
+              </ul>
+              <br/>
+              <b>2:</b>
+              <ul>
+                <li><b>Time: </b>O(n), where n is the length of the array arr. This is because the reduce() method iterates over the array arr once, and the ++acc[curr] or acc[curr]=1 operations take constant time.</li><br/>
+                <li><b>Space: </b>O(n), where n is the length of the array arr. This is because the reduce() method creates a new object to store the results of the reduction.</li><br/>
+                <li>In simple words, the code takes a linear amount of time to run, and it uses a linear amount of space.</li>
+              </ul>
+              <br/>
+
+              <h3>6. Occurence of Elements.</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={occurings}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <ul>
+                <li><b>Time: </b>O(n), where n is the length of the array arr. This is because the for loop iterates over the array arr once, and the hash[arr[i]] lookup takes constant time.</li><br/>
+                <li><b>Space: </b>O(n), where n is the length of the array arr. This is because the hash object can store up to n keys.</li><br/>
+                <li>In simple words, the function fun() takes a linear amount of time to run, and it uses a linear amount of space.</li>
+              </ul>
+              <br/>
+
+              <h3>6. Target Elements.</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={occurence}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>6. Flat Arr.</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={flateArr}
                   language="js"
                   plugins={["line-numbers"]}
                 />

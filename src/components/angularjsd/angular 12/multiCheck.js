@@ -1,42 +1,34 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
+    textAlign: "center",
+  },
+});
 
 const mulSelects = `
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+//html
+<li *ngFor="let item of list">
+<input type="checkbox" [(ngModel)] = "item.checked">
+  {{item.name}}
+</li>
+{{this.result | json}}
 
-@Component({
-  selector: 'app-root',
-  template: '
-    <li *ngFor="let item of list">
-    <input type="checkbox" [(ngModel)] = "item.checked">
-      {{item.name}}
-    </li>
-  {{this.result | json}}
-    ',
-})
 
 export class AppComponent {
   list: any[];
@@ -106,20 +98,13 @@ export class AppComponent {
 `.trim();
 
 const dropdawn = `
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-@Component({
-  selector: 'app-root',
-  template: '
-  <select #select (change) = "onChange()">
-    <option>Select</option>
-      <option *ngFor="let item of this.dataList; let i = index"
-              value = "{{item.name}}" [selected] = "i == 0">
-        {{item.name}}
-      </option >
-    </select >
-  ',})
+//html
+<select #select (change) = "onChange()">
+  <option>Select</option>
+    <option *ngFor="let item of this.dataList; let i = index" value = "{{item.name}}" [selected] = "i == 0">
+      {{item.name}}
+    </option >
+</select >
 
 export class AppComponent {
   dataList: Array<any> = [];
@@ -189,31 +174,12 @@ export class AppComponent {
   }
 }`.trim();
 
-const currTime = `
-@Component({
-  selector: 'app-root',
-  template: '{{ time }}',
-})
-
-export class AppComponent {
-  time='';
-  ngOnInit(){
-    setTimeout(()=>{
-      this.time = new Date().toLocaleTimeString();
-    },1000)
-  }
-}`.trim();
-
-
 const pipes = `
-@Component({
-  selector: 'app-root',
-  template: '
-    <div> {{product | json}}</div>
-    <div>Birthdate: {{(product?.birthdate | date:'longDate') | uppercase}}</div>
-    <label>Price: </label>{{product.price | currency: 'USD': 'symbol'}}
-  ',
-})
+//html
+<div> {{product | json}}</div>
+<div>Birthdate: {{(product?.birthdate | date:'longDate') | uppercase}}</div>
+<label>Price: </label>{{product.price | currency: 'USD': 'symbol'}}
+
 
 export class AppComponent {
   product = {
@@ -224,15 +190,11 @@ export class AppComponent {
 }`.trim();
 
 const currency = `
-@Component({
-  selector: 'app-root',
-  template: '
-      <div>{{money | currency: 'JPY': 'symbol'}}</div >
-      <div>{{money | currency:'USD':'symbol'}}</div>
-      <div>{{money | currency:'INR':'symbol'}}</div>
-      <div>{{money | currency:'JPY':'' }}円</div>
-    ',
-})
+//html
+<div>{{money | currency: 'JPY': 'symbol'}}</div >
+<div>{{money | currency:'USD':'symbol'}}</div>
+<div>{{money | currency:'INR':'symbol'}}</div>
+<div>{{money | currency:'JPY':'' }}円</div>
 
 export class AppComponent {
 	money = 1980;
@@ -269,11 +231,9 @@ const obj2={name:'Mukesh', city:'Gr. Noida', state:'UP', country:'India',street:
 address(obj2)
 }`.trim();
 
-
-
 class MultiCheck extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -281,7 +241,9 @@ class MultiCheck extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
@@ -321,16 +283,6 @@ class MultiCheck extends Component {
               </div>
               <br />
 
-              <h3>Current Time</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={currTime}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
               <h3>Pipes</h3>
               <div style={titles}>
                 <PrismCode
@@ -363,8 +315,8 @@ class MultiCheck extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(MultiCheck));
+export default withStyles(styles)(MultiCheck);

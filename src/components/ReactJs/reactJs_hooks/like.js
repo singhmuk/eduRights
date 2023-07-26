@@ -1,26 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../prismCode';
+import "../styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
+    textAlign: "center",
+  },
+});
 
 const unlike = `
 const App = () => {
@@ -53,7 +52,7 @@ const App = () => {
       <p style={heartStyle}>You have liked this {count} times</p>
     </>
   );
-}`.trim()
+}`.trim();
 
 const checkbox = `
 const App = () => {
@@ -71,7 +70,7 @@ const App = () => {
         onChange={handleClick} />
     </div>
   );
-}`.trim()
+}`.trim();
 
 const radio = `
 const App = () => {
@@ -99,7 +98,7 @@ const App = () => {
       <button>Make your choice</button>
     </form>
   );
-}`.trim()
+}`.trim();
 
 const select = `
 const options = ["Select an Option", "First", "Second", "Third"]
@@ -121,49 +120,63 @@ const App = () => {
   )
 }`.trim();
 
-
 const scroll = `
-const items = [...Array(100)].map((i) => 'Item '$'{i}');
+const nestedItems = [
+  {
+    id: 1,
+    name: "Item 1",
+    subItems: [{ id: 11, name: "Sub Item 1" },{ id: 12, name: "Sub Item 2" }],
+  },
+  
+  {
+    id: 2,
+    name: "Item 2",
+    subItems: [{ id: 21, name: "Sub Item 1",},{ id: 22, name: "Sub Item 2"}],
+  },
+];
 
-const App = () => (
-  <div className="container">
-    <div className="left-col">
-      Left col
+const App = () => {
+  const [items, setItems] = useState("");
+  const [items2, setItems2] = useState("");
+
+  const handleItemChange = (event) => {
+    setItems(event.target.value);
+    setItems2("");
+  };
+
+  const handleSubItemChange = (event) => {
+    setItems2(event.target.value);
+  };
+
+  return (
+    <div>
+      <select id="item" value={items} onChange={handleItemChange}>
+        <option value="">Select an item</option>
+        {nestedItems.map((item) => (
+          <option key={item.id} value={item.name}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+      {items && (
+        <div>
+          <label htmlFor="subItem">Select Sub Item:</label>
+          <select id="subItem" value={items2} onChange={handleSubItemChange}>
+            <option value="">Select a sub item</option>
+            {nestedItems
+              .find((item) => item.name === items)
+              .subItems.map((subItem) => (
+                <option key={subItem.id} value={subItem.name}>
+                  {subItem.name}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
     </div>
-    
-    <div className="center-col">
-      <ul>
-        {items.map((item, i) => (<li key={'item_'$'{i}'}>{ item }</li>))}
-      </ul>
-    </div>
-    
-    <div className="left-col">
-      Right col
-    </div>
-  </div>
-);
-
-
-//App.css
-.container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
-.left-col {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgb(106, 91, 235);
-}
-
-.center-col {
-  flex: 1;
-  background: #aaa;
-  overflow-y: scroll;
-}`.trim();
+  );
+};
+`.trim();
 
 const profiles = `
 class App extends Component {
@@ -218,49 +231,30 @@ class App extends Component {
   }
 }`.trim();
 
-
 const code = `
-const moods = [
-  { name: "Happy", "emoji": "😀" }, 
-  { name: "Angry", "emoji": "😠" },
-  { name: "Really Angry", "emoji": "😡" },
-  { name: "Sad", "emoji": "🙁" },
-  { name: "Really Sad", "emoji": "☹️" },
-  { name: "Poop", "emoji": "💩" }
-];
+const App = () => {
+  const [selectedEmoji, setSelectedEmoji] = useState("");
 
-class App extends React.Component {
-  state = {
-    mood: { 
-      name: "Emoji", 
-      emoji: null 
-    }
-  }
+  const handleEmojiSelect = (emoji) => {
+    setSelectedEmoji(emoji);
+  };
 
-handleButtonClick = () => {
-    const mood = moods[Math.floor(Math.random() * moods.length)];
-    this.setState({ mood });
-}
-
-render() {
-    return (
-        <div>
-          <div>{ this.state.mood.emoji }</div>
-          <div>{ this.state.mood.name }</div>
-          
-            <button onClick={this.handleButtonClick}>
-              Click
-            </button>
-        </div>
-    )
-  }
-}`.trim();
-
-
+  return (
+    <div>
+      {emojis.map((vals) => (
+        <span key={vals} onClick={() => handleEmojiSelect(vals)}>
+          {vals}
+        </span>
+      ))}
+      <div>Selected Emoji: {selectedEmoji}</div>
+    </div>
+  );
+};
+`.trim();
 
 class Like extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -268,7 +262,9 @@ class Like extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
 
@@ -315,7 +311,7 @@ class Like extends Component {
                 />
               </div>
               <br />
-              <h3>5. Scroll</h3>
+              <h3>5. Nested Select</h3>
               <div style={titles}>
                 <PrismCode
                   code={scroll}
@@ -324,7 +320,6 @@ class Like extends Component {
                 />
               </div>
               <br />
-
               <h3>6. Upload Profile</h3>
               <div style={titles}>
                 <PrismCode
@@ -334,7 +329,6 @@ class Like extends Component {
                 />
               </div>
               <br />
-
               <h3>7. EMJ</h3>
               <div style={titles}>
                 <PrismCode
@@ -347,8 +341,8 @@ class Like extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(Like));
+export default withStyles(styles)(Like);

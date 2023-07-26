@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
+    textAlign: "center",
+  },
+});
 
 const pagination = `
 //pagination.component.ts.ts
@@ -147,19 +145,13 @@ export class AppComponent  {
 }
 `.trim();
 
-
 const scrollTop = `
-@Component({
-  selector: 'app-root',
-  template: '
-  <li *ngFor="let product of Images; let  j = index;">
-    <img [src] = "product.image">
-        </li >
+//html
+<li *ngFor="let product of Images; let  j = index;">
+  <img [src] = "product.image">
+</li >
+<div (click) = "scrollToTop()">scrollToTop </div>
 
-  <div (click) = "scrollToTop()">
-    scrollToTop 
-        </div>
-      '})
 
 export class AppComponent  {
 scrollToTop(){
@@ -172,17 +164,15 @@ scrollToTop(){
 }
 `.trim();
 
-
 const startRatings = `
-@Component({
-  selector: 'app-root',
-  template: '
-  <ul *ngFor="let star of stars" style="display: inline-block">
-    <li (click) = "countStar(star)">
-      <i class="fa fa-star">start</i>
-        </li> 
-      </ul>
-  '})
+//html
+<ul *ngFor="let star of stars" style="display: inline-block">
+  <li (click) = "countStar(star)">
+    <i class="fa fa-star">start</i>
+  </li> 
+</ul>
+
+
 export class AppComponent  {
     stars: number[] = [1, 2, 3, 4, 5];
     selectedValue: number;
@@ -194,41 +184,9 @@ export class AppComponent  {
     }
 }`.trim();
 
-
-const findOP = `
-1. @Component({
-  selector: 'app-root',
-  template: '{{num | number: '3.2-5'}}'
-})
-export class AppComponent {
- constructor(){}
- num=12.638457846;
-}
-
-
-2. @Component({
-  selector: 'app-root',
-  template: '{{num | percent}}',
-})
-export class AppComponent {
- constructor(){}
- num=2.5;
-}
-
-
-3. @Component({
-  selector: 'app-root',
-  template: '{{dateObj | date: 'medium'}}',
-})
-export class AppComponent {
- constructor(){}
- dateObj=2015-6-15-21-43-11;
-}`.trim();
-
-
 class Paginations extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -236,7 +194,9 @@ class Paginations extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
@@ -271,21 +231,12 @@ class Paginations extends Component {
                 />
               </div>
               <br />
-
-              <h3>4. Find OutPut</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={findOP}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
             </List>
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(Paginations));
+export default withStyles(styles)(Paginations);

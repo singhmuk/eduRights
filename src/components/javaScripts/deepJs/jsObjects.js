@@ -1,29 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
-
-
+    textAlign: "center",
+  },
+});
 
 const Keywords = `
 function Person(first, last, age, interests) {
@@ -66,17 +62,6 @@ console.log(obj[ageField]);
 
 obj["greet me"]();`.trim();
 
-
-
-const coercion = `
-  const adder =true+5
-   console.log(adder)
-     !adder; // false
-     !!adder;
-   console.log(Boolean(adder))
-   console.log(typeof(adder))`.trim();
-
-
 const parse = `
    const book = {
      title: 'Ego is the Enemy',
@@ -87,16 +72,12 @@ const parse = `
    const bookObject = JSON.parse(bookJSON)
    console.log(bookObject.title)`.trim();
 
-
-
 const stringify = `
 JSON.stringify(undefined);                                                                      //undefined 
 JSON.stringify(function(){});                                                                   //undefined
 JSON.stringify([1,undefined,function(){},4]);                                                   //[1,null,null,4]
 JSON.stringify({a:2, b:function(){}});                                                          //{"a":2}
 `.trim();
-
-
 
 const callbackFun = `
 const someSyncListener = (callback, ) => {
@@ -110,7 +91,6 @@ const someSyncListener = (callback, ) => {
   console.log(error)
  }
  console .log("I'm alive!")`.trim();
-
 
 const usserDefined = `
  const add = (a, b, callback) => {
@@ -179,8 +159,7 @@ Promise.race([
 ])
   .then(() => {},
     function (err) {})
-`.trim()
-
+`.trim();
 
 const callbackSynchronous = `
 var X;
@@ -206,10 +185,6 @@ const getUser = cb => {
 getUser(user => {
   console.log(user.name) 
 })`.trim();
-
-
-
-
 
 const chainig = `
 new Promise((resolve, reject) => {
@@ -286,10 +261,9 @@ setTimeout(function() {
 console.log("Promise (pending)", promise);
 `.trim();
 
-
 class JsObject extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -297,7 +271,9 @@ class JsObject extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
@@ -312,42 +288,38 @@ class JsObject extends Component {
                 />
               </div>
               <br />
-
               <h3>2. Array_like_Objects</h3>
-              Diﬀerence between Arrays and Array-like Objects is that Array-like objects inherit from Object.prototype
-              instead of Array.prototype. This means that Array-like Objects can't access common Array
-              prototype methods like forEach(), push(), map(), filter(), and slice().
+              Diﬀerence between Arrays and Array-like Objects is that Array-like
+              objects inherit from Object.prototype instead of Array.prototype.
+              This means that Array-like Objects can't access common Array
+              prototype methods like forEach(), push(), map(), filter(), and
+              slice().
               <br />
-
-              <h3>3. Coercion</h3>
-              <i>The first ! coerce the value to a boolean and inverse it. In this case, !value will return false. So to
-                reverse it back to true, we put another ! on it. Hence the double use !!.
-              </i>
-              <div style={titles}>
-                <PrismCode
-                  code={coercion}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
               <br />
-
               <h3>4. JSON</h3>
-              Converting a string to a native object is called deserialization, while converting a native object to a string
-              so it can be transmitted across the network is called serialization.
+              Converting a string to a native object is called deserialization,
+              while converting a native object to a string so it can be
+              transmitted across the network is called serialization.
               <br />
               <br />
               <ul>
-                <li>JSON is purely a string with a specified data format — it contains only properties, no methods.</li>
-                <li>JSON requires double quotes to be used around strings and property names. Single quotes are not valid.</li>
+                <li>
+                  JSON is purely a string with a specified data format — it
+                  contains only properties, no methods.
+                </li>
+                <li>
+                  JSON requires double quotes to be used around strings and
+                  property names. Single quotes are not valid.
+                </li>
                 <li>Lightweight data-interchange format</li>
                 <li>Based on a subset of javascript</li>
                 <li>Often used with AJAX</li>
-                <li>Data Types = Number, String, Boolean, Array, Object, Null</li>
+                <li>
+                  Data Types = Number, String, Boolean, Array, Object, Null
+                </li>
               </ul>
               <br />
               <br />
-
               <b>Storing Data with JSON</b>
               <br />
               <div style={titles}>
@@ -359,13 +331,17 @@ class JsObject extends Component {
               </div>
               <br />
               <br />
-
               <b>Json Parse And Json Stringify</b>
               <ul>
-                <li><b>JSON.parse(): </b>to convert the string into a JavaScript object.</li>
-                <li><b>JSON.stringify(): </b>to convert JavaScript object into a string.</li>
+                <li>
+                  <b>JSON.parse(): </b>to convert the string into a JavaScript
+                  object.
+                </li>
+                <li>
+                  <b>JSON.stringify(): </b>to convert JavaScript object into a
+                  string.
+                </li>
               </ul>
-
               <div style={titles}>
                 <PrismCode
                   code={stringify}
@@ -374,7 +350,6 @@ class JsObject extends Component {
                 />
               </div>
               <br />
-
               <h3>5. Callback Function with try/catch</h3>
               <div style={titles}>
                 <PrismCode
@@ -385,7 +360,6 @@ class JsObject extends Component {
               </div>
               <br />
               <br />
-
               <b>Usser Defined</b>
               <div style={titles}>
                 <PrismCode
@@ -396,9 +370,9 @@ class JsObject extends Component {
               </div>
               <br />
               <br />
-
               <b>Callback Hell</b>
-              When working with a lot of dependent asynchronous operations, you quickly end up in callback hell.
+              When working with a lot of dependent asynchronous operations, you
+              quickly end up in callback hell.
               <div style={titles}>
                 <PrismCode
                   code={callbackHell}
@@ -408,7 +382,6 @@ class JsObject extends Component {
               </div>
               <br />
               <br />
-
               <b>Never Calling Callback</b>
               <div style={titles}>
                 <PrismCode
@@ -419,14 +392,15 @@ class JsObject extends Component {
               </div>
               <br />
               <br />
-
               <b>Callback Synchronous</b>
               <br />
               <br />
-              synchronously callback usally return values and asynchronous callback don't.
+              synchronously callback usally return values and asynchronous
+              callback don't.
               <br />
-              Simply adding a callback to a function does not make it non-blocking/ asynchronous.
-              Asynchronous capability is actually provided by the environment.
+              Simply adding a callback to a function does not make it
+              non-blocking/ asynchronous. Asynchronous capability is actually
+              provided by the environment.
               <div style={titles}>
                 <PrismCode
                   code={callbackSynchronous}
@@ -435,7 +409,6 @@ class JsObject extends Component {
                 />
               </div>
               <br />
-
               <h3>6. Promises</h3>
               <b>Callback Promises</b>
               <div style={titles}>
@@ -447,11 +420,11 @@ class JsObject extends Component {
               </div>
               <br />
               <br />
-
               <b>Chaining after a catch</b>
               <br />
-              It's possible to chain after a failure, i.e. a catch, which is useful to accomplish new actions even after an
-              action failed in the chain.
+              It's possible to chain after a failure, i.e. a catch, which is
+              useful to accomplish new actions even after an action failed in
+              the chain.
               <br />
               <div style={titles}>
                 <PrismCode
@@ -462,24 +435,28 @@ class JsObject extends Component {
               </div>
               <br />
               <br />
-
               <b>Promise rejection events</b>
               <br />
-              Whenever a promise is rejected, one of two events is sent to the global scope (window or web worker).
+              Whenever a promise is rejected, one of two events is sent to the
+              global scope (window or web worker).
               <br />
               <br />
               <b>1. rejectionhandled:</b>
               <br />
-              Sent when a promise is rejected, after that rejection has been handled by the executor's reject function.
+              Sent when a promise is rejected, after that rejection has been
+              handled by the executor's reject function.
               <br />
               <br />
               <b>2. unhandledrejection:</b>
               <br />
-              Sent when a promise is rejected but there is no rejection handler available.
+              Sent when a promise is rejected but there is no rejection handler
+              available.
               <br />
               <br />
-              In both cases, the event (PromiseRejectionEvent) has as members a promise property indicating the promise that
-              was rejected, and a reason property that provides the reason given for the promise to be rejected.
+              In both cases, the event (PromiseRejectionEvent) has as members a
+              promise property indicating the promise that was rejected, and a
+              reason property that provides the reason given for the promise to
+              be rejected.
               <br />
               <div style={titles}>
                 <PrismCode
@@ -489,17 +466,23 @@ class JsObject extends Component {
                 />
               </div>
               <br />
-              By calling the event's preventDefault() method, you tell the JavaScript runtime not to do its default action when
-              rejected promises go unhandled.
+              By calling the event's preventDefault() method, you tell the
+              JavaScript runtime not to do its default action when rejected
+              promises go unhandled.
               <br />
-
               <h3>7. Composition</h3>
               <ul>
-                <li>Promise.resolve() and Promise.reject() are shortcuts to manually create an already resolved or rejected promise respectively.</li>
-                <li>Promise.all() and Promise.race() are two composition tools for running asynchronous operations in parallel.</li>
+                <li>
+                  Promise.resolve() and Promise.reject() are shortcuts to
+                  manually create an already resolved or rejected promise
+                  respectively.
+                </li>
+                <li>
+                  Promise.all() and Promise.race() are two composition tools for
+                  running asynchronous operations in parallel.
+                </li>
               </ul>
               <br />
-
               <div style={titles}>
                 <PrismCode
                   code={composition}
@@ -508,12 +491,14 @@ class JsObject extends Component {
                 />
               </div>
               <br />
-
               <h3>8. Timing</h3>
-              To avoid surprises, functions passed to then() will never be called synchronously, even with an already-resolved promise.
+              To avoid surprises, functions passed to then() will never be
+              called synchronously, even with an already-resolved promise.
               <br />
-              Instead of running immediately, the passed-in function is put on a microtask queue, which means it runs later
-              when the queue is emptied at the end of the current run of the JavaScript event loop.
+              Instead of running immediately, the passed-in function is put on a
+              microtask queue, which means it runs later when the queue is
+              emptied at the end of the current run of the JavaScript event
+              loop.
               <div style={titles}>
                 <PrismCode
                   code={timing}
@@ -522,11 +507,14 @@ class JsObject extends Component {
                 />
               </div>
               <br />
-
               <h3>9. Task queues vs microtasks</h3>
               <ul>
-                <li>Promise callbacks are handled as a <b>Microtask</b>.</li>
-                <li>setTimeout() callbacks are handled as <b>Task queues</b>.</li>
+                <li>
+                  Promise callbacks are handled as a <b>Microtask</b>.
+                </li>
+                <li>
+                  setTimeout() callbacks are handled as <b>Task queues</b>.
+                </li>
               </ul>
               <br />
               <div style={titles}>
@@ -540,8 +528,8 @@ class JsObject extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(JsObject));
+export default withStyles(styles)(JsObject);

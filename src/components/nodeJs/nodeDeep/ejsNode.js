@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
+    textAlign: "center",
+  },
+});
 
 const modules = `
 //names.js
@@ -341,7 +339,7 @@ const Render_HTML = `var http = require('http').createServer(onRequest);
   }
   
 http.listen(8000);
-`.trim()
+`.trim();
 
 const Date_time_main = `var http = require('http').createServer(onRequest);
   var dt = require('./date_time');
@@ -352,12 +350,11 @@ const Date_time_main = `var http = require('http').createServer(onRequest);
   }
   
 http.listen(4000);
-`.trim()
-
+`.trim();
 
 class Ejs extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -365,14 +362,17 @@ class Ejs extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
               <h3>1. modules</h3>
-              Every file is module by default.<br/>
+              Every file is module by default.
+              <br />
               Modules - Encapsulated Code (only share minimum)
               <div style={titles}>
                 <PrismCode
@@ -382,7 +382,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>2. Async-Patterns</h3>
               <div style={titles}>
                 <PrismCode
@@ -392,7 +391,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>3. Await-Pattern</h3>
               <div style={titles}>
                 <PrismCode
@@ -402,7 +400,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>4. fs-sync</h3>
               <div style={titles}>
                 <PrismCode
@@ -412,7 +409,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>5. fs-async</h3>
               <div style={titles}>
                 <PrismCode
@@ -422,7 +418,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>6. Http</h3>
               <div style={titles}>
                 <PrismCode
@@ -432,7 +427,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>7. EventEmitter</h3>
               <div style={titles}>
                 <PrismCode
@@ -442,9 +436,9 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>8. Request-Event</h3>
-              Emits request event subcribe to it / listen for it / respond to it.
+              Emits request event subcribe to it / listen for it / respond to
+              it.
               <div style={titles}>
                 <PrismCode
                   code={requestEvent}
@@ -453,7 +447,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>9. create Big File</h3>
               <div style={titles}>
                 <PrismCode
@@ -463,11 +456,13 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>10. Streams</h3>
-              default 64kb<br/>
-              last buffer - remainder<br/>
-              highWaterMark - control size<br/>
+              default 64kb
+              <br />
+              last buffer - remainder
+              <br />
+              highWaterMark - control size
+              <br />
               <div style={titles}>
                 <PrismCode
                   code={streams}
@@ -476,7 +471,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>11. http-stream</h3>
               <div style={titles}>
                 <PrismCode
@@ -485,31 +479,66 @@ class Ejs extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>12. What are the timing features of Node.js?</h3>
-              <p>The Timers module in Node.js contains functions that execute code after a set period of time.</p>
+              <p>
+                The Timers module in Node.js contains functions that execute
+                code after a set period of time.
+              </p>
               <ul>
-                <li><b>setTimeout/ clearTimeout -</b> Can be used to schedule code execution after a designated amount of milliseconds.</li>
-                <li><b>setInterval/ clearInterval -</b> Can be used to execute a block of code multiple times.</li>
-                <li><b>setImmediate/ clearImmediate -</b> Will execute code at the end of the current event loop cycle.</li>
-                <li><b>process.nextTick -</b> Used to schedule a callback function to be invoked in the next iteration of the Event Loop.</li>
+                <li>
+                  <b>setTimeout/ clearTimeout -</b> Can be used to schedule code
+                  execution after a designated amount of milliseconds.
+                </li>
+                <li>
+                  <b>setInterval/ clearInterval -</b> Can be used to execute a
+                  block of code multiple times.
+                </li>
+                <li>
+                  <b>setImmediate/ clearImmediate -</b> Will execute code at the
+                  end of the current event loop cycle.
+                </li>
+                <li>
+                  <b>process.nextTick -</b> Used to schedule a callback function
+                  to be invoked in the next iteration of the Event Loop.
+                </li>
               </ul>
-              <i>On any given context process.nextTick() has higher priority over setImmediate().</i>
+              <i>
+                On any given context process.nextTick() has higher priority over
+                setImmediate().
+              </i>
               <br />
               <br />
               <ul>
-                <li><b>timers: </b>This phase executes callbacks scheduled by setTimeout() and setInterval().</li>
-                <li><b>pending callbacks: </b>executes I/O callbacks deferred to the next loop iteration.</li>
-                <li><b>idle prepare: </b>only used internally.</li>
-                <li><b>poll: </b>retrieve new I/O events; execute I/O related callbacks (almost all with the exception of close callbacks, the ones scheduled by timers, and setImmediate()); node will block here when appropriate.</li>
-                <li><b>check: </b>setImmediate() callbacks are invoked here.</li>
-                <li><b>close callbacks: </b>some close callbacks, e.g. socket.on('close', ...)</li>
-                setImmediate() is processed in the Check handlers phase, while process.nextTick() is processed at the starting of the event
+                <li>
+                  <b>timers: </b>This phase executes callbacks scheduled by
+                  setTimeout() and setInterval().
+                </li>
+                <li>
+                  <b>pending callbacks: </b>executes I/O callbacks deferred to
+                  the next loop iteration.
+                </li>
+                <li>
+                  <b>idle prepare: </b>only used internally.
+                </li>
+                <li>
+                  <b>poll: </b>retrieve new I/O events; execute I/O related
+                  callbacks (almost all with the exception of close callbacks,
+                  the ones scheduled by timers, and setImmediate()); node will
+                  block here when appropriate.
+                </li>
+                <li>
+                  <b>check: </b>setImmediate() callbacks are invoked here.
+                </li>
+                <li>
+                  <b>close callbacks: </b>some close callbacks, e.g.
+                  socket.on('close', ...)
+                </li>
+                setImmediate() is processed in the Check handlers phase, while
+                process.nextTick() is processed at the starting of the event
                 loop and between each phase of the event loop.
               </ul>
               <br />
-
               <h3>13. ipc</h3>
               <div style={titles}>
                 <PrismCode
@@ -519,9 +548,8 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>14. nextTick </h3>
-              This code set up a simple transaction when an instance  of
+              This code set up a simple transaction when an instance of
               <div style={titles}>
                 <PrismCode
                   code={nextTick}
@@ -530,7 +558,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>15. Timers</h3>
               <div style={titles}>
                 <PrismCode
@@ -540,7 +567,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>16. Handling Undefined Input</h3>
               <div style={titles}>
                 <PrismCode
@@ -551,7 +577,6 @@ class Ejs extends Component {
               </div>
               <i>node echo.js HOME PWD NOT_DEFINED</i>
               <br />
-
               <h3>17. Node.js on Browser</h3>
               <b> Render HTML</b>
               <div style={titles}>
@@ -562,7 +587,6 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
               <h3>18. Date time main</h3>
               <div style={titles}>
                 <PrismCode
@@ -572,45 +596,52 @@ class Ejs extends Component {
                 />
               </div>
               <br />
-
-              <h3>19. Provide some example of config file separation for dev and prod environments.</h3>
+              <h3>
+                19. Provide some example of config file separation for dev and
+                prod environments.
+              </h3>
               <p>A perfect and flawless configuration setup should ensure:</p>
               <ul>
-                <li>Keys can be read from file and from environment variable.</li>
+                <li>
+                  Keys can be read from file and from environment variable.
+                </li>
                 <li>Secrets are kept outside committed code.</li>
               </ul>
               <br />
-
               <h3>20. Explain usage of NODE_ENV .</h3>
               <p>
-              NODE_ENV allows components to provide better diagnostics during development, for example by disabling
-                caching or emitting verbose log statements. Setting NODE_ENV to production makes our application 3 times faster.
+                NODE_ENV allows components to provide better diagnostics during
+                development, for example by disabling caching or emitting
+                verbose log statements. Setting NODE_ENV to production makes our
+                application 3 times faster.
               </p>
               <br />
-
               <h3>21. Why should you separate Express 'app' and 'server'?</h3>
               <ul>
                 <li>
-                  Keeping the API declaration separated from the network related configuration (port, protocol, etc) allows testing the
-                  API in-process, without performing network calls.
+                  In a Node.js and Express application, the app object is
+                  responsible for creating and configuring the Express
+                  application, while the server object is responsible for
+                  creating the HTTP server to listen for incoming requests.
                 </li>
+                <br />
                 <li>
-                  fast testing execution and getting coverage metrics of the code. It also allows deploying the same API under flexible
-                  and different network conditions.
-                </li>
-                <li>
-                  Better separation of concerns and cleaner code. API declaration.
+                  It is a good practice to separate the app and server objects
+                  because it allows for better flexibility and scalability of
+                  the application. By separating the two, you can reuse the app
+                  object and configure it for different environments (e.g.
+                  development, staging, production) without having to recreate
+                  the HTTP server each time.
                 </li>
               </ul>
               <br />
-
               <h3>22. OS - Provides information about the operating system</h3>
             </List>
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(Ejs));
+export default withStyles(styles)(Ejs);

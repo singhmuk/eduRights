@@ -69,27 +69,6 @@ function primes(){
 }
 
 primes()
-
-
-//
-function countPrimes(n){
-  const map = []
-
-  for (let i = 2; i < n; i++) {
-    map[i] = true
-  }
-  
-  for (let i = 2; i * i < n; i++) {
-    if (map[i]) {
-      for (let j = i * i; j < n; j += i) {
-        map[j] = false
-      }
-    }
-  }
-  return map.filter(num => num === true).length
-}
-
-console.log(countPrimes(10))
 `.trim()
 
 const magicNumber = `
@@ -152,15 +131,38 @@ reverse(123)
 `.trim();
 
 const isPowerOfTwo = `
-function isPowerOfTwo(x){
-  if (x <= 0) return false;
-  return (x & (x - 1)) === 0
+function fun() {
+  let num = 16;
+
+  for (let i = 0; i < num; i++) {
+    if (2 ** i === num) {
+      console.log('True');
+      break;
+    } else if (2 ** i > num) {
+      console.log('False');
+      break;
+    }
+  }
 }
 
-console.log(isPowerOfTwo(16))
+fun(); 
 `.trim();
 
 const addDigits = `
+function fun(){
+  let num = 2568;
+  let sum=0;
+
+  let newnum=num.toString().split('');
+  for(let i=0;i<newnum.length;i++){
+    sum += parseInt(newnum[i])
+  }
+  console.log(sum)
+}
+
+fun();
+
+//2
 function addDigits(){
   const num = 2568;
   let numArr=0;
@@ -210,9 +212,10 @@ console.log(getSum(5, 1))
 `.trim();
 
 const numSquares = `
-function squareroot() {
+function fun() {
   var nums=64;
-  for (let i=nums; i>=1; i--) {
+  
+  for (let i=0; i<=nums; i++) {
       if(i*i === nums){
           nums =i;
           break;
@@ -221,7 +224,7 @@ function squareroot() {
  console.log(nums);
 }
 
-squareroot();
+fun();
 `.trim();
 
 const brokenCalc = `

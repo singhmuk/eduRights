@@ -1,64 +1,121 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
+    textAlign: "center",
+  },
+});
 
 const services = `
-//service/calc.service.ts
+//useraddress.service.ts
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CalcService {
-  constructor() { }
 
-  public add(...params: number[]): number {
-    let result = 0;
-    for (let val of params) {
-        result += val;
+export class UseraddressService {
+
+  constructor() { }
+  getUserAddress(){
+    return{
+      address:"Delhi, India-110009",
     }
-    return result;
+  }
+}
+
+
+//userdata.service.ts
+import { Injectable } from '@angular/core';
+import {UseraddressService} from './useraddress.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+@Injectable()
+export class UserdataService {
+userAddress:string='';
+  constructor( private useraddressService:UseraddressService) { 
+    this.userAddress=this.useraddressService.getUserAddress().address;
+  }
+  
+  getUserData(){
+    return{
+      name:"Pradeep",
+      email:"pradeep@gmail.com",
+      mobile:9999999999,
+      address:this.userAddress
+    }
   }
 }
 
 
 //app.component.ts
-import { CalcService } from './service/calc.service';
+import { UserdataService } from './userdata.service';
 
 @Component({
   selector: 'app-root',
   template: '
-            <div style="text-align:center">
-              Welcome to {{ title }}! Sum is {{sum}}
-            </div>',
-          })
-          
+     <p>{{ name }}</p>
+     <p>{{ address }}</p>',
+  providers: [UserdataService],
+})
 export class AppComponent {
-  title = 'app';
-  sum: number = 0;
-  constructor(calc:CalcService){
-    this.sum = calc.add(1,2,3,4);
+  name: string = '';
+  email: string = '';
+  mobile: string = '';
+  address: string = '';
+
+  constructor(private userdataService: UserdataService) {
+    let userData = this.userdataService.getUserData();
+
+    this.name = userData.name;
+    this.address = userData.address;
+  }
+}
+`.trim();
+
+const inject = `
+//myservice.ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class myService {
+  name = 'Mukesh';
+  constructor() {}
+}
+
+
+//app.component.ts
+import { Component, Inject } from '@angular/core';
+import { myService } from './myservice';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponent {
+  constructor(@Inject(myService) myService: any) {
+    console.log(myService);
   }
 }
 `.trim();
@@ -118,10 +175,9 @@ export class SearchPipe {
 }
 `.trim();
 
-
 class Services extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -129,7 +185,9 @@ class Services extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
@@ -144,7 +202,20 @@ class Services extends Component {
                 />
               </div>
               <br />
-
+              <h3>Inject</h3>
+              Inject() function provide another way to inject our services as
+              dependency in various part of angular application.
+              <br />
+              It introduced in angular 14.
+              <br />
+              <div style={titles}>
+                <PrismCode
+                  code={inject}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
               <h3>Search</h3>
               <div style={titles}>
                 <PrismCode
@@ -154,21 +225,12 @@ class Services extends Component {
                 />
               </div>
               <br />
-
-              {/* <h3></h3>
-              <div style={titles}>
-                <PrismCode
-                  code={empty}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div> */}
             </List>
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(Services));
+export default withStyles(styles)(Services);

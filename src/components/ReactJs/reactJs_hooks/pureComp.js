@@ -29,39 +29,36 @@ const styles = theme => ({
 })
 
 const childData = `
-class App extends Component {
-  state={ourData:''}
-  
-  changeText = (myData) => {
-    this.setState({ourData:myData});
-  }
-  render(){
-    return(
-      <div>
-        {this.state.ourData}
-        <First refer = {this.changeText} />
-      </div>
-    )
-  }
-}
+const App = () => {
+  const [users, setUsers] = useState("");
 
+  const handleText = (myData) => {
+    setUsers(myData);
+  };
 
-// first.js
-class First extends Component {
-  state={data:'first'}
-   
-   changeText = () => {
-     var myData = this.state.data;
-     this.props.refer(myData)
-   }
-   render(){
-     return(
-       <div>
-         <button onClick = {()=>this.changeText()} >Click</button> 
-       </div>
-     )
-   }
- }`.trim();
+  return (
+    <div>
+      {users}
+      <Child refer={handleText} />
+    </div>
+  );
+};
+
+export default App;
+
+const Child = (props) => {
+  const data = useState("first");
+
+  const changeText = () => {
+    props.refer(data);
+  };
+
+  return (
+    <div>
+      <button onClick={changeText}>Click</button>
+    </div>
+  );
+};`.trim();
 
 const pureComps = `
 const quotes = ["quote1", "quote2", "quote3", "quote4", "quote5"];
@@ -179,163 +176,131 @@ export default Task;
 `.trim();
 
 const PureComponents5 = `
-class ComponentShouldComponentUpdate extends React.Component {
-  renderCounter = 0
+const App = () => {
+  const [message, setMessage] = useState('Hello');
+  const [count, setCount] = useState(0);
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.name !== this.props.name
+  const handleButtonClick = () => {
+    setMessage('Updated Message');
+  };
+
+  const handleCount = () => {
+    setCount((prevCount) => prevCount + 1);
   }
 
-  render() {
-    this.renderCounter++
-    return <h2>{this.props.name} rendered: {this.renderCounter}</h2>
-  }
-}
+  console.log('ParentComponent re-rendered.');
 
-class Component extends React.Component {
-  renderCounter = 0
+  return (
+    <div>
+      <MessageComponent message={message} count={count} />
+      <button onClick={handleButtonClick}>Message</button>
+      <button onClick={handleCount}>Counts</button>
+    </div>
+  );
+};
 
-  render() {
-    this.renderCounter++
-    return <h2>{this.props.name} rendered: {this.renderCounter}</h2>
-  }
-}
 
-export default class Controll extends React.Component {
-  state = { 
-    renderCounter: 1,
-  }
+//
+const MessageComponent = React.memo(({ message, count }) => {
+  console.log('MessageComponent re-rendered.');
 
-  onButtonPress = () => {
-    this.setState({ renderCounter: this.state.renderCounter + 1 })
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Should Component Update</h1>
-        <h2>App rendered: {this.state.renderCounter}</h2>
-        <Component name="Component Should Update" />
-        <ComponentShouldComponentUpdate name="Component Should Not Update"   someProp={this.state.renderCounter} />
-        <button id="button" onClick={this.onButtonPress}><h2>Trigger Render</h2></button>
-      </div>
-    )
-  }
-}`.trim();
+  return(
+    <div>
+      {message} - {count}
+    </div>
+  );
+});
+`.trim();
 
 const shibling = `
-class ErrorBoundary extends Component {
-  state = { error: null, errorInfo: null };
-  
-  componentDidCatch(error, errorInfo) {
-    this.setState({ error, errorInfo })
+const useErrorBoundary = () => {
+  const [hasError, setHasError] = useState(false);
+
+  return { hasError, setHasError };
+}
+
+
+const ErrorBoundary = ({ children }) => {
+  const { hasError, setHasError } = useErrorBoundary();
+
+  if (hasError) {
+    return <div>Something went wrong. Please try again.</div>;
   }
-  
-  render() {
-    if (this.state.errorInfo) {
-      // Error path
-      return (
-        <>
-          <h2>Something went wrong.</h2>
-          <details>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
-        </>
-      );
+
+  return children;
+}
+
+const App = () => {
+  const [count, setCount] = useState(0);
+  const { hasError, setHasError } = useErrorBoundary();
+
+  const handleButtonClick = () => {
+    try {
+      setCount((prevCount) => prevCount + 1);
+      if (count === 3) {
+        throw new Error('Error in event handler');
+      }
+    } catch (error) {
+      console.error(error);
+      setHasError(true);
     }
-    
-    return this.props.children;
-  }  
-}
+  };
 
+  return (
+    <div>
+      {count}
+      <ErrorBoundary>
+        <button onClick={handleButtonClick}>Click Me</button>
+        {hasError && <div>Something went wrong. Please try again.</div>}
+      </ErrorBoundary>
+    </div>
+  );
+}`.trim();
 
+const body = `
+const AppHoc = (OriginalComponent) => {
+  const NewComponent = () => {
+    const [count, setCount] = useState(0);
 
-//BuggyCounter.js
-const BuggyCounter = () => {
-  const [ counter, setCounter ] = useState(0)
+    const incrementCount = () => {
+      setCount(count+1);
+    };
 
-  const handleClick = () => {
-    setCounter({counter: counter + 1})
-  }
+    return (
+      <OriginalComponent count={count} incrementCount={incrementCount} />
+    );
+  };
 
-  if (counter === 5) {
-    throw new Error('I crashed!');
-  }
-  return <h1 onClick={handleClick}>{counter}</h1>;
-}
+  return NewComponent;
+};
 
+const ClickCounter = ({ count, incrementCount }) => {
+  return (
+    <div>
+      <button onClick={incrementCount}>Click {count} times</button>
+    </div>
+  );
+};
 
+const HoverCounter = ({ count, incrementCount }) => {
+  return (
+    <div>
+      <button onMouseOver={incrementCount}>Hover {count} times</button>
+    </div>
+  );
+};
+
+const ClickCounters = AppHoc(ClickCounter);
+const HoverCounters = AppHoc(HoverCounter);
 
 function App() {
   return (
     <div>
-      <ErrorBoundary>
-        <BuggyCounter />
-      </ErrorBoundary>
+      <ClickCounters />
+      <HoverCounters />
     </div>
   );
-}
-
-export default App;`.trim();
-
-const body = `
-  const App = OriginalComponent => {
-    class NewComponent extends Component {
-      constructor(props) {
-        super(props)
-        this.state={
-          count:0
-        }
-      }
-      
-      incrementCount = () => {
-        this.setState(prevState => {
-          return { count: prevState.count +1 }
-        })
-      }
-      render(){
-        return(
-           <OriginalComponent 
-            count={this.state.count}
-            incrementCount={this.incrementCount}
-         />
-        )
-      }
-    }
-    return NewComponent;
-  }
-  
-  
-  
-  const ClickCounter = (props) => {
-      const { count, incrementCount } = props;
-      return (
-        <div>
-          <button onClick={incrementCount}>
-            Click {count} times
-          </button>
-        </div>
-      )
-    }
-  //export default App(ClickCounter);
-  
-  
-  
-  const HoverCounter = (props) => {
-      const { count, incrementCount } = props;
-      return (
-        <div>
-          <button onMouseOver={incrementCount}>
-            Hover {count} times
-          </button>
-        </div>
-      )
-    }
-  
-  export default App(HoverCounter, ClickCounter);
-  //export default App(HoverCounter)`.trim()
+}`.trim()
 
   const ssr = `
   1. ReactDOM.render(<App />, document.getElementById('root'));
@@ -523,8 +488,8 @@ class PureComp extends Component {
               <br />
               
               <h3>5. Error Boundries</h3>
-              <p>Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering.
-                A component can become an Error boundary if it contains the definition of the <b>'componentDidCatch'</b>.</p>
+              <p>The componentDidCatch lifecycle method is not available in React, Achieve <b>componetDidCatch</b>
+               error handling behavior using the useEffect and useState hooks.</p>
               <div style={titles}>
                 <PrismCode
                   code={shibling}

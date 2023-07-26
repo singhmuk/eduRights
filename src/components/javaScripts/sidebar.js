@@ -37,6 +37,7 @@ export default function Sidebar() {
 
         <MenuItem><Link to='/arrayApi' className={classes.line}>Indexed colle-Arr Obj</Link></MenuItem>
         <MenuItem><Link to='/logic' className={classes.line}>Logic</Link></MenuItem>
+        <MenuItem><Link to='/logic2' className={classes.line}>Hash</Link></MenuItem>
 
         <MenuItem><Link to='/hackerRank' className={classes.line}>HackerRank1</Link></MenuItem>
         <MenuItem><Link to='/hackerRank6' className={classes.line}>HackerRank2</Link></MenuItem>

@@ -1,26 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../prismCode';
+import "../styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
+    textAlign: "center",
+  },
+});
 
 const modal = `
 import Previews from "./previews"
@@ -117,54 +116,6 @@ const download = `
    }
 
 export default CsvFile;`.trim();
-
-const routers = `
- // 1. Not Found 404
- <Router>
-  <Switch>
-  <Route exact path = "/" component={Home} />
-  <Route exact path = "/*" component={Error} />
-  </Switch>
-  <Route exact path = "/history/:name/:address" component={History} />
-</Router>
-
-
-// 2.Url value display on UI
-function History({match}) {
-   return (
-     <div>
-       <p>History {match.params.name}</p>
-     </div>
-   )
- }
- 
- export default History;
- 
- 
- // 3.Url value display on UI with hooks
- function History() {
-   const { name, address } = useParams();
-   return (
-     <div>
-       <p>History {name}-{address}</p>
-     </div>
-   )
- }
- 
- export default History;
- 
- 
- //4. History Push
- function History({match}) {
-   return (
-     <div>
-       <p>History {match.params.name}</p>
-     </div>
-   )
- }
- 
- export default History;`.trim();
-
 
 const protecteds = `
  // auth.js
@@ -336,11 +287,9 @@ class App extends Component {
   }
 }`.trim();
 
-
-
 class Models extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -348,7 +297,9 @@ class Models extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
 
@@ -364,7 +315,7 @@ class Models extends Component {
                 />
               </div>
               <br />
-              
+
               <h3>3. Download CSV File</h3>
               <div style={titles}>
                 <PrismCode
@@ -383,17 +334,9 @@ class Models extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+              <br />
+              <br />
 
-              <br />
-              <h3>5. Router</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={routers}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
               <h3>6. Protected Routes</h3>
               <div style={titles}>
                 <PrismCode
@@ -406,8 +349,8 @@ class Models extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(Models));
+export default withStyles(styles)(Models);

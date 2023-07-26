@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
+    textAlign: "center",
+  },
+});
 
 const creaditCard = `
 //import CreditCardDirective in app.module.ts
@@ -74,7 +72,6 @@ export class CreditCardDirective {
 
 export class AppComponent  {}
 `.trim();
-
 
 const debounce = `
 //debounce-click.directive.ts
@@ -134,7 +131,6 @@ export class AppComponent  {
 }
 `.trim();
 
-
 const truncates = `
 //truncate.pipe.ts
 import { Pipe, PipeTransform } from '@angular/core';
@@ -162,33 +158,9 @@ export class TruncatePipe implements PipeTransform {
 export class AppComponent  {}
 `.trim();
 
-
-const popUp = `
-@Component({
-  selector: 'app-root',
-  template: '
-  <button(click)="showAlert()"> show alert</button>
-    <div *ngIf="isVisible">
-      JWT copied to clipboard
-</div>
-'})
-
-export class AppComponent  {
-    public isVisible: boolean = false;
-
-  showAlert() : void {
-    if (this.isVisible) {
-      return;
-    }
-    this.isVisible = true;
-    setTimeout(()=> this.isVisible = false,2500)
-  }
-}`.trim();
-
-
 class Debounce extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -196,7 +168,9 @@ class Debounce extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
@@ -214,8 +188,15 @@ class Debounce extends Component {
 
               <h3>2. Debounce</h3>
               <ul>
-                <li>This directive is used to help prevent duplicate actions.</li>
-                <li>The Directive API is a particular way to add behavior to existing DOM elements or components. For our use case, we want to debounce or delay click events from occurring when an element is a click.</li>
+                <li>
+                  This directive is used to help prevent duplicate actions.
+                </li>
+                <li>
+                  The Directive API is a particular way to add behavior to
+                  existing DOM elements or components. For our use case, we want
+                  to debounce or delay click events from occurring when an
+                  element is a click.
+                </li>
               </ul>
               <div style={titles}>
                 <PrismCode
@@ -235,21 +216,12 @@ class Debounce extends Component {
                 />
               </div>
               <br />
-
-              <h3>4. PopUp</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={popUp}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
             </List>
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(Debounce));
+export default withStyles(styles)(Debounce);

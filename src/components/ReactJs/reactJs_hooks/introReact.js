@@ -292,8 +292,7 @@ class IntroRectJs extends Component {
               <br />
 
               <h3>6. HOC</h3>
-              A HOC is a function that takes a component as i/p and returns a new component. They can accept any dynamically provided child 
-              component but they won’t modify or copy any behavior from their input components.
+              A higher-order component (HOC) is a function that takes a component as input and returns a new component with enhanced functionality. It allows for code reuse, abstraction, and the addition of new features to existing components in a flexible and composable manner.
               <br/>
               <br/>
               <b>Benefits of HOC: </b>
@@ -305,11 +304,12 @@ class IntroRectJs extends Component {
               <br/>
 
               <h3>7. Define Reducers in React?</h3>
-              Reducers are the pure functions that clearly states as to how the application state changes
-              when certain actions are made. This way, it takes into account the previous state and action
-              to turn out to a new state.
+              Reducers are functions that specify how the application's state should change in response to different actions.
               <br/>
-
+              <h3>State</h3>
+              state refers to the data that represents the current state of a component. It determines how the component appears and behaves at a given point in time. State is used to store and manage dynamic information within a component.
+              <br/>
+              
               <h3>8. When would you use state</h3>
               When a component needs to keep track of information between renderings the component itself update, use state.
               <p>

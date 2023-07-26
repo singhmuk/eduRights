@@ -1,80 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
-
-const minMaxs = `
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    textAlign: "center",
   },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
-
-function App() {
-  const classes = useStyles();
-
-  return (
-    <div>
-    <form className={classes.container} noValidate>
-      <TextField
-        id="date"
-        label="Birthday"
-        type="date"
-        defaultValue="2017-05-24"
-        className={classes.textField}
-        inputProps={{
-          min: "2020-10-10"
-        }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      <p>End date</p>
-      <TextField
-        id="date"
-        label="Birthday"
-        type="date"
-        defaultValue="2017-05-24"
-        className={classes.textField}
-        inputProps={{
-          min: "2020-10-10"
-        }}
-      />
-    </form>
-    </div>
-  );
-}
-
-export default App;`.trim();
+});
 
 const slideshow = `
 import "./slideshow.css";
@@ -161,10 +106,285 @@ const slideshowCss = `
   background-color: #6a0dad;
 }`.trim();
 
+const fitersdata = `
+const data = [
+  { category: "vehicle", name: "car" },
+  { category: "vehicle", name: "jeep" },
+  { category: "fruit", name: "apple" },
+  { category: "fruit", name: "orange" },
+  { category: "electronics", name: "mobile" },
+  { category: "electronics", name: "laptop" },
+];
+
+const App = () => {
+  const [category, setCategory] = useState("vehicle");
+  const filteredNames = data
+    .filter((item) => item.category === category)
+    .map((item) => item.name);
+
+  return (
+    <div>
+      <label>
+        Select a category:
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="vehicle">Vehicle</option>
+          <option value="fruit">Fruit</option>
+          <option value="electronics">Electronics</option>
+        </select>
+      </label> 
+      <input
+        type="text"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+      />
+      <ul>
+        {filteredNames.map((name) => (
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+`.trim();
+
+const progressbar = `
+const App = () => {
+  const [progress, setProgress] = useState(0);
+
+  const handleClick = () => {
+    if (progress < 100) {
+      setProgress(progress + 10);
+    }
+  };
+
+  const progressStyle = {
+    width: '$'{progress}%,
+    height: "20px",
+    backgroundColor: "green",
+  };
+
+  return (
+    <div>
+      <div style={progressStyle}>{progress}%</div>
+      <button onClick={handleClick}>Progress</button>
+    </div>
+  );
+};
+`.trim();
+
+const mouseHovers = `
+const App = () => {
+  const [isHovering, setHovering] = useState(false);
+
+  const handleMouseHover = () => {
+    setHovering(isHovering => !isHovering);
+  }
+
+  return (
+    <div>
+      <div
+        onMouseEnter={handleMouseHover}
+        onMouseLeave={handleMouseHover}
+      >
+        Hover Me
+      </div>
+      {isHovering && <div>Hovering right me</div>}
+    </div>
+  );
+}`.trim();
+
+const MoveButton = `
+const MoveButton = (props) => {
+  return (
+      <button onClick={props.onClick}>
+          Click To Move
+      </button>
+  );
+}
+
+const BoxOne = () => <p>Box1</p>;
+
+const BoxTwo = () => <p>Box2</p>;
+
+
+class App extends Component {
+state = { positions: 0 }
+
+handleClick = () => {
+  this.setState({ positions: (this.state.positions + 1) % 3 })
+}
+
+render () { 
+const positions = this.state.positions;
+  return (
+      <div>
+          { positions === 0 ? <MoveButton onClick={this.handleClick}/> : ''}
+          <BoxOne />
+          { positions === 1 ? <MoveButton onClick={this.handleClick}/> : ''}
+          <BoxTwo />
+          { positions === 2 ? <MoveButton onClick={this.handleClick}/> : ''}
+      </div>
+  );
+}
+}
+
+export default App;`.trim();
+
+const sortItems = `
+const items = [1, 2, 3, 4, 5];
+function App() {
+  const [sortOrder, setSortOrder] = useState("ascending");
+
+  const handleCheckboxChange = (e) => {
+    if (e.target.checked) {
+      setSortOrder("descending");
+    } else {
+      setSortOrder("ascending");
+    }
+  };
+
+  const sortItems = (a, b) => {
+    if (sortOrder === "ascending") {
+      return a - b;
+    } else {
+      return b - a;
+    }
+  };
+
+  const sortedItems = [...items].sort(sortItems);
+
+  return (
+    <div>
+      <label>
+        <input type="checkbox" onChange={handleCheckboxChange} />
+      </label>
+      <ul>
+        {sortedItems.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+`.trim();
+
+const sliderBox = `
+import Image1 from "./1.jpg";
+import Image2 from "./2.jpg";
+import Image3 from "./logo.svg";
+
+const images = [Image1, Image2, Image3];
+
+const App = () => {
+  const [index, setIndex] = useState(0);
+
+  const handleClick = (direction) => {
+    if (direction === "prev") {
+      setIndex(index === 0 ? images.length - 1 : index - 1);
+    } else {
+      setIndex(index === images.length - 1 ? 0 : index + 1);
+    }
+  };
+
+  return (
+    <div>
+      <img src={images[index]} alt="" style={{ width: 400, height: 400 }} />
+      <button onClick={() => handleClick("prev")}>Previous</button>
+      <button onClick={() => handleClick("next")}>Next</button>
+    </div>
+  );
+};
+
+export default App;
+`.trim();
+
+const checkConditions = `
+const App = () => {
+  const [items, setItems] = useState([
+    { id: 1, name: "Item 1", checked: false },
+    { id: 2, name: "Item 2", checked: true },
+    { id: 3, name: "Item 3", checked: false },
+    { id: 4, name: "Item 4", checked: true },
+    { id: 5, name: "Item 5", checked: false },
+  ]);
+  const [sort, setSort] = useState("all");
+
+  const handleCheckboxChange = (item) => {
+    const newItems = items.map((i) => {
+      if (i.id === item.id) {
+        return { ...i, checked: !i.checked };
+      }
+      return i;
+    });
+    setItems(newItems);
+  };
+
+  const sortedItems = items.sort((a, b) => {
+    if (sort === "all") {
+      return a.id - b.id;
+    }
+    if (sort === "checked") {
+      return a.checked - b.checked;
+    }
+    if (sort === "unchecked") {
+      return b.checked - a.checked;
+    }
+  });
+
+  return (
+    <div>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={sort === "all"}
+            onChange={() => setSort("all")}
+          />
+          Sort by ID
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={sort === "checked"}
+            onChange={() => setSort("checked")}
+          />
+          Sort by Checked
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={sort === "unchecked"}
+            onChange={() => setSort("unchecked")}
+          />
+          Sort by Unchecked
+        </label>
+      </div>
+      <ul>
+        {sortedItems.map((item) => (
+          <li key={item.id}>
+            <label>
+              <input
+                type="checkbox"
+                checked={item.checked}
+                onChange={() => handleCheckboxChange(item)}
+              />
+              {item.name}
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default App;
+`.trim();
 
 class TicGame extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -172,16 +392,18 @@ class TicGame extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>1. Min-Max date</h3>
+              <h3>1. Filter/Dropdawn</h3>
               <div style={titles}>
                 <PrismCode
-                  code={minMaxs}
+                  code={fitersdata}
                   language="js"
                   plugins={["line-numbers"]}
                 />
@@ -207,12 +429,71 @@ class TicGame extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+              <br />
+
+              <h3>4. Slider on click</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={sliderBox}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+
+              <h3>5. Progress incrase upto 100%</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={progressbar}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>5. Mouse Hover on Card</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={mouseHovers}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>6.onClick move button</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={MoveButton}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>4. Sort items on check box</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={sortItems}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>4. Sort items on check box conditions</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={checkConditions}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
             </List>
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(TicGame));
+export default withStyles(styles)(TicGame);

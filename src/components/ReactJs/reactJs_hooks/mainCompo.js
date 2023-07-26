@@ -1,120 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
-
-const sliderBox = `
-//App.js
-class App extends Component {
-  state = {
-    selectIndex:0
-  }
-
-  slideIndex = () => {
-    const labels = document.querySelectorAll('#slider label');
-    const nextIndex = this.state.selectIndex === (labels.length - 1) ? 0 : 
-                      this.state.selectIndex + 1; 
-                      
-    this.setState({selectIndex: nextIndex})
-  }
-
-  render(){
-    return (
-      <div>
-        <div>
-          <div>
-              <button onClick={this.slideIndex}>btn</button>
-          </div>
-          <div>
-            <section id="slider">
-              <input type="radio" id="s1" checked={this.state.selectIndex === 0} />
-              <input type="radio" id="s2" checked={this.state.selectIndex === 1} />
-              <input type="radio" id="s3" checked={this.state.selectIndex === 2} />
-              
-              <label id="slide1">
-                <img src="https://picsum.photos/200/200" height="100%" width="100%"/>
-              </label>
-              <label id="slide2">
-                <img src="https://picsum.photos/200/300" height="100%" width="100%"/>
-              </label>
-              <label id="slide3">
-                <img src="https://picsum.photos/300/300" height="100%" width="100%"/>
-              </label>
-            </section>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}  
-
-
-//App.css
-[type=radio] {
-  display: none;
-}
-
-#slider {
-  height: 30vw;
-  width: 40vw;
-  margin: 0 auto;
-  left: -10%;
-  position: relative;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-}
-
-#slider label {
-  margin: auto;
-  background-color: aliceblue;
-  width: 60%;
-  height: 100%;
-  border-radius: 4px;
-  position: absolute;
-  left: 0; right: 0;
-  cursor: pointer;
-  transition: transform 0.4s ease;
-}
-
-
-#s1:checked ~ #slide3, #s2:checked ~ #slide1,
-#s3:checked ~ #slide2 {
-  box-shadow: 0 6px 10px 0 rgba(0,0,0,.3), 0 2px 2px 0 rgba(0,0,0,.2);
-  transform: translate3d(-50%,0,-100px);
-}
-
-#s1:checked ~ #slide1, #s2:checked ~ #slide2,
-#s3:checked ~ #slide3 {
-  box-shadow: 0 13px 25px 0 rgba(0,0,0,.3), 0 11px 7px 0 rgba(0,0,0,.19);
-  transform: translate3d(0,0,0);
-}
-
-#s1:checked ~ #slide2, #s2:checked ~ #slide3,
-#s3:checked ~ #slide1 {
-  box-shadow: 0 6px 10px 0 rgba(0,0,0,.3), 0 2px 2px 0 rgba(0,0,0,.2);
-  transform: translate3d(50%,0,-100px);
-}
-`.trim();
+    textAlign: "center",
+  },
+});
 
 const editForm = `
 import EditUserForm from "./EditUserForm";
@@ -404,9 +309,61 @@ const App = () => {
 export default App;
 `.trim();
 
+const addtext = `
+const App = () => {
+  const [user, setUser] = useState('');
+  const [mocks, setMocks] = useState([]);
+
+  const handleChange = (e) => {
+    const {value} = e.target;
+    setUser(value);
+  } 
+
+  const handleAdd = () => {
+    setMocks([...mocks, user])
+  };
+
+  return (
+    <div>
+      <input type="text" name="user" value={user} onChange={handleChange} />
+      <button onClick={handleAdd}>Add</button>
+      {mocks.map(vals=>(
+        <li>{vals}</li>
+      ))}
+    </div>
+  );
+};`.trim();
+
+const addRef = `
+const App = () => {
+  const user = useRef("");
+  const mocks = useRef([]);
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    user.current = value;
+  };
+
+  const handleAdd = () => {
+    mocks.current = [...mocks.current, user.current];
+    console.log(mocks.current)
+    user.current = "";
+  };
+
+  return (
+    <div>
+      <input type="text" name="user" onChange={handleChange} />
+      <button onClick={handleAdd}>Add</button>
+        {mocks.current.map((vals, index) => (
+          <li key={index}>{vals}</li>
+        ))}
+    </div>
+  );
+};`.trim();
+
 class MainCompo extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -414,7 +371,9 @@ class MainCompo extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
@@ -448,11 +407,22 @@ class MainCompo extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+              <br />
 
-              <h3>4. Slider on click</h3>
+              <h3>4. Add Text Only</h3>
               <div style={titles}>
                 <PrismCode
-                  code={sliderBox}
+                  code={addtext}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>5. UsRef</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={addRef}
                   language="js"
                   plugins={["line-numbers"]}
                 />
@@ -461,8 +431,8 @@ class MainCompo extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(MainCompo));
+export default withStyles(styles)(MainCompo);

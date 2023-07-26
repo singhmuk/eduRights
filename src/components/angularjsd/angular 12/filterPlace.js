@@ -1,41 +1,30 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
+    textAlign: "center",
+  },
+});
 
 const filters = `
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
-
-//app.component.ts
-import { HttpClient } from '@angular/common/http';
-
-@Component({
-  selector: 'my-app',
-  template: '
-  <input type = "text" [(ngModel)] = "filterBy" (keyup) = "getUsers()">
-    <div *ngFor="let user of filtersUser"> {{user.name}}</div>',  })
+//html
+<input type = "text" [(ngModel)] = "filterBy" (keyup) = "getUsers()">
+  <div *ngFor="let user of filtersUser"> {{user.name}}</div>
 
 
 export class AppComponent  {
@@ -59,52 +48,14 @@ export class AppComponent  {
 }
 `.trim();
 
-const tempCon = `
-@Component({
-  selector: 'app-root',
-  template:'
-  <div>
-  Celsius
-  <input type = "number" [(ngModel)] = "c" (ngModelChange) = "onChange($event, 'c')" />
-    Fahrenheit
-    <input type = "number" [(ngModel)] = "f" (ngModelChange) = "onChange($event, 'f')" />
-</div >
-  '})
-
-export class AppComponent {
-   c = "";
-   f = "";
-
-   onChange(value: string | null, type: "c" | "f") {
-    if (value === null) {
-      this.c = "";
-      this.f = "";
-      return;
-    }
-
-    const temperature = Number(value);
-    if (type === "c") {
-      this.f = ((temperature * 9) / 5 + 32).toFixed(1);
-    } else {
-      this.c = (((temperature - 32) * 5) / 9).toFixed(1);
-    }
-  }
-}`.trim();
-
 const liveInput = `
-//app.component.ts
-@Component({
-  selector: 'my-app',
-  template: '
-  <input #box (keyup) = 'onKey(box.value)' >
-    {{result}}',
-            })
+//html
+<input #box (keyup) = 'onKey(box.value)' >
+  {{result}}
 
 export class HomeComponent {
   values = '';
   result = '';
-
-  constructor() { }
 
   onKey(value: string) {
     this.values=String(value).replace('a','');
@@ -112,84 +63,6 @@ export class HomeComponent {
   }
 }
 `.trim();
-
-const agreeDis = `
-//app.component.ts
-@Component({
-  selector: 'app-root',
-  template: '
-  <h3> Agree: {{agreed}}, Disagree: {{disagreed}}</h3>
-    <app-voters *ngFor="let voter of voters"
-    [name] = "voter"
-      (voted) = "onVoted($event)" >
-    </app-voters>
-  '
-})
-
-export class AppComponent {
-  agreed = 0;
-  disagreed = 0;
-  voters = ['Narco', 'Celeritas', 'Bombasto'];
-
-  onVoted(agreed: boolean) {
-    agreed ? this.agreed++ : this.disagreed++;
-  }
-}
-
-
-//voters.component.ts
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-@Component({
-  selector: 'app-voters',
-  template: '
-  <h4> {{name}}</h4>
-    <button (click) = "vote(true)" [disabled] = "didVote"> Agree</button >
-      <button (click) = "vote(false)" [disabled] = "didVote"> Disagree</button >
-  '
-})
-export class VotersComponent {
-  @Input()  name = '';
-  @Output() voted = new EventEmitter<boolean>();
-  didVote = false;
-
-  vote(agreed: boolean) {
-    this.voted.emit(agreed);
-    this.didVote = true;
-  }
-}
-`.trim();
-
-const setname = `
-//app.component.ts
-@Component({
-  selector: 'app-root',
-  template: '
-  <p> Master controls {{names.length}} names</p>
-    <app-voters *ngFor="let name of names" [name] = "name"></app-voters>
-        '})
-
-export class AppComponent {
-  names = ['Dr IQ', '   ', '  Bombasto  '];
-}
-
-
-//voters.component.ts
-@Component({
-  selector: 'app-voters',
-  template: '<h4>{{name}}</h4>'
-})
-
-export class VotersComponent {
-  @Input()
-  get name(): string { return this._name; }
-  set name(name: string) {
-    this._name = (name && name.trim()) || '<no name set>';
-  }
-  private _name = '';
-}
-`.trim();
-
 
 const excell = `
 //app.component.ts
@@ -242,50 +115,9 @@ export class AppComponent {
 }
 `.trim();
 
-const getData = `
-import { HttpClient } from '@angular/common/http';
-
-@Component({
-  selector: 'app-root',
-  template: '
-  <div>
-  Enter Name
-<input type="text" [(ngModel)] ="searchTerm" (ngModelChange) ="onChange($event)" />
-
-   <div *ngIf="searchedData">
-    id: {{searchedData.id}}
-    email: {{searchedData.email}}
-   </div>
-  <div *ngIf="searchTerm && !searchedData">
-      No Results Found
-    </div>
-  </div>
-  '})
-
-  export class AppComponent {
-  constructor(private http:HttpClient){}
-  mockData:any =[];
-
-  ngOnInit(){
-    this.http.get('https://jsonplaceholder.typicode.com/users')
-        .subscribe(val=>{
-          this.mockData=val;
-        })
-  }
-  searchTerm = "";
-  searchedData?;
-
-  onChange(value: string | null) {
-    this.searchedData = this.mockData.find(
-      ({name}) => name.toLowerCase() === value.toLowerCase()
-    );
-  }
-}`.trim();
-
-
 class FilterPlace extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -293,36 +125,18 @@ class FilterPlace extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>Get-jsonPlaceholder</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={getData}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
               <h3>Filter-jsonPlaceholder</h3>
               <div style={titles}>
                 <PrismCode
                   code={filters}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>Temperature Converter</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={tempCon}
                   language="js"
                   plugins={["line-numbers"]}
                 />
@@ -337,22 +151,7 @@ class FilterPlace extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <h3>Agree-Disagree</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={agreeDis}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <h3>No Name Set</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={setname}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
+
               <br />
               <h3>Export Excel</h3>
               <div style={titles}>
@@ -366,8 +165,8 @@ class FilterPlace extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(FilterPlace));
+export default withStyles(styles)(FilterPlace);

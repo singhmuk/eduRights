@@ -1,192 +1,83 @@
-import React, { Component } from 'react';
-import PrismCode from '../prismCode';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import PrismCode from "../prismCode";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../styles.css'
-import Sidebar from '../sidebar';
+import "../styles.css";
+import Sidebar from "../sidebar";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
-
-const countProgress = `
-class App extends Component {
-  state = {
-      progress: 0,
-      score: 0
-    };  
-    
-    
-  handleClick = () => {
-      this.setState(() => {
-        if (this.state.progress + 10 === 100) {
-          return { progress: 0, score: this.state.score + 1 };
-        }
-        return { progress: this.state.progress + 10 };
-      });
-    }
-
-  render() {
-    const style = { width: this.state.progress + '%' };
-    
-    return (
-      <div onClick={this.handleClick}>
-        {'Score: ' + this.state.score} <br />
-        {this.state.progress + '%'}
-        <div className="bar" style={style} />
-      </div>
-    );
-  }
-}
-
-
-//App.css
-.bar {
-  width: 0;
-  height: 20px;
-  transition: width 0.3s;
-  background: #21d147;
-  cursor: pointer;
-}`.trim();
+    textAlign: "center",
+  },
+});
 
 const contTimmer = `
-class App extends Component {
-  state = {
-    isActive: false,
-    secondsElapsed: 1800000 / 1000 //time in seconds
-  };
+function App() {
+  const [timer, setTimer] = useState(60);
+  const [intervalId, setIntervalId] = useState(null);
 
-  getHours() {
-    return ("0" + Math.floor(this.state.secondsElapsed / 3600)).slice(-2);
-  }
-
-  getMinutes() {
-    return ("0" + Math.floor((this.state.secondsElapsed % 3600) / 60)).slice(-2);
-  }
-
-  getSeconds() {
-    return ("0" + (this.state.secondsElapsed % 60)).slice(-2);
-  }
-
-  startTime = () => {
-    this.setState({ isActive: true });
-    
-    this.countdown = setInterval(() => {
-      this.setState({ secondsElapsed: this.state.secondsElapsed - 1 }) 
+  const startTimer = () => {
+    if (intervalId) return;
+    const id = setInterval(() => {
+      setTimer((t) => t - 1);
     }, 1000);
+    setIntervalId(id);
   };
 
-  resetTime = () => {
-    clearInterval(this.countdown);
-    this.setState({
-        secondsElapsed: 1800000 / 1000,
-        isActive: false
-    });
+  const pauseTimer = () => {
+    if (!intervalId) return;
+    clearInterval(intervalId);
+    setIntervalId(null);
   };
 
-  pauseTime = () => {
-    clearInterval(this.countdown);
-    this.setState({ isActive: false });
-  };
+  useEffect(() => {
+    if (timer === 0) {
+      pauseTimer();
+    }
+  }, [timer]);
 
-  render() {
-    return (
-      <div>
-        <div>
-          <span>{this.getHours()} : {this.getMinutes()} : {this.getSeconds()}</span>
-        </div>
-        <div>
-          <button onClick={this.state.isActive ? this.pauseTime : this.startTime}>
-            Start/Pause
-          </button>
-          <button onClick={this.resetTime}>Reset</button>
-        </div>
-      </div>
-    );
-  }
-}`.trim();
-
-const pause = `
-const App=()=>{
-  const [count, setCount]=useState(0);
-  const [isFalse,setIsFalse]=useState(false);
-
-  const handleCount=()=>{
-   
-       if(isFalse){
-           setCount(count+1)
-       }
-       else{
-           setCount(count-1)
-       }
-  }
-  
-  const handleBtn=()=>{
-   setIsFalse(!isFalse);
-  }
-
-  return(
-   <div>
-       {count}<br/>
-       <button onClick={handleCount}>Count</button>
-       <button onClick={handleBtn}>Handle</button>
-
-   </div>
-  )
+  return (
+    <div>
+      <h1>{timer}</h1>
+      <button onClick={startTimer}>{intervalId ? "Pause" : "Start"}</button>
+      <button onClick={pauseTimer} disabled={!intervalId}>
+        Pause
+      </button>
+    </div>
+  );
 }
-
-export default App;
 `.trim();
 
 const fizzBuzz = `
-class App extends Component {
-  state = {
-    fizzBuzz: '',
-    counter: 1
-  };
-  
-  isFizzBuzz = () => {
-    const counter = this.state.counter;
-    let fizzBuzz = this.state.fizzBuzz;
-    
-    if (counter % 3 === 0) { fizzBuzz += 'Fizz, ' }
-    if (counter % 5 === 0) { fizzBuzz += 'Buzz, ' };
-    if (counter % 5 && counter % 3) { fizzBuzz += ''$'{counter}, ' };
-    
-    this.setState({ fizzBuzz: fizzBuzz });
-  };
-  increment = () => {
-    this.setState((prevState) => ({ counter: ++prevState.counter }));
-    this.isFizzBuzz();
-  };
-  decrement = () => {
-    this.setState((prevState) => ({ counter: --prevState.counter }));
-    this.isFizzBuzz();
-  };
-  render() {
-    return (
-      <div>
-        <button onClick={this.increment}>+</button>{ }
-        <button onClick={this.decrement}>-</button><br /><br />
-        {this.state.fizzBuzz}
-      </div>
-    );
+const App = () => {
+  const [counter, setCounter] = useState(1);
+
+  function handleCounter() {
+    setCounter(counter + 1);
   }
-}`.trim();
+
+  return (
+    <div>
+      <h1>
+        {counter % 3 === 0 ? "Fizz" : ""}
+        {counter % 5 === 0 ? "Buzz" : ""}
+        {counter % 3 !== 0 && counter % 5 !== 0 ? counter : ""}
+      </h1>
+      <button onClick={handleCounter}>Next</button>
+    </div>
+  );
+};
+`.trim();
 
 const ratings = `
 const Star = ({ starId, marked }) => {
@@ -226,11 +117,9 @@ const App = () => {
   );
 };`.trim();
 
-
-
 class SortItems extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -238,26 +127,18 @@ class SortItems extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <b>1.onClick increase 10% progress bar</b>
-              <br />
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={countProgress}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>2. A click to start the countdown timer and a second one to Pause the timer in the same button</b>
+              <b>
+                2. A click to start the countdown timer and a second one to
+                Pause the timer in the same button
+              </b>
               <br />
               <br />
               <div style={titles}>
@@ -269,21 +150,8 @@ class SortItems extends Component {
               </div>
               <br />
               <br />
-
-              <b>3. Click on pause button to decrese count again Click on pause to start increse count</b>
-              <br />
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={pause}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <br />
-
-              <b>4. FizzBuzz :</b> If counter = 3, then print 'Fizz', counter = 5, 'Buzz' else print counter values.
+              <b>4. FizzBuzz :</b> If counter = 3, then print 'Fizz', counter =
+              5, 'Buzz' else print counter values.
               <br />
               <br />
               <div style={titles}>
@@ -294,7 +162,6 @@ class SortItems extends Component {
                 />
               </div>
               <br />
-
               <b>7. Start Rating</b>
               <br />
               <br />
@@ -309,8 +176,8 @@ class SortItems extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(SortItems));
+export default withStyles(styles)(SortItems);

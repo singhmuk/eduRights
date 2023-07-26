@@ -8,6 +8,7 @@ const Clousers = lazy(() => import('./deepJs/clousers'));
 const FindOutput = lazy(() => import('./deepJs/findOutput'));
 const JsObject = lazy(() => import('./deepJs/jsObjects'));
 const Logic = lazy(() => import('./deepJs/logic'));
+const Logic2 = lazy(() => import('./deepJs/logic2'));
 
 const Oops = lazy(() => import('./deepJs/oops'));
 const Prototypes = lazy(() => import('./deepJs/prototypes'));
@@ -24,7 +25,7 @@ const TypeScript2 = lazy(() => import('./deepJs/typeScript_2'));
 const TypeScript4 = lazy(() => import('../javaScripts/deepJs/typeScript_4'));
 
 const components = {
-  Arrays, Clousers, FindOutput, JsObject, Logic, Prototypes, IntroJs,
+  Arrays, Clousers, FindOutput, JsObject, Logic, Logic2, Prototypes, IntroJs,
   Oops, ArraysApi, KeyedCollections, RegularExp, McqJs, HackerRank1,
   HackerRank6, Datatypests, TypeScript2, TypeScript4
 };

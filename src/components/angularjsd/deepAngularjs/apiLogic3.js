@@ -1,439 +1,85 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
-
-const commonArray = `
-var mockData=[];
-var mockData2 = [6,7,8,9,23];
-var commonEle = [];
-function myCtrl($scope, $http){
-    $http({
-        method:'get',
-        url:'https://jsonplaceholder.typicode.com/users'
-    }).then((res) => {
-        person = res.data;
-        person.map(val=>{
-            mockData.push(val.id)
-        })
-
-    var common = mockData.filter(item=>{
-        return mockData2.includes(item)
-    })
-
-    for(var i=0; i<=common.length; i++){
-        commonEle.push(common[i])
-    }
-    console.log("commonEle",commonEle);
-    })
-}`.trim()
-
-const commonStr = `var str='';
-var str2='';
-var dict = {};
-function myCtrl($scope, $http){
-    $http({
-        method:'get',
-        url:'https://jsonplaceholder.typicode.com/users'
-    }).then(mySuccess = (res) => {
-        person = res.data;
-        person.map(val=>{
-            str=val.name;
-            str2=val.username;
-        })
-        
-        for(var i=0; i < str.length; i++) {
-            dict[str.charAt(i)] = 1;
-          }
-          console.log('str',dict);
-
-          var commonChars =[];
-      for(var i=0; i < str2.length; i++) {
-        if( dict[str2.charAt(i)] == 1) {
-          commonChars.push(str2.charAt(i)); // this is optional we can simply print
-        }
-        console.log('str2',commonChars);  
-
-      }
-      
-      dict = commonChars.join(""); 
-      console.log('commonChars',dict);
-    })
-}`.trim()
-
-const arrObj = `var arr = [];
-function myCtrl($scope, $http){
-    $http({
-        method:'get',
-        url:'https://jsonplaceholder.typicode.com/users'
-    }).then(mySuccess = (res) => {
-        person = res.data;
-        
-        console.log('arr',person)
-        console.log('obj',...person)
-        
-       })
-}`.trim()
-
-const objArr = `var obj = {};
-var objKey = [];
-function myCtrl($scope, $http){
-    $http({
-        method:'get',
-        url:'https://jsonplaceholder.typicode.com/users'
-    }).then(mySuccess = (res) => {
-        person = res.data;
-        person.map(val=>{
-            obj=val;
-        })
-        console.log('obj',obj)
-
-        //Convert the keys to Array using - Object.keys()
-        objKey = Object.keys(obj)
-        console.log('objKey',objKey)
-
-        //Converts the Values to Array using - Object.values()
-        objVal = Object.values(obj)
-        console.log('objVal',objVal)
-
-        //Converts both keys and values using - Object.entries()
-        objAll = Object.entries(obj)
-        console.log('objAll',objAll)
-       })
-}`.trim()
-
-const sumAll = `var arr=[];
-var sum = 0;
-function myCtrl($scope, $http){
-    $http({
-        method:'get',
-        url:'https://jsonplaceholder.typicode.com/users'
-    }).then(mySuccess = (res) => {
-        person = res.data;
-        person.map(val=>{
-            arr.push(val.id);
-        })
-        
-        var sum = arr.reduce((a, i) => {
-            return a + i;
-          });
-        console.log('sum',sum)
-       })
-}`.trim()
-
-const dotVal = `var person=[];
-var personEmail=[];
-function myCtrl($scope, $http){
-    $http({
-        method:'get',
-        url:'https://jsonplaceholder.typicode.com/users'
-    }).then(mySuccess = (res) => {
-        $scope.person = res.data;
-        $scope.person.map(val=>{
-             personEmail.push(val.email);
-        })
-        console.log('personEmail',personEmail)
-        $scope.personEmail=personEmail
-    })
-}`.trim()
-
-const lastMatch = `
-var mockData=[];
- var apiId = 10;
- var names = [];
-function myCtrl($scope, $http){
-    $http({
-        method:'get',
-        url:'https://jsonplaceholder.typicode.com/users'
-    }).then(mySuccess = (res) => {
-        $scope.person = res.data;
-        $scope.person.map(val=>{
-             mockData.push(val.id);
-             if(val.id == apiId){
-                names.push(val.name)
-                for(let i=0; i<=names.length; i++){
-                    console.log('inside loop',names)
-                }
-             }
-        })
-    })
-}
-`.trim()
-
-const functions = `
-var app = angular.module("myApp", []);
-app.controller("myCtrl", myCtrl);
-
-var mainId=1;
-var subParameters=[];
-var subParametersIds=[];
-var matchingData=[];
-
-function myCtrl ($scope, $http){
-      $http({
-        method:'get',
-        url:'https://jsonplaceholder.typicode.com/users'
-      }).then(res => {
-        $scope.person = res.data;
-          
-        for(var i = 0; i < $scope.person.length; i++){
-         // console.log('json placeholder data in loop',$scope.person[i].id)
-         if(mainId == $scope.person[i].id){
-             // console.log('only match id',$scope.person[i].id)
-             
-             $scope.person.map(score=>{
-                 if(subParametersIds.indexOf(score.id)==-1){
-                     // console.log('only unique records',score.id)
-                     let newObj={"id":score.id, "name":score.name,'value':[]}
-                     // console.log('push object',newObj)
-                     $scope.newObj = newObj.value.push(score.address.zipcode)
-                     // console.log('after push object',newObj)
-                     subParametersIds.push(score.id);
-                     $scope.subParameters = subParameters.push(newObj);
-                     
-                     let scores={"ids":["2"]}
-                     // console.log('hard coded',scores.ids)
-                     
-                     var index=subParameters.indexOf(score.id)
-                     // console.log('index value',index,":",score.id)
-                     // subParameters[index].value = subParameters[index].concat(score.id)
-                     
-                     if((score.id == scores.ids || score.id == mainId)){
-                         console.log('matching hard coded value: ',score.id,"=",scores.ids,":",mainId);
-                         matchingData=matchingData.concat(score.id);
-                         console.log('matching values: ',matchingData)
-                     }
-                     
-                 }
-                 else{
-                 var index=subParameters.indexOf(score.phone)
-                 subParameters[index].value = subParameters[index].value.concat(score.id)
-                 }
-             })
-         }
-     }
-    })
-    console.log('concate data in the array',subParameters)
- }`.trim()
-
-const functionsH = `
-<body>
-    <div ng-controller="myCtrl">
-        <table>
-            <tr>
-              <th>Country</th>
-              <th>Address</th>
-              <th>Geo</th>
-            </tr>
-            <tr ng-repeat="persons in person">
-              <td>{{persons.name}}</td>
-              <td>{{persons.address.street}}</td>
-              <td>{{persons.address.geo.lat}}</td>
-            </tr>
-          </table> 
-          <h1>SubParameters</h1>
-          {{subParameters}}
-          <br/>
-          <b>New object</b>
-          {{newObj}}
-    </div>  
-</body>
-`.trim()
-
-const empty = `
-//app.js
-var app = angular.module('myApp', []);
-app.controller('myCtrl', timeCtrl);
-  
- var mockData=[];
- var apiId = 10;
- var names = [];
- function timeCtrl ($scope, $http){
-   $http({
-     method:'get',
-     url:'https://jsonplaceholder.typicode.com/users'
-   }).then(res => {
-    $scope.person = res.data;
-    $scope.person.map(fields => {
-              mockData.push(fields.id);
-              
-              if(fields.id == apiId){
-                  console.log('fields',mockData)
-                  for(let i=0; i<=mockData.length; i++){
-                      console.log('Matched Id',fields.id)
-                  }
-              }
-          })
-       console.log('after map',mockData);
-   })
-}
-
-
-//index.html
-<body ng-controller="myCtrl">
-</body>
-`.trim();
-
-const Pick = `
-var app = angular.module('myApp', []);
-app.controller('myCtrl', timeCtrl);
-  
-var mockData=[];
-var apiId = 2;
-var names = ['Bret'];
-nameObj = []
- function timeCtrl ($scope, $http){
-   $http({
-     method:'get',
-     url:'https://jsonplaceholder.typicode.com/users'
-   }).then(res => {
-    $scope.person = res.data;
-    $scope.person.map(fields => {
-        if(fields.id == apiId){
-            mockData.push(fields);
-            console.log('map function',mockData)
-        }
-    // apiId = mockData.push(fields);
-    if(fields.username == names){
-        for(let i=0; i<=mockData.length; i++){
-            nameObj.push(mockData)
-        }
-    }
-})
-console.log('inside for loop',nameObj)
-console.log('after map',mockData);
+    textAlign: "center",
+  },
 });
+
+const choose = `
+//html
+<button (click)="onClick()">Click me</button>
+<div #myButton>Selected element</div>
+
+
+import { Component, ViewChild, ElementRef } from '@angular/core';
+export class AppComponent {
+  @ViewChild('myButton') myElement!: ElementRef;
+
+  onClick() {
+    console.log(this.myElement.nativeElement);
+  }
 }`.trim();
 
-const sum = `
-var app = angular.module('myApp', []);
-app.controller('myCtrl', timeCtrl);
-  
-var tempObj = [];
-var sum = 0;
-var avg;
- function timeCtrl ($scope, $http){
-   $http({
-     method:'get',
-     url:'https://jsonplaceholder.typicode.com/users'
-   }).then(res => {
-    $scope.person = res.data;
-            $scope.person.map(fields => {
-                tempObj.push(fields.id) 
-        });
-        for(let i =0; i<=tempObj.length;i++){
-            sum +=tempObj[i];
-            avg = sum/tempObj.length
-            console.log('sum',sum)
-            console.log('avg',avg)
-        }
-     });
-   
-//Flattening an array of arrays
-     const nested = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-     let flat = nested.reduce((acc, it) => [...acc, ...it], []);
-     console.log('flat',flat)
-  }`.trim();
+const ngZone = `
+//html
+<p>Value: {{ value }}</p>
 
-const object = `
-var percentage;
- var sum=0;
- function timeCtrl (){
-        var data = 
-           [
-            {label:1, quater :'Q1', y:34},
-            {label:2, quater:'Q1', y:20},
-            {label:3, quater:'Q1', y:30},
-     
-            {label:1, quater:'Q2', y:77},
-            {label:2, quater:'Q2', y:52},
-            {label:3, quater:'Q2', y:3},
-     
-            {label:1, quater:'Q3', y:65},
-            {label:2, quater:'Q3', y:12},
-            {label:3, quater:'Q3', y:9},
-     
-            {label:1, quater:'Q4', y:77},
-            {label:2, quater:'Q4', y:34},
-            {label:3, quater:'Q4', y:5}
-           ];
- 
- quartersum = {}
- data.map(function(entry) {
-   quartersum[entry.label] = (quartersum[entry.label]||0) + entry.y
- })
- 
- data.map(function(entry) {
-   entry.percent = entry.y / quartersum[entry.label] * 100;
-   console.log(JSON.stringify(entry))
- })
- 
- console.log('data',quartersum);
- console.log('extract object keys',Object.keys(quartersum));
- console.log('extract object values',Object.values(quartersum));
- 
-        for(let [key, value] of Object.entries(quartersum)){
-            console.log('extract object property',key, value);
-        }
-        percentage = parseInt((sum*100/quartersum.length));
-        console.log('percentage',percentage);
+
+import { Component, NgZone } from '@angular/core';
+export class MyComponent {
+  value: string;
+
+  constructor(private zone: NgZone) {
+    // Listen for changes to the model data outside the NgZone
+    someExternalService.onDataChanged((newValue) => {
+      // Update the model data inside the NgZone
+      this.zone.run(() => {
+        this.value = newValue;
+      });
+    });
+  }
 }`.trim();
 
-const Array = `
-var app = angular.module('myApp', []);
-app.controller('myCtrl', timeCtrl);
-  
-var names = [];
- function timeCtrl ($scope, $http){
-   $http({
-     method:'get',
-     url:'https://jsonplaceholder.typicode.com/users'
-   }).then(res => {
-    $scope.person = res.data;
-    $scope.person.map(data => {
-      names.push(data.id)
-    })
-    let scores = names.find(element => element > 4);
-    let filterScores = names.filter(element => element > 4);
-    let joinArr = filterScores.join("*");
-    let spliceArr = filterScores.splice(0,2)
-    let concatArr = filterScores.concat(scores,joinArr,"100");
-    
-    //The slice() method slices out a piece of an array into a new array.
-    let sliceArr = filterScores.slice(0,2);
-    let toStringArr = names.toString()
-    let position = filterScores.indexOf(8)
-    
-    //The includes() method determines whether an array contains a specified element.
-    let includeArr = filterScores.includes(10)
-    console.log('find',includeArr)
-  });
-}
+const cookies = `
+// Set a cookie
+this.cookieService.set('myCookie', 'myValue');
+
+// Get a cookie
+const myCookieValue = this.cookieService.get('myCookie');
+
+// Clear a cookie
+this.cookieService.delete('myCookie');`.trim();
+
+const contentPro = `
+//add in html of childs.ts
+<ng-content></ng-content>
+
+
+//add in html of app.component.ts
+<child>Mukesh</child>
+<child>Rakesh</child>
+<child>Nitesh</child>
 `.trim();
-
 
 class Logic3 extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -441,133 +87,115 @@ class Logic3 extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>Common element in arrays</h3>
+              <h3>1. How do you choose an element from a component template</h3>
+              To create a template reference variable, you can add the # symbol
+              followed by a name to the element you want to select.
+              <br />
+              <br />
+              With the help of the ViewChild decorator can get a reference to
+              the element in the component class.
               <div style={titles}>
                 <PrismCode
-                  code={commonArray}
+                  code={choose}
                   language="js"
                   plugins={["line-numbers"]}
                 />
               </div>
               <br />
-              <h3>Common element in strings</h3>
+              <h3>
+                2. What happens when you use the script tag within a template.
+              </h3>
+              <ul>
+                <li>
+                  If you include a script tag within a template, the content of
+                  the tag is treated as text and displayed in the template as
+                  is. It is not executed as JavaScript code.
+                </li>
+                <br />
+                <li>
+                  This is because Angular's built-in security system, called
+                  "Sanitization", is designed to protect against Cross-Site
+                  Scripting (XSS) attacks by removing potentially dangerous code
+                  from the HTML before it is rendered in the browser.
+                </li>
+                <br />
+                <li>
+                  To include a script in an Angular application, you should use
+                  the Angular CLI to install and manage external dependencies or
+                  create a custom Angular service to handle dynamic script
+                  loading.
+                </li>
+              </ul>
+              <br />
+              <h3>
+                3. How will you update the view if your model data is updated
+                outside the 'Zone'.
+              </h3>
+              <ul>
+                <li>
+                  In Angular, the NgZone service is responsible for running
+                  change detection and updating the view when model data
+                  changes. However, if model data is updated outside the NgZone,
+                  Angular may not be aware of the changes and may not update the
+                  view as expected.
+                </li>
+                <br />
+                <li>
+                  To update the view if your model data is updated outside the
+                  NgZone, you can use the zone.run() method to execute a
+                  function inside the NgZone.{" "}
+                </li>
+              </ul>
               <div style={titles}>
                 <PrismCode
-                  code={commonStr}
+                  code={ngZone}
                   language="js"
                   plugins={["line-numbers"]}
                 />
               </div>
               <br />
-              <h3>convert an Array to Object</h3>
+              we're using the someExternalService to listen for changes to the
+              model data outside the NgZone. When the data changes, we're using
+              the zone.run() method to update the model data inside the NgZone,
+              which triggers change detection and updates the view.
+              <br />
+              <br />
+              <h3>4. How will you set, get, and clear cookies in Angular.</h3>
+              <ul>
+                <li>
+                  You can use the ngx-cookie-service library to set, get, and
+                  clear cookies. This library provides an easy-to-use API for
+                  working with cookies in Angular.
+                </li>
+                <li>
+                  Now, you can use the CookieService to set, get, and clear
+                  cookies:
+                </li>
+              </ul>
               <div style={titles}>
                 <PrismCode
-                  code={arrObj}
+                  code={cookies}
                   language="js"
                   plugins={["line-numbers"]}
                 />
               </div>
               <br />
-              <h3>Convert an Object into an Array </h3>
-              <div style={titles}>
-                <PrismCode
-                  code={objArr}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
               <br />
-              <h3>Sum of all elements of a given array</h3>
+              <h3>5. Content Projection</h3>
+              Content Projection in Angular is a technique for passing content
+              from a parent component to its child components via the component
+              template.
               <div style={titles}>
                 <PrismCode
-                  code={sumAll}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <h3>Dispay dot value</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={dotVal}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <h3>Last match name</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={lastMatch}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>Apply deep logic</h3>
-              <b>functions.js</b>
-              <div style={titles}>
-                <PrismCode
-                  code={functions}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <b>functions.html</b>
-              <div style={titles}>
-                <PrismCode
-                  code={functionsH}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-
-              <h3>Add data in empty array from api values</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={empty}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <h3>Pick a record from list of records</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={Pick}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <h3>Add sum/avg of number from a list</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={sum}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <h3>Avrage and keys/valuue pair extract from an object</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={object}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
-              <h3>Array methods</h3>
-              <div style={titles}>
-                <PrismCode
-                  code={Array}
+                  code={contentPro}
                   language="js"
                   plugins={["line-numbers"]}
                 />
@@ -576,8 +204,8 @@ class Logic3 extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(Logic3));
+export default withStyles(styles)(Logic3);

@@ -1,132 +1,62 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../prismCode';
+import "../styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
+    textAlign: "center",
+  },
+});
 
 const states = `
-//components/myContext.js
-import React from 'react';
+import React, { useState, useContext } from "react";
 
-const MyContext = React.createContext();
+const AppContext = React.createContext();
 
-export default MyContext;
+function MyComponent() {
+  const { count, setCount } = useContext(AppContext);
 
-
-//components/compA.js
-import Comp2 from './compB';
-
-const Comp = () => {
-  return(
-    <div>
-      <Comp2 />
-    </div>
-  )
-}
-
-export default Comp;
-
-
-//components/compB.js
-import MyContext from './myContext';
-
-const Comp2 = () => {
-    return(
-    <MyContext.Consumer>
-      {(data)=>(
-        <li>{data.name}</li>
-      )}
-    </MyContext.Consumer>
-    )
-  }
-
-export default Comp2;
-
-
-//App.js
-import React, { useState } from 'react';
-import MyContext from './components/myContext';
-import CompA from './components/compA';
-
-const App = () => {
-  const [ name ] = useState('Mukesh')
-  
-    return(
-      <div>
-        <MyContext.Provider
-          value={{name:name}}>
-          <CompA />
-        </MyContext.Provider>
-      </div>
-    )
-  }
-
-export default App;
-`.trim();
-
-const useReducers = `
-import { useCallback, useState, useEffect } from "react";
-
-
-function Child({ returnComment }) {
-  useEffect(() => {
-  }, [returnComment]);
-
-  return <div>{returnComment("Pedro")}</div>;
-}
-
-export default function CallBackTutorial() {
-  const [toggle, setToggle] = useState(false);
-  const [data, setData] = useState("Yo, pls sub to the channel!");
-
-  const returnComment = useCallback(
-    (name) => {
-      return data + name;
-    },
-    [data]
-  );
+  const handleClick = () => {
+    setCount(count + 1);
+  };
 
   return (
-    <div className="App">
-      <Child returnComment={returnComment} />
-
-      <button
-        onClick={() => {
-          setToggle(!toggle);
-        }}
-      >
-        {" "}
-        Toggle
-      </button>
-      {toggle && <h1> toggle </h1>}
+    <div>
+      <p>{count}</p>
+      <button onClick={handleClick}>Increment</button>
     </div>
   );
 }
+
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <AppContext.Provider value={{ count, setCount }}>
+      <MyComponent />
+    </AppContext.Provider>
+  );
+};
 `.trim();
 
 
 
 class UseReducers extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -134,14 +64,16 @@ class UseReducers extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
 
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-            <h3>1. Context API State</h3>
+              <h3>1. Context API State</h3>
               <div style={titles}>
                 <PrismCode
                   code={states}
@@ -149,29 +81,22 @@ class UseReducers extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
-              
-
-              <h3>2. useCallback</h3>
-              The useCallback and useMemo Hooks are similar. The main difference is that useMemo returns 
-              a memoized value and useCallback returns a memoized function. 
-              <div style={titles}>
+              <br />
+              <h3>2. </h3>
+              {/* <div style={titles}>
                 <PrismCode
                   code={useReducers}
                   language="js"
                   plugins={["line-numbers"]}
                 />
-              </div>
+              </div> */}
               <br />
-           
-             
             </List>
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(UseReducers));
+export default withStyles(styles)(UseReducers);

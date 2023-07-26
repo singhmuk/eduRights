@@ -1,26 +1,25 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
-  }
-})
+    textAlign: "center",
+  },
+});
 
 const deletes = `
 var output = (function(x) {
@@ -29,7 +28,7 @@ var output = (function(x) {
 })(0);
 
 console.log(output);
-`.trim()
+`.trim();
 
 const objCreate = `
 var Employee = {
@@ -41,7 +40,7 @@ console.log(emp1.company);
 
 delete emp1.company
 console.log('After', emp1.company);
- `.trim()
+ `.trim();
 
 const code = `(function(){
   var a = b = 3;
@@ -49,7 +48,7 @@ const code = `(function(){
  
  console.log("a defined? " + (typeof a !== 'undefined'));                                         //False
  console.log("b defined? " + (typeof b !== 'undefined'));                                         //True
- `.trim()
+ `.trim();
 
 const code_2 = `function foo1(){
   return {
@@ -65,7 +64,7 @@ const code_2 = `function foo1(){
  }
  
  console.log("foo1 returns:",foo1());
- console.log("foo2 returns:",foo2());`.trim()
+ console.log("foo2 returns:",foo2());`.trim();
 
 const code_4 = `function sum(x, y) {
   if (y !== undefined) {
@@ -76,7 +75,7 @@ const code_4 = `function sum(x, y) {
  }
  
  console.log(sum(2,3));
- console.log(sum(2)(3));`.trim()
+ console.log(sum(2)(3));`.trim();
 
 const code_5 = `var list = readHugeList();
 var nextListItem = function() {
@@ -86,7 +85,7 @@ var nextListItem = function() {
  // process the list item...
  nextListItem();
  }
-};`.trim()
+};`.trim();
 
 const code_6 = `
 //1
@@ -103,12 +102,12 @@ for (var i = 0; i < 3; i++) {
     console.log(i);
   }, 1000);
 }
-`.trim()
+`.trim();
 
 const code_7 = `
 var fruits = ["Banana", "Orange", "Apple", "Mango"];
 fruits.splice(2, 0, "Lemon", "Kiwi");
-console.log(fruits)`.trim()
+console.log(fruits)`.trim();
 
 const code_8 = `var a={},
 b={key:'b'},
@@ -116,9 +115,10 @@ c={key:'c'};
   a[b]=123;
   a[c]=456;
   
-console.log(a[b]);`.trim()
+console.log(a[b]);`.trim();
 
-const code_9 = `console.log((function f(n){return ((n > 1) ? n * f(n-1) : n)})(10));`.trim()
+const code_9 =
+  `console.log((function f(n){return ((n > 1) ? n * f(n-1) : n)})(10));`.trim();
 
 const accidental = `
 function foo() {
@@ -193,8 +193,6 @@ console.log(Array.isArray(v1));                                                 
 console.log(Array.isArray(v2));                                                                     // true
 `.trim();
 
-
-
 const commonEl = `
 const arr = [1, 2, 3, 3, 2];
 const count = {};
@@ -239,8 +237,6 @@ var arr = [1, 2, 3];
 arr = arr.concat(arr);
 
 console.log(arr)`.trim();
-
-
 
 const removeEl = `
 var arr = [1, 2, 3, 4, 5, 3]
@@ -425,13 +421,6 @@ add(arr, 1)
 console.log('arr', arr)
 `.trim();
 
-const actually = `
-function fun({a,b,c}){
-  console.log(a,b,c)
-}
-fun(1,2,3)
-`.trim();
-
 const frozen = `
 let person = {
   name: "Leonardo",
@@ -515,10 +504,9 @@ console.log(6);                                         // 1,6,2,4,5,3
 
 // const diffop = ``.trim();
 
-
 class FindOutput extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -526,7 +514,9 @@ class FindOutput extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
@@ -541,12 +531,14 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-              <i>Above code will output 0 as output. delete operator is used to delete a property from an object. Here x is
-                not an object it's local variable. delete operator doesn't affect local variable.</i>
+              <i>
+                Above code will output 0 as output. delete operator is used to
+                delete a property from an object. Here x is not an object it's
+                local variable. delete operator doesn't affect local variable.
+              </i>
               <br />
               <br />
               <br />
-
               <b>2.</b>
               <div style={titles}>
                 <PrismCode
@@ -557,15 +549,23 @@ class FindOutput extends Component {
               </div>
               <br />
               <ul>
-                <li><i>Above code will output xyz as output. Here emp1 object got company as prototype property. delete operator
-                  doesn't delete prototype property.</i></li>
-                <li><i>emp1 object doesn't have company as its own property.</i></li>
+                <li>
+                  <i>
+                    Above code will output xyz as output. Here emp1 object got
+                    company as prototype property. delete operator doesn't
+                    delete prototype property.
+                  </i>
+                </li>
+                <li>
+                  <i>emp1 object doesn't have company as its own property.</i>
+                </li>
                 <br />
-                <li><b>console.log(emp1.hasOwnProperty('company')); //false</b></li>
+                <li>
+                  <b>console.log(emp1.hasOwnProperty('company')); //false</b>
+                </li>
               </ul>
               <br />
               <br />
-
               <b>3.</b>
               <div style={titles}>
                 <PrismCode
@@ -576,14 +576,23 @@ class FindOutput extends Component {
               </div>
               <br />
               <ul>
-                <li><i>Since both a and b are defined within the enclosing scope of the function, and since the line they are
-                  on begins with the var keyword,</i></li>
-                <li><i>But in fact, var a = b = 3;</i></li>
+                <li>
+                  <i>
+                    Since both a and b are defined within the enclosing scope of
+                    the function, and since the line they are on begins with the
+                    var keyword,
+                  </i>
+                </li>
+                <li>
+                  <i>But in fact, var a = b = 3;</i>
+                </li>
               </ul>
               <br />
               <br />
-
-              <b>4. Consider the two functions below. Will they both return the same thing? Why or why not?</b>
+              <b>
+                4. Consider the two functions below. Will they both return the
+                same thing? Why or why not?
+              </b>
               <div style={titles}>
                 <PrismCode
                   code={code_2}
@@ -592,16 +601,19 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
-              <i>As a result, when the line containing the return statement (with
-                nothing else on the line) is encountered in foo2(), a semicolon is automatically inserted immediately after
-                the return statement.
+              <i>
+                As a result, when the line containing the return statement (with
+                nothing else on the line) is encountered in foo2(), a semicolon
+                is automatically inserted immediately after the return
+                statement.
               </i>
               <br />
               <br />
               <br />
-
-              <b>5. Write a sum method which will work properly when invoked using either syntax below.</b>
+              <b>
+                5. Write a sum method which will work properly when invoked
+                using either syntax below.
+              </b>
               <br />
               <div style={titles}>
                 <PrismCode
@@ -612,8 +624,10 @@ class FindOutput extends Component {
               </div>
               <br />
               <br />
-              <b>6. The following recursive code will cause a stack overflow if the array list is too large. How can you fix
-                this and still retain the recursive pattern?
+              <b>
+                6. The following recursive code will cause a stack overflow if
+                the array list is too large. How can you fix this and still
+                retain the recursive pattern?
               </b>
               <div style={titles}>
                 <PrismCode
@@ -623,12 +637,17 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-              <i>The stack overflow is eliminated because the event loop handles the recursion, not the call stack.
-                When nextListItem runs, if item is not null, the timeout function (nextListItem) is pushed to the event
-                queue and the function exits, thereby leaving the call stack clear. When the event queue runs its timed-out
-                event, the next item is processed and a timer is set to again invoke nextListItem. Accordingly, the method
-                is processed from start to finish without a direct recursive call, so the call stack remains clear, regardless of
-                the number of iterations.</i>
+              <i>
+                The stack overflow is eliminated because the event loop handles
+                the recursion, not the call stack. When nextListItem runs, if
+                item is not null, the timeout function (nextListItem) is pushed
+                to the event queue and the function exits, thereby leaving the
+                call stack clear. When the event queue runs its timed-out event,
+                the next item is processed and a timer is set to again invoke
+                nextListItem. Accordingly, the method is processed from start to
+                finish without a direct recursive call, so the call stack
+                remains clear, regardless of the number of iterations.
+              </i>
               <br />
               <br />
               <h3>7.</h3>
@@ -640,13 +659,17 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-              <i>Each function executed within the loop will be executed after the entire loop has completed and
-                so reference the last value stored in i.<br />
-                Closures can be used to prevent this problem by creating a unique scope for each iteration, storing each
-                unique value of the variable within its scope, as follows:</i>
+              <i>
+                Each function executed within the loop will be executed after
+                the entire loop has completed and so reference the last value
+                stored in i.
+                <br />
+                Closures can be used to prevent this problem by creating a
+                unique scope for each iteration, storing each unique value of
+                the variable within its scope, as follows:
+              </i>
               <br />
               <br />
-
               <div style={titles}>
                 <PrismCode
                   code={code_8}
@@ -655,13 +678,16 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-              <i>JavaScript will implicitly stringify the parameter value. In this case, since b and c are both objects, they
-                will both be converted to "[object object]". As a result, a[b] and a[c] are both equivalent to a["[object
-                object]"] and can be used interchangeably. Therefore, referencing a[c] is same as
-                referencing a[b].</i>
+              <i>
+                JavaScript will implicitly stringify the parameter value. In
+                this case, since b and c are both objects, they will both be
+                converted to "[object object]". As a result, a[b] and a[c] are
+                both equivalent to a["[object object]"] and can be used
+                interchangeably. Therefore, referencing a[c] is same as
+                referencing a[b].
+              </i>
               <br />
               <br />
-
               <div style={titles}>
                 <PrismCode
                   code={code_9}
@@ -670,7 +696,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>8.</h3>
               <div style={titles}>
                 <PrismCode
@@ -680,14 +705,15 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
-              <i>a closure is a function, along with all variables or functions that were in-scope at the time that the closure
-                was created. In JavaScript, a closure is implemented as an “inner function”; An important feature of
-                closures is that an inner function still has access to the outer function’s variables.
+              <i>
+                a closure is a function, along with all variables or functions
+                that were in-scope at the time that the closure was created. In
+                JavaScript, a closure is implemented as an “inner function”; An
+                important feature of closures is that an inner function still
+                has access to the outer function’s variables.
               </i>
               <br />
               <br />
-
               <h3>9. Accidental global variable</h3>
               <div style={titles}>
                 <PrismCode
@@ -698,14 +724,21 @@ class FindOutput extends Component {
               </div>
               <br />
               <ul>
-                <li><i>No variable b is declared neither in the foo() scope/ global scope. So JavaScript interprets b = 0 expression as
-                  <b>window.b = 0</b>.</i></li>
-                <li><i>So, b is a global variable created accidentally.</i></li>
+                <li>
+                  <i>
+                    No variable b is declared neither in the foo() scope/ global
+                    scope. So JavaScript interprets b = 0 expression as
+                    <b>window.b = 0</b>.
+                  </i>
+                </li>
+                <li>
+                  <i>So, b is a global variable created accidentally.</i>
+                </li>
               </ul>
-
               <h3>10. Array length property</h3>
-              Reducing the value of the length property has the side-effect of deleting own array elements whose
-              array index is between the old and new length values.
+              Reducing the value of the length property has the side-effect of
+              deleting own array elements whose array index is between the old
+              and new length values.
               <div style={titles}>
                 <PrismCode
                   code={arrlength}
@@ -713,11 +746,13 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <ul><li>undefined, because clothes array has been emptied.</li></ul>
-
+              <ul>
+                <li>undefined, because clothes array has been emptied.</li>
+              </ul>
               <h3>11. What is the content of numbers array</h3>
               <i>
-                for() iterates 4 times over the null statement, ignoring the block that actually pushes items to array.
+                for() iterates 4 times over the null statement, ignoring the
+                block that actually pushes items to array.
               </i>
               <div style={titles}>
                 <PrismCode
@@ -727,7 +762,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>12. Clousers</h3>
               <div style={titles}>
                 <PrismCode
@@ -737,9 +771,12 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
-              <h3>13. What happens if you access myVar and myConst before declaration</h3>
-              const variables are in a temporal dead zone until the declaration line const myConst = 3.14.
+              <h3>
+                13. What happens if you access myVar and myConst before
+                declaration
+              </h3>
+              const variables are in a temporal dead zone until the declaration
+              line const myConst = 3.14.
               <div style={titles}>
                 <PrismCode
                   code={happense}
@@ -748,17 +785,20 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>14.</h3>
               <ul>
-                <li>In the outer function, both this and self refer to myObject and therefore both can properly reference
-                  and access foo.</li>
-                <li>In the inner function, this no longer refers to myObject. As a result, this.foo is undefined in
-                  the inner function, whereas the reference to the local variable self remains in scope and is accessible
-                  there.</li>
+                <li>
+                  In the outer function, both this and self refer to myObject
+                  and therefore both can properly reference and access foo.
+                </li>
+                <li>
+                  In the inner function, this no longer refers to myObject. As a
+                  result, this.foo is undefined in the inner function, whereas
+                  the reference to the local variable self remains in scope and
+                  is accessible there.
+                </li>
               </ul>
               <br />
-
               <div style={titles}>
                 <PrismCode
                   code={code_16}
@@ -767,14 +807,17 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>15. How to check if an object is an array or not</h3>
               <ul>
-                <li>isArray() method is used to check if an object is an array.</li>
-                <li>Array.isArray() method returns true if an object is an array, otherwise returns false.</li>
+                <li>
+                  isArray() method is used to check if an object is an array.
+                </li>
+                <li>
+                  Array.isArray() method returns true if an object is an array,
+                  otherwise returns false.
+                </li>
               </ul>
               <br />
-
               <div style={titles}>
                 <PrismCode
                   code={CheckArr}
@@ -783,7 +826,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>16. Occurence elements in the array</h3>
               <div style={titles}>
                 <PrismCode
@@ -793,12 +835,12 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>17. Find unque element in array (hasOwnProperty)</h3>
               <p>
-                The hasOwnProperty() is used to check whether the object has the specified property as its
-                own property. It returns a boolean value indicating whether the object has the given
-                property as its own property.
+                The hasOwnProperty() is used to check whether the object has the
+                specified property as its own property. It returns a boolean
+                value indicating whether the object has the given property as
+                its own property.
               </p>
               <div style={titles}>
                 <PrismCode
@@ -808,7 +850,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>18. Group Elements</h3>
               <div style={titles}>
                 <PrismCode
@@ -818,7 +859,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>19. Make duplicate elements in an array</h3>
               <div style={titles}>
                 <PrismCode
@@ -828,7 +868,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>20. Remove a specific item from an array</h3>
               <div style={titles}>
                 <PrismCode
@@ -838,7 +877,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>21. Delete a property from an object</h3>
               <div style={titles}>
                 <PrismCode
@@ -848,7 +886,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>22. Insert an element at specific place in Array</h3>
               <div style={titles}>
                 <PrismCode
@@ -858,7 +895,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>23. Checking if a key exists in a JavaScript object</h3>
               <div style={titles}>
                 <PrismCode
@@ -868,7 +904,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>24.</h3>
               <div style={titles}>
                 <PrismCode
@@ -878,7 +913,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>25.</h3>
               <div style={titles}>
                 <PrismCode
@@ -888,15 +922,17 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>26.</h3>
               <ul>
                 <li>It’s because JavaScript initialization is not hoisted.</li>
-                <li>Why doesn’t it show the global value of 21? The reason is that when the function is executed, it
-                  checks that there’s a local x variable present but doesn’t yet declare it, so it won’t look for global one.</li>
+                <li>
+                  Why doesn’t it show the global value of 21? The reason is that
+                  when the function is executed, it checks that there’s a local
+                  x variable present but doesn’t yet declare it, so it won’t
+                  look for global one.
+                </li>
               </ul>
               <br />
-
               <div style={titles}>
                 <PrismCode
                   code={findOutput3}
@@ -905,7 +941,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>27.</h3>
               <div style={titles}>
                 <PrismCode
@@ -915,7 +950,6 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>28.</h3>
               <div style={titles}>
                 <PrismCode
@@ -925,9 +959,9 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
               <h3>29.</h3>
-              typeof 1 will return "number" and typeof "number" will return string.
+              typeof 1 will return "number" and typeof "number" will return
+              string.
               <div style={titles}>
                 <PrismCode
                   code={findOutput6}
@@ -935,9 +969,11 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
-              <h3>30. Which operator returns true if the two compared values are not equal?</h3>
+              <br />
+              <h3>
+                30. Which operator returns true if the two compared values are
+                not equal?
+              </h3>
               <div style={titles}>
                 <PrismCode
                   code={operator}
@@ -946,19 +982,21 @@ class FindOutput extends Component {
                 />
               </div>
               <br />
-
-              <h3>31. How is a forEach statement different from a for statement?</h3>
-              A for statement is generic, but a forEach statement can be used only with an array.
-              <br/>
-
+              <h3>
+                31. How is a forEach statement different from a for statement?
+              </h3>
+              A for statement is generic, but a forEach statement can be used
+              only with an array.
+              <br />
               <h3>32. How does a function create a closure?</h3>
               It returns a reference to a variable in its parent scope.
-              <br/>
-
-              <h3>33. Which Object method returns an iterable that can be used to iterate over the properties of an object?</h3>
+              <br />
+              <h3>
+                33. Which Object method returns an iterable that can be used to
+                iterate over the properties of an object?
+              </h3>
               Object.keys()
-              <br/>
-
+              <br />
               <h3>34. What will be logged to the console?</h3>
               <div style={titles}>
                 <PrismCode
@@ -967,8 +1005,7 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>35. Add operator.</h3>
               <div style={titles}>
                 <PrismCode
@@ -977,12 +1014,13 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
-              <h3>36. Which variable is an implicit parameter for every function in JavaScript?</h3>
+              <br />
+              <h3>
+                36. Which variable is an implicit parameter for every function
+                in JavaScript?
+              </h3>
               Arguments
-              <br/>
-
+              <br />
               <h3>37. What will the value of y be in this code:</h3>
               <div style={titles}>
                 <PrismCode
@@ -991,13 +1029,13 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>38. Which keyword is used to create an error?</h3>
               throw
-              <br/>
-
-              <h3>39. What is the result in the console of running this code?</h3>
+              <br />
+              <h3>
+                39. What is the result in the console of running this code?
+              </h3>
               <div style={titles}>
                 <PrismCode
                   code={running}
@@ -1005,8 +1043,7 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>40. What will this code log to the console?</h3>
               <div style={titles}>
                 <PrismCode
@@ -1015,8 +1052,7 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>41. What does this code do?</h3>
               <div style={titles}>
                 <PrismCode
@@ -1025,13 +1061,16 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
-              <h3>42. Upon encountering empty statements, what does the Javascript Interpreter do?</h3>
-                Ignores the statements.
-              <br/>
-
-              <h3>43. What will be the output of the following code snippet?</h3>
+              <br />
+              <h3>
+                42. Upon encountering empty statements, what does the Javascript
+                Interpreter do?
+              </h3>
+              Ignores the statements.
+              <br />
+              <h3>
+                43. What will be the output of the following code snippet?
+              </h3>
               <div style={titles}>
                 <PrismCode
                   code={snippet}
@@ -1039,8 +1078,7 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>44. </h3>
               <div style={titles}>
                 <PrismCode
@@ -1049,8 +1087,7 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>45. </h3>
               <div style={titles}>
                 <PrismCode
@@ -1059,7 +1096,6 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-
               <h3>46. </h3>
               <div style={titles}>
                 <PrismCode
@@ -1068,8 +1104,7 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>47. </h3>
               <div style={titles}>
                 <PrismCode
@@ -1078,28 +1113,22 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
-              <h3>48. Is JavaScript a pass-by-reference or pass-by-value language?</h3>
-              It’s always pass by value, but for objects the value of the variable is a reference. Because of this, when you pass 
-              an object and change its members, those changes persist outside of the function. This makes it look like pass by 
-              reference. But if you actually change the value of the object variable you will see that the change does not 
-              persist, proving it’s really pass by value.
-              <br/>
-
-              <h3>49. </h3>
-              <div style={titles}>
-                <PrismCode
-                  code={actually}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br/>
-
+              <br />
+              <h3>
+                48. Is JavaScript a pass-by-reference or pass-by-value language?
+              </h3>
+              It’s always pass by value, but for objects the value of the
+              variable is a reference. Because of this, when you pass an object
+              and change its members, those changes persist outside of the
+              function. This makes it look like pass by reference. But if you
+              actually change the value of the object variable you will see that
+              the change does not persist, proving it’s really pass by value.
+              <br />
+              
               <h3>50. How to “deep-freeze” object in JavaScript?</h3>
-              If you want make sure the object is deep frozen you have to create a recursive function to freeze each property 
-              which is of type object.
+              If you want make sure the object is deep frozen you have to create
+              a recursive function to freeze each property which is of type
+              object.
               <div style={titles}>
                 <PrismCode
                   code={frozen}
@@ -1107,9 +1136,10 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
-              <h3>51.  Is it possible to write a multi-line string in JavaScript?</h3>
+              <br />
+              <h3>
+                51. Is it possible to write a multi-line string in JavaScript?
+              </h3>
               <ul>
                 <li>Using backticks</li>
                 <li>Using + operator</li>
@@ -1122,8 +1152,7 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>52. </h3>
               <div style={titles}>
                 <PrismCode
@@ -1132,10 +1161,12 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <i>The delete operator does not really affect the entire length of the array as the operates removes only the value 
-                which is there at the position. </i>
-                <br/>
-
+              <i>
+                The delete operator does not really affect the entire length of
+                the array as the operates removes only the value which is there
+                at the position.{" "}
+              </i>
+              <br />
               <h3>53. </h3>
               <div style={titles}>
                 <PrismCode
@@ -1144,8 +1175,7 @@ class FindOutput extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <br/>
-
+              <br />
               <h3>54. </h3>
               <div style={titles}>
                 <PrismCode
@@ -1158,8 +1188,8 @@ class FindOutput extends Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(FindOutput));
+export default withStyles(styles)(FindOutput);

@@ -1,195 +1,98 @@
-import React, { Component } from 'react';
-import Prism from "prismjs"
+import React, { Component } from "react";
+import Prism from "prismjs";
 import { Grid, Paper, withStyles, List } from "@material-ui/core";
 
-import '../../ReactJs/styles.css'
-import Sidebar from '../sidebar';
-import PrismCode from '../../ReactJs/prismCode';
+import "../../ReactJs/styles.css";
+import Sidebar from "../sidebar";
+import PrismCode from "../../ReactJs/prismCode";
 
+const titles = { backgroundColor: "#F0F8FF", padding: "1px", fontSize: "16px" };
 
-const titles = { backgroundColor: '#F0F8FF', padding: '1px', fontSize: '16px' }
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     margin: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   smMargin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   actionDiv: {
-    textAlign: "center"
+    textAlign: "center",
+  },
+});
+
+const fullResponse = `
+import { HttpClient, HttpResponse } from '@angular/common/http';
+
+
+constructor(private http: HttpClient) {}
+
+this.http.get('https://example.com/api', { observe: 'response' })
+  .subscribe((response: HttpResponse<any>) => {
+    console.log(response.headers); // headers of the response
+    console.log(response.status); // status code of the response
+    console.log(response.body);   // body of the response
+  });
+`.trim();
+
+const performError = `
+//html
+<p>{{errorMessage}}</p>
+
+
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
+export class AppComponent {
+  public errorMessage: string;
+
+  constructor(private http: HttpClient) {
+    this.getData().subscribe((res) => console.log(res), (error: HttpErrorResponse) => {
+
+        if (error.error instanceof ErrorEvent) {
+          this.errorMessage = 'Error: '$'{error.error.message}';                            // client-side error
+        } 
+        else {
+          this.errorMessage = 'Error Code: '$'{error.status} Message: '$'{error.message}';  // server-side error
+        }
+      }
+    );
   }
-})
 
-
-const appcompos = `
-import {
-  Component,
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
-  DoCheck,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Input,
-  SimpleChanges
-} from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  template: '
-      <h2> Life Cycle Hooks</h2>
-        <button (click) = "toggle()"> Hide / Show Child</button >
-        
-        <child-component *ngIf="displayChild" [message] = "'Hello'">
-      </child-component>
-  '
-})
-export class AppComponent implements
-  OnChanges,
-  OnInit,
-  DoCheck,
-  AfterContentInit,
-  AfterContentChecked,
-  AfterViewInit,
-  AfterViewChecked,
-  OnDestroy {
-
-    displayChild: boolean = false;
-
-    constructor() {
-      console.log("AppComponent: Constructor");
-    }
-
-    toggle() {
-      this.displayChild = !this.displayChild;
-    }
-
-    ngOnChanges() {
-      console.log("AppComponent: OnChanges");
-    }
-
-    ngOnInit() {
-      console.log("AppComponent: OnInit");
-    }
-
-    ngDoCheck() {
-      console.log("AppComponent: DoCheck");
-    }
-
-    ngAfterContentInit() {
-      console.log("AppComponent: AfterContentInit");
-    }
-
-    ngAfterContentChecked() {
-    console.log("AppComponent:AfterContentChecked");
-    }
-
-    ngAfterViewInit() {
-    console.log("AppComponent:AfterViewInit");
-    }
-
-    ngAfterViewChecked() {
-      console.log("AppComponent:AfterViewChecked");
-    }
-
-    ngOnDestroy() {
-      console.log("AppComponent:OnDestroy");
-    }
+  private getData() {
+    const url = 'https://my-api.com/data';
+    return this.http.get(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    );
+  }
 }
 `.trim();
 
-const childcompo = `
-import {
-  Component,
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
-  DoCheck,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Input,
-  SimpleChanges
-} from '@angular/core';
+const interceptor = `
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
-@Component({
-  selector: 'child-component',
-  template: '<h > Child Component</h2>'
-})
-
-export class ChildComponent implements
-  OnChanges,
-  OnInit,
-  DoCheck,
-  AfterContentInit,
-  AfterContentChecked,
-  AfterViewInit,
-  AfterViewChecked,
-  OnDestroy {
-    @Input() message:string = "";
-
-    constructor() {
-    console.log("ChildComponent:Constructor");
-    }
-
-    ngOnChanges() {
-      console.log("ChildComponent:OnChanges");
-    }
-
-
-    ngOnInit() {
-      console.log("ChildComponent:OnInit");
-    }
-
-    ngDoCheck() {
-      console.log("ChildComponent:DoCheck");
-    }
-
-    ngAfterContentInit() {
-      console.log("ChildComponent:AfterContentInit");
-    }
-
-    ngAfterContentChecked() {
-      console.log("ChildComponent:AfterContentChecked");
-    }
-
-    ngAfterViewInit() {
-      console.log("ChildComponent:AfterViewInit");
-    }
-
-    ngAfterViewChecked() {
-      console.log("ChildComponent:AfterViewChecked");
-    }
-
-    ngOnDestroy() {
-      console.log("ChildComponent:OnDestroy");
-    }
-}`.trim();
-
-const fullResponse = `
-getUserResponse(): Observable<HttpResponse<User>> {
-  return this.http.get<User>(
-    this.userUrl, { observe: 'response' });
-}`.trim();
-
-const performError = `
-fetchUser() {
-  this.userService.getProfile()
-    .subscribe(
-      (data: User) => this.userProfile = { ...data }, // success path
-      error => this.error = error // error path
-    );
-}`.trim();
-
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  intercept(request: HttpRequest<any>, next: HttpHandler) {
+    const authToken = localStorage.getItem('authToken');
+    
+    const authRequest = request.clone({
+      headers: request.headers.set('Authorization', 'Bearer '$'{authToken}')
+    });
+    
+    // Pass the auth request on to the next interceptor or to the HttpClient if there are no more interceptors
+    return next.handle(authRequest);
+  }
+}
+`.trim();
 
 class AngularLifeCycle extends Component {
   componentDidMount() {
-    setTimeout(() => Prism.highlightAll(), 0)
+    setTimeout(() => Prism.highlightAll(), 0);
   }
   render() {
     const { classes } = this.props;
@@ -197,24 +100,28 @@ class AngularLifeCycle extends Component {
       <Grid container>
         <Grid item xs={2}>
           <Paper className={classes.paper}>
-            <h4><Sidebar /></h4>
+            <h4>
+              <Sidebar />
+            </h4>
           </Paper>
         </Grid>
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
               <h3>1. lifecycle hook</h3>
-              Constructor excuite first. If we need to inject any
-              dependencies into component, then Constructor is the best place to inject those dependencies.
-              After excuitiing Constructor angular excuites its lifecycle hooks in a specific order.
+              Constructor excuite first. If we need to inject any dependencies
+              into component, then Constructor is the best place to inject those
+              dependencies. After excuitiing Constructor angular excuites its
+              lifecycle hooks in a specific order.
               <br />
               <br />
               <b>Sequeces: </b>
-              OnChange - OnInit - DoCheck - AfterContentInit - AfterContentChecked - AfterViewInit -
-              AfterViewChecked - OnDestry.
+              OnChange - OnInit - DoCheck - AfterContentInit -
+              AfterContentChecked - AfterViewInit - AfterViewChecked - OnDestry.
               <br />
               <br />
-              <b>Lifecycle of a component includes:</b><br />
+              <b>Lifecycle of a component includes:</b>
+              <br />
               <ul>
                 <li>Creating a component</li>
                 <li>Rendering a component</li>
@@ -224,8 +131,9 @@ class AngularLifeCycle extends Component {
               </ul>
               <br />
               <b>ngOnChange:</b>
-              Respond when Angular sets data-bound input properties. The method receives a SimpleChanges object of
-              current and previous property values.
+              Respond when Angular sets data-bound input properties. The method
+              receives a SimpleChanges object of current and previous property
+              values.
               <ul>
                 <li>Alwase called whenever one of our bound input changes.</li>
                 <li>Used in any component that has an input.</li>
@@ -234,43 +142,55 @@ class AngularLifeCycle extends Component {
               </ul>
               <br />
               <b>ngOnInit():</b>
-              Initialize the directive/ component after Angular first displays the data-bound properties and sets the
-              directive/ component's input properties.
+              Initialize the directive/ component after Angular first displays
+              the data-bound properties and sets the directive/ component's
+              input properties.
               <br />
-              can be excuited once component has been initialize. This hook is fired before any of the child directive
-              properties are initialize. This place we put logic related to initialization of properties.
+              can be excuited once component has been initialize. This hook is
+              fired before any of the child directive properties are initialize.
+              This place we put logic related to initialization of properties.
               <ul>
                 <li>Called once, after the first ngOnChanges().</li>
                 <li>Used to initialize data in a component.</li>
-                <li>called after input values are set when a component is initialized.</li>
+                <li>
+                  called after input values are set when a component is
+                  initialized.
+                </li>
                 <li>Called only once.</li>
               </ul>
               <br />
               <b>ngDoCheck():</b>
               <br />
-              Called during every change detection run, immediately after ngOnChanges() and ngOnInit().
+              Called during every change detection run, immediately after
+              ngOnChanges() and ngOnInit().
               <br />
-              whenever something changes on the template of a component or inside component
-              then it excuites. it called during every changes detection run.
-              This is similar to ngOnChanges() hook, but ngOnChanges() not detect all the changes made
-              to the input properties.
+              whenever something changes on the template of a component or
+              inside component then it excuites. it called during every changes
+              detection run. This is similar to ngOnChanges() hook, but
+              ngOnChanges() not detect all the changes made to the input
+              properties.
               <br />
               <br />
               It detects changes for those properties which passed by value.
-              However, ngDoCheck() detects changes for those properties also which are passed reference
-              such as array.
+              However, ngDoCheck() detects changes for those properties also
+              which are passed reference such as array.
               <br />
               <br />
               <ul>
                 <li>Called during all changes detection runs.</li>
-                <li>A run through the view by Angular to update/ detect changes.</li>
+                <li>
+                  A run through the view by Angular to update/ detect changes.
+                </li>
               </ul>
               <br />
               <br />
               <b>ngAfterContentInit():</b>
               <br />
               <ul>
-                <li>Respond after Angular projects external content into the component's view.</li>
+                <li>
+                  Respond after Angular projects external content into the
+                  component's view.
+                </li>
                 <li>Called once after the first ngDoCheck().</li>
               </ul>
               <br />
@@ -278,15 +198,24 @@ class AngularLifeCycle extends Component {
               <b>ngAfterContentChecked():</b>
               <br />
               <ul>
-                <li>Respond after Angular checks the content projected into the directive/ component.</li>
-                <li>Called after the ngAfterContentInit() and every subsequent ngDoCheck().</li>
+                <li>
+                  Respond after Angular checks the content projected into the
+                  directive/ component.
+                </li>
+                <li>
+                  Called after the ngAfterContentInit() and every subsequent
+                  ngDoCheck().
+                </li>
               </ul>
               <br />
               <br />
               <b>ngAfterViewInit():</b>
               <br />
               <ul>
-                <li>Respond after Angular initializes the component's views and child views.</li>
+                <li>
+                  Respond after Angular initializes the component's views and
+                  child views.
+                </li>
                 <li>Called once after the first ngAfterContentChecked().</li>
               </ul>
               <br />
@@ -294,85 +223,78 @@ class AngularLifeCycle extends Component {
               <b>ngAfterViewChecked():</b>
               <br />
               <ul>
-                <li>Respond after Angular checks the component's views and child views.</li>
-                <li>Called after the ngAfterViewInit() and every subsequent ngAfterContentChecked().</li>
+                <li>
+                  Respond after Angular checks the component's views and child
+                  views.
+                </li>
+                <li>
+                  Called after the ngAfterViewInit() and every subsequent
+                  ngAfterContentChecked().
+                </li>
               </ul>
               <br />
               <br />
               <b>ngOnDestroy():</b>
               <br />
               <ul>
-                <li>Cleanup just before Angular destroys the directive/ component. Unsubscribe Observables and detach event handlers to avoid memory leaks.</li>
-                <li>Called just before Angular destroys the directive/ component.</li>
+                <li>
+                  Cleanup just before Angular destroys the directive/ component.
+                  Unsubscribe Observables and detach event handlers to avoid
+                  memory leaks.
+                </li>
+                <li>
+                  Called just before Angular destroys the directive/ component.
+                </li>
               </ul>
               <br />
-
-              <b>app.component.ts</b>
-              <div style={titles}>
-                <PrismCode
-                  code={appcompos}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
               <br />
-
-              <b>child.component.ts</b>
-              <br />
-              <div style={titles}>
-                <PrismCode
-                  code={childcompo}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br/>
-
-              <h3>2. Describe the MVVM architecture. </h3>
-              MVVM architecture removes tight coupling between each component. The MVVM architecture comprises of three parts:
-              <br />
+              <h3>2. What is the use of Codelyzer</h3>
               <ul>
-                <li>Model</li>
-                <li>View</li>
-                <li>ViewModel</li>
-              </ul>
-              The architecture allows the children to have reference through observables and not directly to their parents.
-              <br />
+                <li>
+                  Codelyzer provides a set of rules and guidelines for writing
+                  high-quality, maintainable code. It is built on top of TSLint,
+                  a popular static analysis tool for TypeScript, and is
+                  specifically designed to analyze Angular-specific code.
+                </li>
 
-              <h3>3. How do you update the view if your data model is updated outside the ‘Zone’?</h3>
-              <ul>
-                <li>Using the <b>ApplicationRef.prototype.tick</b> method, which will run change detection on the entire component tree.</li>
-                <li>Using <b>NgZone.prototype.run</b> method, which will also run change detection on the entire tree. The run method under the hood itself calls tick, and the parameter takes the function you want to perform before tick.</li>
-                <li>Using the <b>ChangeDetectorRef.prototype.detectChanges</b> method, which will launch change detection on the current component and its children.</li>
-              </ul>
-              <br />
-
-              <h3>4. What is the use of Codelyzer</h3>
-              <ul>
-                <li>All enterprise applications follows a set of coding conventions and guidelines to maintain code
-                  in better way. Codelyzer is a tool to run and check whether the pre-defined coding guidelines has
-                  been followed or not.
-                  <br />
-                  Codelyzer does only static code analysis for angular and typescript project.</li>
                 <br />
                 <li>Codelyzer can be run via angular cli or npm directly.</li>
               </ul>
               <br />
-
-              <h3>5. Why should ngOnInit be used, if we already have a constructor</h3>
+              <h3>
+                3. Why should ngOnInit be used, if we already have a constructor
+              </h3>
               <ul>
-                <li>The Constructor is a default method of the class that is executed when the class is instantiated
-                  and ensures proper initialization of fields in the class and its subclasses.</li>
-                <li>ngOnInit is a life cycle hook called by Angular to indicate that Angular is done creating the
-                  component.</li>
-                <li>We use ngOnInit for all the initialization/ declaration in the constructor. The constructor should only be used to
-                  initialize class members but shouldn't do actual "work". So you should use constructor() to setup Dependency Injection
-                  and not much else. ngOnInit() is better place to "start" - it's where/ when components' bindings are resolved.</li>
+                <li>
+                  The constructor is a special method that is called when an
+                  instance of a component is created. It's primarily used for
+                  dependency injection, where you inject services or other
+                  dependencies into the component's constructor parameters. You
+                  can also perform initialization tasks in the constructor, such
+                  as setting default property values.
+                </li>
+                <br />
+                <li>
+                  ngOnInit is a lifecycle hook that is called after the
+                  component's constructor is called and all its inputs are set.
+                  It's used for initialization tasks that require the
+                  component's inputs to be set, such as fetching data from a
+                  server or initializing a form.
+                </li>
+                <br />
+                <li>
+                  To summarize, the constructor is used for dependency injection
+                  and initialization tasks that don't require the component's
+                  inputs to be set, while ngOnInit is used for initialization
+                  tasks that require the component's inputs to be set.
+                </li>
               </ul>
               <br />
-
-              <h3>6. How can you read full response</h3>
-              The response body doesn't may not return full response data because sometimes servers also return special headers or status code which are important for the application workflow. Inorder to get full response, you should use observe option from HttpClient,
+              <h3>4. How can you read full response</h3>To read the full
+              response, you can set the observe option of the HttpClient request
+              to 'response' instead of the default 'body'. This tells HttpClient
+              to return the full HTTP response, including the headers and status
+              code, instead of just the response body.
               <div style={titles}>
                 <PrismCode
                   code={fullResponse}
@@ -380,12 +302,12 @@ class AngularLifeCycle extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              Now HttpClient.get() method returns an Observable of typed HttpResponse rather than just the JSON data.
               <br />
-
-              <h3>7. How do you perform Error handling</h3>
-              If the request fails reach the server due to network issues then HttpClient will return an error
-              object instead of a successful reponse. In this case, need to handle in the component by passing error object as a second callback to subscribe() method.
+              <br />
+              <h3>5. How do you perform Error handling.</h3>
+              In Angular, error handling can be performed using a combination of
+              techniques, including try-catch blocks, error handling functions,
+              and observable error handling.
               <div style={titles}>
                 <PrismCode
                   code={performError}
@@ -393,12 +315,203 @@ class AngularLifeCycle extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
+              <br />
+              <h3>5. What is Interceptor.</h3>
+              <ul>
+                <li>
+                  Interceptor is a middleware that intercepts incoming or
+                  outgoing HTTP requests and responses. Interceptors can be used
+                  to modify or add headers to requests, handle errors, or
+                  perform other actions before or after a request or response is
+                  sent or received.
+                </li>
+                <br />
+                <li>
+                  Interceptors are defined as classes that implement the
+                  HttpInterceptor interface, which defines a handle method that
+                  intercepts HTTP requests and responses. Interceptors are
+                  registered with the HttpClientModule by adding them to the
+                  providers array of an Angular module.
+                </li>
+
+                <br />
+                <div style={titles}>
+                  <PrismCode
+                    code={interceptor}
+                    language="js"
+                    plugins={["line-numbers"]}
+                  />
+                </div>
+                <br />
+                <li>
+                  Interceptors are a powerful feature of Angular that can be
+                  used to implement common patterns such as authentication,
+                  caching, and error handling in a reusable and modular way.
+                </li>
+              </ul>
+              <br />
+              <h3>How do you implement server-side rendering in Angular?</h3>
+              Server-side rendering (SSR) is a technique used to improve the
+              initial load time and search engine optimization (SEO) of web
+              applications by rendering the HTML on the server before sending it
+              to the client.
+              <ol>
+                <li>
+                  <b>Install: </b>@nguniversal/express-engine
+                  @nguniversal/module-map-ngfactory-loader.
+                </li>
+                <br />
+                <li>
+                  Create a new file server.ts in the root of your project, which
+                  will contain the code for the server-side rendering logic.
+                </li>
+                <br />
+                <li>
+                  Modify app.module.ts file to include the ServerModule instead
+                  of the BrowserModule.{" "}
+                </li>
+                <br />
+                <li>
+                  Add <b>"build:ssr"</b> command in package.json
+                </li>
+                <br />
+                <li>
+                  <b>npm run build:ssr :</b>Run this command to build the
+                  server-side code:
+                </li>
+                <br />
+                <li>
+                  <b>node dist/server.js: </b>Start the server
+                </li>
+                <br />
+              </ol>
+              <br />
+              <h3>
+                How do you optimize the performance of an Angular application?
+              </h3>
+              <ul>
+                <li>
+                  <b>Lazy loading: </b>Splitting the application into smaller
+                  feature modules and loading them on demand can improve initial
+                  load times and reduce the amount of code the user needs to
+                  download.
+                </li>
+                <br />
+                <li>
+                  <b>AOT compilation: </b>Pre-compiling the application can
+                  improve the initial rendering speed and reduce the size of the
+                  bundle.
+                </li>
+                <br />
+                <li>
+                  <b>Change detection strategy: </b>Choosing the right change
+                  detection strategy (e.g. OnPush) can improve the performance
+                  of the application by reducing the number of unnecessary
+                  checks.
+                </li>
+                <br />
+                <li>
+                  <b>Optimizing network requests: </b>Minimizing the number of
+                  HTTP requests, compressing files, and using server-side
+                  caching can improve the performance of the application.
+                </li>
+                <br />
+                <li>
+                  <b>Optimizing rendering: </b>Avoiding unnecessary DOM
+                  manipulations and using pure pipes can improve the rendering
+                  performance of the application.
+                </li>
+                <br />
+                <li>
+                  <b>Production mode: </b>Enabling production mode can improve
+                  the performance of the application by disabling certain
+                  development-only features and enabling additional
+                  optimizations.
+                </li>
+              </ul>
+              <br />
+              <h3>
+                How do you implement authentication and authorization in
+                Angular?.
+              </h3>
+              <ul>
+                <li>
+                  <b>Send authentication request: </b>When a user submits the
+                  login form, send a request to the server to authenticate the
+                  user's credentials. The server should return a token if the
+                  user is authenticated.
+                </li>
+                <br />
+                <li>
+                  <b>Protect routes: </b>Use guards to protect routes that
+                  require authentication. A guard is a service that can prevent
+                  access to a route if certain conditions are not met.
+                </li>
+              </ul>
+              <br />
+              <h3>
+                How would you handle asynchronous data in Angular, such as HTTP
+                requests or observables?
+              </h3>
+              <ul>
+                <li>
+                  <b>Using the async pipe: </b>The async pipe is an Angular
+                  built-in pipe that subscribes to an observable or a promise
+                  and automatically handles the subscription and unsubscription.
+                  It is often used in the template to display asynchronous data.
+                </li>
+                <br />
+                <li>
+                  <b>Subscribing manually: </b>Instead of using the async pipe,
+                  you can subscribe to an observable or a promise manually and
+                  handle the data in the component.
+                </li>
+                <br />
+                <li>
+                  <b>Using RxJS operators: </b>
+                </li>
+                <br />
+                <li>
+                  <b>Using the HttpClient: </b>
+                </li>
+              </ul>
+              <br />
+              <h3>
+                Explain the concept of observables and how they are used in
+                Angular.
+              </h3>
+              <ul>
+                <li>
+                  Observable is an entity that represents a stream of data that
+                  can be subscribed to, allowing the consumer to receive values
+                  emitted by the observable over time.
+                </li>
+                <br />
+                <li>
+                  In Angular, observables are often used for handling HTTP
+                  requests, user interactions, and other asynchronous events.
+                </li>
+                <br />
+                <li>
+                  Observables have a number of advantages over traditional
+                  callback-based approaches to handling asynchronous data. They
+                  provide better support for handling multiple events, allow for
+                  easy composition and transformation of data streams, and can
+                  be canceled or unsubscribed when no longer needed.
+                </li>
+                <br />
+                <li>
+                  To use observables in Angular, you can create an observable
+                  using the RxJS library and then subscribe to it in your
+                  component.
+                </li>
+              </ul>
             </List>
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default (withStyles(styles)(AngularLifeCycle));
+export default withStyles(styles)(AngularLifeCycle);
