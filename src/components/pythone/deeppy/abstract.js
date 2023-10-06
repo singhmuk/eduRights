@@ -25,17 +25,29 @@ const styles = theme => ({
 const abstrcts = `
 from abc import ABC, abstractmethod
 
-class Computer(ABC):
+class Shape(ABC):
     @abstractmethod
-    def process(self):
+    def area(self):
         pass
 
-class Laptop(Computer):
-    def process(self):
-        print("It's running")
+    @abstractmethod
+    def perimeter(self):
+        pass
 
-obj=Laptop()
-obj.process()`.trim();
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius * self.radius
+
+    def perimeter(self):
+        return 2 * 3.14 * self.radius
+
+circle = Circle(5)
+print(circle.area())
+print(circle.perimeter())
+`.trim();
 
 const decorator = `
 def decor_result(result_function):
@@ -217,6 +229,9 @@ class Abstract extends Component {
             <List>
               <h3>Abstract Class</h3>
               <ul>
+                <li>An abstract class in Python is a class that cannot be instantiated directly but serves as a blueprint for other 
+                  classes. It defines common methods and attributes that its subclasses must implement. Python's abc 
+                  (Abstract Base Classes) module is often used to create abstract classes.</li>
                 <li>Python default don't support abstract class. But with abc module can do.</li>
                 <li>Abstract class has at least one abstract method.</li>
               </ul>

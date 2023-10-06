@@ -30,14 +30,47 @@ const styles = theme => ({
 
 
 const forNum=`
-const PrintNumbers = (start, end)=> {
-  console.log(start);
-  if (start < end) {
-      PrintNumbers((start + 1), end);
+function fun() {
+  const num=19;
+  let count=0;
+
+  for(let i=0;i<=num;i++){
+    count +=i.toString().split('2').length-1
   }
+
+  console.log(count);
 }
 
-PrintNumbers(1, 10);
+fun();
+
+
+// 2 Linked List
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function fun() {
+    const num=19;
+    let count=0;
+  
+    for(let i=0;i<=num;i++){
+      count +=i.toString().split('1').length-1
+    }
+  
+    console.log(count);
+  }
+
+  return { append, print, fun };
+}
+
+const list = createList(16);
+list.fun(16)
 `.trim();
 
 const factorial = `
@@ -69,6 +102,42 @@ function primes(){
 }
 
 primes()
+
+
+// 2 Linked List
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function fun(){
+    const num=100;
+    const result=[];
+    let i,j;
+  
+    for(i=0; i<num; i++){
+        let count=0;
+        for(j=2; j<i; j++){
+            if(i%j==0) count +=1;
+        }
+     
+        if(count==0){
+            result.push(i);
+        }
+    }
+    console.log(result);
+  }
+
+  return { append, fun };
+}
+
+const list = createList();
+list.fun(100)
 `.trim()
 
 const magicNumber = `
@@ -132,20 +201,17 @@ reverse(123)
 
 const isPowerOfTwo = `
 function fun() {
-  let num = 16;
+  const num=16;
 
-  for (let i = 0; i < num; i++) {
-    if (2 ** i === num) {
-      console.log('True');
-      break;
-    } else if (2 ** i > num) {
-      console.log('False');
+  for(let i=0; i<=num;i++){
+    if(2**i===num){
+      console.log(i)
       break;
     }
   }
 }
 
-fun(); 
+fun()
 `.trim();
 
 const addDigits = `
@@ -161,20 +227,6 @@ function fun(){
 }
 
 fun();
-
-//2
-function addDigits(){
-  const num = 2568;
-  let numArr=0;
-  let sum=0;
-
-    numArr = num.toString().split('').map(Number)
-    sum=numArr.reduce((a,b)=>a+b);
-  
-  console.log(sum);
-};
-
-addDigits()
 `.trim();
 
 const isUgly = `
@@ -261,27 +313,6 @@ function multiply() {
 }
 
 multiply();
-
-
-//
-function multiply() {
-  const num="2";
-  const num2="3";
-  const product = Array(num.length + num2.length).fill(0);
-
-  for (let i = num.length; i--;) {
-      let carry = 0;
-      for (let j = num2.length; j--;) {
-          product[1+i+j] += carry + num[i]*num2[j];
-          carry = Math.floor(product[1+i+j] / 10);
-          product[1+i+j] = product[1+i+j] % 10;
-      }
-      product[i] += carry;
-  }
-  console.log(product.join("").replace(/^0*(\d)/, "$1"));
-}
-
-multiply();
 `.trim();
 
 const myPow = `
@@ -296,63 +327,37 @@ function myPow(x, n){
 console.log(myPow(2.00000, 10))
 `.trim();
 
-const letterCombinations = `
-function letterCombinations(digits = ''){
-  const map = {
-    2: ['a', 'b', 'c'],
-    3: ['d', 'e', 'f'],
-    4: ['g', 'h', 'i'],
-    5: ['j', 'k', 'l'],
-    6: ['m', 'n', 'o'],
-    7: ['p', 'q', 'r', 's'],
-    8: ['t', 'u', 'v'],
-    9: ['w', 'x', 'y', 'z'],
-  }
-
-  if (!digits.length) return [];
-
-  let result = [''];
-  let index = 0;
-
-  while (index < digits.length) {
-    const next = map[digits[index]];
-    const nextResult = [];
-
-    for (let i = 0; i < result.length; i++) {
-      for (let j = 0; j < next.length; j++) {
-        nextResult.push(result[i] + next[j])
-      }
-    }
-    result = nextResult;
-    index++;
-  }
-  return result;
-}
-
-console.log(letterCombinations("23"))
-`.trim();
-
 const remString = `
-const greeting = 'Hello Marcus, welcome in 2020';
-const withoutNumbers = greeting.replace(/[0-9]/g, '')
- console.log(withoutNumbers)
-
-
-//
-function removeFive(){
-  let number = 915765;
+function fun(){
+  let num = 915765;
   const target=5;
 
-  let numberStr = number.toString();
+  let newnum=num.toString().split('');
+  const index=newnum.indexOf(target)
+  
+  newnum.splice(index,1)
+ console.log(newnum.join(''))
+}
+fun()
 
-  let numberArr = number.toString().split('').map(Number);
-  let index = numberArr.indexOf(target); 
- 
-  const res = numberStr.replace(numberStr[index], '');
-  console.log(res);
+
+//Remove all 5.
+function fun() {
+  let num = 915765;
+  const target = 5;
+
+  let newnum = num.toString().split('');
+
+  for (let i=0;i<=newnum.length;i++) {
+    if (newnum[i] === target.toString()) {
+      newnum.splice(i, 1);
+    }
+  }
+
+  console.log(newnum.join(''));
 }
 
-removeFive();
+fun();
 `.trim();
 
 
@@ -365,32 +370,6 @@ function remove(){
 }
 
 remove();
-
-
-//Remove a particular digit from numbers;
-function addNum(){
-  let number = 789051234;
-  const target=5;
-  let indexNum = [];
-  var result=[];
-
-  let arr = number.toString().split("");
-  for(let i=0; i<arr.length; i++){
-    if(arr[i]==target){
-      indexNum.push(i)
-    }
-  }
-
-  splitArr = arr.splice(0, indexNum)
-  splitArr2 = arr.splice(1, arr.length)
-
-  result = splitArr + ','+ splitArr2;
-  // result = parseInt(splitArr.join(splitArr2))                                       //sum
-
-  console.log(result)
-}
-
-addNum();
 `.trim();
 
 
@@ -410,7 +389,7 @@ class DSLogic4 extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-            <h3>1. Print num without loop.</h3>
+            <h3>1. Print number 1.</h3>
               <div style={titles}>
                 <PrismCode
                   code={forNum}
@@ -578,23 +557,6 @@ class DSLogic4 extends Component {
               </div>
               <br/>
               
-              <h3>16. Letter Combinations of a Phone Number.</h3>
-              Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
-              <br/><br/>
-            A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.<br/><br/>
-            <b>Example: </b>
-
-            <b>Input: </b>"23"<br/>
-            <b>Output: </b>["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
-              <div style={titles}>
-                <PrismCode
-                  code={letterCombinations}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br/>
-
               <h3>17. Ugly Number.</h3>
               Write a program to check whether a given number is an ugly number.
               <br/>

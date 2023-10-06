@@ -133,17 +133,17 @@ const continues = `
 from multiprocessing import Process
 import os
 
-def square_numbers():
+def sqrt():
     for i in range(1000):
         result = i * i
-
+        print(result)
         
 if __name__ == "__main__":        
     processes = []
-    num_processes = os.cpu_count()                                            # number of CPUs on the machine.
+    num = os.cpu_count()                                            # number of CPUs on the machine.
      
-    for i in range(num_processes):                                  # create processes and asign a function for each process
-        process = Process(target=square_numbers)
+    for i in range(num):                                  # create processes and asign a function for each process
+        process = Process(target=sqrt)
         processes.append(process)
 
     for process in processes:                                                 # start all processes

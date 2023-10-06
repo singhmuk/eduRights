@@ -29,6 +29,23 @@ const styles = (theme) => ({
 });
 
 const uniqueStr = `
+function fun(){
+  const arr='apple'.split('')
+  let result=[]
+
+  for(let i=0;i<arr.length;i++){
+   if(result.includes(arr[i])){
+      result.pop()
+   }else{
+    result.push(arr[i])
+   }
+  }
+  console.log(result.join(''))
+}
+
+fun()                           // O(n^2)
+
+//2
 function unique(){
   let str="Java is great Grails is also great";
   let uniqueStr = str.split(' ');
@@ -39,6 +56,163 @@ function unique(){
 }
 
 unique();
+
+//3
+function fun(){
+  let str="Reverse Words in a String Reverse Words in".split(' ');
+  let hash={};
+
+  for(let i=0; i<str.length; i++){
+    if(hash[str[i]]){
+      hash[str[i]]++;
+    }else{
+      hash[str[i]]=1
+    }
+  }
+
+  for (let word in hash) {
+    if (hash[word] === 1) {
+      console.log(word);
+    }
+  }
+}
+
+fun()
+
+
+// Linked list
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function print() {
+    let currentNode = head;
+    let output = '';
+    while (currentNode) {
+      output += currentNode.value;
+      currentNode = currentNode.next;
+    }
+    console.log(output);
+  }
+
+  function unique() {
+    let current = head;
+    let uniqeChar = '';
+
+    while (current) {
+      let isUnique = true;
+      let runner = head;
+
+      while (runner !== current) {
+        if (runner.value === current.value) {
+          isUnique = false;
+          break;
+        }
+        runner = runner.next;
+      }
+
+      if (isUnique) {
+        uniqeChar += current.value;
+      }
+
+      current = current.next;
+    }
+
+    return uniqeChar;
+  }
+
+  return { append, print, unique };
+}
+
+const list = createList('a');
+list.append('p');
+list.append('p');
+list.append('l');
+list.append('e');
+list.print();
+
+console.log(list.unique());
+`.trim();
+
+const duplicates = `
+function fun(){
+  const arr='apple'.split('')
+  let result=[]
+
+  for(let i=0;i<arr.length;i++){
+    let count=0;
+   for(let j=i+1;j<arr.length;j++){
+    if(arr[i]==arr[j]){
+      count +=1;
+    }
+   }
+   if(count >=1){
+    result.push(arr[i])
+   }
+  }
+  console.log(result.join(''))
+}
+
+fun()
+
+
+// Linked list
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function print() {
+    let currentNode = head;
+    let output = '';
+    while (currentNode) {
+      output += currentNode.value;
+      currentNode = currentNode.next;
+    }
+    console.log(output);
+  }
+
+  function duplicatesCh() {
+    let current = head;
+    let duplicates = '';
+    const result = {};
+
+    while (current) {
+      if (result[current.value]) {
+        if (!duplicates.includes(current.value)) {
+          duplicates += current.value;
+        }
+      } else {
+        result[current.value] = true;
+      }
+      current = current.next;
+    }
+
+    return duplicates;
+  }
+
+  return { append, print, duplicatesCh };
+}
+
+const list = createList('a');
+list.append('p');
+list.append('p');
+list.append('l');
+list.append('e');
+list.print();
+
+console.log(list.duplicatesCh());
 `.trim();
 
 const non_repeating_character = `
@@ -56,104 +230,113 @@ function unique(){
 }
 
 unique();
-
-
-// ss2
-function unique() {
-  const str="apple";
-    let result="";
-
-    for(let i=0; i<str.length; i++){
-        let count=0
-        for(let j=0; j<str.length; j++){
-            if(str.charAt(i)==str.charAt(j)){
-                count +=1;
-            }
-        }
-        if(count>1){                                        //Double
-    // if(count<=1){                                        //Unique
-            result += str.charAt(i);
-        }
-    }
-    console.log(result)
-}
-
-unique();
 `.trim();
 
 const findVowel = `
-function vowel() {
-  var str='apple';
-  let vowelList = 'AEIOUaeiou'
-  let vowels = '';
-  
-   for(var i = 0; i < str.length ; i++){
-      if (vowelList.indexOf(str[i]) !== -1) vowels += str[i];
-      }
-    console.log(vowels);
-  }
-  
-vowel();
-  
-  
-//2
-function getCount() {
-  var str = 'appleo';
-  var matches;
+function fun(){
+  const str='apple';
+  const vowel='aeiou';
+  let result='';
 
-  for (var i = 0; i < str.length; i++) {
-    if (str && (matches = str.match(/[aeiou]/g))) { }
+  for(let i=0;i<str.length;i++){
+    if(vowel.includes(str.charAt(i))){
+      result += str.charAt(i)
+    }
   }
-  console.log(matches);
+  console.log(result)
 }
 
-getCount();
-  `.trim();
+fun()
 
-const combinations = ``.trim();
+
+// Linked List
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function print() {
+    let currentNode = head;
+    let output = '';
+    while (currentNode) {
+      output += currentNode.value;
+      currentNode = currentNode.next;
+    }
+    console.log(output);
+  }
+
+  function vowels() {
+    let str = head;
+    const vowel = 'aeiouAEIOU';
+    let result = '';
+
+    while (str) {
+      if (vowel.includes(str.value)) {
+        result += str.value;
+      }
+      str = str.next;
+    }
+
+    console.log(result);
+  }
+
+  return { append, print, vowels };
+}
+
+const list = createList('a');
+list.append('p')
+list.append('p')
+list.append('l')
+list.append('e')
+list.print();
+
+list.vowels();
+`.trim();
 
 const isIsomorphic = `
-function longStr() {
+function fun() {
   const str1 = 'egg';
   const str2 = 'add';
 
-  const isIsomorphic = (str1 = '', str2 = '') => {
-  if (str1.length !== str2.length) {
+  for (let i = 0; i < str1.length; i++) {
+    const a = str1.indexOf(str1[i]);
+    const b = str2.indexOf(str2[i]);
+    if (str2[a] !== str2[b] || str1[b] !== str1[a]) {
       return false;
-  };
-  for (let i = 0; i< str1.length; i++) {
-      const a=str1.indexOf(str1[i]);
-      const b=str2.indexOf(str2[i]);
-      if (str2[a] !== str2[i] || str1[b] !== str1[i]) {
-          return false;
-      };
-  };
+    }
+  }
+  
   return true;
-  };
-  console.log(isIsomorphic(str1, str2));
 }
 
-longStr()
+
+console.log(fun());
 `.trim();
 
 const wordBreak = `
-function wordBreak(s, wordDict) {
-  const dp = new Array(s.length + 1).fill(false);
-  dp[0] = true;
+function fun() {
+  let str="leetcode"
+  let wordDict = ["leet", "code"];
+  let result=[]
 
-  for (let i = 1; i <= s.length; i++) {
+  for (let i = 1; i <= str.length; i++) {
     for (let j = 0; j < i; j++) {
-      if (dp[j] && wordDict.includes(s.substring(j, i))) {
-        dp[i] = true;
+      if (wordDict.includes(str.substring(j, i))) {
+        result.push(str.substring(j, i))
         break;
       }
     }
   }
 
-  return dp[s.length];
+  return console.log(result);
 }
 
-console.log(wordBreak("leetcode", (wordDict = ["leet", "code"])));
+fun()
 `.trim();
 
 const removeDuplicates = `
@@ -175,46 +358,107 @@ removeDup();
 
 const lonStr = `
 function lonStr(){
-  const str = 'second item is longer than the third one';
+  const str = 'second itemlonger is longer than the third one';
   const arr=str.split(' ');
+  let result='';
   
-  let lgth = 0;
-  let longest;
-  
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i].length > lgth) {
-      lgth = arr[i].length;
-      longest = arr[i];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].length > result.length) {
+      result = arr[i]
     }
   }
   
-  console.log(longest);
+  console.log(result);
 }
 
 lonStr();
 `.trim();
 
-const lengthOfLongestSubstring = `
-function longStr() {
-  const str='applaaopsf';
-  let currentStr = [];
-  let strLen = 0;
+const pairs = `
+function fun(){
+  let str='abccd'
+  let newstr=[];
 
-  for (let i=0; i<str.length; i++) {
-      const currentCharPos = currentStr.indexOf(str[i]);
-
-      if (currentCharPos !== -1) {
-          currentStr.splice(0, currentCharPos + 1);
-      }
-      
-      currentStr.push(str[i]);
-      strLen = Math.max(strLen, currentStr.length);
+  for(let i=0; i<str.length;i++){
+    if(!newstr.includes(str.charAt(i))){
+      newstr.push(str.charAt(i))
+    }else{
+      newstr.pop()
+    }
   }
-  console.log(currentStr)
-  console.log(strLen);
+  console.log(newstr.join(''))
 }
 
-longStr()
+fun()
+
+
+// Linked List
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function print() {
+    let currentNode = head;
+    let output = '';
+    while (currentNode) {
+      output += currentNode.value;
+      currentNode = currentNode.next;
+    }
+    console.log(output);
+  }
+
+  function fun() {
+    let str = head;
+    let result = '';
+
+    while (str) {
+      if (!result.includes(str.value)) {
+        result += str.value;
+      }
+      str = str.next;
+    }
+
+    console.log(result);
+  }
+
+  return { append, print, fun };
+}
+
+const list = createList('a');
+list.append('p')
+list.append('p')
+list.append('l')
+list.append('e')
+list.print();
+
+list.fun();
+`.trim();
+
+const lengthOfLongestSubstring = `
+function longStr() {
+  const str = 'applaaops';
+  let currentStr = '';
+
+  for (let i = 0; i < str.length; i++) {
+    if (currentStr.includes(str.charAt(i))) {
+      // Remove characters from the beginning of currentStr until the repeated character
+      currentStr = currentStr.slice(currentStr.indexOf(str.charAt(i)) + 1) + str.charAt(i);
+    } else {
+      currentStr += str.charAt(i);
+    }
+  }
+
+  console.log(currentStr);
+}
+
+longStr();
+
 `.trim();
 
 const ladderLength = `
@@ -304,20 +548,6 @@ function palindromNum(){
 palindromNum();
 `.trim();
 
-const Palindrom = `
-function palindrom(){
-  let i, str='madam', result='';
-  
-  for(i=str.length-1; i>=0; i-- ){
-    result += str[i]; 
-  }
-  if(str==result){console.log('Palindrom', result)}
-  else{console.log('Not Palindrom', result)}
-}
-
-palindrom();
-`.trim();
-
 const partition = `
 function partition(s = ''){
   function isPalindrome(left, right){
@@ -354,6 +584,44 @@ const str = "the sky is blue";
 const reverseWords = str.split("").reverse().join("");
 
 console.log(reverseWords)
+
+
+// Linked List
+function lists(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function reverse() {
+    let prev = null;
+    let current = head;
+    let next = null;
+
+    while (current) {
+      next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+    }
+    head = prev;
+    return head; 
+  }
+
+  return { append, reverse };
+}
+
+const list = lists('a');
+list.append('p');
+list.append('p');
+list.append('l');
+list.append('e');
+
+console.log(list.reverse());
 `.trim();
 
 class DSLogic extends Component {
@@ -409,15 +677,26 @@ class DSLogic extends Component {
                 />
               </div>
               <br />
-              <h3>2. Single time repeated word print from a String.</h3>
+              <h3>2. Words that appear only once in the string.</h3>
               <ul>
                 <li><b>Time complexity: </b>O(n), where n is the length of the string str. This is because the split() method iterates over the string str once, and the new Set() method iterates over the array of words once.</li><br/>
                 <li><b>Space complexity: </b>O(n), where n is the length of the string str. This is because the new Set() method creates a new set that can store up to n elements.</li><br/>
                 <li>In simple words, the unique() function takes a linear amount of time to run, and it uses a linear amount of space.</li>
               </ul>
+              <br/>
+              <b>Set(): </b>Reduce time complexity of O(n).
               <div style={titles}>
                 <PrismCode
                   code={uniqueStr}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+              <h3>Duplicate Character</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={duplicates}
                   language="js"
                   plugins={["line-numbers"]}
                 />
@@ -458,20 +737,7 @@ class DSLogic extends Component {
                 />
               </div>
               <br />
-              <h3>5. Palindrom</h3>
-              <ul>
-                <li><b>Time: </b>O(n), where n is the length of the string str. This is because the for loop iterates over the string str from back to front, and each iteration takes constant time.</li><br/>
-                <li><b>Space: </b>O(1), where n is the length of the string str. This is because the result variable can store up to n characters.</li><br/>
-                <li>In simple words, the palindrom() function takes a linear amount of time to run, and it uses a constant amount of space.</li>
-              </ul>
-              <div style={titles}>
-                <PrismCode
-                  code={Palindrom}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
+              
               <h3>6. Palindrome Number.</h3>
               Determine whether an integer is a palindrome. An integer is a
               palindrome when it reads the same backward as forward.
@@ -485,18 +751,7 @@ class DSLogic extends Component {
                 />
               </div>
               <br />
-              <h3>
-                7. Find all the combinations of a string in lowercase and
-                uppercase (Permutation).
-              </h3>
-              <div style={titles}>
-                <PrismCode
-                  code={combinations}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br />
+              
               <h3>8. Word Break.</h3>
               Given a non-empty string s and a dictionary wordDict containing a
               list of non-empty words, determine if s can be segmented into a
@@ -550,6 +805,20 @@ class DSLogic extends Component {
                 <li>In simple words, the removeDup() function takes a linear amount of time to run, and it uses a linear amount of space.</li>
               </ul>
               <br />
+
+              <h3>10. Destroy Those Pairs.</h3>
+              "Destroy Those Pairs" is a problem where you need to find and remove pairs of elements from an array 
+              such that each pair consists of two identical elements. The task is to count how many such pairs can 
+              be formed and removed from the array. 
+              <div style={titles}>
+                <PrismCode
+                  code={pairs}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
               <h3>10. Longest Substring from a String.</h3>
               <div style={titles}>
                 <PrismCode
@@ -559,6 +828,7 @@ class DSLogic extends Component {
                 />
               </div>
               <br />
+
               <h3>11. Longest Substring Without Repeating Characters.</h3>
               <div style={titles}>
                 <PrismCode
@@ -567,12 +837,8 @@ class DSLogic extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <ul>
-                <li><b>Time: </b>O(n), where n is the length of the string str. This is because the for loop iterates over the array arr once, and the length property of a string takes constant time.</li><br/>
-                <li><b>Space: </b>O(n), where n is the length of the string str. This is because the arr array can store up to n words.</li><br/>
-                <li>In simple words, the lonStr() function takes a linear amount of time to run, and it uses a linear amount of space.</li>
-              </ul>
               <br />
+
               <h3>12. Isomorphic Strings.</h3>
               Given two strings s and t, determine if they are isomorphic.
               <br />
@@ -598,6 +864,7 @@ class DSLogic extends Component {
                 />
               </div>
               <br />
+              <b>Break</b>
               <h3>13. Word Ladder.</h3>
               Given two words (beginWord and endWord), and a dictionary's word
               list, find the length of shortest transformation sequence from

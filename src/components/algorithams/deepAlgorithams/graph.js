@@ -76,6 +76,165 @@ const example = () => {
   g.printGraph()
 }`.trim()
 
+const create=`
+function createGraph() {
+  return {
+    vertices: new Map(),
+  };
+}
+
+function addVertex(graph, vertex) {
+  if (!graph.vertices.has(vertex)) {
+    graph.vertices.set(vertex, []);
+  }
+  return graph;
+}
+
+function addEdge(graph, vertex1, vertex2) {
+  if (graph.vertices.has(vertex1) && graph.vertices.has(vertex2)) {
+    graph.vertices.get(vertex1).push(vertex2);
+    graph.vertices.get(vertex2).push(vertex1);
+  }
+  return graph;
+}
+
+const graph = createGraph();
+
+addVertex(graph, 'A');
+addVertex(graph, 'B');
+addVertex(graph, 'C');
+addVertex(graph, 'D');
+
+addEdge(graph, 'A', 'B');
+addEdge(graph, 'B', 'C');
+addEdge(graph, 'C', 'D');
+addEdge(graph, 'D', 'A');
+
+console.log(graph);
+
+`.trim();
+
+const removed=`
+function createGraph(){
+  return{
+    vertices:new Map()
+  }
+}
+
+function addVertices(graph, vertex){
+  if(!graph.vertices.has(vertex)){
+    graph.vertices.set(vertex,[])
+  }
+  return graph;
+}
+
+function addEdge(graph, vertext1, vertex2){
+  if(graph.vertices.has(vertext1) && graph.vertices.has(vertex2)){
+    graph.vertices.get(vertext1).push(vertex2);
+    graph.vertices.get(vertex2).push(vertext1);
+  }
+  return graph;
+}
+
+function removeVertex(graph, vertex) {
+  if (graph.vertices.has(vertex)) {
+    const neighbors = graph.vertices.get(vertex);
+    for (const neighbor of neighbors) {
+      const adjList = graph.vertices.get(neighbor);
+      const index = adjList.indexOf(vertex);
+      if (index !== -1) {
+        adjList.splice(index, 1);
+      }
+    }
+    graph.vertices.delete(vertex);
+  }
+  return graph;
+}
+
+function removeEdge(graph, vertex1, vertex2) {
+  if (graph.vertices.has(vertex1) && graph.vertices.has(vertex2)) {
+    const adjList1 = graph.vertices.get(vertex1);
+    const index1 = adjList1.indexOf(vertex2);
+    if (index1 !== -1) {
+      adjList1.splice(index1, 1);
+    }
+
+    const adjList2 = graph.vertices.get(vertex2);
+    const index2 = adjList2.indexOf(vertex1);
+    if (index2 !== -1) {
+      adjList2.splice(index2, 1);
+    }
+  }
+  return graph;
+}
+
+const obj=createGraph()
+addVertices(obj, 'A');
+addVertices(obj, 'B');
+addVertices(obj, 'C');
+
+addEdge(obj, 'A','B')
+addEdge(obj, 'A','C')
+console.log(obj)
+
+removeVertex(obj, 'B');
+console.log('Graph after removing B:');
+console.log(obj);
+`.trim();
+
+const updates=`
+function createGraph(){
+  return{
+    vertices:new Map()
+  }
+}
+
+function addVertices(graph, vertex){
+  if(!graph.vertices.has(vertex)){
+    graph.vertices.set(vertex,[])
+  }
+  return graph;
+}
+
+function addEdge(graph, vertext1, vertex2){
+  if(graph.vertices.has(vertext1) && graph.vertices.has(vertex2)){
+    graph.vertices.get(vertext1).push(vertex2);
+    graph.vertices.get(vertex2).push(vertext1);
+  }
+  return graph;
+}
+
+function updateVertex(graph, oldVertex, newVertex) {
+  if (graph.vertices.has(oldVertex)) {
+    const neighbors = graph.vertices.get(oldVertex);
+    graph.vertices.delete(oldVertex); 
+    graph.vertices.set(newVertex, neighbors);
+  }
+  for (const [vertex, adjList] of graph.vertices) {
+    if (adjList.includes(oldVertex)) {
+      const index = adjList.indexOf(oldVertex);
+      adjList[index] = newVertex;
+    }
+  }
+  return graph;
+}
+
+const obj=createGraph()
+addVertices(obj, 'A');
+addVertices(obj, 'B');
+addVertices(obj, 'C');
+
+addEdge(obj, 'A','B')
+addEdge(obj, 'A','C')
+console.log(obj)
+
+updateVertex(obj, 'A', 'D'); 
+console.log('Graph after updating vertex A to D:');
+console.log(obj);`.trim();
+
+// const create=``.trim();
+
+
 
 class Graph extends Component {
   componentDidMount() {
@@ -149,13 +308,35 @@ class Graph extends Component {
               </ul>
               <br />
 
+              <h3>Create</h3>
               <div style={titles}>
                 <PrismCode
-                  code={graph}
+                  code={create}
                   language="js"
                   plugins={["line-numbers"]}
                 />
               </div>
+              <br/>
+
+              <h3>Remove</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={removed}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>Update</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={updates}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
             </List>
           </Paper>
         </Grid>

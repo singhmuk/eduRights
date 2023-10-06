@@ -234,124 +234,96 @@ del obj`.trim();
 
 const encapsulations = `
 class Computer:
-
     def __init__(self):
-        self.__maxprice = 900
+        self.maxPrice = 999
 
     def sell(self):
-        print("Selling Price: {}".format(self.__maxprice))
+        print("Selling price: {}".format(self.maxPrice))
 
-    def setMaxPrice(self, price):
-        self.__maxprice = price
+    def setMAx(self, price):
+        self.maxPrice = price
 
-c = Computer()
-c.sell()
+obj = Computer()
+obj.sell()
 
-c.__maxprice = 1000
-c.sell()
+obj.maxPrice = 1000
+obj.sell()
 
-c.setMaxPrice(1000)                                                                 # using setter function
-c.sell()`.trim();
+obj.setMAx(2000)
+obj.sell()
+
+`.trim();
 
 const inherritance = `
-class A:
-    def features(self):
-        print('features1')
-
-    def features2(self):
-        print('features2')
-
-class B:
-    def features3(self):
-        print('features3')
-    def features4(self):
-        print('features4')
-
-class C(A,B):
-    def features4(self):
-        print('features5')
-
-a1=A()
-# a1.features()
-# a1.features2()
-
-b1=B()
-c1=C()
-c1.features()
-
-
-#2
-class Person(object):
+class Animal:
     def __init__(self, name):
         self.name = name
 
-    def getName(self):
-        return self.name
+    def speak():
+        pass
 
-    def isEmployee(self):
-        return False
+class Cat(Animal):
+    def speak(self):
+        return f"{self.name} says meow"
 
-
-class Employee(Person):
-    def isEmployee(self):
-        return True
-
-emp = Person("Geek1")
-print(emp.getName(), emp.isEmployee())
-
-emp = Employee("Geek2")
-print(emp.getName(), emp.isEmployee())`.trim();
+cat = Cat("Whiskers")
+print(cat.speak())
+`.trim();
 
 const multipleInheritance = `
-class Base1(object):
-    def __init__(self):
-        self.str1 = "Geek1"
-        print("Base1")
-
-class Base2(object):
-    def __init__(self):
-        self.str2 = "Geek2"
-        print("Base2")
-
-class Derived(Base1, Base2):
-    def __init__(self):
-        Base1.__init__(self)
-        Base2.__init__(self)
-        print("Derived")
-
-    def printStrs(self):
-        print(self.str1, self.str2)
-
-ob = Derived()
-ob.printStrs()`.trim();
-
-const multilevelInheritance = `
-class Base(object):
-
+class Animal:
     def __init__(self, name):
         self.name = name
-    def getName(self):
-        return self.name
+
+class Cat:
+    def __init__(self, price):
+        self.price = price
+
+class Dog(Animal, Cat):
+    def __init__(self, name, price):
+        super().__init__(name)
+        self.price = price
+
+    def fun(self):
+        print(self.name, self.price)
+
+obj = Dog("Cat", 10)
+print(obj.fun())
+
+`.trim();
+
+const multilevelInheritance = `
+class First:
+    def __init__(self, num1):
+        self.num1 = num1
 
 
-class Child(Base):
-    def __init__(self, name, age):
-        Base.__init__(self, name)
-        self.age = age
-    def getAge(self):
-        return self.age
+class Second(First):
+    def __init__(self, num1, num2):
+        super().__init__(num1)
+        self.num2 = num2
+
+    def add(self):
+        return self.num1 + self.num2
 
 
-class GrandChild(Child):
-    def __init__(self, name, age, address):
-        Child.__init__(self, name, age)
-        self.address = address
+class Third(Second):
+    def __init__(self, num1, num2, num3):
+        super().__init__(num1, num2)
+        self.num3 = num3
 
-    def getAddress(self):
-        return self.address
+    def add(self):
+        return self.num1 + self.num2 + self.num3
 
-g = GrandChild("Geek1", 23, "Noida")
-print(g.getName(), g.getAge(), g.getAddress())`.trim();
+
+obj = First(10)
+obj2 = Second(20, 30)
+obj3 = Third(40, 50, 60)
+
+print("First:", obj.num1)
+print("Second:", obj2.add())
+print("Third:", obj3.add())
+`.trim();
 
 const privateMembers = `
 class C(object):
@@ -369,90 +341,50 @@ print(object1.d)`.trim();
 
 const overriding_methods = `
 class Animal:
-    multicellular = True
-    eukaryotic = True
+    def __init__(self, name):
+        self.name = name
 
-    def breathe(self):
-        print("I breathe oxygen.")
+    def speak(self):
+        print("sweet")
 
-    def feed(self):
-        print("I eat food.")
-
-
-class Herbivorous(Animal):
-
-    def feed(self):
-        print("I eat only plants. I am vegetarian.")
+    def speak(self):
+        print("Hi")
 
 
-herbi = Herbivorous()
-herbi.feed()
-herbi.breathe()`.trim();
+obj = Animal("A")
+obj.speak()
+
+
+//2
+class Animal:
+    def __init__(self):
+        pass
+
+    def speak(self):
+        print("sweet")
+
+    def speak(self, price):
+        self.price = price
+        print("Hi", self.price)
+
+obj = Animal()
+obj.speak(1)
+`.trim();
 
 const polymorphism = `
-def add(x, y, z = 0):
-	return x + y+z
+class Animal:
+    def speak(self):
+        print("Animal")
 
-print(add(2, 3))
-print(add(2, 3, 4))
+class Cat(Animal):
+    def speak2(self):
+        print("Cat")
 
+animal = Animal()
+cat = Cat()
 
-#2
-class India():
-	def capital(self):
-		print("New Delhi")
-
-	def language(self):
-		print("Hindi")
-
-	def type(self):
-		print("India")
-
-class USA():
-	def capital(self):
-		print("Washington")
-
-	def language(self):
-		print("English")
-
-	def type(self):
-		print("USA")
-
-obj_ind = India()
-obj_usa = USA()
-for country in (obj_ind, obj_usa):
-	country.capital()
-	country.language()
-	country.type()
-
-
-
-
-#3
-class Parrot:
-    def fly(self):
-        print("Parrot can fly")
-
-    def swim(self):
-        print("Parrot can't swim")
-
-
-class Penguin:
-    def fly(self):
-        print("Penguin can't fly")
-
-    def swim(self):
-        print("Penguin can swim")
-
-
-def flying_test(bird):                                                              # common interface
-    bird.fly()
-
-blu = Parrot()                                                                      # instantiate objects
-peggy = Penguin()
-
-flying_test(blu)                                                                    # passing the object
-flying_test(peggy)
+print(animal.speak())
+print(cat.speak2())
 `.trim();
 
 

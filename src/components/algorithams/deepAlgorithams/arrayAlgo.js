@@ -30,8 +30,85 @@ const styles = theme => ({
 
 
 const strArray = `
-    var strArray = "StackOverflow".split("");
-    console.log(strArray.join(""));
+function fun() {
+  const arr = [1, 5, 10, 20, 40, 80];
+  const arr2 = [6, 7, 20, 80, 100];
+  const arr3 = [3, 4, 15, 20, 30, 70, 80, 120];
+  let result = [];
+
+  for(let i=0;i<arr.length;i++){
+    if(arr2.includes(arr[i]) && (arr3.includes(arr[i]))){
+      result.push(arr[i])
+    }
+  }
+  
+
+  console.log(result);  
+}
+
+fun()
+
+
+// Linked List
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function print() {
+    let currentNode = head;
+    let output = '';
+    while (currentNode) {
+      output += currentNode.value + " ";
+      currentNode = currentNode.next;
+    }
+    console.log(output);
+  }
+
+  return { append, print };
+}
+
+function fun(list1, list2, list3) {
+  let currentNode1 = list1.head;
+  console.log("Common Digit:", list1.head);
+  while (currentNode1) {
+    const digit = currentNode1.value;
+    
+    if (list2.includes(digit) && list3.includes(digit)) {
+      console.log("Common Digit:", digit);
+    }
+
+    currentNode1 = currentNode1.next;
+  }
+}
+
+const list = createList(1);
+list.append(6);
+list.append(2);
+
+const list2 = createList(2);
+list2.append(7);
+list2.append(6);
+
+const list3 = createList(3);
+list3.append(2);
+list3.append(8);
+
+console.log("List 1:");
+list.print();
+
+console.log("List 2:");
+list2.print();
+
+console.log("List 3:");
+list3.print();
+
+fun(list, list2, list3);
 `.trim();
 
 const Sort = `
@@ -61,6 +138,58 @@ const arr = [0, 9, 8, 7, 6];
 arr.sort((a, b) => a - b);
 
 console.log(arr);
+
+
+// 2. Linked List
+function createList(data){
+  const head={value:data, next:null};
+  let tail=null;
+
+  function append(item){
+    let newnode={value:item, next:null};
+
+    if(tail==null){
+      head.next=newnode;
+      tail=newnode;
+    }else{
+      tail.next=newnode;
+      tail=newnode;
+    }
+  }
+
+  function traversing(){
+    let mapnode=head;
+    while(mapnode){
+      console.log(mapnode.value)
+      mapnode = mapnode.next
+    }
+  }
+
+  function sorts(){
+    let current=head;
+    let temp;
+
+    while(current.next){
+      if(current.value>current.next.value){
+        temp=current.value;
+        current.value=current.next.value;
+        current.next.value=temp;
+      }
+      current=current.next;
+    }
+  }
+
+  return {append, traversing, sorts}
+}
+
+const obj=new createList(3);
+obj.append(1)
+obj.append(2)
+obj.append(6)
+obj.append(4)
+obj.traversing()
+obj.sorts()
+obj.traversing()
 `.trim()
 
 const duplicates = `
@@ -85,6 +214,57 @@ function removeDup(){
 }
 
 removeDup();
+
+
+// 2. Linked List
+function createList(data){
+  const head={value:data, next:null};
+  let tail=null;
+
+  function append(item){
+    let newnode={value:item, next:null};
+
+    if(tail==null){
+      head.next=newnode;
+      tail=newnode;
+    }else{
+      tail.next=newnode;
+      tail=newnode;
+    }
+  }
+
+  function traversing(){
+    let mapnode=head;
+    while(mapnode){
+      console.log(mapnode.value)
+      mapnode = mapnode.next
+    }
+  }
+
+  function unique(){
+    let current=head;
+
+    while(current.next !== null){
+      if(current.value === current.next.value){
+        current.next = current.next.next;
+      }else{
+        current=current.next;
+      }
+    }
+  }
+
+  return {append, traversing, unique}
+}
+
+const obj=new createList(3);
+obj.append(1)
+obj.append(2)
+obj.append(2)
+obj.append(6)
+obj.append(4)
+obj.traversing()
+obj.unique()
+obj.traversing()
 `.trim()
 
 const compare_array = `
@@ -159,6 +339,146 @@ function plusOne(){
 plusOne();
 `.trim();
 
+const bulb = `function fun() {
+  let n = 4;
+  let result = [];
+
+  for (let i = 0; i <= n; i++) {
+      let roundOnCount = 0;
+
+      for (let j = 1; j <= i; j++) {
+          if (i % j === 0) {
+              roundOnCount++;
+          }
+      }
+
+      result[i] = roundOnCount % 2 === 1;
+  }
+
+  let count = 0;
+  for (const bulb of result) {
+      if (bulb) {
+          count++;
+      }
+  }
+
+  return count;
+}
+
+console.log(fun());  
+`.trim();
+
+const rotateArray = `
+function rotateArray(arr, k) {
+  const n = arr.length;
+  k %= n; 
+
+  for (let i = 0; i < n; i++) {
+      if (i >= k) {
+          const temp = arr[i - k];
+          arr[i - k] = arr[i];
+          arr[i] = temp;
+      }
+  }
+
+  return arr;
+}
+
+const arr = [1, 2, 3, 4, 5];
+const k = 2;
+rotateArray(arr, k);
+console.log(arr); // Output: [4, 5, 1, 2, 3]
+`.trim();
+
+const countInversions = `
+
+function countInversions(arr) {
+  const n = arr.length;
+  let count = 0;
+
+  for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+          if (arr[i] > arr[j]) {
+              count++;
+          }
+      }
+  }
+
+  return count;
+}
+
+const arr = [4, 3, 1, 2];
+const result = countInversions(arr);
+console.log(result);  // Output: 5`.trim();
+
+const cyclicShiftLeft = `
+function cyclicShiftLeft(arr, k) {
+  const n = arr.length;
+  k %= n;                                     // In case k is larger than array length
+
+  for (let i = 0; i < n; i++) {
+      const newIndex = (i + n - k) % n;
+      console.log(arr[newIndex]);
+  }
+}
+
+const arr = [1, 2, 3, 4, 5];
+const k = 2;
+cyclicShiftLeft(arr, k);
+`.trim();
+
+const unluckyNo = `
+function fun() {
+  const n = 1000;
+  const arr = [];
+
+  // Fill the arr array with random numbers between 0 and 99
+  for (let i = 0; i < n; i++) {
+      arr.push(Math.floor(Math.random() * 100));
+  }
+
+  let count = 0;
+  
+  for (let i = 0; i < n; i++) {
+      if (arr[i] !== 13) {
+          count++;
+      }
+  }
+  
+  console.log(count);
+}
+
+fun();
+`.trim();
+
+const countNiceStrings = `
+function countNiceStrings(strings) {
+  const n = strings.length;
+  let count = 0;
+
+  for (let i = 0; i < n; i++) {
+      let isNice = true;
+
+      for (let j = i + 1; j < n; j++) {
+          if (strings[i] >= strings[j]) {
+              isNice = false;
+              break;
+          }
+      }
+
+      if (isNice) {
+          count++;
+      }
+  }
+
+  return count;
+}
+
+const strings = ["a", "b", "ab", "ba"];
+const result = countNiceStrings(strings);
+console.log(result);  // Output: 3
+`.trim();
+
 const arrayCounter = `
 function fun(arr) {
   let maxDepth = 0;
@@ -185,26 +505,28 @@ fun([]);
 `.trim()
 
 const countElements = `
-function arrCounts(){
-  const arr = [1,2,3,4,5];
-  var result = 0;
-
-  while(arr[result]!==undefined){
-    result++;
+function fun() {
+  const arr = [-7, -3, 2, 3, 11];
+  const result=[];
+  
+  for(let i=0;i<arr.length;i++){
+    result.push(arr[i]*arr[i])
   }
-  console.log(result);
+
+  for(let i=0; i<result.length;i++){
+    for(let j=i; j<result.length;j++){
+      if(result[i]>result[j]){
+        let temp=result[i];
+        result[i]=result[j];
+        result[j]=temp;
+      }
+    }
+  }
+  
+  console.log(result)
 }
 
-arrCounts();  
-
-
-//
-let arr=[0,9,8,7,6,6,0];
-arr=arr.reduce((acc,curr)=>{
-  return acc[curr]? ++acc[curr]:acc[curr]=1, acc
-},{})
-
-console.log(arr)
+fun()
 `.trim();
 
 const occurings = `
@@ -246,20 +568,24 @@ pattern123();
 `.trim();
 
 const numIdenticalPairs = `
-function numIdenticalPairs(nums) {
-  let count = 0
-  
-  for (let i=0; i<nums.length; i++) {
-    for (let j=(i+1); j<nums.length; j++) {
-      if (nums[i] === nums[j]) {
-        count += 1
+function fun(){
+  const arr=[1,2,3,1,1,3];
+  const result=[];
+  let count=0;
+
+  for(let i=0; i<arr.length; i++){
+    for(let j=i+1; j<arr.length; j++){
+      if(arr[i]==arr[j]){
+        result.push([arr[i], arr[j]]);
+        count++;
       }
     }
   }
-  return count
+  console.log(result)
+  console.log(count)
 }
 
-console.log(numIdenticalPairs([1,2,3,1,1,3]))
+fun();
 `.trim();
 
 const removeElement = `
@@ -273,6 +599,60 @@ function fun(){
 }
 
 fun();
+
+
+// 2 Linked List
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function print() {
+    let currentNode = head;
+    let output = '';
+    while (currentNode) {
+      output += currentNode.value + " ";
+      currentNode = currentNode.next;
+    }
+    console.log(output);
+  }
+
+  function fun(target) {
+    while (head !== null && head.value === target) {
+      head = head.next;
+    }
+
+    let current = head;
+    let prev = null;
+
+    while (current !== null) {
+      if (current.value === target) {
+        prev.next = current.next;
+      } else {
+        prev = current;
+      }
+      current = current.next;
+    }
+  }
+
+  return { append, print, fun };
+}
+
+const list = createList(6);
+list.append(-7);
+list.append(2);
+list.append(1);
+list.append(3);
+
+list.print();
+
+list.fun(2); 
+list.print();
 `.trim();
 
 const shuffle = `
@@ -292,20 +672,29 @@ fun();
 `.trim();
 
 const searchRange = `
-function positionEle(){
-  const arr = [5,7,7,8,8,10], target = 8;
-  let result=[];
-  let i;
-
-  for(i=0; i<arr.length; i++){
-    if(arr[i]==target){
-      result.push(arr.indexOf(target));
-    }
+function fun() {
+  const nums = [5, 7, 7, 8, 8, 10];
+  const target = 8;
+  const result = [];
+  
+  for (let i = 0; i < nums.length; i++) {                  // Find the first occurrence
+      if (nums[i] === target) {
+          result[0] = i;
+          break;
+      }
   }
-  console.log(result);
+ 
+  for (let i = nums.length - 1; i >= 0; i--) {             // Find the last occurrence
+      if (nums[i] === target) {
+          result[1] = i;
+          break;
+      }
+  }
+  
+  return result;
 }
 
-positionEle();
+console.log(fun());  
 `.trim();
 
 const combinationSum = `
@@ -325,6 +714,58 @@ function combinationSum(){
 }
 
 combinationSum();
+
+
+// 2 Linked List
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function print() {
+    let currentNode = head;
+    let output = '';
+    while (currentNode) {
+      output += currentNode.value + " ";
+      currentNode = currentNode.next;
+    }
+    console.log(output);
+  }
+
+  function fun() {
+    let current1 = head;
+
+    while (current1) {
+      let current2 = current1.next;
+
+      while (current2) {
+        if (current1.value + current2.value === 7) {
+          console.log('('$'{current1.value},'$'{current2.value})');
+        }
+        current2 = current2.next;
+      }
+      current1 = current1.next;
+    }
+  }
+
+  return { append, print, fun };
+}
+
+const list = createList(6);
+list.append(-7);
+list.append(-3);
+list.append(2);
+list.append(3);
+list.append(1);
+list.append(3);
+list.print();
+
+list.fun();
 `.trim();
 
 const missing_number = `
@@ -357,32 +798,6 @@ for (let i=0; i<arr.length; i++) {
 }
 
 console.log(missing);
-
-
-//2
-function findMissingRanges(nums, lower, upper) {
-  const result = [];
-  const count = (lo, hi) => hi - lo - 1;
-
-  function set(lo, hi){
-    if (count(lo, hi) === 1) {
-      result.push('$'{lo + 1}')
-    } 
-    else if (count(lo, hi) > 1) {
-      result.push('$'{lo + 1}->'$'{hi - 1}')
-    }
-  }
-  
-  for (let i = 0; i <= nums.length; i++) {
-    set(
-      i === 0 ? lower - 1 : nums[i - 1],
-      i === nums.length ? upper + 1 : nums[i],
-    )
-  }
-  return result
-}
-
-console.log(findMissingRanges([1,2,3,-2,4]))
 `.trim();
 
 const sortname = `
@@ -435,24 +850,22 @@ fun();
 `.trim();
 
 const permute = `
-function permute(nums = []){
-  const result = [];
+function fun() {
+  const arr = [2, 3, 1, 4];
+  let maxReach=0;
 
-  function aux(list = [], current = []){
-    if (list.length === 0) {
-      result.push(current)
+  for(let i=0;i<arr.length;i++){
+    maxReach = Math.max(maxReach, arr[i])
+    if(i>maxReach){
+      console.log('false')
     }
-
-    list.forEach((number, index) => {
-      aux(list.filter((v, index2) => index2 !== index), [...current, number])
-    })
+    else if(maxReach>arr.length-1){
+      console.log('true')
+    }
   }
-  
-  aux(nums)
-  return result
 }
 
-console.log(permute([1,2,3]))
+fun()
 `.trim();
 
 const containsDuplicate = `
@@ -499,23 +912,23 @@ console.log(summaryRanges([1,2,3,4,6,7,9]))
 `.trim();
 
 const productExceptSelf = `
-function fun(){
-  const arr = [1,2,3,4];
+function fun() {
+  const arr = [1, 2, 3, 4];
   const result = [];
 
-  for(let i=0;i<arr.length;i++){
-    let prod=1;
-    for(let j=0;j<arr.length;j++){
-      if(arr[i] !==arr[j]){
-        prod *=arr[i]
+  for (let i = 0; i < arr.length; i++) {
+    let prod = 1;
+    for (let j = 0; j < arr.length; j++) {
+      if (arr[i]!==arr[j]) {
+        prod *= arr[j];
       }
     }
-    result.push(prod)
+    result.push(prod); 
+    console.log(prod);
   }
-  console.log(result)
 }
 
-fun()
+fun();
 `.trim();
 
 const countSmaller = `
@@ -528,6 +941,46 @@ function fun(){
       if(arr[i]>arr[j]){
         result[i] +=1;
       }
+    }
+  }
+  console.log(result)
+}
+
+fun()
+`.trim();
+
+const subarray = `
+function fun(){
+  const arr = [1,3,-1,6,2,2,0,3,2,1];
+  let result=0;
+  let sum=0;
+
+  for(let i=0;i<arr.length;i++){
+    if(arr[i]<=0){
+      sum=0
+    }else{
+      sum +=arr[i];
+      result=Math.max(result,sum)
+    }
+  }
+  console.log(result)
+}
+
+fun()
+`.trim();
+
+const submularray = `
+function fun(){
+  const arr = [1,3,-1,6,2,2,0,3,2,1];
+  let result=1;
+  let sum=1;
+
+  for(let i=0;i<arr.length;i++){
+    if(arr[i]<=0){
+      sum=1
+    }else{
+      sum *=arr[i];
+      result=Math.max(result,sum)
     }
   }
   console.log(result)
@@ -572,6 +1025,61 @@ function fun() {
 
 fun();
 
+
+
+// 2 Linked List
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = head;
+
+  function append(item) {
+    const newNode = { value: item, next: null };
+    tail.next = newNode;
+    tail = newNode;
+  }
+
+  function print() {
+    let currentNode = head;
+    let output = '';
+    while (currentNode) {
+      output += currentNode.value + " ";
+      currentNode = currentNode.next;
+    }
+    console.log(output);
+  }
+
+  function remove(target) {
+    while (head !== null && head.value === target) {
+      head = head.next;
+    }
+
+    let current = head;
+    let prev = null;
+
+    while (current !== null) {
+      if (current.value === target) {
+        prev.next = current.next;
+      } else {
+        prev = current;
+      }
+      current = current.next;
+    }
+  }
+
+  return { append, print, remove };
+}
+
+const list = createList(6);
+list.append(-7);
+list.append(-3);
+list.append(2);
+list.append(3);
+list.append(1);
+list.append(3);
+list.print();
+
+list.remove(1); 
+list.print();
 `.trim();
 
 const flateArr = `
@@ -639,7 +1147,7 @@ class DSLogic2 extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-            <h3>1. Convert a string to an array</h3>
+            <h3>1. Intersection of 3 Sorted Arrays</h3>
               <div style={titles}>
                 <PrismCode
                   code={strArray}
@@ -647,11 +1155,6 @@ class DSLogic2 extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <ul>
-                <li><b>Time: </b>O(n), where n is the length of the string str. This is because the split() method iterates over the string str once, and the join() method iterates over the array strArray once.</li><br/>
-                <li><b>Space: </b>O(n), where n is the length of the string str. This is because the strArray array can store up to n characters.</li><br/>
-                <li>In simple words, the code takes a linear amount of time to run, and it uses a linear amount of space.</li>
-              </ul>
               <br />
 
               <h3>2. Sort</h3>
@@ -707,7 +1210,9 @@ class DSLogic2 extends Component {
               </div>
               <br />
 
-              <h3>6. Counting Elements.</h3>
+              <h3>6. Sort Those Squares.</h3>
+              "Sort Those Squares" is a problem where you're given an array of integers, some of which could be 
+              negative, and you're asked to sort the squares of those integers in ascending order. 
               <div style={titles}>
                 <PrismCode
                   code={countElements}
@@ -715,19 +1220,6 @@ class DSLogic2 extends Component {
                   plugins={["line-numbers"]}
                 />
               </div>
-              <b>1:</b><br/>
-              <ul>
-                <li><b>Time: </b>O(n), where n is the length of the array arr. This is because the while loop iterates over the array arr once, and the arr[result]!==undefined check takes constant time.</li><br/>
-                <li><b>Space: </b>O(1), where n is the length of the array arr. This is because the function only uses the variables arr and result.</li><br/>
-                <li>In simple words, the arrCounts() function takes a linear amount of time to run, and it uses a constant amount of space.</li>
-              </ul>
-              <br/>
-              <b>2:</b>
-              <ul>
-                <li><b>Time: </b>O(n), where n is the length of the array arr. This is because the reduce() method iterates over the array arr once, and the ++acc[curr] or acc[curr]=1 operations take constant time.</li><br/>
-                <li><b>Space: </b>O(n), where n is the length of the array arr. This is because the reduce() method creates a new object to store the results of the reduction.</li><br/>
-                <li>In simple words, the code takes a linear amount of time to run, and it uses a linear amount of space.</li>
-              </ul>
               <br/>
 
               <h3>6. Occurence of Elements.</h3>
@@ -919,8 +1411,9 @@ class DSLogic2 extends Component {
                 />
               </div>
 
-              <h3>18. Permutations.</h3>
-              Given a collection of distinct integers, return all possible permutations.
+              <h3>18. Jump Game.</h3>
+              Given an array of non-negative integers representing the maximum jump length from each position. The goal 
+              is to determine if you can reach the last index of the array starting from the first position.
               <div style={titles}>
                 <PrismCode
                   code={permute}
@@ -973,6 +1466,98 @@ class DSLogic2 extends Component {
                 />
               </div>
               <br/>
+
+              <h3>21. Subarray max sum</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={subarray}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>21. Maximum Product Subarray.</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={submularray}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>22. Bulb swicher</h3>
+              Involves toggling the states of light bulbs based on a specific pattern. You start with a row of n bulbs, 
+              and you toggle every i-th bulb (i=1 to n) during the i-th round. The goal is to find how many bulbs are 
+              on after n rounds.
+              <div style={titles}>
+                <PrismCode
+                  code={bulb}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>22. involves rotating elements in an array by a given number of positions.</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={rotateArray}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>22. Count Inversions</h3>
+              involves counting the number of inversions in an array. An inversion occurs when two elements at 
+                {/* positions i and j (where i < j) satisfy the condition arr[i] > arr[j]. */}
+              <div style={titles}>
+                <PrismCode
+                  code={countInversions}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>22. Cyclic ShiftLeft</h3>
+              "Cyclic Shift" typically refers to rotating the elements of an array to the left or right by a certain 
+              number of positions while maintaining the order of the elements.
+              <div style={titles}>
+                <PrismCode
+                  code={cyclicShiftLeft}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>22. UnluckyNo 13</h3>
+              "Unlucky 13" typically refers to a problem where you need to count the number of elements in an array 
+              that are not equal to 13.
+              <div style={titles}>
+                <PrismCode
+                  code={unluckyNo}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>22. Count Nice Strings</h3>
+              involves counting the number of strings that are "nice" among a given list of strings. A string is 
+              considered "nice" if it is lexicographically smaller than all the strings appearing after it in the 
+              list.
+              <div style={titles}>
+                <PrismCode
+                  code={countNiceStrings}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
 
               <h3>22. Array Counter</h3>
               <div style={titles}>

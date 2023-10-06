@@ -30,86 +30,211 @@ const styles = theme => ({
 
 
 const combine = `
-function combine(n, k) {
-  const result = [];
-  
-  function aux(index = 1, current = []){
-    if (current.length === k) {
-      result.push(current);
-      return;
-    }
-    if (index > n) return;
+function fun(){
+  let a=2,b=4;
+  const result=[];
 
-    aux(index + 1, [...current, index]);
-    aux(index + 1, current);
+  for(let i=1;i<=a;i++){
+    for(let j=1;j<=b;j++){
+      if(i !==j){
+        result.push([i,j])
+      }
+    }
   }
-  aux();
-  return result;
+  console.log(result)
 }
 
-console.log(combine(4,2))
+fun()
 `.trim();
 
 const maxProfit = `
-function maxProfit(prices) {
-  let max = 0;
-  let minPrice = Infinity;
+function fun(){
+  const arr = [7,1,5,3,6,4];
+  let minVal=Math.min(...arr);
+  let maxVal=0;
+  let maxProfit=0;
 
-  for (const price of prices) {
-    minPrice = Math.min(price, minPrice);
-    max = Math.max(max, price - minPrice);
-  }
-  return max;
-}
+  let index=arr.indexOf(minVal)
 
-console.log(maxProfit([7,1,5,3,6,4]))
-`.trim();
-
-const maxProduct = `
-function maxProduct(nums = []){
-  if (nums.length === 0) return 0;
-
-  let prevMax = nums[0];
-  let prevMin = nums[0];
-  let max = nums[0];
-
-  for (let i = 1; i < nums.length; i++) {
-    const currentMax = Math.max(nums[i], prevMax * nums[i], prevMin * nums[i]);
-    const currentMin = Math.min(nums[i], prevMax * nums[i], prevMin * nums[i]);
-    prevMax = currentMax;
-    prevMin = currentMin;
-
-    if (prevMax > max) {
-      max = prevMax;
+  for(let i=0;i<arr.length;i++){
+    if(i>index && maxVal< arr[i]){
+      maxVal=arr[i]
     }
   }
-  return max;
+
+  maxProfit = (maxVal - minVal)
+
+  console.log(maxProfit)
 }
 
-console.log(maxProduct([2,3,-2,4]))
+fun()
 `.trim();
 
 const longestCommonPrefix = `
-function longestCommonPrefix(strs = []){
-  let prefix = '';
-
-  let minLength = strs.reduce((acc, str) => (acc < str.length ? acc : str.length), Infinity);
-  minLength = minLength === Infinity ? 0 : minLength;
-
-  for (let i = 0; i < minLength; i++) {
-    const current = strs[0][i];
-    const isSame = strs.every(str => str[i] === current);
-
-    if (isSame) {
-      prefix += current;
-    } else {
-      return prefix;
-    }
+function fun() {
+  let candies = 10;
+  const child = 3;
+  let result = [];
+  
+  const candiesPerChild = Math.floor(candies / child);
+  const remainingCandies = candies % child;
+  
+  for (let i = 0; i < child; i++) {
+    result.push(candiesPerChild + (i < remainingCandies ? 1 : 0));
   }
-  return prefix;
+
+  return console.log(result);
 }
 
-console.log(longestCommonPrefix(["flower","flow","flight"]))
+fun(); 
+`.trim();
+
+const dictionary = `
+function fun() {
+  const words = ["hello", "leetcode"];
+  const order = "hlabcdefgijkmnopqrstuvwxyz";
+
+  for (let i = 1; i < words.length; i++) {
+    const prevWord = words[i - 1];
+    const currentWord = words[i];
+
+    let j = 0;
+    while (j < prevWord.length && j < currentWord.length) {
+      const prevCharIndex = order.indexOf(prevWord[j]);
+      const currentCharIndex = order.indexOf(currentWord[j]);
+
+      if (prevCharIndex < currentCharIndex) {
+        break;                    // Correct order, move to the next pair of words
+      } else if (prevCharIndex > currentCharIndex) {
+        console.log('False');     // Incorrect order
+        return;
+      } else {
+        j++;                      // Characters are equal, move to the next character
+      }
+    }
+
+    if (j === currentWord.length && j < prevWord.length) {
+      console.log('False');       // Incorrect order
+      return;
+    }
+  }
+
+  console.log('True'); // All pairs are in correct order
+}
+
+fun();
+`.trim();
+
+const pointsMax = `
+function fun() {
+  const points = [[1,1],[2,2],[3,3],[4,2]];
+  let max = 0;
+
+  for (let i = 0; i < points.length; i++) {
+      if(points[i][0] == points[i][1]){
+        max +=1;
+      }
+  }
+
+  console.log(max);
+}
+
+fun();
+`.trim();
+
+const isValidSudoku = `
+function isValidSudoku(board) {
+  const seen = new Set();
+
+  for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+          const num = board[i][j];
+
+          if (num !== '.') {
+              const rowKey = row'$'{i}-'$'{num};
+              const colKey = col'$'{j}-'$'{num};
+              const subgridKey = subgrid'$'{Math.floor(i / 3)}-'$'{Math.floor(j / 3)}-'$'{num};
+
+              if (seen.has(rowKey) || seen.has(colKey) || seen.has(subgridKey)) {
+                  return false; // Duplicate number found
+              }
+
+              seen.add(rowKey);
+              seen.add(colKey);
+              seen.add(subgridKey);
+          }
+      }
+  }
+
+  return true; 
+}
+
+const sudokuBoard = [
+  ['5','3','.','.','7','.','.','.','.'],
+  ['6','.','.','1','9','5','.','.','.'],
+  ['.','9','8','.','.','.','.','6','.'],
+  ['8','.','.','.','6','.','.','.','3'],
+  ['4','.','.','8','.','3','.','.','1'],
+  ['7','.','.','.','2','.','.','.','6'],
+  ['.','6','.','.','.','.','2','8','.'],
+  ['.','.','.','4','1','9','.','.','5'],
+  ['.','.','.','.','8','.','.','7','9']
+];
+const result = isValidSudoku(sudokuBoard);
+console.log(result);  // Output: true
+
+`.trim();
+
+const islandPerimeter = `
+function islandPerimeter(grid) {
+  let perimeter = 0;
+  
+  for (let row = 0; row < grid.length; row++) {
+      for (let col = 0; col < grid[0].length; col++) {
+          if (grid[row][col] === 1) {
+              perimeter += 4;
+              
+              if (row > 0 && grid[row - 1][col] === 1) {
+                  perimeter -= 2;               // Subtract for adjacent land on top
+              }
+              
+              if (col > 0 && grid[row][col - 1] === 1) {
+                  perimeter -= 2;               // Subtract for adjacent land on left
+              }
+          }
+      }
+  }
+  
+  return perimeter;
+}
+
+const grid = [
+  [0, 1, 0, 0],
+  [1, 1, 1, 0],
+  [0, 1, 0, 0],
+  [1, 1, 0, 0]
+];
+const result = islandPerimeter(grid);
+console.log(result);  // Output: 16
+
+`.trim();
+
+const rotate = `
+function fun() {
+  const matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+
+  for (let i=0; i<matrix.length; i++) {
+    for (let j =i+1; j<matrix.length; j++) {
+      const temp = matrix[i][j];
+      matrix[i][j] = matrix[j][i];
+      matrix[j][i] = temp;
+    }
+  }
+
+  console.log(matrix);
+}
+
+fun();
 `.trim();
 
 class DSLogic6 extends Component {
@@ -134,15 +259,15 @@ class DSLogic6 extends Component {
               You may return the answer in any order.<br/><br/>
               <b>Example 1: </b>
 
-              <b>Input: </b>n = 4, k = 2<br/>
+              <b>Input: </b>a = 2, b = 4<br/>
               <b>Output: </b>
               [<br/>
-                [2,4],<br/>
-                [3,4],<br/>
-                [2,3],<br/>
                 [1,2],<br/>
                 [1,3],<br/>
                 [1,4],<br/>
+                [2,1],<br/>
+                [2,3],<br/>
+                [2,4],<br/>
               ]<br/><br/>
               <b>Example 2: </b>
 
@@ -176,35 +301,10 @@ class DSLogic6 extends Component {
               </div>
               <br/>
 
-              <h3>3. Maximum Product Subarray.</h3>
-              Given an integer array nums, find the contiguous subarray within an array (containing at least one number) which has the largest product.
-              <br/>
-              <b>Input: </b>[2,3,-2,4]<br/>
-              <b>Output: </b>6
-              <div style={titles}>
-                <PrismCode
-                  code={maxProduct}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br/>
-
-              <h3>4. Longest Common Prefix</h3>
-              Write a function to find the longest common prefix string amongst an array of strings.
-              <br/>
-              If there is no common prefix, return an empty string "".
-              <br/><br/>
-              <b>Example 1: </b>
-
-              <b>Input: </b>["flower","flow","flight"]<br/>
-              <b>Output: </b>"fl"<br/><br/>
-              <b>Example 2: </b>
-
-              <b>Input: </b>["dog","racecar","car"]<br/>
-              <b>Output: </b>""<br/>
-              <b>Explanation: </b>There is no common prefix among the input strings.<br/><br/>
-              <b>N: </b>All given inputs are in lowercase letters a-z.
+              <h3>3. Stuff Them Candies</h3>
+              Distribute candies 
+              to a list of children such that each child receives a specific number of candies, and you have a limited 
+              number of candies available. 
               <div style={titles}>
                 <PrismCode
                   code={longestCommonPrefix}
@@ -213,6 +313,69 @@ class DSLogic6 extends Component {
                 />
               </div>
               <br/>
+
+              <h3>4. Max Points On a Line</h3>
+              Finding the maximum number of points that lie on the same line in a given set of points on a 2D plane. 
+              <div style={titles}>
+                <PrismCode
+                  code={pointsMax}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>5. Rotate Image.</h3>
+              You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+              <br/>
+              You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+              <br/><br/><b>Input: </b>matrix = [[1,2,3],[4,5,6],[7,8,9]]<br/>
+              <b>Output: </b>[[7,4,1],[8,5,2],[9,6,3]]
+              <div style={titles}>
+                <PrismCode
+                  code={rotate}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>6. Verify the Alien Dictionary</h3>
+              Given a list of words in an alien language and 
+              the order of characters in that language. You need to determine if the given list of words is sorted 
+              lexicographically according to the given alien dictionary. 
+              <div style={titles}>
+                <PrismCode
+                  code={dictionary}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>6. Valid Sudoku</h3>
+              given a 9x9 Sudoku board, and you need to determine if the board is valid according to Sudoku rules. The 
+              rules state that each row, each column, and each of the nine 3x3 sub-grids that compose the board must 
+              contain distinct digits from 1 to 9.
+              <div style={titles}>
+                <PrismCode
+                  code={isValidSudoku}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>7. Island Perimeter</h3>
+              finding the perimeter of an island represented as a grid, where '1's represent land and '0's represent 
+              water. The goal is to determine the total perimeter of the island.
+              <div style={titles}>
+                <PrismCode
+                  code={islandPerimeter}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
             </List>
           </Paper>
         </Grid>

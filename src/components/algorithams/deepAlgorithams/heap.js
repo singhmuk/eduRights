@@ -30,114 +30,83 @@ const styles = theme => ({
 })
 
 
-const heap = `class MinPriorityQueue {
-  constructor(c) {
-    this.heap = [];
-    this.capacity = c;
-    this.size = 0;
-  }
+const heap = `
+function HashTable() {
+  const hash = {};
 
-  
-  insert(key) {                               //inserts key at end and rearranges, so the binary heap in appropriate order.
-    if (this.isFull()) return;
-    this.heap[this.size + 1] = key;
-    let k = this.size + 1;
-    
-    while (k > 1) {
-      if (this.heap[k] < this.heap[Math.floor(k / 2)]) {
-        let temp = this.heap[k];
-        this.heap[k] = this.heap[Math.floor(k / 2)];
-        this.heap[Math.floor(k / 2)] = temp;
-      }
-      k = Math.floor(k / 2);
+  function hashFunction(key) {
+    let hashValue = 0;
+    for (let i = 0; i < key.length; i++) {
+      hashValue += key.charCodeAt(i);
     }
-    this.size++;
+    return hashValue % 100; // You can adjust the size of the hash table as needed.
   }
 
-  
-  peek() {                                                            // returns the highest priority value.
-    return this.heap[1];
+  function insert(key, value) {
+    const index = hashFunction(key);
+    if (!hash[index]) {
+      hash[index] = {};
+    }
+    hash[index][key] = value;
   }
 
-  
-  isEmpty() {                                                        
-    if (0 == this.size) return true;
-    return false;
-  }
-
-  
-  isFull() {                                                          
-    if (this.size == this.capacity) return true;
-    return false;
-  }
-
-
-  print() {                                                          
-    console.log(this.heap.slice(1));
-  }
-                                                                       
-  heapSort() {                                                        // heap sorting done by delete function to the 
-    for (let i = 1; i < this.capacity; i++) {                         //number of times of the size of the heap it returns
-      this.delete();                                                  //reverse sort because it is a min priority queue.
+  function get(key) {
+    const index = hashFunction(key);
+    if (hash[index] && hash[index][key] !== undefined) {
+      return hash[index][key];
+    } else {
+      return null; 
     }
   }
 
-
-  sink() {                                                            // this function reorders the heap after every delete.
-    let k = 1;
-    while (2 * k <= this.size || 2 * k + 1 <= this.size) {
-      let minIndex;
-      if (this.heap[2 * k] >= this.heap[k]) {
-        if (2 * k + 1 <= this.size && this.heap[2*k+1] >= this.heap[k]) {
-          break;
-        }
-        else if(2*k+1 > this.size){
-          break;
-        }
-      }
-      if (2 * k + 1 > this.size) {
-        minIndex = this.heap[2 * k] < this.heap[k] ? 2 * k : k;
-      } else {
-        if (
-          this.heap[k] > this.heap[2 * k] ||
-          this.heap[k] > this.heap[2 * k + 1]
-        ) {
-          minIndex =
-            this.heap[2 * k] < this.heap[2 * k + 1] ? 2 * k : 2 * k + 1;
-        } else {
-          minIndex = k;
-        }
-      }
-      let temp = this.heap[k];
-      this.heap[k] = this.heap[minIndex];
-      this.heap[minIndex] = temp;
-      k = minIndex;
+  function update(key, value) {
+    const index = hashFunction(key);
+    if (hash[index] && hash[index][key] !== undefined) {
+      hash[index][key] = value;
+    } else {
+      throw new Error('Key not found');
     }
   }
 
-  
-  delete() {                                                            // deletes the highest priority value from the heap.
-    let min = this.heap[1];
-    this.heap[1] = this.heap[this.size];
-    this.heap[this.size] = min;
-    this.size--;
-    this.sink();
-    return min;
+  function remove(key) {
+    const index = hashFunction(key);
+    if (hash[index] && hash[index][key] !== undefined) {
+      delete hash[index][key];
+    } else {
+      throw new Error('Key not found');
+    }
   }
+
+  function getAll() {
+    const values = [];
+    for (const index in hash) {
+      const keys = Object.keys(hash[index]);
+      for (const key of keys) {
+        values.push(hash[index][key]);
+      }
+    }
+    return values;
+  }
+
+  return { insert, get, update, remove, getAll };
 }
 
+const myHashTable = new HashTable();
 
-q = new MinPriorityQueue(8);
+myHashTable.insert('name', 'John');
+myHashTable.insert('country', 'India');
+myHashTable.insert('city', 'Noida');
+myHashTable.insert('age', 30);
 
-q.insert(5);
-q.insert(2);
-q.insert(4);
-q.insert(1);
-q.insert(7);
+console.log(myHashTable.get('name')); 
 
-q.print();                                                              // [ 1, 2, 3, 5, 7, 6, 4, 8 ]
-q.heapSort();
-q.print();                                                              // [ 8, 7, 6, 5, 4, 3, 2, 1 ]
+myHashTable.update('age', 31);
+console.log(myHashTable.get('age')); 
+
+myHashTable.remove('age');
+console.log(myHashTable.get('age')); 
+
+console.log(myHashTable.getAll()); 
 `.trim()
 
 

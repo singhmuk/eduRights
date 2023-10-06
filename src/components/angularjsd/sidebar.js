@@ -92,7 +92,7 @@ export default function Sidebar() {
         </MenuItem>
 
         <MenuItem>
-          <Link to="/projection" className={classes.line}>
+          <Link to="/outputs" className={classes.line}>
             Input-Output
             <br />
             -KeyIn-If-Switch

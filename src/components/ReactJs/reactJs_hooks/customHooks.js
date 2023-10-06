@@ -146,36 +146,32 @@ function App() {
 }`.trim();
 
 const useReducersCase = `
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "INCREMENT":
-      return { count: state.count + 1, showText: state.showText };
-    case "toggleShowText":
-      return { count: state.count, showText: !state.showText };
-    default:
-      return state;
-  }
-};
-
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, { count: 0, showText: true });
+  const [count, dispatch] = useReducer((state, action)=>{
+      switch(action.type){
+        case 'inc':
+          return state+1;
+        case 'dec':
+          return state-1;
+        case 'reset':
+          return state=0;
+        default:
+          return state;
+      }
+  },0);
 
-  return (
+  return(
     <div>
-      <h1>{state.count}</h1>
-      <button
-        onClick={() => {
-          dispatch({ type: "INCREMENT" });
-          dispatch({ type: "toggleShowText" });
-        }}
-      >
-        Click Here
-      </button>
-
-      {state.showText && <p>This is a text</p>}
+      {count}<br/>
+      <button onClick={()=>dispatch({type:'inc'})}>Count</button>
+      <button onClick={()=>dispatch({type:'dec'})}>Dec</button>
+      <button onClick={()=>dispatch({type:'reset'})}>Reset</button>
     </div>
-  );
-};`.trim();
+  )
+}
+
+export default App;
+`.trim();
 
 const useReducersc = `
 const App = () => {

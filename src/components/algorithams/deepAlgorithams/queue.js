@@ -29,71 +29,36 @@ const styles = theme => ({
 })
 
 
-const queue = `var Queue = (function () {
-  
-  function Queue() {                                                     
-    this.queue = [];
+const queue = `
+function fun(){
+  const queue=[1,2,3];
+
+  function enqueue(item){
+    queue.push(item)
   }
 
-  Queue.prototype.enqueue = function (item) {
-    this.queue[this.queue.length] = item;                                 //Add a value to the end of the queue.
-  };
+  function printQueue(){
+    return queue.slice()
+  }
 
-  Queue.prototype.dequeue = function () {
-    if (this.queue.length === 0) {                                        //Removes the value at the front of the queue.
-      throw "Queue is Empty";
-    }
+  function dequeue(){
+    return queue.shift()
+  }
 
-    var result = this.queue[0];
-    this.queue.splice(0, 1);                                              //Remove the item at position 0.
+  function size(){
+    return queue.length;
+  }
 
-    return result;
-  };
-
-  Queue.prototype.length = function () {
-    return this.queue.length;                                             
-  };
-
-  Queue.prototype.peek = function () {
-    return this.queue[0];                                           //Return the item at the front of the queue.
-  };
-
- 
-  Queue.prototype.view = function () {
-    console.log(this.queue);                                        
-  };
-
-  return Queue;
-
-}());
-
-var myQueue = new Queue();
-
-myQueue.enqueue(1);
-myQueue.enqueue(5);
-myQueue.enqueue(76);
-myQueue.enqueue(69);
-myQueue.enqueue(32);
-myQueue.enqueue(54);
-
-myQueue.view();
-
-console.log("Length: " + myQueue.length());
-console.log("Front item: " + myQueue.peek());
-console.log("Removed " + myQueue.dequeue() + " from front.");
-console.log("New front item: " + myQueue.peek());
-console.log("Removed " + myQueue.dequeue() + " from front.");
-console.log("New front item: " + myQueue.peek());
-myQueue.enqueue(55);
-console.log("Inserted 55");
-console.log("New front item: " + myQueue.peek());
-
-for (var i = 0; i < 5; i++) {
-  myQueue.dequeue();
-  myQueue.view();
+  return {enqueue, printQueue, dequeue, size}
 }
 
-//console.log(myQueue.dequeue());                                                              // throws exception!
+const obj=fun();
+obj.enqueue(1);
+obj.enqueue(2);
+console.log(obj.printQueue())
+obj.dequeue()
+console.log(obj.printQueue())
+console.log(obj.size())
 `.trim()
 
 

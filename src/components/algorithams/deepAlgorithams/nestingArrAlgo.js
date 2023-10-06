@@ -29,49 +29,24 @@ const styles = theme => ({
 })
 
 
-const rotate = `
-function rotate (matrix = []){
-  const n = matrix.length
+const groupAnagrams = `
+function fun() {
+  const words = ["eat","tea","tan","ate","nat","bat"];
+  const anagramGroups = {};
 
-  for (let i = 0; i < Math.floor(n / 2); i++) {
-    const temp = matrix[i]
-    matrix[i] = matrix[n - 1 - i]
-    matrix[n - 1 - i] = temp
-  }
-  
-  for (let i = 0; i < n; i++) {
-    for (let j = i + 1; j < n; j++) {
-      const temp = matrix[i][j]
-      matrix[i][j] = matrix[j][i]
-      matrix[j][i] = temp
+  for (const word of words) {
+    const sortedWord = word.split('').sort().join('');
+
+    if (anagramGroups[sortedWord]) {
+      anagramGroups[sortedWord].push(word);
+    } else {
+      anagramGroups[sortedWord] = [word];
     }
   }
-  return matrix
+  console.log(anagramGroups)
 }
 
-console.log(rotate([[1,2,3],[4,5,6],[7,8,9]]))
-`.trim();
-
-const groupAnagrams = `
-function groupAnagrams(strs) {
-  const sortStr = str => str.split('').sort((a, b) => a.localeCompare(b)).join('')
-
-  const sortedMap = strs.map(sortStr).reduce((map, current, index) => {
-      if (map[current]) {
-        map[current].push(strs[index])
-      } 
-      else {
-        map[current] = [strs[index]]
-      }
-      return map
-    },
-    {},
-  )
-
-  return Object.keys(sortedMap).map(key => sortedMap[key])
-}
-
-console.log(groupAnagrams(["eat","tea","tan","ate","nat","bat"]))
+fun()
 `.trim();
 
 const binaryMatrix = `
@@ -235,21 +210,6 @@ class DSLogic3 extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
-              <h3>1. Rotate Image.</h3>
-              You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
-              <br/>
-              You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
-              <br/><br/><b>Input: </b>matrix = [[1,2,3],[4,5,6],[7,8,9]]<br/>
-              <b>Output: </b>[[7,4,1],[8,5,2],[9,6,3]]
-              <div style={titles}>
-                <PrismCode
-                  code={rotate}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br/>
-
               <h3>2. Group Anagrams.</h3>
               Given an array of strings strs, group the anagrams together. You can return the answer in any order.
               <br/>
@@ -266,6 +226,7 @@ class DSLogic3 extends Component {
               </div>
               <br/>
 
+              <b>break</b>
               <h3>3. Shortest Path in Binary Matrix</h3>
               <ul>
                 <li>In an N by N square grid, each cell is either empty (0) or blocked (1).</li>

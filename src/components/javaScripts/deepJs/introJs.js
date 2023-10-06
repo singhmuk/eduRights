@@ -649,23 +649,42 @@ class IntroJs extends Component {
           <Paper className={classes.paper}>
             <List>
               <h3>1. What are JavaScript Data Types?</h3>
-              Default javaScript is Synchronous.
-              <br />
-              <i>
-                In JavaScript null is <b>nothing</b>. It is supposed to be
+              <ul>
+                <li>Default javaScript is Synchronous.</li>
+                <li>In JavaScript null is <b>nothing</b>. It is supposed to be
                 something that
                 <b> doesn't exist</b>. In JavaScript, the data type of null is
-                an <b>object</b>.
-              </i>
-              <br />
-              <ol>
-                <li>Number</li>
-                <li>String</li>
-                <li>Boolean</li>
-                <li>Object</li>
-                <li>Undefined</li>
-                <li>Null</li>
-              </ol>
+                an <b>object</b>.</li>
+                <li>JavaScript is a dynamically typed language, means variables can hold values of different data types at 
+                  different times during their lifecycle. JavaScript has several built-in data types, which can be categorized 
+                  into two main categories:</li>
+                  <ul>
+                    <li><b>primitive data types</b></li>
+                    <li><b>Reference data types</b></li>
+                  </ul>
+                  <br/>
+                <li>Primitive Data Types:</li>
+                <ul>
+                    <li><b>Number</b></li>
+                    <li><b>String</b></li>
+                    <li><b>Boolean</b></li>
+                    <li><b>Null</b></li>
+                    <li><b>Undefined</b></li>
+                    <li><b>Symbol </b>const symbol = Symbol("description");</li>
+                    <li><b>BigInt </b>const bigIntValue = 1234567890123456789012345678901234567890n;</li>
+                  </ul>
+                  <br/>
+                <li><b>Reference Data Types: </b>These data types are more complex and can hold multiple values. They are stored and 
+                  accessed by reference.</li>
+                <ul>
+                    <li><b>Object</b></li>
+                    <li><b>Array</b></li>
+                    <li><b>Function</b></li>
+                    <li><b>Date</b></li>
+                    <li><b>RegExp </b>let pattern = /hello/i; // Matches "hello" case-insensitively</li>
+                    <li><b>Map and Set</b></li>
+                  </ul>
+              </ul>
               <br />
 
               <h3>What is first class object in javascript</h3>
@@ -928,6 +947,10 @@ class IntroJs extends Component {
               <h3>13. What are closures? Explain with example.</h3>
               <b>scope: </b> Local, Global, Lexical.
               <br />
+              A closure is a function that remembers the variables from the scope in which it was created, even after 
+              that scope has finished executing.
+              <br/>
+              <br/>
               In normal programming when we call function after than any
               varriables or parameter declared in that function we can't use
               again. But with help of closers we can use function variables
@@ -964,11 +987,10 @@ class IntroJs extends Component {
               <br />
               <ul>
                 <li>Uses: Module Design Pattern</li>
-                <li>Currying</li>
-                <li>Functions like once</li>
+                <li>Implementing data privacy and encapsulation in JavaScript.</li>
+                <li>Managing asynchronous code, like in callbacks or event handlers, where you need to 
+                  retain access to certain variables.</li>
                 <li>Memoize</li>
-                <li>Maintaining state in async world</li>
-                <li>setTimeouts</li>
                 <li>Iterators</li>
               </ul>
               <br />
@@ -1054,7 +1076,9 @@ class IntroJs extends Component {
               <br />
               <br />
               <h3>16. Bind()</h3>
-              The bind() is used to create a new function with a specified this value and, optionally, initial arguments. It allows you to control the context in which a function is invoked. 
+              The bind() method is used to create a new function that has a specific this context and, 
+              optionally, one or more predefined arguments. The primary problem that bind() solves is 
+              related to controlling the value of this within a function.
               <br />
               <div style={titles}>
                 <PrismCode

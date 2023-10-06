@@ -314,50 +314,7 @@ class Html1 extends Component {
               all browsers.
               <br />
               <br />
-              <h3>
-                8. Explain the difference between HTML and XHTML (Extensible
-                Hypertext Markup Language) .
-              </h3>
-              <ul>
-                <li>
-                  <b>Syntax: </b>HTML syntax is more forgiving, allowing for
-                  unclosed tags, missing attributes, and more. XHTML, on the
-                  other hand, requires well-formed XML syntax, with all tags
-                  properly closed and attributes quoted.
-                </li>
-                <br />
-                <li>
-                  <b>Document structure: </b>HTML does not require a document
-                  type declaration, while XHTML requires a specific DOCTYPE
-                  declaration at the beginning of the document.
-                </li>
-                <br />
-                <li>
-                  <b>Validation: </b>HTML validation is done against a set of
-                  rules, while XHTML validation is done against a specific XML
-                  schema.
-                </li>
-                <br />
-                <li>
-                  <b>MIME type: </b>HTML is served with a text/html MIME type,
-                  while XHTML is served with an application/xhtml+xml MIME type.
-                </li>
-                <br />
-                <li>
-                  <b>Browser support: </b>Most modern browsers support both HTML
-                  and XHTML, but older browsers may have difficulty with XHTML
-                  due to its stricter syntax.
-                </li>
-                <br />
-              </ul>
-              In summary, XHTML is a stricter and more standardized version of
-              HTML that is based on XML syntax. It requires well-formed XML
-              syntax and a specific DOCTYPE declaration, and is validated
-              against an XML schema. While both languages are used for creating
-              web pages, HTML is more forgiving and easier to work with, while
-              XHTML offers greater standardization and stricter rules.
-              <br />
-              <br />
+              
               <h3>
                 9. What are the different types of form inputs in HTML, and how
                 do you use them?
@@ -594,9 +551,15 @@ class Html1 extends Component {
               the SEO of a web page.
               <br />
               <br />
-              <h3>23. Diffeence between innerHtml and innerTextHtml.</h3>
+              <h3>23. Diffeence between innerHtml and innerText in Html.</h3>
               The innerHTML and innerText properties are used to manipulate the
               content of an HTML element using JavaScript.
+              <br/>
+              <br/>
+              <ul>
+                <li><b>innerHTML :</b>Deals with HTML content, including HTML tags.</li>
+                <li><b>innerText :</b>Deals with only the visible text content and ignores any HTML tags within the element.</li>
+              </ul>
               <div style={titles}>
                 <PrismCode
                   code={iframe}

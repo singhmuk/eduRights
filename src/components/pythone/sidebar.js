@@ -43,6 +43,16 @@ export default function Sidebar() {
         <MenuItem><Link to='/logicalspy' className={classes.line}>Logicals</Link></MenuItem>
         <MenuItem><Link to='/pyLogic' className={classes.line}>PyLogic</Link></MenuItem>
         <MenuItem><Link to='/csv' className={classes.line}>CsvPython</Link></MenuItem>
+        <br/>
+        DSA
+        <MenuItem><Link to='/pyString' className={classes.line}>String</Link></MenuItem>
+        <MenuItem><Link to='/pyArray' className={classes.line}>Array</Link></MenuItem>
+        <MenuItem><Link to='/pyNumbers' className={classes.line}>Numbers</Link></MenuItem>
+        <MenuItem><Link to='/pyLinkedList' className={classes.line}>LinkedList</Link></MenuItem>
+        <MenuItem><Link to='/pyHash' className={classes.line}>Hash</Link></MenuItem>
+        <MenuItem><Link to='/pyTree' className={classes.line}>Tree</Link></MenuItem>
+        <MenuItem><Link to='/pyGraph' className={classes.line}>Graph</Link></MenuItem>
+        <MenuItem><Link to='/pyArrStr' className={classes.line}>ArrStr</Link></MenuItem>
         <br />
         Flask
         <MenuItem><Link to='/conroutes' className={classes.line}>routes</Link></MenuItem>

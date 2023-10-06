@@ -2,10 +2,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import HeaderSection from "../../components/dashboard/blog/HeaderSection";
 
-import { components as ReduxMains } from "../Redux";
-import { components as PyMains } from "../pythone";
+
 import { components as AngularJs } from "../angularjs";
-import { components as AngularJsd } from "../angularjsd";
 import { components as MlMains } from "../ml";
 import About from "../../components/dashboard/about";
 
@@ -144,53 +142,94 @@ import DSLogic7 from "../algorithams/deepAlgorithams/introAlgo";
 import DSLogic8 from "../algorithams/deepAlgorithams/dslogic8";
 import Trees from "../algorithams/deepAlgorithams/trees";
 
+import IntroRedux from "../Redux/deep/introRedux";
+import ReduxState from "../Redux/deep/reduxState";
+import CountersRedux from "../Redux/deep/counter";
+import ReduxMethods from "../Redux/deep/reduxMethods";
+import Git from "../Redux/deep/git";
+import ReactRedux from "../Redux/deep/react_redux";
+import ContctHooks from "../Redux/deep/contactKeeperApi";
+import ExpenseTraMern from "../Redux/deep/expenseTraMern";
+import GitConcepts from "../Redux/deep/gitConcepts";
+import MernRedux from "../Redux/deep/mernRedux";
+import ReduxCurd from "../Redux/deep/reduxCurd";
+import SignUp from "../Redux/deep/signUp";
+import Skills from "../Redux/deep/skills";
+import ComSkils from "../Redux/deep/comskills";
+import TechSkils from "../Redux/deep/techskills";
+import TechInto from "../Redux/deep/techinto";
 
-const {
-  ReduxState,
-  ReduxMethods,
-  Git,
-  Skills,
-  IntroRedux,
-  ReactRedux,
-  ContctHooks,
-  ExpenseTraMern,
-  GitConcepts,
-  CountersRedux,
-  MernRedux,
-  ReduxCurd,
-  SignUp,
-  ComSkils,
-  TechSkils,
-  TechInto,
-} = ReduxMains;
+import IntroAngulard from "../angularjsd/deepAngularjs/introAngularjs";
+import DepenInjection from "../angularjsd/deepAngularjs/depenInjection";
+import Aflows from "../angularjsd/angular 12/flows";
+import NgModel from "../angularjsd/deepAngularjs/ngModel";
+import NgRepeat from "../angularjsd/deepAngularjs/ngRepeat";
+import AngularCond from "../angularjsd/deepAngularjs/angularConditions";
+import Directives from "../angularjsd/deepAngularjs/directives";
+import Fiters from "../angularjsd/deepAngularjs/angularlFlters";
+import AngularForm from "../angularjsd/deepAngularjs/form";
+import Scope from "../angularjsd/deepAngularjs/scope";
+import Services from "../angularjsd/deepAngularjs/services";
+import Validations from "../angularjsd/deepAngularjs/validations";
+import Filterss from "../angularjsd/deepAngularjs/filter";
+import Logic3 from "../angularjsd/deepAngularjs/apiLogic3";
+import Projection12 from "../angularjsd/angular 12/projection";
+import Outputs from "../angularjsd/angular 12/output";
+import AngularCurd12 from "../angularjsd/angular 12/angularCurd";
+import FilterPlace from "../angularjsd/angular 12/filterPlace";
+import RadioButton12 from "../angularjsd/angular 12/radioButton";
+import Services12 from "../angularjsd/angular 12/services12";
+import MultiCheck from "../angularjsd/angular 12/multiCheck";
+import DropDownAngular from "../angularjsd/angular 12/dropdownsAngu";
+import AngularDir from "../angularjsd/angular 12/angularDir";
+import AngularFor from "../angularjsd/angular 12/ngFor";
+import AngularLifeCycle from "../angularjsd/angular 12/lifeCycleAng";
+import DynamicallyLoad from "../angularjsd/angular 12/dynamicallyLoad";
+import Rxjs from "../angularjsd/angular 12/rxjs";
+import NgrxCurd from "../angularjsd/angular 12/ngrxCurd";
+import NgrxCounter from "../angularjsd/angular 12/ngrxCounter";
+import Debounce from "../angularjsd/angular 12/debounce";
+import Loader from "../angularjsd/angular 12/loader";
+import Paginations from "../angularjsd/angular 12/paginations";
 
-const {
-  PyIntro,
-  PyLogic,
-  IntroPython,
-  Collections,
-  CsvPython,
-  Json,
-  Logics,
-  Mathematics,
-  OopsPyton,
-  Regex,
-  Tkinter,
-  LogicalsPy,
-  Abstract,
-  Tuples,
-  StringPy,
-  IteratorsPy,
-  ExceptionsPy,
-  Logging,
-  Threadings,
-  FlaskSignUp,
-  GetSearch,
-  LoadSearch,
-  Conroures,
-  FlaskIns,
-  HttpsMethods,
-} = PyMains;
+
+
+import PyIntro from "../pythone/deeppy/pyIntro";
+import PyLogic from "../pythone/deeppy/pyLogic";
+import IntroPython from "../pythone/deeppy/introPython";
+import Collections from "../pythone/deeppy/collections";
+import CsvPython from "../pythone/deeppy/csv";
+import Json from "../pythone/deeppy/json";
+import Logics from "../pythone/deeppy/logic_python";
+import Mathematics from "../pythone/deeppy/mathematics";
+import OopsPyton from "../pythone/deeppy/oops_";
+
+import Regex from "../pythone/deeppy/regex";
+import Tkinter from "../pythone/deeppy/tkinter";
+import LogicalsPy from "../pythone/deeppy/logicalspy";
+import Abstract from "../pythone/deeppy/abstract";
+import Tuples from "../pythone/deeppy/tuples";
+import StringPy from "../pythone/deeppy/stringPy";
+import IteratorsPy from "../pythone/deeppy/iteratorsPy";
+import ExceptionsPy from "../pythone/deeppy/exceptionsPy";
+import Logging from "../pythone/deeppy/logging";
+import Threadings from "../pythone/deeppy/threadings";
+import FlaskSignUp from "../pythone/deeppy/flask_signUp";
+import GetSearch from "../pythone/deeppy/get_search";
+import LoadSearch from "../pythone/deeppy/load_search";
+import Conroures from "../pythone/deeppy/conroutes";
+import HttpsMethods from "../pythone/deeppy/httpsMethods";
+import FlaskIns from "../pythone/deeppy/flasksIn";
+
+import PyString from "../pythone/deeppy/pyString";
+import PyArray from "../pythone/deeppy/pyArray";
+import PyNumbers from "../pythone/deeppy/pyNumbers";
+import PyLinkedList from "../pythone/deeppy/pyLinkedList";
+import PyHash from "../pythone/deeppy/pyHash";
+import PyTree from "../pythone/deeppy/pyTree";
+import PyGraph from "../pythone/deeppy/pyGraph";
+import PyArrStr from "../pythone/deeppy/pyArrStr";
+
 
 const {
   IntroAngular,
@@ -215,41 +254,6 @@ const {
   TensorFlows,
 } = AngularJs;
 
-const {
-  IntroAngulard,
-  NgModel,
-  Calculators,
-  NgRepeat,
-  AngularCond,
-  Rxjs,
-  NgrxCurd,
-  NgrxCounter,
-  Logic3,
-  AngularDir,
-  AngularLifeCycle,
-  Aflows,
-  Directives,
-  AungularEvents,
-  Fiters,
-  AngularForm,
-  AngularFor,
-  Scope,
-  Services,
-  Validations,
-  Filterss,
-  Projection12,
-  AngularCurd12,
-  FilterPlace,
-  DynamicallyLoad,
-  RadioButton12,
-  Services12,
-  MultiCheck,
-  DropDownAngular,
-  DepenInjection,
-  Debounce,
-  Paginations,
-  Loader,
-} = AngularJsd;
 
 const {
   Capture,
@@ -439,6 +443,15 @@ const Routes = (props) => {
           <Route exact path="/httpsMethods" component={HttpsMethods} />
           <Route exact path="/flasksIn" component={FlaskIns} />
 
+          <Route exact path="/pyString" component={PyString} />
+          <Route exact path="/pyArray" component={PyArray} />
+          <Route exact path="/pyNumbers" component={PyNumbers} />
+          <Route exact path="/pyLinkedList" component={PyLinkedList} />
+          <Route exact path="/pyHash" component={PyHash} />
+          <Route exact path="/pyTree" component={PyTree} />
+          <Route exact path="/pyGraph" component={PyGraph} />
+          <Route exact path="/pyArrStr" component={PyArrStr} />
+
           <Route exact path="/introAlgo" component={IntroAlgo} />
           <Route exact path="/graph" component={Graph} />
           <Route exact path="/linkedList" component={LinkedList} />
@@ -537,7 +550,7 @@ const Routes = (props) => {
           <Route exact path="/depenInjection" component={DepenInjection} />
           <Route exact path="/flows" component={Aflows} />
           <Route exact path="/ngModel" component={NgModel} />
-          <Route exact path="/calculator" component={Calculators} />
+          {/* <Route exact path="/calculator" component={Calculators} /> */}
           <Route exact path="/ngRepeat" component={NgRepeat} />
           <Route exact path="/angularConditions" component={AngularCond} />
 
@@ -551,6 +564,7 @@ const Routes = (props) => {
           <Route exact path="/filter" component={Filterss} />
           <Route exact path="/projection" component={Projection} />
           <Route exact path="/projection" component={Projection12} />
+          <Route exact path="/outputs" component={Outputs} />
           <Route exact path="/angularCurd" component={AngularCurd12} />
           {/* <Route exact path="/basicts" component={BasicTs} /> */}
           <Route exact path="/filterPlace" component={FilterPlace} />

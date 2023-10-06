@@ -30,81 +30,42 @@ const styles = theme => ({
 
 
 const stack = `
-class Stack {
-  constructor() {
-      this.items = []
-      this.count = 0
+function fun(){
+  const stack=[3];
+
+  function pushed(item){
+     stack.push(item)
   }
 
-  
-  push(element) {                                                             // Add element to top of stack.
-      this.items[this.count] = element
-      console.log('$'{element} added to '$'{this.count})
-      this.count += 1
-      return this.count - 1
+  function peek(){
+     return stack[stack.length-1]
   }
 
-  
-  
-  pop() {
-      if(this.count == 0) return undefined                                    // Return undefined if stack is empty.
-      let deleteItem = this.items[this.count - 1]
-      this.count -= 1                                                         // Return and remove top element in stack.
-      console.log('$'{deleteItem} removed)
-      return deleteItem
+  function printStack(){
+    return stack.slice()
   }
 
-  
-  peek() {                                                                    // Check top element in stack.
-      console.log(Top element is '$'{this.items[this.count - 1]})
-      return this.items[this.count - 1]
+  function poped(){
+    stack.pop()
   }
 
-  
-  isEmpty() {                                                                 // Check if stack is empty.
-      console.log(this.count == 0 ? 'Stack is empty' : 'Stack is NOT empty')
-      return this.count == 0
+  function isEmpty(){
+    return stack.length ===0
   }
 
-
-  size() {                                                                     // Check size of stack.
-      console.log('$'{this.count} elements in stack)
-      return this.count
-  }
-
-  
-  print() {                                                                     
-      let str = ''
-      for(let i = 0; i < this.count; i++) {
-          str += this.items[i] + ' '
-      }
-      return str
-  }
-
-  clear() {
-      this.items = []
-      this.count = 0
-      console.log('Stack cleared..')
-      return this.items
-  }
+  return {pushed, peek, printStack, poped, isEmpty}
 }
 
-const stack = new Stack()
+const obj= fun();
+obj.pushed(1)
+obj.pushed(2)
+console.log(obj.printStack())
 
-stack.isEmpty()
-stack.push(100)
-stack.peek()
-stack.push(300)
+obj.poped()
 
-console.log(stack.print())
-
-stack.pop()
-stack.clear()
-
-console.log(stack.print())
-
-stack.size()
-stack.isEmpty()`.trim()
+console.log(obj.printStack())
+console.log(obj.isEmpty())
+`.trim()
 
 
 class Stack extends Component {

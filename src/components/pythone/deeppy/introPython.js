@@ -50,13 +50,37 @@ print(num.imag)
 `.trim();
 
 const nonlocal = `
-def make_counter():
-    count = 0
-    def counter():
-        nonlocal count
-        count += 1
-        return count
-    return counter`.trim();
+def count():
+    x = 2
+    y = 3
+
+    def sum():
+        print(x + y)
+
+    return sum()
+
+count()
+
+
+// 2
+def count():
+    x = 2
+
+    def sum():
+        nonlocal x
+        x += 1
+        return x
+
+    return sum
+
+
+obj = count()
+obj2 = count()
+
+print(obj())
+print(obj())
+print(obj2())         # (obj2 has its own separate count)
+`.trim();
 
 const firstClass = `
 def shout(text):
@@ -81,39 +105,40 @@ greet(whisper)
     
     
 #3
-def create_adder(x):
-  def adder(y):
-    return x+y
-  return adder
+def add(x):
+    def add2(y):
+        return x + y
+    return add2
 
-add_15 = create_adder(15)
-print (add_15(10))
+obj = add(2)
+print(obj(3))
 `.trim();
 
 const docstrings = `
-def myFun(x):
-      x[0] = 20
-      lst = [10, 11, 12, 13, 14, 15]
-      myFun(lst)
-      print(lst)
-    
-def myFun(x, y=50):                                                             # Default arguments.
-  print("x: ", x)
-  print("y: ", y)
+def fun(x):
+    x[0] = 20
+    lst = [1, 2, 3]
+    fun(lst)
+    print(lst)
 
-myFun(10)                                                            
+def fun(x, y=5):  # Default arguments.
+    print(x)
+    print(y)
+
+fun(10)
 `.trim();
 
 const closure = `
-    def oF(text):
-      text = text
-      def iF():
-        print(text)
-      return iF                                                           # returning function WITHOUT parenthesis
-    
-    if __name__ == '__main__':
-      myFunction = oF('Hey!')
-      myFunction()
+def outer(a):
+    b = 2
+
+    def inner():
+        nonlocal b
+        print(a + b)
+
+    return inner()
+
+outer(3)
     `.trim();
 
 const logging = `
@@ -141,202 +166,202 @@ add_logger(4, 5)
 `.trim();
 
 const kwargs = `
-def student(firstname, lastname):
-  print(firstname, lastname)
+def fun(a, b):
+    print(a, b)
 
-student(lastname='Practice', firstname='Geeks')                      # Keyword arguments
+fun(b="Practice", a="Geeks")                     # Keyword arguments
     
     
 #2 Variable-length arguments:
-def myFun(*argv):
-  for arg in argv:
-    print(arg)
+def fun(*argv):
+    for item in argv:
+        print(item)
 
-myFun('Hello', 'Welcome', 'to', 'GeeksforGeeks')
+
+fun("Hello", "Welcome", "to", "World")
+
     
     
 # 3
-def myFun(**kwargs):
-  for key, value in kwargs.items():
-    print("%s == %s" % (key, value))
+def fun(**kwargv):
+    for keys, value in kwargv.items():
+        print("%s == %s" % (keys, value))
 
-myFun(first='Geeks', mid='for', last='Geeks')
+
+fun(a="Hello", b="Welcome", c="to", d="World")
     
     
     
 #4 with one extra argument.
-def myFun(arg1, **kwargs):
-    for key, value in kwargs.items():
-        print("%s == %s" % (key, value))
+def fun(arg1, **kwargv):
+    for keys, value in kwargv.items():
+        print("%s == %s" % (keys, value))
 
-myFun("Hi", first='Geeks', mid='for', last='Geeks')
-    
-    
-    
-#5 To call a function
-def myFun(arg1, arg2, arg3):
-    print("arg1:", arg1)
-    print("arg2:", arg2)
-    print("arg3:", arg3)
 
-args = ("Geeks", "for", "Geeks")
-myFun(*args)
-
-kwargs = {"arg1": "Geeks", "arg2": "for", "arg3": "Geeks"}
-myFun(**kwargs)
+fun("Hi", a="Hello", b="Welcome", c="to", d="World")
 `.trim();
 
 const variables = `
-    #1
-    def f():
-      s = "Me too."
-      print(s)
-    
-    s = "I love Geeksforgeeks"
-    f()
-    
-    
-    #2
-    a=10
-    def something():
-      global a
-      a=15
-      print('in function ',a)
-    
-    something()
-    print('outside', a)
+#1
+def fun():
+    str = "Me too."
+    print(str)
+
+    str = "I love"
+
+fun()
     
     
-    #3
-    a = 10
-    print(id(a))
+#2
+a = 10
+print("outside", a)
+
+def fun():
+    global a
+    a = 15
+    print("inside ", a)
+
+fun()
+print("outside", a)
     
-    def something():
-        a = 20
-        x = globals()['a']
-        print(id(x))
-        print('in function ', a)
     
-        globals()['a'] = 15
-    
-    something()
-    print('outside', a)`.trim();
+#3
+a = 10
+print(id(a))
+
+
+def fun():
+    a = 20
+    x = globals()["a"]
+    print(id(x))
+    print("inside ", a)
+
+    globals()["a"] = 15
+
+
+fun()
+print("outside", a)
+    `.trim();
 
 const parameters = `
-def print_name(name):                                                     # name is the parameter
+def fun(name):                       # name is the parameter
     print(name)
 
-print_name('Alex')                                                        # 'Alex' is the argument
+
+fun("Alex")                          # 'Alex' is the argument
 `.trim();
 
 const rearrange = `
 #positional argument
-def f1(a,b):
-    print("a=",a,"b=",b)
-f1(1,2)
+def fun(a,b):
+    print(a, b)
+fun(1,2)
 
 
 #keyword argument
-def f1(a,b):
-    print("a=",a,"b=",b)
-f1(b=1,a=2)
+def fun(a,b):
+    print(a, b)
+fun(b=1,a=2)
     
     
     
 #3
-def foo(a, b, c):
+def fun(a, b, c):
     print(a, b, c)
     
-foo(1, 2, 3)                                                        # positional arguments
-foo(a=1, b=2, c=3)                                                  # keyword arguments
-foo(c=3, b=2, a=1)                                                  # Order is not important
-foo(1, b=2, c=3)                                                    
+fun(1, 2, 3)                                                        # positional arguments
+fun(a=1, b=2, c=3)                                                  # keyword arguments
+fun(c=3, b=2, a=1)                                                  # Order is not important
+fun(1, b=2, c=3)                                                    
 
 # This is not allowed:
-foo(1, b=2, 3)                                                      # positional argument after keyword argument
-foo(1, b=2, a=3)                                                    # multiple values for argument 'a'`
+fun(1, b=2, 3)                                                      # positional argument after keyword argument
+fun(1, b=2, a=3)                                                    # multiple values for argument 'a'`
   .trim();
 
 const defaultargs = `
-def foo(a, b, c, d=4):                                                  # default arguments
+def fun(a, b, c, d=4):                                                  # default arguments
     print(a, b, c, d)
 
-foo(1, 2, 3)
-foo(1, b=2, c=3, d=100)
+fun(1, 2, 3)
+fun(1, b=2, c=3, d=100)
 
-def foo(a, b=2, c, d=4):                                                # default arguments must be at the end
+def fun(a, b=2, c, d=4):                                                # default arguments must be at the end
     print(a, b, c, d)
 `.trim();
 
 const forced = `
-def foo(a, b, *, c, d):
+def fun(a, b, *, c, d):
     print(a, b, c, d)
 
-foo(1, 2, c=3, d=4)
-# foo(1, 2, 3, 4)                                                               # not allowed:
+fun(1, 2, c=3, d=4)
+# fun(1, 2, 3, 4)                                                               # not allowed:
 
                                                 
-def foo(*args, last):
+def fun(*args, last):
     for arg in args:
         print(arg)
     print(last)
 
-foo(8, 9, 10, last=50)
+fun(8, 9, 10, last=50)
 `.trim();
 
 const unpacking = `
-def foo(a, b, c):
+def fun(a, b, c):
     print(a, b, c)
 
-my_list = [4, 5, 6] # or tuple
-foo(*my_list)                                                     # list/tuple unpacking, length must match
+list = [4, 5, 6] # or tuple
+fun(*list)                                                     # list/tuple unpacking, length must match
 
-my_dict = {'a': 1, 'b': 2, 'c': 3}                                # dict unpacking, keys and length must match
-foo(**my_dict)
+dict = {'a': 1, 'b': 2, 'c': 3}                                # dict unpacking, keys and length must match
+fun(**dict)
 
-# my_dict = {'a': 1, 'b': 2, 'd': 3}                              # not possible since wrong keyword
+# dict = {'a': 1, 'b': 2, 'd': 3}                              # not possible since wrong keyword
 `.trim();
 
 const passing = `
 # immutable objects 
-def foo(x):
+def fun(x):
     x = 5                                 # x += 5 also no effect since x is immutable and a new variable must be created
 
 var = 10
-print('var before foo():', var)
-foo(var)
-print('var after foo():', var)
+print('var before fun():', var)
+fun(var)
+print('var after fun():', var)
 
 
 #2 mutable objects 
-def foo(a_list):
-    a_list.append(4)
-    
-my_list = [1, 2, 3]
-print('my_list before foo', my_list)
-foo(my_list)
-print('my_list after foo', my_list)
+def fun(list):
+    list.append(4)
+
+list2 = [1, 2, 3]
+print("list2 before fun", list2)
+fun(list2)
+print("list2 after fun", list2)
+
     
     
 #3 immutable objects within a mutable object 
 a_list[0] = -100
 a_list[2] = "Paul"
 
-my_list = [1, 2, "Max"]
-print('my_list before foo', my_list)
-foo(my_list)
-print('my_list after foo', my_list)
+list = [1, 2, "Max"]
+print('list before fun', list)
+fun(list)
+print('list after fun', list)
 
 
 #4 Rebind a mutable reference 
-def foo(a_list):
-    a_list = [50, 60, 70]                                   # a_list is now a new local variable within the function
-    a_list.append(50)
-    
-my_list = [1, 2, 3]
-print('my_list before', my_list)
-foo(my_list)
-print('my_list after', my_list)
+def fun(list):
+    list = [50, 60, 70]
+    list.append(50)
+
+
+list2 = [1, 2, 3]
+print("list2 before", list2)
+fun(list2)
+print("list2 after", list2)
+
 `.trim();
 
 const operators = `
@@ -362,21 +387,22 @@ print((lambda: b, lambda: a)[a < b]())
 `.trim();
 
 const overloadings = `
-class A:
+class Plus:
     def __init__(self, a):
         self.a = a
 
     def __add__(self, o):
-        return self.a + o.a                                                             // adding two objects
+        return self.a + o.a  
 
 
-ob1 = A(1)
-ob2 = A(2)
-ob3 = A("Geeks")
-ob4 = A("For")
+obj1 = Plus(1)
+obj2 = Plus(2)
+obj3 = Plus("Geeks")
+obj4 = Plus("For")
 
-print(ob1 + ob2)
-print(ob3 + ob4)
+print(obj1 + obj2)
+print(obj3 + obj4)
+
 
 
 // 2
@@ -388,28 +414,30 @@ class complex:
     def __add__(self, other):
         return self.a + other.a, self.b + other.b
 
-Ob1 = complex(1, 2)
-Ob2 = complex(2, 3)
-print(Ob1 + Ob2)
+obj1 = complex(1, 2)
+obj2 = complex(2, 3)
+print(obj1 + obj2)
+
 
 
 // 3
-class A:
+class Condition:
     def __init__(self, a):
         self.a = a
 
     def __gt__(self, other):
-        if (self.a > other.a):
+        if self.a > other.a:
             return True
         else:
             return False
 
-ob1 = A(2)
-ob2 = A(3)
-if (ob1 > ob2):
-    print("ob1 is greater than ob2")
+
+obj1 = Condition(2)
+obj2 = Condition(3)
+if obj1 > obj2:
+    print("obj1")
 else:
-    print("ob2 is greater than ob1")
+    print("obj2")
 `.trim();
 
 const divisions = `
@@ -419,12 +447,11 @@ print (-5.0/2)
 `.trim();
 
 const anyAll = `
-boolean_list = ['True', 'True', 'True']
-result = all(boolean_list)
-result = any(boolean_list)
+obj = ["True", "True", "True"]
+result = all(obj)
+result = any(obj)
 
 print(result)
-
 `.trim();
 
 const assignment = `
@@ -523,11 +550,11 @@ print (operator.getitem(li,slice(0,2)))                     # using getitem() to
 
 
 //7
-s1 = "geeksfor"
-s2 = "geeks"
-print (operator.concat(s1,s2))
+str = "geeksfor"
+str2 = "geeks"
+print (operator.concat(str,str2))
 
-if (operator.contains(s1,s2)):                              # contains() to check if s1 contains s2                         
+if (operator.contains(str,str2)):                              # contains() to check if str contains str2                         
 	print ("geeksfor")
 else : print ("not contain geeks")
 

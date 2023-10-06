@@ -28,8 +28,354 @@ const styles = theme => ({
   }
 })
 
+const insertData = `
+function Nodes(data, left, right){
+  this.data=data;
+  this.left=left;
+  this.right=right;
+  this.show=show;
+}
+
+function show(){
+  return this.data;
+}
+
+function bst(){
+  this.root=null;
+  this.insert=insert;
+}
+
+function insert(data){
+  const node=new Nodes(data,null,null)
+  if(this.root === null){
+    this.root=node;
+  }else{
+    var current=this.root;
+    var parrent;
+    while(current){
+      parrent=current;
+      if(data < current.data){
+        current=current.left;
+        if(current === null){
+          parrent.left=node;
+        }
+      }else{
+        current = current.right;
+        if(current === null){
+          parrent.right = node;
+        }
+      }
+    }
+  }
+}
+
+const obj= new bst();
+obj.insert(3)
+obj.insert(5)
+obj.insert(2)
+obj.insert(7)
+obj.insert(1)
+
+console.log(obj.root)`.trim()
+
+const traversing = `
+function Nodes(data, left, right){
+  this.data=data;
+  this.left=left;
+  this.right=right;
+  this.show=show;
+}
+
+function show(){
+  return this.data;
+}
+
+function bst(){
+  this.root=null;
+  this.insert=insert;
+}
+
+function insert(data){
+  const node=new Nodes(data,null,null)
+  if(this.root === null){
+    this.root=node;
+  }else{
+    var current=this.root;
+    var parrent;
+    while(current){
+      parrent=current;
+      if(data < current.data){
+        current=current.left;
+        if(current === null){
+          parrent.left=node;
+        }
+      }else{
+        current = current.right;
+        if(current === null){
+          parrent.right = node;
+        }
+      }
+    }
+  }
+}
+
+function inOrder(node){
+  if(!(node==null)){
+    inOrder(node.left);
+    console.log(node.show()+ " ")
+    inOrder(node.right)
+  }
+}
+
+function preOrder(node) {
+  if (node !== null) {
+    console.log(node.show() + " ");
+    preOrder(node.left);
+    preOrder(node.right);
+  }
+}
+
+function postOrder(node) {
+  if (node !== null) {
+    postOrder(node.left);
+    postOrder(node.right);
+    console.log(node.show() + " ");
+  }
+}
+
+const obj= new bst();
+obj.insert(3)
+obj.insert(5)
+obj.insert(2)
+obj.insert(7)
+obj.insert(1)
+
+console.log(obj.root)
+
+console.log('Inorder Traversal')
+inOrder(obj.root)
+
+console.log('Pre-Order Traversal');
+preOrder(obj.root);
+
+console.log('Post-Order Traversal');
+postOrder(obj.root);`.trim()
+
+const deleteNode = `
+function Node(data,left,right){
+  this.data=data;
+  this.left=left;
+  this.right=right;
+  this.show=show;
+}
+
+function show(){
+  return this.data;
+}
+
+function bst(){
+  this.root=null;
+  this.insert=insert;
+}
+
+function insert(data){
+  const node=new Node(data,null,null);
+
+  if(this.root===null){
+    this.root=node;
+  }else{
+    var current=this.root;
+    var parent;
+
+    while(current){
+      parent=current;
+      if(data < current.data){
+        current=current.left;
+        if(current === null){
+          parent.left = node;
+        }
+      }else{
+        current = current.right;
+        if(current === null){
+          parent.right = node;
+        }
+      }
+    }
+  }
+}
+
+function inOrder(node){
+  if(!(node === null)){
+    inOrder(node.left)
+    console.log(node.show())
+    inOrder(node.right)
+  }
+}
+
+function deleteNode(root, key){
+  if(root === null){
+    return root;
+  }
+
+  if(key < root.data){
+    root.left = deleteNode(root.left, key)
+  }else if(key > root.data){
+    root.right = deleteNode(root.right, key)
+  }else {
+    if(root.left === null){
+      return root.right;
+    }else if(root.right === null){
+      return root.right;
+    }
+  }
+  return root;
+}
+
+const obj = new bst()
+obj.insert(5)
+obj.insert(6)
+obj.insert(1)
+obj.insert(2)
+obj.insert(3)
+
+inOrder(obj.root)
+
+obj.root = deleteNode(obj.root, 6)
+console.log('After Deleting')
+inOrder(obj.root)`.trim()
+
+const updates = `
+function Node(data,left,right){
+  this.data=data;
+  this.left=left;
+  this.right=right;
+  this.show=show;
+}
+
+function show(){
+  return this.data;
+}
+
+function bst(){
+  this.root=null;
+  this.insert=insert;
+}
+
+function insert(data){
+  const node=new Node(data,null,null)
+  if(this.root===null){
+    this.root=node;
+  }else{
+    var current=this.root;
+    var parrent;
+    while(current){
+      parrent=current;
+      if(data<current.data){
+        current=current.left;;
+        if(current===null){
+          parrent.left=node;
+        }
+      }else{
+        current=current.right;
+        if(current===null){
+          parrent.right=node;
+        }
+      }
+    }
+  }
+}
+
+function inOrder(root){
+  if(!(root===null)){
+    inOrder(root.left)
+    console.log(root.show())
+    inOrder(root.right)
+  }
+}
+
+function updateNode(node, target, newValue) {
+  if (node === null) {
+    return null;                                // Target node not found
+  }
+
+  if (target < node.data) {
+    node.left = updateNode(node.left, target, newValue);
+  } else if (target > node.data) {
+    node.right = updateNode(node.right, target, newValue);
+  } else {
+    node.data = newValue;                       // Found the target node, update its data
+  }
+
+  return node;
+}
+
+const obj=new bst()
+obj.insert(4)
+obj.insert(1)
+obj.insert(2)
+obj.insert(3)
+
+inOrder(obj.root)
+
+console.log('Update Node');
+obj.root = updateNode(obj.root, 4, 10);
+inOrder(obj.root);
+`.trim()
+
+// const traversing = ``.trim()
 
 const generateTrees = `
+function Node(val, left, right) {
+  this.val = val;
+  this.left = left || null;
+  this.right = right || null;
+}
+
+function generateTrees(n) {
+  if (n === 0) return [];
+
+  // Helper function to generate BSTs recursively
+  function generateBST(start, end) {
+    if (start > end) return [null];
+    const result = [];
+
+    for (let i = start; i <= end; i++) {
+      const leftSubtrees = generateBST(start, i - 1);
+      const rightSubtrees = generateBST(i + 1, end);
+
+      for (const leftTree of leftSubtrees) {
+        for (const rightTree of rightSubtrees) {
+          const root = new Node(i);
+          root.left = leftTree;
+          root.right = rightTree;
+          result.push(root);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  return generateBST(1, n);
+}
+
+function preOrder(node) {
+  if (node !== null) {
+    console.log(node.val);
+    preOrder(node.left);
+    preOrder(node.right);
+  }
+}
+
+const obj = generateTrees(3);
+
+for (const tree of obj) {
+  preOrder(tree);
+  console.log('---');
+}
+
+
+//2
 function TreeNode(val) {
   this.val = val
   this.left = null
@@ -81,29 +427,77 @@ console.log(generateTrees(3))
 `.trim();
 
 const isValidBST = `
-function isValidBST(root) {
-  const aux = (node) => {
-    if (!node) return [true, null, null];
-
-    const [leftValid, leftMin, leftMax] = aux(node.left)
-    const [rightValid, rightMin, rightMax] = aux(node.right)
-    let valid = leftValid && rightValid
-
-    if (leftMax !== null && leftMax >= node.val) {
-      valid = false
-    }
-    if (rightMin !== null && rightMin <= node.val) {
-      valid = false
-    }
-    
-    const currentMin = leftMin === null ? node.val : leftMin
-    const currentMax = rightMax === null ? node.val : rightMax
-    return [valid, currentMin, currentMax]
-  }
-  return aux(root)[0]
+function Nodes(data, left, right) {
+  this.data = data;
+  this.left = left;
+  this.right = right;
+  this.show = show;
 }
 
-console.log(isValidBST(3))
+function show() {
+  return this.data;
+}
+
+function bst() {
+  this.root = null;
+  this.insert = insert;
+  this.isValidBST = isValidBST; 
+}
+
+function insert(data) {
+  const node = new Nodes(data, null, null);
+  if (this.root === null) {
+    this.root = node;
+  } else {
+    let current = this.root;
+    let parent;
+    while (current) {
+      parent = current;
+      if (data < current.data) {
+        current = current.left;
+        if (current === null) {
+          parent.left = node;
+        }
+      } else {
+        current = current.right;
+        if (current === null) {
+          parent.right = node;
+        }
+      }
+    }
+  }
+}
+
+function inOrder(node) {
+  if (!(node == null)) {
+    inOrder(node.left);
+    console.log(node.show() + " ");
+    inOrder(node.right);
+  }
+}
+
+function isValidBST(node, min = null, max = null) {
+  if (node === null) return true;
+
+  if ((min !== null && node.data <= min) || (max !== null && node.data >= max)) {
+    return false;
+  }
+
+  return (
+    isValidBST(node.left, min, node.data) && isValidBST(node.right, node.data, max)
+  );
+}
+
+const obj = new bst();
+obj.insert(3);
+obj.insert(5);
+obj.insert(2);
+obj.insert(7);
+obj.insert(1);
+
+inOrder(obj.root);
+
+console.log('Is Valid BST:', obj.isValidBST(obj.root));
 `.trim();
 
 const recoverTree = `
@@ -139,56 +533,83 @@ function recoverTree(root) {
 console.log(recoverTree([1,3,null,2]))`.trim();
 
 const isSameTree = `
-function isSameTree(p, q) {
-  if ((p && !q) || (!p && q)) return false;
-  if (!p && !q) return true;
-
-  const leftSame = isSameTree(p.left, q.left)
-  const rightSame = isSameTree(p.right, q.right)
-  
-  return leftSame && rightSame && (p.val === q.val)
+function TreeNode(val, left, right) {
+  this.val = val;
+  this.left = left || null;
+  this.right = right || null;
 }
 
-console.log(isSameTree([1,3,null,2], [1,3,null,2]))
+function isSameTree(p, q) {
+  if (!p && !q) return true; 
+  if (!p || !q) return false;                     // One of the nodes is null, they are different.
+  if (p.val !== q.val) return false;              // Values are different.
+
+  // Recursively compare left and right subtrees.
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+}
+
+function buildTreeFromArray(arr) {
+  if (!arr || arr.length === 0) return null;
+
+  const build = (index) => {
+    if (index >= arr.length || arr[index] === null) {
+      return null;
+    }
+    return new TreeNode(arr[index], build(2 * index + 1), build(2 * index + 2));
+  };
+
+  return build(0);
+}
+
+const tree1Array = [1, 3, null, 2];
+const tree2Array = [1, 3, null, 2];
+
+const tree1 = buildTreeFromArray(tree1Array);
+const tree2 = buildTreeFromArray(tree2Array);
+
+console.log(isSameTree(tree1, tree2)); 
 `.trim();
 
 const isSymmetric = `
-function isSymmetric(root){
-  function aux (node, level, result){
-    if (!result[level]) {
-      result[level] = []
-    }
-
-    if (!node) {
-      result[level].push(null)
-      return result
-    }
-
-    result[level].push(node.val)
-    aux(node.left, level + 1, result)
-    aux(node.right, level + 1, result)
-    return result
-  }
-
-  function isSymmetricHelper (values = []){
-    for (let i = 0; i <= values.length / 2; i++) {
-      if (values[i] !== values[values.length - 1 - i]) {
-        return false
-      }
-    }
-    return true
-  }
-
-  const result = aux(root, 0, [])
-  for (let i = 0; i < result.length; i++) {
-    if (!isSymmetricHelper(result[i])) {
-      return false
-    }
-  }
-  return true
+function TreeNode(val, left, right) {
+  this.val = val;
+  this.left = left || null;
+  this.right = right || null;
 }
 
-console.log(isSymmetric([1,2,2,3,4,4,3]))
+function isSymmetric(root) {
+  if (!root) return true;                           // An empty tree is symmetric.
+
+  function isMirror(left, right) {
+    if (!left && !right) return true;               // Both nodes are null, they are mirrors.
+    if (!left || !right) return false;              // One of the nodes is null, they are not mirrors.
+    if (left.val !== right.val) return false; 
+
+    // Check if subtrees are mirrors of each other.
+    return isMirror(left.left, right.right) && isMirror(left.right, right.left);
+  }
+
+  // Start by comparing the left and right subtrees.
+  return isMirror(root.left, root.right);
+}
+
+function buildTreeFromArray(arr) {
+  if (!arr || arr.length === 0) return null;
+
+  const build = (index) => {
+    if (index >= arr.length || arr[index] === null) {
+      return null;
+    }
+    return new TreeNode(arr[index], build(2 * index + 1), build(2 * index + 2));
+  };
+
+  return build(0);
+}
+
+const obj = [1, 2, 2, 3, 4, 4, 3];
+const tree = buildTreeFromArray(obj);
+
+console.log(isSymmetric(tree)); 
  `.trim();
 
 const sortedArrayToBST = `
@@ -211,54 +632,159 @@ console.log(sortedArrayToBST([3,9,20,null,null,15,7]))
 `.trim();
 
 const sortedListToBST = `
-function sortedListToBST(head) {
-  const nodes = []
-
-  while (head) {
-    head.left = null
-    head.right = null
-    nodes.push(head)
-    head = head.next
-  }
-
-  const aux = (nodes, low, high) => { 
-    if (low > high) return null;
-
-    const middle = Math.floor((low + high) / 2)
-    nodes[middle].left = aux(nodes, low, middle - 1)
-    nodes[middle].right = aux(nodes, middle + 1, high)
-    return nodes[middle]
-  }
-  return aux(nodes, 0, nodes.length - 1)
+function Node(data, left, right) {
+  this.data = data;
+  this.left = left;
+  this.right = right;
+  this.show = show;
 }
 
-console.log(sortedListToBST([-10,-3,0,5,9]))
+function show() {
+  return this.data;
+}
+
+function bst() {
+  this.root = null;
+  this.insert = insert;
+  this.sortedArrayToBST = sortedArrayToBST;
+}
+
+function insert(data) {
+  const node = new Node(data, null, null);
+  if (this.root === null) {
+    this.root = node;
+  } else {
+    let current = this.root;
+    let parent;
+    while (current) {
+      parent = current;
+      if (data < current.data) {
+        current = current.left;
+        if (current === null) {
+          parent.left = node;
+        }
+      } else {
+        current = current.right;
+        if (current === null) {
+          parent.right = node;
+        }
+      }
+    }
+  }
+}
+
+function sortedArrayToBST(arr) {
+  this.root = sortedArray(arr, 0, arr.length - 1);
+}
+
+function sortedArray(arr, start, end) {
+  if (start > end) {
+    return null;
+  }
+
+  const mid = Math.floor((start + end) / 2);
+  const node = new Node(arr[mid], null, null);
+
+  node.left = sortedArray(arr, start, mid - 1);
+  node.right = sortedArray(arr, mid + 1, end);
+
+  return node;
+}
+
+function postOrder(node) {
+  if (node !== null) {
+    postOrder(node.left);
+    postOrder(node.right);
+    console.log(node.show() + " ");
+  }
+}
+
+const obj = new bst();
+
+obj.sortedArrayToBST([1, 2, 3, 5, 7]);
+postOrder(obj.root);
 `.trim();
 
 const minDepth = `
-function minDepth (root){
-  if (!root) return 0;
-
-  const aux = (node, depth) => {
-    if (!node || (!node.left && !node.right)) return depth;
-
-    if (node.left && !node.right) {
-      return aux(node.left, depth + 1)
-    }
-
-    if (node.right && !node.left) {
-      return aux(node.right, depth + 1)
-    }
-
-    const leftDepth = aux(node.left, depth + 1)
-    const rightDepth = aux(node.right, depth + 1)
-    return leftDepth < rightDepth ? leftDepth : rightDepth
-  }
-
-  return aux(root, 1)
+function Node(data, left, right) {
+  this.data = data;
+  this.left = left;
+  this.right = right;
 }
 
-console.log(minDepth([3,9,20,null,null,15,7]))
+function BST() {
+  this.root = null;
+  this.insert = insert;
+  this.insertArray = insertArray;
+}
+
+function insert(data) {
+  const node = new Node(data, null, null);
+  if (this.root === null) {
+    this.root = node;
+  } else {
+    let current = this.root;
+    let parent;
+    while (current) {
+      parent = current;
+      if (data < current.data) {
+        current = current.left;
+        if (current === null) {
+          parent.left = node;
+        }
+      } else {
+        current = current.right;
+        if (current === null) {
+          parent.right = node;
+        }
+      }
+    }
+  }
+}
+
+function insertArray(arr) {
+  for (const data of arr) {
+    this.insert(data);
+  }
+}
+
+
+function minDepth(root) {
+  let depth = 0;
+  const queue = [root];
+
+  while (queue.length > 0) {
+    depth++;
+    const levelSize = queue.length;
+
+    for (let i = 0; i < levelSize; i++) {
+      const currentNode = queue.shift();
+
+      // If a leaf node is encountered, return the depth.
+      if (currentNode.left === null && currentNode.right === null) {
+        return depth;
+      }
+
+     
+      if (currentNode.left !== null) {                       // Add the child nodes to the queue.
+        queue.push(currentNode.left);
+      }
+      if (currentNode.right !== null) {
+        queue.push(currentNode.right);
+      }
+    }
+  }
+
+  return depth;
+}
+
+
+const obj = new BST();
+const sortedArray = [3,9,20,null,null,15,7];
+obj.insertArray(sortedArray);
+
+const minimumDepth = minDepth(obj.root);
+console.log("Minimum Depth of Binary Tree:", minimumDepth);
 `.trim();
 
 const hasPathSum = `
@@ -326,6 +852,46 @@ class Trees extends Component {
         <Grid item xs={10}>
           <Paper className={classes.paper}>
             <List>
+              <h3>Create Tree</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={insertData}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>Traversing</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={traversing}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>Delete</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={deleteNode}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
+              <h3>Update</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={updates}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br/>
+
               <h3>1. Unique Binary Search Trees.</h3>
               <b>Input: </b>3<br/>
               <b>Output: </b>
@@ -346,23 +912,9 @@ class Trees extends Component {
               <br/>
 
               <h3>2. Validate Binary Search Tree.</h3>
-              Given a binary tree, determine if it is a valid binary search tree (BST).
-              <br/>
-              Assume a BST is defined as follows:
-              <ul>
-                <li>The left subtree of a node contains only nodes with keys less than the node's key.</li>
-                <li>The right subtree of a node contains only nodes with keys greater than the node's key.</li>
-                <li>Both the left and right subtrees must also be binary search trees.</li>
-              </ul>
-              <br/>
-              <b>Input: </b> [2,1,3]
-              <b>Output: </b> true
-              <br/>
-              <br/>
-              <b>Example 2: </b> 
-              <b>Input: </b>[5,1,4,null,null,3,6]<br/>
-              <b>Output: </b>false<br/>
-              <b>Explanation: </b>The root node's value is 5 but its right child's value is 4.
+              To validate whether a binary tree is a binary search tree (BST), you can use an inorder traversal approach. In a BST, 
+              when you traverse the tree in inorder, the values should be in ascending order. If they are not, the tree is not a 
+              valid BST.
               <div style={titles}>
                 <PrismCode
                   code={isValidBST}

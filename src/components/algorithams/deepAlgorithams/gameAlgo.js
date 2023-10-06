@@ -30,25 +30,27 @@ const styles = theme => ({
 
 
 const rob = `
-function rob(nums = []){
-  const memo = {};
+function fun() {
+  const nums = [1, 2, 3, 1];
+  let prevMax = 0;
+  let currMax = 0;
 
-  function aux(index = 0){
-    if (memo[index] !== undefined) return memo[index];
-    if (index >= nums.length) return 0;
-
-    memo[index] = Math.max(aux(index + 2) + nums[index], aux(index + 1))
-    return memo[index]
+  for (let i=0;i<nums.length;i++) {
+    const temp = currMax;
+    currMax = Math.max(prevMax + i, currMax);
+    prevMax = temp;
   }
-  return aux()
+
+  console.log(currMax)
 }
 
-console.log(rob([2,7,9,3,1]))
+fun()
 `.trim();
 
 
 const maxArea = `
-function maxArea(height = []){
+function fun(){
+  const height=[1,8,6,2,5,4,8,3,7]
   let max = 0;
   let left = 0;
   let right = height.length - 1;
@@ -62,124 +64,56 @@ function maxArea(height = []){
       right -= 1;
     }
   }
-  return max
+  console.log(max)
 }
 
-console.log(maxArea([1,8,6,2,5,4,8,3,7]))
-`.trim();
-
-const isValidSudoku = `
-function isValidSudoku(board = []){
-  const rows = [];
-  const columns = [];
-  const boxes = [];
-
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      const content = board[i][j];
-      
-      if (content !== '.') {
-        if (!rows[i]) {
-          rows[i] = {};
-        }
-        if (rows[i][content]) return false;
-        rows[i][content] = 1;
-
-        if (!columns[j]) {
-          columns[j] = {};
-        }
-        if (columns[j][content]) return false;
-
-        columns[j][content] = 1;
-        const boxNum = Math.floor(i / 3) * 3 + Math.floor(j / 3);
-
-        if (!boxes[boxNum]) {
-          boxes[boxNum] = {};
-        }
-
-        if (boxes[boxNum][content]) return false;
-        boxes[boxNum][content] = 1;
-      }
-    }
-  }
-  return true;
-}
-
-console.log(isValidSudoku([
-  ["5","3",".",".","7",".",".",".","."],
-  ["6",".",".","1","9","5",".",".","."],
-  [".","9","8",".",".",".",".","6","."],
-  ["8",".",".",".","6",".",".",".","3"],
-  ["4",".",".","8",".","3",".",".","1"],
-  ["7",".",".",".","2",".",".",".","6"],
-  [".","6",".",".",".",".","2","8","."],
-  [".",".",".","4","1","9",".",".","5"],
-  [".",".",".",".","8",".",".","7","9"]
-]))
-`.trim();
-
-const jump = `
-function jump(nums = []){
-  let steps = 0;
-  let currentJumpIndex = 0;
-  let nextJumpIndex = 0;
-
-  for (let i = 0; i < nums.length - 1; i++) {
-      nextJumpIndex = Math.max(i + nums[i], nextJumpIndex)
-    if (i === currentJumpIndex) {
-      steps += 1;
-      currentJumpIndex = nextJumpIndex;
-    }
-  }
-  return steps;
-}
-
-console.log(jump([2,3,1,1,4]))
+fun()
 `.trim();
 
 const climbStairs = `
-function climbStairs(n){
-  const memo = {};
-
-  function aux(count = 0){
-    if (memo[count] !== undefined) return memo[count];
-    if (count === n) return 1;
-    if (count > n) return 0;
-
-    memo[count] = aux(count + 1) + aux(count + 2);
-    return memo[count];
+function fun(n) {
+  if (n <= 2) {
+    return n;
   }
-  return aux();
+
+  return fun(n - 1) + fun(n - 2);
 }
 
-console.log(climbStairs(3))
+console.log(fun(3));
 `.trim();
 
 const judgePoint24 = `
-function judgePoint24(nums) {
-  const isValid = x => Math.abs(x - 24) < 0.0000001;
-  const aux = (arr = []) => {
-    if (arr.length === 1) return isValid(arr[0]);
-    let valid = false;
+function fun() {
+  const arr=[4, 1, 8, 7];
+  let result=0;
+  const sum=24;
+  const operator = "+"; 
 
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = i + 1; j < arr.length; j++) {
-        const nextArr = arr.filter((x, index) => index !== i && index !== j);
-        valid = valid || aux([...nextArr, arr[i] + arr[j]])
-          || aux([...nextArr, arr[i] - arr[j]])
-          || aux([...nextArr, arr[j] - arr[i]])
-          || aux([...nextArr, arr[i] * arr[j]])
-          || aux([...nextArr, arr[i] / arr[j]])
-          || aux([...nextArr, arr[j] / arr[i]])
+  for(let i=0;i<arr.length;i++){
+    while(result<sum){
+      switch(operator){
+        case "+":
+          result += arr[i];
+          break;
+        case "-":
+          result -= arr[i];
+          break;
+        case "*":
+          result *= arr[i];
+          break;
+        case "/":
+          result /= arr[i];
+          break;
+        default:
+          console.log("Invalid operator");
+          return;
       }
     }
-    return valid;
   }
-
-  return aux(nums);
+  console.log(result)
 }
 
-console.log(judgePoint24([4, 1, 8, 7]))
+fun()
 `.trim();
 
 const numTimesAllBlue = `
@@ -314,52 +248,6 @@ class DSLogic5 extends Component {
               <div style={titles}>
                 <PrismCode
                   code={maxArea}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-
-              <h3>3. Valid Sudoku.</h3>
-              Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
-              <br/>
-              <ul>
-                <li>Each row must contain the digits 1-9 without repetition.</li>
-                <li>Each column must contain the digits 1-9 without repetition.</li>
-                <li>Each of the 9 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.</li>
-              </ul>
-              <br/>
-         
-              <b>Note: </b>
-              <ul>
-                <li>A Sudoku board (partially filled) could be valid but is not necessarily solvable.</li>
-                <li>Only the filled cells need to be validated according to the mentioned rules.</li>
-                <li>The given board contain only digits 1-9 and the character '.'.</li>
-                <li> The given board size is always 9x9.</li>
-              </ul>
-              <br/>
-              <div style={titles}>
-                <PrismCode
-                  code={isValidSudoku}
-                  language="js"
-                  plugins={["line-numbers"]}
-                />
-              </div>
-              <br/>
-
-              <h3>4. Jump Game</h3>
-              Given an array of non-negative integers, you are initially positioned at the first index of the array.
-              <br/>
-              Each element in the array represents your maximum jump length at that position.<br/>
-
-              Your goal is to reach the last index in the minimum number of jumps.<br/><br/>
-              <b>Input: </b>[2,3,1,1,4]<br/>
-              <b>Output: </b>2<br/>
-              <b>Explanation: </b>The minimum number of jumps to reach the last index is 2.
-              Jump 1 step from index 0 to 1, then 3 steps to the last index.<br/><br/>
-              <b>N: </b>You can assume that you can always reach the last index.
-              <div style={titles}>
-                <PrismCode
-                  code={jump}
                   language="js"
                   plugins={["line-numbers"]}
                 />

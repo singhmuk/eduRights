@@ -22,76 +22,358 @@ const styles = theme => ({
   }
 })
 
+const simple = `
+function createList(data){
+  const head={value:data, next:null};
+  let tail=null;
 
-const hasCycle = `
-const hasCycle = (head) => {
-  const aux = (current, next) => {
-    if (!current || !next || !next.next || !next.next.next) {
-      return false
+  function append(item){
+    let newnode={value:item, next:null}
+
+    if(tail==null){
+      head.next=newnode;
+      tail=newnode;
+    }else{
+      tail.next=newnode;
+      tail=newnode;
     }
-    if (current === next) {
-      return true
+  }
+
+  function print(){
+    let currentNode=head;
+    let current='';
+
+    while(currentNode){
+      current += currentNode.value;
+      if(currentNode.next){
+        current += '->'
+      }
+      currentNode=currentNode.next;
     }
-    return aux(current.next, next.next.next)
+    console.log(current)
   }
-  if (!head || !head.next) {
-    return false
-  }
-  return aux(head, head.next)
+
+  return {append, print}
 }
 
-console.log(hasCycle(3,2,0,-4, 1))`.trim();
+const obj=new createList(2);
+obj.append(1)
+obj.append(3)
+obj.print()
+`.trim();
+
+const traversing = `
+function createList(data){
+  const head={value:data, next:null};
+  let tail=null;
+
+  function append(item){
+    let newnode={value:item, next:null}
+
+    if(tail==null){
+      head.next=newnode;
+      tail=newnode;
+    }else{
+      tail.next=newnode;
+      tail=newnode;
+    }
+  }
+
+  function traversing(){
+    let mapnode=head;
+
+    while(mapnode){
+      console.log(mapnode.value);
+      mapnode=mapnode.next
+    }
+  }
+
+  return {append, traversing}
+}
+
+const obj=new createList(2);
+obj.append(1)
+obj.append(3)
+obj.traversing()
+`.trim();
+
+const deleted = `
+function createList(data){
+  const head={value:data, next:null};
+  let tail=null;
+  let size=1;
+
+  function append(item){
+    let newnode={value:item, next:null}
+
+    if(tail==null){
+      head.next=newnode;
+      tail=newnode;
+    }else{
+      tail.next=newnode;
+      tail=newnode;
+    }
+  }
+
+  function traversing(){
+    let mapnode=head;
+
+    while(mapnode){
+      console.log(mapnode.value);
+      mapnode=mapnode.next
+    }
+  }
+
+  function deletes(index){
+    let lend=head;
+    let counter=1;
+
+    while(counter < index-1){
+      lend=lend.next;
+      counter++;
+    }
+    if(lend.next){
+      let nextNode=lend.next.next;
+      lend.next=nextNode;
+    }
+    size -= 1;
+  }
+
+  return {append, traversing, deletes}
+}
+
+const obj=new createList(2);
+obj.append(1)
+obj.append(3)
+obj.deletes(1)
+obj.traversing()
+`.trim();
+
+const searche = `
+function createList(data) {
+  let head = { value: data, next: null };
+  let tail = null;
+
+  function append(item){
+    const newnode={value:item, next:null}
+    if(tail==null){
+      head.next=newnode;
+      tail=newnode;
+    }else{
+      tail.next=newnode;
+      tail=newnode;
+    }
+  }
+
+  function searche(data){
+    let result = undefined;
+    let lead= head;
+    
+    while (lead !== null) {
+      if (lead.value === data) {
+        result = lead;
+        break; 
+      }
+      lead = lead.next;
+    }
+    
+    console.log(result);
+  }
+
+  return { append, searche };
+}
+
+const obj = createList(1);
+obj.append(2);
+obj.append(3);
+obj.searche(2)
+`.trim();
+
+const hasCycle = `
+function createList(data) {
+  const head = { value: data, next: null };
+  let tail = null;
+
+  function append(item){
+    let newnode={value:item, next:null}
+
+    if(tail==null){
+      head.next=newnode;
+      tail=newnode;
+    }else{
+      tail.next=newnode;
+      tail=newnode;
+    }
+  }
+
+  function traversing() {
+    let currentNode = head;
+    while (currentNode) {
+      console.log(currentNode.value);
+      currentNode = currentNode.next;
+    }
+  }
+
+  function cyclic() {
+    tail.next = head;
+  }
+
+  function breakCycle() {
+    tail.next = null;
+  }
+
+  return { append, traversing, cyclic, breakCycle };
+}
+
+const list = createList(1);
+list.append(2);
+list.append(4);
+
+// list.cyclic();
+list.traversing();
+list.breakCycle();
+`.trim();
 
 const removeNthFromEnd = `
-const removeNthFromEnd = (head, n) => {
-  let h1 = head
-  let h2 = null
-  let count = 0
-  while (h1) {
-    count += 1
-    h1 = h1.next
-    if (h2) {
-      h2 = h2.next
-    }
-    if (count === n + 1) {
-      h2 = head
+function createList(data) {
+  const head = { value: data, next: null };
+  let tail=null;
+
+  function append(item){
+    let newnode={value:item, next:null}
+
+    if(tail==null){
+      head.next=newnode;
+      tail=newnode;
+    }else{
+      tail.next=newnode;
+      tail=newnode;
     }
   }
-  if (!h2) {
-    return head ? head.next : null
+
+  function traversing() {
+    let currentNode = head;
+    while (currentNode) {
+      console.log(currentNode.value);
+      currentNode = currentNode.next;
+    }
   }
-  h2.next = h2.next.next
-  return head
-}`.trim();
+
+  function removeNthFromEnd(data) {
+    let fast = head;
+    let slow = head;
+    let prev = null;
+
+    // Move the fast pointer N nodes ahead
+    for (let i = 0; i < data; i++) {
+      fast = fast.next;
+    }
+
+    // Move both pointers until the fast pointer reaches the end
+    while (fast) {
+      fast = fast.next;
+      prev = slow;
+      slow = slow.next;
+    }
+
+    // Now, slow points to the Nth node from the end
+    // Remove the Nth node by updating the next pointer of the node before it
+    if (prev) {
+      prev.next = slow.next;
+    } else {
+      head = slow.next;
+    }
+
+  }
+
+  return { append, traversing, removeNthFromEnd };
+}
+
+const list = createList(1);
+list.append(2);
+list.append(4);
+
+console.log("After removing 2nd node from the end:");
+list.removeNthFromEnd(2);
+list.traversing();
+`.trim();
 
 const mergeTwoLists = `
-const mergeTwoLists = (l1, l2) => {
-  const aux = (current1, current2, acc) => {
-    if (!current1) {
-      acc.next = current2
-      return acc
+function createList(data) {
+  return { value: data, next: null };
+}
+
+function createLinked() {
+  return { head: null }; 
+}
+
+function append(linkedList, item) {
+  const newNode = createList(item);
+
+  if (linkedList.head === null) {
+    linkedList.head = newNode;
+  } else {
+    let temp = linkedList.head;
+    while (temp.next !== null){
+      temp = temp.next;
     }
-    if (!current2) {
-      acc.next = current1
-      return acc
-    }
-    if (current1.val < current2.val) {
-      acc.next = {
-        val: current1.val,
-        next: null,
-      }
-      return aux(current1.next, current2, acc.next)
-    }
-    acc.next = {
-      val: current2.val,
-      next: null,
-    }
-    return aux(current2.next, current1, acc.next)
+    temp.next = newNode;
   }
-  const head = { val: null, next: null }
-  aux(l1, l2, head)
-    return head.next
-}`.trim();
+}
+
+function traversing(linkedList) {
+  let currentNode = linkedList.head;
+
+  while (currentNode) {
+    console.log(currentNode.value);
+    currentNode = currentNode.next;
+  }
+}
+
+function sortMerge(headA, headB) {
+  let dummyNode = createList(0);
+  let tail = dummyNode;
+  while (true) {
+    if (headA === null) {
+      tail.next = headB;
+      break;
+    }
+    if (headB === null) {
+      tail.next = headA;
+      break;
+    }
+
+    if (headA.value <= headB.value) {
+      tail.next = headA;
+      headA = headA.next;
+    } else {
+      tail.next = headB;
+      headB = headB.next;
+    }
+
+    tail = tail.next;
+  }
+  return dummyNode.next;
+}
+
+function mergeAndPrintSortedLists() {
+  let llist1 = createLinked();
+  let llist2 = createLinked();
+
+  append(llist1, 5);
+  append(llist1, 10);
+  append(llist1, 15);
+
+  append(llist2, 2);
+  append(llist2, 3);
+  append(llist2, 20);
+
+  llist1.head = sortMerge(llist1.head, llist2.head);
+  traversing(llist1);
+}
+
+mergeAndPrintSortedLists();
+`.trim();
 
 const swap = `const swap = (a, b, arr) => { 
   if (a !== b) {
@@ -257,6 +539,46 @@ class LinkedList extends Component {
 
               <b>Functions -</b> add, remove, indexOf, elementAt, addAt, removeAt, view.
               <br />
+
+              <h3>Append</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={simple}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>Traversing</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={traversing}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>Delete</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={deleted}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
+
+              <h3>Search</h3>
+              <div style={titles}>
+                <PrismCode
+                  code={searche}
+                  language="js"
+                  plugins={["line-numbers"]}
+                />
+              </div>
+              <br />
               
               <h3>1. Linked List Cycle.</h3>
               Given head, the head of a linked list, determine if the linked list has a cycle in it.
@@ -274,6 +596,7 @@ class LinkedList extends Component {
               <br />
 
               <h3>4. Remove Nth Node From End of List</h3>
+              To remove the Nth node from the end of a singly linked list, you can use a two-pointer approach. 
               <div style={titles}>
                 <PrismCode
                   code={removeNthFromEnd}
@@ -283,6 +606,7 @@ class LinkedList extends Component {
               </div>
               <br/>
 
+              <b>break</b>
               <h3>6. Merge Two Sorted Lists.</h3>
               Merge two sorted linked lists and return it as a new sorted list. The new list should be made by splicing together the nodes of the first two lists.
               <div style={titles}>
